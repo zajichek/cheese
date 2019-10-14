@@ -1,0 +1,9 @@
+Meta
+doc
+.DS_Store
+.Rapp.history
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+inst/doc
