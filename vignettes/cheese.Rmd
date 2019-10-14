@@ -1,0 +1,14 @@
+---
+title: "Tutorial on cheese"
+author: Alex Zajichek
+date: "`r format(Sys.time(), '%m/%d/%Y')`"
+output: 
+    rmarkdown::html_vignette
+vignette: >
+    %\VignetteIndexEntry{Tutorial on cheese}
+    %\VignetteEngine{knitr::rmarkdown}
+    \usepackage[utf8]{inputenc}
+---
+
+#Introduction
+The data used in the following examples comes from the heart disease dataset found at the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Heart+Disease).
