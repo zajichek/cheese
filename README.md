@@ -3,9 +3,12 @@
 
 # cheese
 
+<!-- badges: start -->
+
 [![CRAN
 Status](https://www.r-pkg.org/badges/version/cheese)](https://cran.r-project.org/package=cheese)
 ![CRAN\_Download\_Counter](http://cranlogs.r-pkg.org/badges/grand-total/cheese)
+<!-- badges: end -->
 
 # Introduction
 
