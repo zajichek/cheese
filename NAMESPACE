@@ -1,0 +1,7 @@
+importFrom("magrittr", "%>%")
+importFrom("rlang", ".data")
+importFrom("tibble", "tibble")
+importFrom("stats", "IQR", "median", "na.omit", "sd", "terms", "glm")
+
+export("%>%",
+       "divide")
