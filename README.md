@@ -1,6 +1,11 @@
-cheese
-================
-10/14/2019
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# cheese
+
+[![CRAN
+Status](https://www.r-pkg.org/badges/version/cheese)](https://cran.r-project.org/package=cheese)
+![CRAN\_Download\_Counter](http://cranlogs.r-pkg.org/badges/grand-total/cheese)
 
 # Introduction
 
