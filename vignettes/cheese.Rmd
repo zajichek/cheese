@@ -10,5 +10,5 @@ vignette: >
     \usepackage[utf8]{inputenc}
 ---
 
-#Introduction
+# Introduction
 The data used in the following examples comes from the heart disease dataset found at the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Heart+Disease).
