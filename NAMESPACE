@@ -4,4 +4,5 @@ importFrom("tibble", "tibble")
 importFrom("stats", "IQR", "median", "na.omit", "sd", "terms", "glm")
 
 export("%>%",
-       "divide")
+       "divide",
+       "depths")

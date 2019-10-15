@@ -142,3 +142,96 @@ divide <-
     data
     
   }
+
+#Name: depths
+#Description: Traverse a list of arbitrary depth to find elements that satisfy a predicate
+depths <-
+  function(
+    list, #A list, data frame or atomic vector
+    predicate, #A binary function
+    bare = FALSE, #Only continue on bare lists
+    ... #Additional arguments for 'predicate'
+  ) {
+    
+    #Get continuation function
+    continue <- rlang::is_list
+    if(bare)
+      continue <- rlang::is_bare_list
+    
+    #Check if elements satisfy the predicate
+    result <-
+      list %>%
+      purrr::map_lgl(
+        .f = predicate,
+        ...
+      )
+    
+    #Make vector of indices
+    index <- seq_along(result)
+    
+    #Merge indices with indicator
+    result <- ifelse(result, -1*index, index)
+    
+    #Check if next elements are lists
+    are_lists <- 
+      list %>% 
+      purrr::map_lgl(
+        .f = continue
+      )
+    
+    #Continue traversal for list elements only
+    if(any(are_lists)) {
+      
+      ifelse(
+        
+        #Check elements that are lists (including data.frames)
+        are_lists,
+        
+        #Concatenate with recursive function call for those elements
+        result %>%
+          str_c(
+            list[are_lists] %>% 
+              purrr::map_chr(
+                .f = depths, 
+                predicate = predicate,
+                bare = bare
+              )
+          ),
+        
+        #Otherwise just return index
+        result
+        
+      ) %>%
+        
+        #Collapse into single string
+        str_c(
+          collapse = ","
+        ) %>%
+        
+        #Add beginning and ending bracket
+        str_c(
+          "{",
+          .,
+          "}"
+        )
+      
+    } else {
+      
+      #Return current result
+      result %>%
+        
+        #Collapse indices
+        stringr::str_c(
+          collapse = ","
+        ) %>%
+        
+        #Add boundaries
+        stringr::str_c(
+          "{",
+          .,
+          "}"
+        )
+      
+    }
+    
+  }
