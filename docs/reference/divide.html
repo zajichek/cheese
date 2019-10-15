@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Divide a data frame into a list of any depth by any number of variables. — divide • cheese</title>
+<title>Divide a data frame into a list — divide • cheese</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Divide a data frame into a list of any depth by any number of variables. — divide" />
+<meta property="og:title" content="Divide a data frame into a list — divide" />
 
-<meta property="og:description" content="Separates a data frame by one or more stratification variables into a list of arbitrary depth whose leaves are data frames and names are the strata." />
+<meta property="og:description" content="Separate a data.frame into a list of any depth by one or more stratification columns whose levels become the names." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,14 +106,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Divide a data frame into a list of any depth by any number of variables.</h1>
+    <h1>Divide a data frame into a list</h1>
     
     <div class="hidden name"><code>divide.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Separates a data frame by one or more stratification variables into a list of arbitrary depth whose leaves are data frames and names are the strata.</p>
+    <p>Separate a <code>data.frame</code> into a list of any depth by one or more stratification columns whose levels become the names.</p>
     
     </div>
 
@@ -151,17 +151,17 @@
     </tr>
     <tr>
       <th>sep</th>
-      <td><p>String to separate values of each stratification variable by. Defaults to <code><a href='https://rdrr.io/r/base/Logic.html'>"|"</a></code>. Only used when the number of stratification columns exceeds the desired depth.</p></td>
+      <td><p>String to separate values of each stratification variable by. Defaults to "|". Only used when the number of stratification columns exceeds the desired depth.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For the <code>depth</code>, use positive integers to move from the root and negative integers to move from the leaves.</p>
+    <p>For the <code>depth</code>, use positive integers to move from the root and negative integers to move from the leaves. The maximum depth will be used for integers larger than such.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>list</code> with <code>tibble</code> objects at the leaves.</p>
+    <p>A <code>list</code> with <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble</a></code> objects at the leaves.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -170,147 +170,74 @@
 <span class='co'>#1) Unquoted</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>divide</span>(
-        <span class='no'>Sex</span>,
-        <span class='no'>HeartDisease</span>
+        <span class='no'>Sex</span>
     )</div><div class='output co'>#&gt; $Female
-#&gt; $Female$No
-#&gt; <span style='color: #555555;'># A tibble: 72 x 7</span><span>
-#&gt;      Age ChestPain        BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span>    41 Atypical ang…   130         204 FALSE            172 No                
-#&gt; </span><span style='color: #555555;'> 2</span><span>    57 Asymptomatic    120         354 FALSE            163 Yes               
-#&gt; </span><span style='color: #555555;'> 3</span><span>    56 Atypical ang…   140         294 FALSE            153 No                
-#&gt; </span><span style='color: #555555;'> 4</span><span>    48 Non-anginal …   130         275 FALSE            139 No                
-#&gt; </span><span style='color: #555555;'> 5</span><span>    58 Typical angi…   150         283 TRUE             162 No                
-#&gt; </span><span style='color: #555555;'> 6</span><span>    50 Non-anginal …   120         219 FALSE            158 No                
-#&gt; </span><span style='color: #555555;'> 7</span><span>    58 Non-anginal …   120         340 FALSE            172 No                
-#&gt; </span><span style='color: #555555;'> 8</span><span>    66 Typical angi…   150         226 FALSE            114 No                
-#&gt; </span><span style='color: #555555;'> 9</span><span>    69 Typical angi…   140         239 FALSE            151 No                
-#&gt; </span><span style='color: #555555;'>10</span><span>    71 Atypical ang…   160         302 FALSE            162 No                
-#&gt; </span><span style='color: #555555;'># … with 62 more rows</span><span>
-#&gt; 
-#&gt; $Female$Yes
-#&gt; </span><span style='color: #555555;'># A tibble: 25 x 7</span><span>
-#&gt;      Age ChestPain        BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span>    62 Asymptomatic    140         268 FALSE            160 No                
-#&gt; </span><span style='color: #555555;'> 2</span><span>    65 Asymptomatic    150         225 FALSE            114 No                
-#&gt; </span><span style='color: #555555;'> 3</span><span>    61 Asymptomatic    130         330 FALSE            169 No                
-#&gt; </span><span style='color: #555555;'> 4</span><span>    51 Asymptomatic    130         305 FALSE            142 Yes               
-#&gt; </span><span style='color: #555555;'> 5</span><span>    62 Asymptomatic    160         164 FALSE            145 No                
-#&gt; </span><span style='color: #555555;'> 6</span><span>    60 Asymptomatic    150         258 FALSE            157 No                
-#&gt; </span><span style='color: #555555;'> 7</span><span>    61 Asymptomatic    145         307 FALSE            146 Yes               
-#&gt; </span><span style='color: #555555;'> 8</span><span>    43 Asymptomatic    132         341 TRUE             136 Yes               
-#&gt; </span><span style='color: #555555;'> 9</span><span>    62 Non-anginal …   130         263 FALSE             97 No                
-#&gt; </span><span style='color: #555555;'>10</span><span>    63 Asymptomatic    150         407 FALSE            154 No                
-#&gt; </span><span style='color: #555555;'># … with 15 more rows</span><span>
-#&gt; 
+#&gt; <span style='color: #555555;'># A tibble: 97 x 8</span><span>
+#&gt;      Age ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'> 1</span><span>    41 Atypical…   130         204 FALSE            172 No              
+#&gt; </span><span style='color: #555555;'> 2</span><span>    62 Asymptom…   140         268 FALSE            160 No              
+#&gt; </span><span style='color: #555555;'> 3</span><span>    57 Asymptom…   120         354 FALSE            163 Yes             
+#&gt; </span><span style='color: #555555;'> 4</span><span>    56 Atypical…   140         294 FALSE            153 No              
+#&gt; </span><span style='color: #555555;'> 5</span><span>    48 Non-angi…   130         275 FALSE            139 No              
+#&gt; </span><span style='color: #555555;'> 6</span><span>    58 Typical …   150         283 TRUE             162 No              
+#&gt; </span><span style='color: #555555;'> 7</span><span>    50 Non-angi…   120         219 FALSE            158 No              
+#&gt; </span><span style='color: #555555;'> 8</span><span>    58 Non-angi…   120         340 FALSE            172 No              
+#&gt; </span><span style='color: #555555;'> 9</span><span>    66 Typical …   150         226 FALSE            114 No              
+#&gt; </span><span style='color: #555555;'>10</span><span>    69 Typical …   140         239 FALSE            151 No              
+#&gt; </span><span style='color: #555555;'># … with 87 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
 #&gt; 
 #&gt; $Male
-#&gt; $Male$No
-#&gt; </span><span style='color: #555555;'># A tibble: 92 x 7</span><span>
-#&gt;      Age ChestPain        BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span>    63 Typical angi…   145         233 TRUE             150 No                
-#&gt; </span><span style='color: #555555;'> 2</span><span>    37 Non-anginal …   130         250 FALSE            187 No                
-#&gt; </span><span style='color: #555555;'> 3</span><span>    56 Atypical ang…   120         236 FALSE            178 No                
-#&gt; </span><span style='color: #555555;'> 4</span><span>    57 Asymptomatic    140         192 FALSE            148 No                
-#&gt; </span><span style='color: #555555;'> 5</span><span>    44 Atypical ang…   120         263 FALSE            173 No                
-#&gt; </span><span style='color: #555555;'> 6</span><span>    52 Non-anginal …   172         199 TRUE             162 No                
-#&gt; </span><span style='color: #555555;'> 7</span><span>    57 Non-anginal …   150         168 FALSE            174 No                
-#&gt; </span><span style='color: #555555;'> 8</span><span>    54 Asymptomatic    140         239 FALSE            160 No                
-#&gt; </span><span style='color: #555555;'> 9</span><span>    49 Atypical ang…   130         266 FALSE            171 No                
-#&gt; </span><span style='color: #555555;'>10</span><span>    64 Typical angi…   110         211 FALSE            144 Yes               
-#&gt; </span><span style='color: #555555;'># … with 82 more rows</span><span>
-#&gt; 
-#&gt; $Male$Yes
-#&gt; </span><span style='color: #555555;'># A tibble: 114 x 7</span><span>
-#&gt;      Age ChestPain        BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span>    67 Asymptomatic    160         286 FALSE            108 Yes               
-#&gt; </span><span style='color: #555555;'> 2</span><span>    67 Asymptomatic    120         229 FALSE            129 Yes               
-#&gt; </span><span style='color: #555555;'> 3</span><span>    63 Asymptomatic    130         254 FALSE            147 No                
-#&gt; </span><span style='color: #555555;'> 4</span><span>    53 Asymptomatic    140         203 TRUE             155 Yes               
-#&gt; </span><span style='color: #555555;'> 5</span><span>    56 Non-anginal …   130         256 TRUE             142 Yes               
-#&gt; </span><span style='color: #555555;'> 6</span><span>    48 Atypical ang…   110         229 FALSE            168 No                
-#&gt; </span><span style='color: #555555;'> 7</span><span>    58 Atypical ang…   120         284 FALSE            160 No                
-#&gt; </span><span style='color: #555555;'> 8</span><span>    58 Non-anginal …   132         224 FALSE            173 No                
-#&gt; </span><span style='color: #555555;'> 9</span><span>    60 Asymptomatic    130         206 FALSE            132 Yes               
-#&gt; </span><span style='color: #555555;'>10</span><span>    40 Asymptomatic    110         167 FALSE            114 Yes               
-#&gt; </span><span style='color: #555555;'># … with 104 more rows</span><span>
-#&gt; 
+#&gt; </span><span style='color: #555555;'># A tibble: 206 x 8</span><span>
+#&gt;      Age ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'> 1</span><span>    63 Typical …   145         233 TRUE             150 No              
+#&gt; </span><span style='color: #555555;'> 2</span><span>    67 Asymptom…   160         286 FALSE            108 Yes             
+#&gt; </span><span style='color: #555555;'> 3</span><span>    67 Asymptom…   120         229 FALSE            129 Yes             
+#&gt; </span><span style='color: #555555;'> 4</span><span>    37 Non-angi…   130         250 FALSE            187 No              
+#&gt; </span><span style='color: #555555;'> 5</span><span>    56 Atypical…   120         236 FALSE            178 No              
+#&gt; </span><span style='color: #555555;'> 6</span><span>    63 Asymptom…   130         254 FALSE            147 No              
+#&gt; </span><span style='color: #555555;'> 7</span><span>    53 Asymptom…   140         203 TRUE             155 Yes             
+#&gt; </span><span style='color: #555555;'> 8</span><span>    57 Asymptom…   140         192 FALSE            148 No              
+#&gt; </span><span style='color: #555555;'> 9</span><span>    56 Non-angi…   130         256 TRUE             142 Yes             
+#&gt; </span><span style='color: #555555;'>10</span><span>    44 Atypical…   120         263 FALSE            173 No              
+#&gt; </span><span style='color: #555555;'># … with 196 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
 #&gt; </div><div class='input'>
 <span class='co'>#2) Using select helpers</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>divide</span>(
-        <span class='fu'>matches</span>(<span class='st'>"^(S|H)"</span>)
+        <span class='fu'>matches</span>(<span class='st'>"^S"</span>)
     )</div><div class='output co'>#&gt; $Female
-#&gt; $Female$No
-#&gt; </span><span style='color: #555555;'># A tibble: 72 x 7</span><span>
-#&gt;      Age ChestPain        BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span>    41 Atypical ang…   130         204 FALSE            172 No                
-#&gt; </span><span style='color: #555555;'> 2</span><span>    57 Asymptomatic    120         354 FALSE            163 Yes               
-#&gt; </span><span style='color: #555555;'> 3</span><span>    56 Atypical ang…   140         294 FALSE            153 No                
-#&gt; </span><span style='color: #555555;'> 4</span><span>    48 Non-anginal …   130         275 FALSE            139 No                
-#&gt; </span><span style='color: #555555;'> 5</span><span>    58 Typical angi…   150         283 TRUE             162 No                
-#&gt; </span><span style='color: #555555;'> 6</span><span>    50 Non-anginal …   120         219 FALSE            158 No                
-#&gt; </span><span style='color: #555555;'> 7</span><span>    58 Non-anginal …   120         340 FALSE            172 No                
-#&gt; </span><span style='color: #555555;'> 8</span><span>    66 Typical angi…   150         226 FALSE            114 No                
-#&gt; </span><span style='color: #555555;'> 9</span><span>    69 Typical angi…   140         239 FALSE            151 No                
-#&gt; </span><span style='color: #555555;'>10</span><span>    71 Atypical ang…   160         302 FALSE            162 No                
-#&gt; </span><span style='color: #555555;'># … with 62 more rows</span><span>
-#&gt; 
-#&gt; $Female$Yes
-#&gt; </span><span style='color: #555555;'># A tibble: 25 x 7</span><span>
-#&gt;      Age ChestPain        BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span>    62 Asymptomatic    140         268 FALSE            160 No                
-#&gt; </span><span style='color: #555555;'> 2</span><span>    65 Asymptomatic    150         225 FALSE            114 No                
-#&gt; </span><span style='color: #555555;'> 3</span><span>    61 Asymptomatic    130         330 FALSE            169 No                
-#&gt; </span><span style='color: #555555;'> 4</span><span>    51 Asymptomatic    130         305 FALSE            142 Yes               
-#&gt; </span><span style='color: #555555;'> 5</span><span>    62 Asymptomatic    160         164 FALSE            145 No                
-#&gt; </span><span style='color: #555555;'> 6</span><span>    60 Asymptomatic    150         258 FALSE            157 No                
-#&gt; </span><span style='color: #555555;'> 7</span><span>    61 Asymptomatic    145         307 FALSE            146 Yes               
-#&gt; </span><span style='color: #555555;'> 8</span><span>    43 Asymptomatic    132         341 TRUE             136 Yes               
-#&gt; </span><span style='color: #555555;'> 9</span><span>    62 Non-anginal …   130         263 FALSE             97 No                
-#&gt; </span><span style='color: #555555;'>10</span><span>    63 Asymptomatic    150         407 FALSE            154 No                
-#&gt; </span><span style='color: #555555;'># … with 15 more rows</span><span>
-#&gt; 
+#&gt; </span><span style='color: #555555;'># A tibble: 97 x 8</span><span>
+#&gt;      Age ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'> 1</span><span>    41 Atypical…   130         204 FALSE            172 No              
+#&gt; </span><span style='color: #555555;'> 2</span><span>    62 Asymptom…   140         268 FALSE            160 No              
+#&gt; </span><span style='color: #555555;'> 3</span><span>    57 Asymptom…   120         354 FALSE            163 Yes             
+#&gt; </span><span style='color: #555555;'> 4</span><span>    56 Atypical…   140         294 FALSE            153 No              
+#&gt; </span><span style='color: #555555;'> 5</span><span>    48 Non-angi…   130         275 FALSE            139 No              
+#&gt; </span><span style='color: #555555;'> 6</span><span>    58 Typical …   150         283 TRUE             162 No              
+#&gt; </span><span style='color: #555555;'> 7</span><span>    50 Non-angi…   120         219 FALSE            158 No              
+#&gt; </span><span style='color: #555555;'> 8</span><span>    58 Non-angi…   120         340 FALSE            172 No              
+#&gt; </span><span style='color: #555555;'> 9</span><span>    66 Typical …   150         226 FALSE            114 No              
+#&gt; </span><span style='color: #555555;'>10</span><span>    69 Typical …   140         239 FALSE            151 No              
+#&gt; </span><span style='color: #555555;'># … with 87 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
 #&gt; 
 #&gt; $Male
-#&gt; $Male$No
-#&gt; </span><span style='color: #555555;'># A tibble: 92 x 7</span><span>
-#&gt;      Age ChestPain        BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span>    63 Typical angi…   145         233 TRUE             150 No                
-#&gt; </span><span style='color: #555555;'> 2</span><span>    37 Non-anginal …   130         250 FALSE            187 No                
-#&gt; </span><span style='color: #555555;'> 3</span><span>    56 Atypical ang…   120         236 FALSE            178 No                
-#&gt; </span><span style='color: #555555;'> 4</span><span>    57 Asymptomatic    140         192 FALSE            148 No                
-#&gt; </span><span style='color: #555555;'> 5</span><span>    44 Atypical ang…   120         263 FALSE            173 No                
-#&gt; </span><span style='color: #555555;'> 6</span><span>    52 Non-anginal …   172         199 TRUE             162 No                
-#&gt; </span><span style='color: #555555;'> 7</span><span>    57 Non-anginal …   150         168 FALSE            174 No                
-#&gt; </span><span style='color: #555555;'> 8</span><span>    54 Asymptomatic    140         239 FALSE            160 No                
-#&gt; </span><span style='color: #555555;'> 9</span><span>    49 Atypical ang…   130         266 FALSE            171 No                
-#&gt; </span><span style='color: #555555;'>10</span><span>    64 Typical angi…   110         211 FALSE            144 Yes               
-#&gt; </span><span style='color: #555555;'># … with 82 more rows</span><span>
-#&gt; 
-#&gt; $Male$Yes
-#&gt; </span><span style='color: #555555;'># A tibble: 114 x 7</span><span>
-#&gt;      Age ChestPain        BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span>    67 Asymptomatic    160         286 FALSE            108 Yes               
-#&gt; </span><span style='color: #555555;'> 2</span><span>    67 Asymptomatic    120         229 FALSE            129 Yes               
-#&gt; </span><span style='color: #555555;'> 3</span><span>    63 Asymptomatic    130         254 FALSE            147 No                
-#&gt; </span><span style='color: #555555;'> 4</span><span>    53 Asymptomatic    140         203 TRUE             155 Yes               
-#&gt; </span><span style='color: #555555;'> 5</span><span>    56 Non-anginal …   130         256 TRUE             142 Yes               
-#&gt; </span><span style='color: #555555;'> 6</span><span>    48 Atypical ang…   110         229 FALSE            168 No                
-#&gt; </span><span style='color: #555555;'> 7</span><span>    58 Atypical ang…   120         284 FALSE            160 No                
-#&gt; </span><span style='color: #555555;'> 8</span><span>    58 Non-anginal …   132         224 FALSE            173 No                
-#&gt; </span><span style='color: #555555;'> 9</span><span>    60 Asymptomatic    130         206 FALSE            132 Yes               
-#&gt; </span><span style='color: #555555;'>10</span><span>    40 Asymptomatic    110         167 FALSE            114 Yes               
-#&gt; </span><span style='color: #555555;'># … with 104 more rows</span><span>
-#&gt; 
+#&gt; </span><span style='color: #555555;'># A tibble: 206 x 8</span><span>
+#&gt;      Age ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'> 1</span><span>    63 Typical …   145         233 TRUE             150 No              
+#&gt; </span><span style='color: #555555;'> 2</span><span>    67 Asymptom…   160         286 FALSE            108 Yes             
+#&gt; </span><span style='color: #555555;'> 3</span><span>    67 Asymptom…   120         229 FALSE            129 Yes             
+#&gt; </span><span style='color: #555555;'> 4</span><span>    37 Non-angi…   130         250 FALSE            187 No              
+#&gt; </span><span style='color: #555555;'> 5</span><span>    56 Atypical…   120         236 FALSE            178 No              
+#&gt; </span><span style='color: #555555;'> 6</span><span>    63 Asymptom…   130         254 FALSE            147 No              
+#&gt; </span><span style='color: #555555;'> 7</span><span>    53 Asymptom…   140         203 TRUE             155 Yes             
+#&gt; </span><span style='color: #555555;'> 8</span><span>    57 Asymptom…   140         192 FALSE            148 No              
+#&gt; </span><span style='color: #555555;'> 9</span><span>    56 Non-angi…   130         256 TRUE             142 Yes             
+#&gt; </span><span style='color: #555555;'>10</span><span>    44 Atypical…   120         263 FALSE            173 No              
+#&gt; </span><span style='color: #555555;'># … with 196 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
 #&gt; </div><div class='input'>
 <span class='co'>#3) Reduce the depth</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
@@ -318,143 +245,44 @@
         <span class='no'>Sex</span>,
         <span class='no'>HeartDisease</span>,
         <span class='kw'>depth</span> <span class='kw'>=</span> <span class='fl'>1</span>
-    )</div><div class='output co'>#&gt; $`Female|No`
-#&gt; </span><span style='color: #555555;'># A tibble: 72 x 7</span><span>
-#&gt;      Age ChestPain        BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span>    41 Atypical ang…   130         204 FALSE            172 No                
-#&gt; </span><span style='color: #555555;'> 2</span><span>    57 Asymptomatic    120         354 FALSE            163 Yes               
-#&gt; </span><span style='color: #555555;'> 3</span><span>    56 Atypical ang…   140         294 FALSE            153 No                
-#&gt; </span><span style='color: #555555;'> 4</span><span>    48 Non-anginal …   130         275 FALSE            139 No                
-#&gt; </span><span style='color: #555555;'> 5</span><span>    58 Typical angi…   150         283 TRUE             162 No                
-#&gt; </span><span style='color: #555555;'> 6</span><span>    50 Non-anginal …   120         219 FALSE            158 No                
-#&gt; </span><span style='color: #555555;'> 7</span><span>    58 Non-anginal …   120         340 FALSE            172 No                
-#&gt; </span><span style='color: #555555;'> 8</span><span>    66 Typical angi…   150         226 FALSE            114 No                
-#&gt; </span><span style='color: #555555;'> 9</span><span>    69 Typical angi…   140         239 FALSE            151 No                
-#&gt; </span><span style='color: #555555;'>10</span><span>    71 Atypical ang…   160         302 FALSE            162 No                
-#&gt; </span><span style='color: #555555;'># … with 62 more rows</span><span>
-#&gt; 
-#&gt; $`Male|No`
-#&gt; </span><span style='color: #555555;'># A tibble: 92 x 7</span><span>
-#&gt;      Age ChestPain        BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span>    63 Typical angi…   145         233 TRUE             150 No                
-#&gt; </span><span style='color: #555555;'> 2</span><span>    37 Non-anginal …   130         250 FALSE            187 No                
-#&gt; </span><span style='color: #555555;'> 3</span><span>    56 Atypical ang…   120         236 FALSE            178 No                
-#&gt; </span><span style='color: #555555;'> 4</span><span>    57 Asymptomatic    140         192 FALSE            148 No                
-#&gt; </span><span style='color: #555555;'> 5</span><span>    44 Atypical ang…   120         263 FALSE            173 No                
-#&gt; </span><span style='color: #555555;'> 6</span><span>    52 Non-anginal …   172         199 TRUE             162 No                
-#&gt; </span><span style='color: #555555;'> 7</span><span>    57 Non-anginal …   150         168 FALSE            174 No                
-#&gt; </span><span style='color: #555555;'> 8</span><span>    54 Asymptomatic    140         239 FALSE            160 No                
-#&gt; </span><span style='color: #555555;'> 9</span><span>    49 Atypical ang…   130         266 FALSE            171 No                
-#&gt; </span><span style='color: #555555;'>10</span><span>    64 Typical angi…   110         211 FALSE            144 Yes               
-#&gt; </span><span style='color: #555555;'># … with 82 more rows</span><span>
-#&gt; 
-#&gt; $`Female|Yes`
-#&gt; </span><span style='color: #555555;'># A tibble: 25 x 7</span><span>
-#&gt;      Age ChestPain        BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span>    62 Asymptomatic    140         268 FALSE            160 No                
-#&gt; </span><span style='color: #555555;'> 2</span><span>    65 Asymptomatic    150         225 FALSE            114 No                
-#&gt; </span><span style='color: #555555;'> 3</span><span>    61 Asymptomatic    130         330 FALSE            169 No                
-#&gt; </span><span style='color: #555555;'> 4</span><span>    51 Asymptomatic    130         305 FALSE            142 Yes               
-#&gt; </span><span style='color: #555555;'> 5</span><span>    62 Asymptomatic    160         164 FALSE            145 No                
-#&gt; </span><span style='color: #555555;'> 6</span><span>    60 Asymptomatic    150         258 FALSE            157 No                
-#&gt; </span><span style='color: #555555;'> 7</span><span>    61 Asymptomatic    145         307 FALSE            146 Yes               
-#&gt; </span><span style='color: #555555;'> 8</span><span>    43 Asymptomatic    132         341 TRUE             136 Yes               
-#&gt; </span><span style='color: #555555;'> 9</span><span>    62 Non-anginal …   130         263 FALSE             97 No                
-#&gt; </span><span style='color: #555555;'>10</span><span>    63 Asymptomatic    150         407 FALSE            154 No                
-#&gt; </span><span style='color: #555555;'># … with 15 more rows</span><span>
-#&gt; 
-#&gt; $`Male|Yes`
-#&gt; </span><span style='color: #555555;'># A tibble: 114 x 7</span><span>
-#&gt;      Age ChestPain        BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span>    67 Asymptomatic    160         286 FALSE            108 Yes               
-#&gt; </span><span style='color: #555555;'> 2</span><span>    67 Asymptomatic    120         229 FALSE            129 Yes               
-#&gt; </span><span style='color: #555555;'> 3</span><span>    63 Asymptomatic    130         254 FALSE            147 No                
-#&gt; </span><span style='color: #555555;'> 4</span><span>    53 Asymptomatic    140         203 TRUE             155 Yes               
-#&gt; </span><span style='color: #555555;'> 5</span><span>    56 Non-anginal …   130         256 TRUE             142 Yes               
-#&gt; </span><span style='color: #555555;'> 6</span><span>    48 Atypical ang…   110         229 FALSE            168 No                
-#&gt; </span><span style='color: #555555;'> 7</span><span>    58 Atypical ang…   120         284 FALSE            160 No                
-#&gt; </span><span style='color: #555555;'> 8</span><span>    58 Non-anginal …   132         224 FALSE            173 No                
-#&gt; </span><span style='color: #555555;'> 9</span><span>    60 Asymptomatic    130         206 FALSE            132 Yes               
-#&gt; </span><span style='color: #555555;'>10</span><span>    40 Asymptomatic    110         167 FALSE            114 Yes               
-#&gt; </span><span style='color: #555555;'># … with 104 more rows</span><span>
-#&gt; </div><div class='input'>
+    ) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>() <span class='co'>#Each combinations</span></div><div class='output co'>#&gt; [1] 4</div><div class='input'>
 <span class='co'>#4) Keep columns in result</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>divide</span>(
         <span class='no'>Sex</span>,
-        <span class='no'>HeartDisease</span>,
         <span class='kw'>remove</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
     )</div><div class='output co'>#&gt; $Female
-#&gt; $Female$No
-#&gt; </span><span style='color: #555555;'># A tibble: 72 x 9</span><span>
+#&gt; </span><span style='color: #555555;'># A tibble: 97 x 9</span><span>
 #&gt;      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'> 1</span><span>    41 Fema… Atypical…   130         204 FALSE            172 No              
-#&gt; </span><span style='color: #555555;'> 2</span><span>    57 Fema… Asymptom…   120         354 FALSE            163 Yes             
-#&gt; </span><span style='color: #555555;'> 3</span><span>    56 Fema… Atypical…   140         294 FALSE            153 No              
-#&gt; </span><span style='color: #555555;'> 4</span><span>    48 Fema… Non-angi…   130         275 FALSE            139 No              
-#&gt; </span><span style='color: #555555;'> 5</span><span>    58 Fema… Typical …   150         283 TRUE             162 No              
-#&gt; </span><span style='color: #555555;'> 6</span><span>    50 Fema… Non-angi…   120         219 FALSE            158 No              
-#&gt; </span><span style='color: #555555;'> 7</span><span>    58 Fema… Non-angi…   120         340 FALSE            172 No              
-#&gt; </span><span style='color: #555555;'> 8</span><span>    66 Fema… Typical …   150         226 FALSE            114 No              
-#&gt; </span><span style='color: #555555;'> 9</span><span>    69 Fema… Typical …   140         239 FALSE            151 No              
-#&gt; </span><span style='color: #555555;'>10</span><span>    71 Fema… Atypical…   160         302 FALSE            162 No              
-#&gt; </span><span style='color: #555555;'># … with 62 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
-#&gt; 
-#&gt; $Female$Yes
-#&gt; </span><span style='color: #555555;'># A tibble: 25 x 9</span><span>
-#&gt;      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'> 1</span><span>    62 Fema… Asymptom…   140         268 FALSE            160 No              
-#&gt; </span><span style='color: #555555;'> 2</span><span>    65 Fema… Asymptom…   150         225 FALSE            114 No              
-#&gt; </span><span style='color: #555555;'> 3</span><span>    61 Fema… Asymptom…   130         330 FALSE            169 No              
-#&gt; </span><span style='color: #555555;'> 4</span><span>    51 Fema… Asymptom…   130         305 FALSE            142 Yes             
-#&gt; </span><span style='color: #555555;'> 5</span><span>    62 Fema… Asymptom…   160         164 FALSE            145 No              
-#&gt; </span><span style='color: #555555;'> 6</span><span>    60 Fema… Asymptom…   150         258 FALSE            157 No              
-#&gt; </span><span style='color: #555555;'> 7</span><span>    61 Fema… Asymptom…   145         307 FALSE            146 Yes             
-#&gt; </span><span style='color: #555555;'> 8</span><span>    43 Fema… Asymptom…   132         341 TRUE             136 Yes             
-#&gt; </span><span style='color: #555555;'> 9</span><span>    62 Fema… Non-angi…   130         263 FALSE             97 No              
-#&gt; </span><span style='color: #555555;'>10</span><span>    63 Fema… Asymptom…   150         407 FALSE            154 No              
-#&gt; </span><span style='color: #555555;'># … with 15 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
-#&gt; 
+#&gt; </span><span style='color: #555555;'> 2</span><span>    62 Fema… Asymptom…   140         268 FALSE            160 No              
+#&gt; </span><span style='color: #555555;'> 3</span><span>    57 Fema… Asymptom…   120         354 FALSE            163 Yes             
+#&gt; </span><span style='color: #555555;'> 4</span><span>    56 Fema… Atypical…   140         294 FALSE            153 No              
+#&gt; </span><span style='color: #555555;'> 5</span><span>    48 Fema… Non-angi…   130         275 FALSE            139 No              
+#&gt; </span><span style='color: #555555;'> 6</span><span>    58 Fema… Typical …   150         283 TRUE             162 No              
+#&gt; </span><span style='color: #555555;'> 7</span><span>    50 Fema… Non-angi…   120         219 FALSE            158 No              
+#&gt; </span><span style='color: #555555;'> 8</span><span>    58 Fema… Non-angi…   120         340 FALSE            172 No              
+#&gt; </span><span style='color: #555555;'> 9</span><span>    66 Fema… Typical …   150         226 FALSE            114 No              
+#&gt; </span><span style='color: #555555;'>10</span><span>    69 Fema… Typical …   140         239 FALSE            151 No              
+#&gt; </span><span style='color: #555555;'># … with 87 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
 #&gt; 
 #&gt; $Male
-#&gt; $Male$No
-#&gt; </span><span style='color: #555555;'># A tibble: 92 x 9</span><span>
+#&gt; </span><span style='color: #555555;'># A tibble: 206 x 9</span><span>
 #&gt;      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'> 1</span><span>    63 Male  Typical …   145         233 TRUE             150 No              
-#&gt; </span><span style='color: #555555;'> 2</span><span>    37 Male  Non-angi…   130         250 FALSE            187 No              
-#&gt; </span><span style='color: #555555;'> 3</span><span>    56 Male  Atypical…   120         236 FALSE            178 No              
-#&gt; </span><span style='color: #555555;'> 4</span><span>    57 Male  Asymptom…   140         192 FALSE            148 No              
-#&gt; </span><span style='color: #555555;'> 5</span><span>    44 Male  Atypical…   120         263 FALSE            173 No              
-#&gt; </span><span style='color: #555555;'> 6</span><span>    52 Male  Non-angi…   172         199 TRUE             162 No              
-#&gt; </span><span style='color: #555555;'> 7</span><span>    57 Male  Non-angi…   150         168 FALSE            174 No              
-#&gt; </span><span style='color: #555555;'> 8</span><span>    54 Male  Asymptom…   140         239 FALSE            160 No              
-#&gt; </span><span style='color: #555555;'> 9</span><span>    49 Male  Atypical…   130         266 FALSE            171 No              
-#&gt; </span><span style='color: #555555;'>10</span><span>    64 Male  Typical …   110         211 FALSE            144 Yes             
-#&gt; </span><span style='color: #555555;'># … with 82 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
-#&gt; 
-#&gt; $Male$Yes
-#&gt; </span><span style='color: #555555;'># A tibble: 114 x 9</span><span>
-#&gt;      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'> 1</span><span>    67 Male  Asymptom…   160         286 FALSE            108 Yes             
-#&gt; </span><span style='color: #555555;'> 2</span><span>    67 Male  Asymptom…   120         229 FALSE            129 Yes             
-#&gt; </span><span style='color: #555555;'> 3</span><span>    63 Male  Asymptom…   130         254 FALSE            147 No              
-#&gt; </span><span style='color: #555555;'> 4</span><span>    53 Male  Asymptom…   140         203 TRUE             155 Yes             
-#&gt; </span><span style='color: #555555;'> 5</span><span>    56 Male  Non-angi…   130         256 TRUE             142 Yes             
-#&gt; </span><span style='color: #555555;'> 6</span><span>    48 Male  Atypical…   110         229 FALSE            168 No              
-#&gt; </span><span style='color: #555555;'> 7</span><span>    58 Male  Atypical…   120         284 FALSE            160 No              
-#&gt; </span><span style='color: #555555;'> 8</span><span>    58 Male  Non-angi…   132         224 FALSE            173 No              
-#&gt; </span><span style='color: #555555;'> 9</span><span>    60 Male  Asymptom…   130         206 FALSE            132 Yes             
-#&gt; </span><span style='color: #555555;'>10</span><span>    40 Male  Asymptom…   110         167 FALSE            114 Yes             
-#&gt; </span><span style='color: #555555;'># … with 104 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
-#&gt; 
+#&gt; </span><span style='color: #555555;'> 2</span><span>    67 Male  Asymptom…   160         286 FALSE            108 Yes             
+#&gt; </span><span style='color: #555555;'> 3</span><span>    67 Male  Asymptom…   120         229 FALSE            129 Yes             
+#&gt; </span><span style='color: #555555;'> 4</span><span>    37 Male  Non-angi…   130         250 FALSE            187 No              
+#&gt; </span><span style='color: #555555;'> 5</span><span>    56 Male  Atypical…   120         236 FALSE            178 No              
+#&gt; </span><span style='color: #555555;'> 6</span><span>    63 Male  Asymptom…   130         254 FALSE            147 No              
+#&gt; </span><span style='color: #555555;'> 7</span><span>    53 Male  Asymptom…   140         203 TRUE             155 Yes             
+#&gt; </span><span style='color: #555555;'> 8</span><span>    57 Male  Asymptom…   140         192 FALSE            148 No              
+#&gt; </span><span style='color: #555555;'> 9</span><span>    56 Male  Non-angi…   130         256 TRUE             142 Yes             
+#&gt; </span><span style='color: #555555;'>10</span><span>    44 Male  Atypical…   120         263 FALSE            173 No              
+#&gt; </span><span style='color: #555555;'># … with 196 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
 #&gt; </div><div class='input'>
 <span class='co'>#5) Move from leaves</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
@@ -463,235 +291,115 @@
         <span class='no'>HeartDisease</span>,
         <span class='no'>ChestPain</span>,
         <span class='kw'>depth</span> <span class='kw'>=</span> -<span class='fl'>1</span>
-    )</div><div class='output co'>#&gt; $Female
-#&gt; $Female$`No|Typical angina`
-#&gt; </span><span style='color: #555555;'># A tibble: 4 x 6</span><span>
-#&gt;     Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'>1</span><span>    58   150         283 TRUE             162 No                   
-#&gt; </span><span style='color: #555555;'>2</span><span>    66   150         226 FALSE            114 No                   
-#&gt; </span><span style='color: #555555;'>3</span><span>    69   140         239 FALSE            151 No                   
-#&gt; </span><span style='color: #555555;'>4</span><span>    60   150         240 FALSE            171 No                   
-#&gt; 
-#&gt; $Female$`No|Atypical angina`
-#&gt; </span><span style='color: #555555;'># A tibble: 16 x 6</span><span>
-#&gt;      Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'> 1</span><span>    41   130         204 FALSE            172 No                   
-#&gt; </span><span style='color: #555555;'> 2</span><span>    56   140         294 FALSE            153 No                   
-#&gt; </span><span style='color: #555555;'> 3</span><span>    71   160         302 FALSE            162 No                   
-#&gt; </span><span style='color: #555555;'> 4</span><span>    41   105         198 FALSE            168 No                   
-#&gt; </span><span style='color: #555555;'> 5</span><span>    45   130         234 FALSE            175 No                   
-#&gt; </span><span style='color: #555555;'> 6</span><span>    55   135         250 FALSE            161 No                   
-#&gt; </span><span style='color: #555555;'> 7</span><span>    54   132         288 TRUE             159 Yes                  
-#&gt; </span><span style='color: #555555;'> 8</span><span>    45   112         160 FALSE            138 No                   
-#&gt; </span><span style='color: #555555;'> 9</span><span>    63   140         195 FALSE            179 No                   
-#&gt; </span><span style='color: #555555;'>10</span><span>    50   120         244 FALSE            162 No                   
-#&gt; </span><span style='color: #555555;'>11</span><span>    46   105         204 FALSE            172 No                   
-#&gt; </span><span style='color: #555555;'>12</span><span>    34   118         210 FALSE            192 No                   
-#&gt; </span><span style='color: #555555;'>13</span><span>    74   120         269 FALSE            121 Yes                  
-#&gt; </span><span style='color: #555555;'>14</span><span>    49   134         271 FALSE            162 No                   
-#&gt; </span><span style='color: #555555;'>15</span><span>    41   126         306 FALSE            163 No                   
-#&gt; </span><span style='color: #555555;'>16</span><span>    55   132         342 FALSE            166 No                   
-#&gt; 
-#&gt; $Female$`Yes|Atypical angina`
-#&gt; </span><span style='color: #555555;'># A tibble: 2 x 6</span><span>
-#&gt;     Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'>1</span><span>    58   136         319 TRUE             152 No                   
-#&gt; </span><span style='color: #555555;'>2</span><span>    57   130         236 FALSE            174 No                   
-#&gt; 
-#&gt; $Female$`No|Non-anginal pain`
-#&gt; </span><span style='color: #555555;'># A tibble: 34 x 6</span><span>
-#&gt;      Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'> 1</span><span>    48   130         275 FALSE            139 No                   
-#&gt; </span><span style='color: #555555;'> 2</span><span>    50   120         219 FALSE            158 No                   
-#&gt; </span><span style='color: #555555;'> 3</span><span>    58   120         340 FALSE            172 No                   
-#&gt; </span><span style='color: #555555;'> 4</span><span>    65   140         417 TRUE             157 No                   
-#&gt; </span><span style='color: #555555;'> 5</span><span>    46   142         177 FALSE            160 Yes                  
-#&gt; </span><span style='color: #555555;'> 6</span><span>    54   135         304 TRUE             170 No                   
-#&gt; </span><span style='color: #555555;'> 7</span><span>    65   155         269 FALSE            148 No                   
-#&gt; </span><span style='color: #555555;'> 8</span><span>    65   160         360 FALSE            151 No                   
-#&gt; </span><span style='color: #555555;'> 9</span><span>    51   140         308 FALSE            142 No                   
-#&gt; </span><span style='color: #555555;'>10</span><span>    53   128         216 FALSE            115 No                   
-#&gt; </span><span style='color: #555555;'># … with 24 more rows</span><span>
-#&gt; 
-#&gt; $Female$`Yes|Non-anginal pain`
-#&gt; </span><span style='color: #555555;'># A tibble: 1 x 6</span><span>
-#&gt;     Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'>1</span><span>    62   130         263 FALSE             97 No                   
-#&gt; 
-#&gt; $Female$`No|Asymptomatic`
-#&gt; </span><span style='color: #555555;'># A tibble: 18 x 6</span><span>
-#&gt;      Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'> 1</span><span>    57   120         354 FALSE            163 Yes                  
-#&gt; </span><span style='color: #555555;'> 2</span><span>    53   130         264 FALSE            143 No                   
-#&gt; </span><span style='color: #555555;'> 3</span><span>    53   138         234 FALSE            160 No                   
-#&gt; </span><span style='color: #555555;'> 4</span><span>    57   128         303 FALSE            159 No                   
-#&gt; </span><span style='color: #555555;'> 5</span><span>    35   138         183 FALSE            182 No                   
-#&gt; </span><span style='color: #555555;'> 6</span><span>    62   124         209 FALSE            163 No                   
-#&gt; </span><span style='color: #555555;'> 7</span><span>    42   102         265 FALSE            122 No                   
-#&gt; </span><span style='color: #555555;'> 8</span><span>    58   100         248 FALSE            122 No                   
-#&gt; </span><span style='color: #555555;'> 9</span><span>    62   140         394 FALSE            157 No                   
-#&gt; </span><span style='color: #555555;'>10</span><span>    45   138         236 FALSE            152 Yes                  
-#&gt; </span><span style='color: #555555;'>11</span><span>    50   110         254 FALSE            159 No                   
-#&gt; </span><span style='color: #555555;'>12</span><span>    64   180         325 FALSE            154 Yes                  
-#&gt; </span><span style='color: #555555;'>13</span><span>    46   138         243 FALSE            152 Yes                  
-#&gt; </span><span style='color: #555555;'>14</span><span>    64   130         303 FALSE            122 No                   
-#&gt; </span><span style='color: #555555;'>15</span><span>    49   130         269 FALSE            163 No                   
-#&gt; </span><span style='color: #555555;'>16</span><span>    67   106         223 FALSE            142 No                   
-#&gt; </span><span style='color: #555555;'>17</span><span>    71   112         149 FALSE            125 No                   
-#&gt; </span><span style='color: #555555;'>18</span><span>    58   130         197 FALSE            131 No                   
-#&gt; 
-#&gt; $Female$`Yes|Asymptomatic`
-#&gt; </span><span style='color: #555555;'># A tibble: 22 x 6</span><span>
-#&gt;      Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'> 1</span><span>    62   140         268 FALSE            160 No                   
-#&gt; </span><span style='color: #555555;'> 2</span><span>    65   150         225 FALSE            114 No                   
-#&gt; </span><span style='color: #555555;'> 3</span><span>    61   130         330 FALSE            169 No                   
-#&gt; </span><span style='color: #555555;'> 4</span><span>    51   130         305 FALSE            142 Yes                  
-#&gt; </span><span style='color: #555555;'> 5</span><span>    62   160         164 FALSE            145 No                   
-#&gt; </span><span style='color: #555555;'> 6</span><span>    60   150         258 FALSE            157 No                   
-#&gt; </span><span style='color: #555555;'> 7</span><span>    61   145         307 FALSE            146 Yes                  
-#&gt; </span><span style='color: #555555;'> 8</span><span>    43   132         341 TRUE             136 Yes                  
-#&gt; </span><span style='color: #555555;'> 9</span><span>    63   150         407 FALSE            154 No                   
-#&gt; </span><span style='color: #555555;'>10</span><span>    56   200         288 TRUE             133 Yes                  
-#&gt; </span><span style='color: #555555;'># … with 12 more rows</span><span>
-#&gt; 
-#&gt; 
-#&gt; $Male
-#&gt; $Male$`No|Typical angina`
-#&gt; </span><span style='color: #555555;'># A tibble: 12 x 6</span><span>
-#&gt;      Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'> 1</span><span>    63   145         233 TRUE             150 No                   
-#&gt; </span><span style='color: #555555;'> 2</span><span>    64   110         211 FALSE            144 Yes                  
-#&gt; </span><span style='color: #555555;'> 3</span><span>    40   140         199 FALSE            178 Yes                  
-#&gt; </span><span style='color: #555555;'> 4</span><span>    51   125         213 FALSE            125 Yes                  
-#&gt; </span><span style='color: #555555;'> 5</span><span>    34   118         182 FALSE            174 No                   
-#&gt; </span><span style='color: #555555;'> 6</span><span>    52   118         186 FALSE            190 No                   
-#&gt; </span><span style='color: #555555;'> 7</span><span>    52   152         298 TRUE             178 No                   
-#&gt; </span><span style='color: #555555;'> 8</span><span>    42   148         244 FALSE            178 No                   
-#&gt; </span><span style='color: #555555;'> 9</span><span>    59   178         270 FALSE            145 No                   
-#&gt; </span><span style='color: #555555;'>10</span><span>    69   160         234 TRUE             131 No                   
-#&gt; </span><span style='color: #555555;'>11</span><span>    56   120         193 FALSE            162 No                   
-#&gt; </span><span style='color: #555555;'>12</span><span>    64   170         227 FALSE            155 No                   
-#&gt; 
-#&gt; $Male$`Yes|Typical angina`
-#&gt; </span><span style='color: #555555;'># A tibble: 7 x 6</span><span>
-#&gt;     Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'>1</span><span>    65   138         282 TRUE             174 No                   
-#&gt; </span><span style='color: #555555;'>2</span><span>    59   170         288 FALSE            159 No                   
-#&gt; </span><span style='color: #555555;'>3</span><span>    59   160         273 FALSE            125 No                   
-#&gt; </span><span style='color: #555555;'>4</span><span>    38   120         231 FALSE            182 Yes                  
-#&gt; </span><span style='color: #555555;'>5</span><span>    61   134         234 FALSE            145 No                   
-#&gt; </span><span style='color: #555555;'>6</span><span>    59   134         204 FALSE            162 No                   
-#&gt; </span><span style='color: #555555;'>7</span><span>    45   110         264 FALSE            132 No                   
-#&gt; 
-#&gt; $Male$`No|Atypical angina`
-#&gt; </span><span style='color: #555555;'># A tibble: 25 x 6</span><span>
-#&gt;      Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'> 1</span><span>    56   120         236 FALSE            178 No                   
-#&gt; </span><span style='color: #555555;'> 2</span><span>    44   120         263 FALSE            173 No                   
-#&gt; </span><span style='color: #555555;'> 3</span><span>    49   130         266 FALSE            171 No                   
-#&gt; </span><span style='color: #555555;'> 4</span><span>    44   130         219 FALSE            188 No                   
-#&gt; </span><span style='color: #555555;'> 5</span><span>    48   130         245 FALSE            180 No                   
-#&gt; </span><span style='color: #555555;'> 6</span><span>    52   120         325 FALSE            172 No                   
-#&gt; </span><span style='color: #555555;'> 7</span><span>    52   134         201 FALSE            158 No                   
-#&gt; </span><span style='color: #555555;'> 8</span><span>    54   108         309 FALSE            156 No                   
-#&gt; </span><span style='color: #555555;'> 9</span><span>    41   135         203 FALSE            132 No                   
-#&gt; </span><span style='color: #555555;'>10</span><span>    44   120         220 FALSE            170 No                   
-#&gt; </span><span style='color: #555555;'># … with 15 more rows</span><span>
-#&gt; 
-#&gt; $Male$`Yes|Atypical angina`
-#&gt; </span><span style='color: #555555;'># A tibble: 7 x 6</span><span>
-#&gt;     Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'>1</span><span>    48   110         229 FALSE            168 No                   
-#&gt; </span><span style='color: #555555;'>2</span><span>    58   120         284 FALSE            160 No                   
-#&gt; </span><span style='color: #555555;'>3</span><span>    62   120         281 FALSE            103 No                   
-#&gt; </span><span style='color: #555555;'>4</span><span>    66   160         246 FALSE            120 Yes                  
-#&gt; </span><span style='color: #555555;'>5</span><span>    54   192         283 FALSE            195 No                   
-#&gt; </span><span style='color: #555555;'>6</span><span>    57   124         261 FALSE            141 No                   
-#&gt; </span><span style='color: #555555;'>7</span><span>    57   154         232 FALSE            164 No                   
-#&gt; 
-#&gt; $Male$`No|Non-anginal pain`
-#&gt; </span><span style='color: #555555;'># A tibble: 34 x 6</span><span>
-#&gt;      Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'> 1</span><span>    37   130         250 FALSE            187 No                   
-#&gt; </span><span style='color: #555555;'> 2</span><span>    52   172         199 TRUE             162 No                   
-#&gt; </span><span style='color: #555555;'> 3</span><span>    57   150         168 FALSE            174 No                   
-#&gt; </span><span style='color: #555555;'> 4</span><span>    44   130         233 FALSE            179 Yes                  
-#&gt; </span><span style='color: #555555;'> 5</span><span>    61   150         243 TRUE             137 Yes                  
-#&gt; </span><span style='color: #555555;'> 6</span><span>    59   150         212 TRUE             157 No                   
-#&gt; </span><span style='color: #555555;'> 7</span><span>    51   110         175 FALSE            123 No                   
-#&gt; </span><span style='color: #555555;'> 8</span><span>    53   130         197 TRUE             152 No                   
-#&gt; </span><span style='color: #555555;'> 9</span><span>    54   125         273 FALSE            152 No                   
-#&gt; </span><span style='color: #555555;'>10</span><span>    54   150         232 FALSE            165 No                   
-#&gt; </span><span style='color: #555555;'># … with 24 more rows</span><span>
-#&gt; 
-#&gt; $Male$`Yes|Non-anginal pain`
-#&gt; </span><span style='color: #555555;'># A tibble: 17 x 6</span><span>
-#&gt;      Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'> 1</span><span>    56   130         256 TRUE             142 Yes                  
-#&gt; </span><span style='color: #555555;'> 2</span><span>    58   132         224 FALSE            173 No                   
-#&gt; </span><span style='color: #555555;'> 3</span><span>    64   140         335 FALSE            158 No                   
-#&gt; </span><span style='color: #555555;'> 4</span><span>    58   112         230 FALSE            165 No                   
-#&gt; </span><span style='color: #555555;'> 5</span><span>    50   140         233 FALSE            163 No                   
-#&gt; </span><span style='color: #555555;'> 6</span><span>    60   140         185 FALSE            155 No                   
-#&gt; </span><span style='color: #555555;'> 7</span><span>    46   150         231 FALSE            147 No                   
-#&gt; </span><span style='color: #555555;'> 8</span><span>    68   180         274 TRUE             150 Yes                  
-#&gt; </span><span style='color: #555555;'> 9</span><span>    49   120         188 FALSE            139 No                   
-#&gt; </span><span style='color: #555555;'>10</span><span>    57   128         229 FALSE            150 No                   
-#&gt; </span><span style='color: #555555;'>11</span><span>    64   125         309 FALSE            131 Yes                  
-#&gt; </span><span style='color: #555555;'>12</span><span>    47   108         243 FALSE            152 No                   
-#&gt; </span><span style='color: #555555;'>13</span><span>    70   160         269 FALSE            112 Yes                  
-#&gt; </span><span style='color: #555555;'>14</span><span>    69   140         254 FALSE            146 No                   
-#&gt; </span><span style='color: #555555;'>15</span><span>    49   118         149 FALSE            126 No                   
-#&gt; </span><span style='color: #555555;'>16</span><span>    59   126         218 TRUE             134 No                   
-#&gt; </span><span style='color: #555555;'>17</span><span>    67   152         212 FALSE            150 No                   
-#&gt; 
-#&gt; $Male$`No|Asymptomatic`
-#&gt; </span><span style='color: #555555;'># A tibble: 21 x 6</span><span>
-#&gt;      Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'> 1</span><span>    57   140         192 FALSE            148 No                   
-#&gt; </span><span style='color: #555555;'> 2</span><span>    54   140         239 FALSE            160 No                   
-#&gt; </span><span style='color: #555555;'> 3</span><span>    43   150         247 FALSE            171 No                   
-#&gt; </span><span style='color: #555555;'> 4</span><span>    59   135         234 FALSE            161 No                   
-#&gt; </span><span style='color: #555555;'> 5</span><span>    42   140         226 FALSE            178 No                   
-#&gt; </span><span style='color: #555555;'> 6</span><span>    65   120         177 FALSE            140 No                   
-#&gt; </span><span style='color: #555555;'> 7</span><span>    45   104         208 FALSE            148 Yes                  
-#&gt; </span><span style='color: #555555;'> 8</span><span>    66   120         302 FALSE            151 No                   
-#&gt; </span><span style='color: #555555;'> 9</span><span>    48   122         222 FALSE            186 No                   
-#&gt; </span><span style='color: #555555;'>10</span><span>    45   115         260 FALSE            185 No                   
-#&gt; </span><span style='color: #555555;'># … with 11 more rows</span><span>
-#&gt; 
-#&gt; $Male$`Yes|Asymptomatic`
-#&gt; </span><span style='color: #555555;'># A tibble: 83 x 6</span><span>
-#&gt;      Age    BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngina
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                
-#&gt; </span><span style='color: #555555;'> 1</span><span>    67   160         286 FALSE            108 Yes                  
-#&gt; </span><span style='color: #555555;'> 2</span><span>    67   120         229 FALSE            129 Yes                  
-#&gt; </span><span style='color: #555555;'> 3</span><span>    63   130         254 FALSE            147 No                   
-#&gt; </span><span style='color: #555555;'> 4</span><span>    53   140         203 TRUE             155 Yes                  
-#&gt; </span><span style='color: #555555;'> 5</span><span>    60   130         206 FALSE            132 Yes                  
-#&gt; </span><span style='color: #555555;'> 6</span><span>    40   110         167 FALSE            114 Yes                  
-#&gt; </span><span style='color: #555555;'> 7</span><span>    60   117         230 TRUE             160 Yes                  
-#&gt; </span><span style='color: #555555;'> 8</span><span>    43   120         177 FALSE            120 Yes                  
-#&gt; </span><span style='color: #555555;'> 9</span><span>    57   150         276 FALSE            112 Yes                  
-#&gt; </span><span style='color: #555555;'>10</span><span>    55   132         353 FALSE            132 Yes                  
-#&gt; </span><span style='color: #555555;'># … with 73 more rows</span><span>
-#&gt; 
-#&gt; </div></span></pre>
+    ) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 2
+#&gt;  $ Female:List of 7
+#&gt;   ..$ No|Typical angina   :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	4 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:4] 58 66 69 60
+#&gt;   .. ..$ BP                   : num [1:4] 150 150 140 150
+#&gt;   .. ..$ Cholesterol          : num [1:4] 283 226 239 240
+#&gt;   .. ..$ BloodSugar           : logi [1:4] TRUE FALSE FALSE FALSE
+#&gt;   .. ..$ MaximumHR            : num [1:4] 162 114 151 171
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 1 1 1 1
+#&gt;   ..$ No|Atypical angina  :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	16 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:16] 41 56 71 41 45 55 54 45 63 50 ...
+#&gt;   .. ..$ BP                   : num [1:16] 130 140 160 105 130 135 132 112 140 120 ...
+#&gt;   .. ..$ Cholesterol          : num [1:16] 204 294 302 198 234 250 288 160 195 244 ...
+#&gt;   .. ..$ BloodSugar           : logi [1:16] FALSE FALSE FALSE FALSE FALSE FALSE ...
+#&gt;   .. ..$ MaximumHR            : num [1:16] 172 153 162 168 175 161 159 138 179 162 ...
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 2 1 1 1 ...
+#&gt;   ..$ Yes|Atypical angina :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	2 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:2] 58 57
+#&gt;   .. ..$ BP                   : num [1:2] 136 130
+#&gt;   .. ..$ Cholesterol          : num [1:2] 319 236
+#&gt;   .. ..$ BloodSugar           : logi [1:2] TRUE FALSE
+#&gt;   .. ..$ MaximumHR            : num [1:2] 152 174
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 1 1
+#&gt;   ..$ No|Non-anginal pain :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	34 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:34] 48 50 58 65 46 54 65 65 51 53 ...
+#&gt;   .. ..$ BP                   : num [1:34] 130 120 120 140 142 135 155 160 140 128 ...
+#&gt;   .. ..$ Cholesterol          : num [1:34] 275 219 340 417 177 304 269 360 308 216 ...
+#&gt;   .. ..$ BloodSugar           : logi [1:34] FALSE FALSE FALSE TRUE FALSE TRUE ...
+#&gt;   .. ..$ MaximumHR            : num [1:34] 139 158 172 157 160 170 148 151 142 115 ...
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 1 1 1 1 2 1 1 1 1 1 ...
+#&gt;   ..$ Yes|Non-anginal pain:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	1 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num 62
+#&gt;   .. ..$ BP                   : num 130
+#&gt;   .. ..$ Cholesterol          : num 263
+#&gt;   .. ..$ BloodSugar           : logi FALSE
+#&gt;   .. ..$ MaximumHR            : num 97
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 1
+#&gt;   ..$ No|Asymptomatic     :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	18 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:18] 57 53 53 57 35 62 42 58 62 45 ...
+#&gt;   .. ..$ BP                   : num [1:18] 120 130 138 128 138 124 102 100 140 138 ...
+#&gt;   .. ..$ Cholesterol          : num [1:18] 354 264 234 303 183 209 265 248 394 236 ...
+#&gt;   .. ..$ BloodSugar           : logi [1:18] FALSE FALSE FALSE FALSE FALSE FALSE ...
+#&gt;   .. ..$ MaximumHR            : num [1:18] 163 143 160 159 182 163 122 122 157 152 ...
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 2 1 1 1 1 1 1 1 1 2 ...
+#&gt;   ..$ Yes|Asymptomatic    :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	22 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:22] 62 65 61 51 62 60 61 43 63 56 ...
+#&gt;   .. ..$ BP                   : num [1:22] 140 150 130 130 160 150 145 132 150 200 ...
+#&gt;   .. ..$ Cholesterol          : num [1:22] 268 225 330 305 164 258 307 341 407 288 ...
+#&gt;   .. ..$ BloodSugar           : logi [1:22] FALSE FALSE FALSE FALSE FALSE FALSE ...
+#&gt;   .. ..$ MaximumHR            : num [1:22] 160 114 169 142 145 157 146 136 154 133 ...
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 1 1 1 2 1 1 2 2 1 2 ...
+#&gt;  $ Male  :List of 8
+#&gt;   ..$ No|Typical angina   :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	12 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:12] 63 64 40 51 34 52 52 42 59 69 ...
+#&gt;   .. ..$ BP                   : num [1:12] 145 110 140 125 118 118 152 148 178 160 ...
+#&gt;   .. ..$ Cholesterol          : num [1:12] 233 211 199 213 182 186 298 244 270 234 ...
+#&gt;   .. ..$ BloodSugar           : logi [1:12] TRUE FALSE FALSE FALSE FALSE FALSE ...
+#&gt;   .. ..$ MaximumHR            : num [1:12] 150 144 178 125 174 190 178 178 145 131 ...
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 1 2 2 2 1 1 1 1 1 1 ...
+#&gt;   ..$ Yes|Typical angina  :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:7] 65 59 59 38 61 59 45
+#&gt;   .. ..$ BP                   : num [1:7] 138 170 160 120 134 134 110
+#&gt;   .. ..$ Cholesterol          : num [1:7] 282 288 273 231 234 204 264
+#&gt;   .. ..$ BloodSugar           : logi [1:7] TRUE FALSE FALSE FALSE FALSE FALSE ...
+#&gt;   .. ..$ MaximumHR            : num [1:7] 174 159 125 182 145 162 132
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 1 1 1 2 1 1 1
+#&gt;   ..$ No|Atypical angina  :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	25 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:25] 56 44 49 44 48 52 52 54 41 44 ...
+#&gt;   .. ..$ BP                   : num [1:25] 120 120 130 130 130 120 134 108 135 120 ...
+#&gt;   .. ..$ Cholesterol          : num [1:25] 236 263 266 219 245 325 201 309 203 220 ...
+#&gt;   .. ..$ BloodSugar           : logi [1:25] FALSE FALSE FALSE FALSE FALSE FALSE ...
+#&gt;   .. ..$ MaximumHR            : num [1:25] 178 173 171 188 180 172 158 156 132 170 ...
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;   ..$ Yes|Atypical angina :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:7] 48 58 62 66 54 57 57
+#&gt;   .. ..$ BP                   : num [1:7] 110 120 120 160 192 124 154
+#&gt;   .. ..$ Cholesterol          : num [1:7] 229 284 281 246 283 261 232
+#&gt;   .. ..$ BloodSugar           : logi [1:7] FALSE FALSE FALSE FALSE FALSE FALSE ...
+#&gt;   .. ..$ MaximumHR            : num [1:7] 168 160 103 120 195 141 164
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 1 1 1 2 1 1 1
+#&gt;   ..$ No|Non-anginal pain :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	34 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:34] 37 52 57 44 61 59 51 53 54 54 ...
+#&gt;   .. ..$ BP                   : num [1:34] 130 172 150 130 150 150 110 130 125 150 ...
+#&gt;   .. ..$ Cholesterol          : num [1:34] 250 199 168 233 243 212 175 197 273 232 ...
+#&gt;   .. ..$ BloodSugar           : logi [1:34] FALSE TRUE FALSE FALSE TRUE TRUE ...
+#&gt;   .. ..$ MaximumHR            : num [1:34] 187 162 174 179 137 157 123 152 152 165 ...
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 1 1 1 2 2 1 1 1 1 1 ...
+#&gt;   ..$ Yes|Non-anginal pain:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	17 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:17] 56 58 64 58 50 60 46 68 49 57 ...
+#&gt;   .. ..$ BP                   : num [1:17] 130 132 140 112 140 140 150 180 120 128 ...
+#&gt;   .. ..$ Cholesterol          : num [1:17] 256 224 335 230 233 185 231 274 188 229 ...
+#&gt;   .. ..$ BloodSugar           : logi [1:17] TRUE FALSE FALSE FALSE FALSE FALSE ...
+#&gt;   .. ..$ MaximumHR            : num [1:17] 142 173 158 165 163 155 147 150 139 150 ...
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 2 1 1 1 1 1 1 2 1 1 ...
+#&gt;   ..$ No|Asymptomatic     :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	21 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:21] 57 54 43 59 42 65 45 66 48 45 ...
+#&gt;   .. ..$ BP                   : num [1:21] 140 140 150 135 140 120 104 120 122 115 ...
+#&gt;   .. ..$ Cholesterol          : num [1:21] 192 239 247 234 226 177 208 302 222 260 ...
+#&gt;   .. ..$ BloodSugar           : logi [1:21] FALSE FALSE FALSE FALSE FALSE FALSE ...
+#&gt;   .. ..$ MaximumHR            : num [1:21] 148 160 171 161 178 140 148 151 186 185 ...
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 2 1 1 1 ...
+#&gt;   ..$ Yes|Asymptomatic    :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	83 obs. of  6 variables:
+#&gt;   .. ..$ Age                  : num [1:83] 67 67 63 53 60 40 60 43 57 55 ...
+#&gt;   .. ..$ BP                   : num [1:83] 160 120 130 140 130 110 117 120 150 132 ...
+#&gt;   .. ..$ Cholesterol          : num [1:83] 286 229 254 203 206 167 230 177 276 353 ...
+#&gt;   .. ..$ BloodSugar           : logi [1:83] FALSE FALSE FALSE TRUE FALSE FALSE ...
+#&gt;   .. ..$ MaximumHR            : num [1:83] 108 129 147 155 132 114 160 120 112 132 ...
+#&gt;   .. ..$ ExerciseInducedAngina: Factor w/ 2 levels "No","Yes": 2 2 1 2 2 2 2 2 2 2 ...</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

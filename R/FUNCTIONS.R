@@ -108,7 +108,7 @@ divide <-
                   ~
                     .x %>%
                     split(
-                      select(., tidyselect::one_of(.split_vars)),
+                      dplyr::select(., tidyselect::one_of(.split_vars)),
                       drop = drop,
                       sep = sep
                     )
@@ -128,7 +128,7 @@ divide <-
           .depth = depth,
           ~
             .x %>%
-            select(
+            dplyr::select(
               -tidyselect::one_of(
                 selected_vars %>% 
                   purrr::flatten_chr()
@@ -182,56 +182,45 @@ depths <-
     #Continue traversal for list elements only
     if(any(are_lists)) {
       
-      ifelse(
+      result <-
         
-        #Check elements that are lists (including data.frames)
-        are_lists,
-        
-        #Concatenate with recursive function call for those elements
-        result %>%
-          str_c(
-            list[are_lists] %>% 
-              purrr::map_chr(
-                .f = depths, 
-                predicate = predicate,
-                bare = bare
-              )
-          ),
-        
-        #Otherwise just return index
-        result
-        
+        ifelse(
+          
+          #Check elements that are lists (including data.frames)
+          are_lists,
+          
+          #Concatenate with recursive function call for those elements
+          result %>%
+            stringr::str_c(
+              list[are_lists] %>% 
+                purrr::map_chr(
+                  .f = depths, 
+                  predicate = predicate,
+                  bare = bare,
+                  ...
+                )
+            ),
+          
+          #Otherwise just return index
+          result
+          
+        ) 
+      
+    } 
+    
+    #Return current result
+    result %>%
+      
+      #Collapse indices
+      stringr::str_c(
+        collapse = ","
       ) %>%
-        
-        #Collapse into single string
-        str_c(
-          collapse = ","
-        ) %>%
-        
-        #Add beginning and ending bracket
-        str_c(
-          "{",
-          .,
-          "}"
-        )
       
-    } else {
-      
-      #Return current result
-      result %>%
-        
-        #Collapse indices
-        stringr::str_c(
-          collapse = ","
-        ) %>%
-        
-        #Add boundaries
-        stringr::str_c(
-          "{",
-          .,
-          "}"
-        )
-      
-    }
+      #Add boundaries
+      stringr::str_c(
+        "{",
+        .,
+        "}"
+      )
     
   }
