@@ -1,4 +1,6 @@
-# cheese 0.0.2 (in development)
+# cheese 0.0.2
+
+_This version is in development_
 
 ## Changes to existing functions
 
@@ -25,7 +27,7 @@
   - Default access to 25th and 75th percentiles for string templates with "q1" and "q3", respectively
   - Use "median (q1, q3)" as the default string template for numeric variables
 
-## New functions (not all complete yet)
+## New functions
 
 * `chop` removes or extracts a vector of patterns from the beginning or end of a vector of strings
 * `depths` traverses a list structure to find elements that satisfy a predicate
