@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • cheese</title>
+<title>Changelog • cheese</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Changelog" />
 
 
 
@@ -50,7 +50,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -104,49 +104,98 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/zajichek/cheese/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <table class="ref-index">
-
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="depths.html">depths()</a></code> </p>
-        </td>
-        <td><p>Traverse a list of arbitrary depth to find elements that satisfy a predicate.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="divide.html">divide()</a></code> </p>
-        </td>
-        <td><p>Divide a data frame into a list</p></td>
-      </tr>
-    </tbody>
-    </table>
+    <div id="cheese-0-0-2-in-development" class="section level1">
+<h1 class="page-header">
+<a href="#cheese-0-0-2-in-development" class="anchor"></a>cheese 0.0.2 (in development)<small> Unreleased </small>
+</h1>
+<div id="changes-to-existing-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes-to-existing-functions" class="anchor"></a>Changes to existing functions</h2>
+<ul>
+<li>
+<p><code>divide</code></p>
+<ul>
+<li>Default behavior is now to split to a multi-level list depending on the number of split variables</li>
+<li>Control over the depth at which the list is split to</li>
+<li>Select split variables unquoted, quoted, or with select helpers as in <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code>
+</li>
+<li>Control over whether unused split combinations are dropped with the <code>drop</code> argument</li>
+<li>Control over whether stratification variables are removed from the split frames with the <code>remove</code> argument</li>
+</ul>
+</li>
+<li>
+<p><code>stratiply</code></p>
+<ul>
+<li>Retain original stratification columns by default when result is binded</li>
+<li>When result is unbinded, the depth reflects that of <code>divide</code>
+</li>
+</ul>
+</li>
+<li>
+<p><code>stretch</code></p>
+<ul>
+<li>Works when there are no <code>keep</code> variables</li>
+<li>Variables spread over the columns are right-most in the result</li>
+</ul>
+</li>
+<li>
+<p><code>univariate_table</code></p>
+<ul>
+<li>Default access to 25th and 75th percentiles for string templates with “q1” and “q3”, respectively</li>
+<li>Use “median (q1, q3)” as the default string template for numeric variables</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="new-functions-not-all-complete-yet" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions-not-all-complete-yet" class="anchor"></a>New functions (not all complete yet)</h2>
+<ul>
+<li>
+<code>chop</code> removes or extracts a vector of patterns from the beginning or end of a vector of strings</li>
+<li>
+<code>depths</code> traverses a list structure to find elements that satisfy a predicate</li>
+<li>
+<code>explore</code> using flexible models to visually assess non-linear relationships and interactions</li>
+<li>
+<code>fasten</code> takes a divided data frame and merges it back together</li>
+<li>
+<code>muddle</code> randomly permutes some or all of the columns of a data frame</li>
+<li>
+<code>pick</code> selects a subset of a list as in <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code>
+</li>
+<li>
+<code>regression_table</code> creates a custom table for regression models similar to <code>univariate_table</code>
+</li>
+<li>
+<code>wander</code> reduces a set of columns from a <code>data.frame</code> by user-specified functions, stopping criteria, comparator values, etc.</li>
+</ul>
+</div>
+</div>
+    <div id="cheese-0-0-1" class="section level1">
+<h1 class="page-header">
+<a href="#cheese-0-0-1" class="anchor"></a>cheese 0.0.1<small> 2019-04-01 </small>
+</h1>
+<p>Initial CRAN release</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
-    </ul>
+    <div id="tocnav">
+      <h2>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#cheese-0-0-2-in-development">0.0.2</a></li>
+        <li><a href="#cheese-0-0-1">0.0.1</a></li>
+      </ul>
+    </div>
   </div>
+
 </div>
 
 
