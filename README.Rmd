@@ -28,6 +28,6 @@ The `cheese` package contains tools aimed to assist in building analysis workflo
 
 `install.packages("cheese")`
 
-*   From source __(currently under redevelopment; this version is incomplete)__
+*   From source
 
 `devtools::install_github("zajichek/cheese")`

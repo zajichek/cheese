@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Traverse a list of arbitrary depth to find elements that satisfy a predicate. — depths • cheese</title>
+<title>Check if an object is at least one (or none) of the specified types — type_match • cheese</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Traverse a list of arbitrary depth to find elements that satisfy a predicate. — depths" />
+<meta property="og:title" content="Check if an object is at least one (or none) of the specified types — type_match" />
 
-<meta property="og:description" content="Finds paths and positions of a list structure that satisfy a binary function. The depth of the list can be arbitrary and uneven. See details for more information." />
+<meta property="og:description" content="This is a utility function to assess whether an object inherits at least one (or none) of the user-specified classes." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -109,109 +109,94 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Traverse a list of arbitrary depth to find elements that satisfy a predicate.</h1>
+    <h1>Check if an object is at least one (or none) of the specified types</h1>
     
-    <div class="hidden name"><code>depths.Rd</code></div>
+    <div class="hidden name"><code>type_match.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Finds paths and positions of a list structure that satisfy a binary function. The depth of the list can be arbitrary and uneven. See details for more information.</p>
+    <p>This is a utility function to assess whether an object inherits at least one (or none) of the user-specified classes.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>depths</span>(
-    <span class='no'>list</span>,
-    <span class='no'>predicate</span>,
-    <span class='kw'>bare</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-    <span class='no'>...</span>
+    <pre class="usage"><span class='fu'>type_match</span>(
+    <span class='no'>object</span>,
+    <span class='no'>types</span>,
+    <span class='kw'>negated</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>list</th>
-      <td><p>Any <code>list</code>, <code>data.frame</code>, or atomic vector.</p></td>
+      <th>object</th>
+      <td><p>Any <code>R</code> object.</p></td>
     </tr>
     <tr>
-      <th>predicate</th>
-      <td><p>Any binary <code>function</code>.</p></td>
+      <th>types</th>
+      <td><p>A character vector of classes to check against <code>object</code>.</p></td>
     </tr>
     <tr>
-      <th>bare</th>
-      <td><p>Should algorithm only continue for bare lists? Defaults to FALSE.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments to pass to <code>predicate</code>.</p></td>
+      <th>negated</th>
+      <td><p>Should <code>TRUE</code> be returned if <code>object</code> inherits no <code>types</code>? Defaults to <code>FALSE</code>.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The input is recursively evaluated to indicate whether each element satisfies <code>predicate</code>, and only proceeds where the next element <code><a href='https://rlang.r-lib.org/reference/type-predicates.html'>rlang::is_list</a></code> when argument <code>bare</code> is <code>FALSE</code>, and <code><a href='https://rlang.r-lib.org/reference/bare-type-predicates.html'>rlang::is_bare_list</a></code> when it is <code>TRUE</code>. The result uses "{" and "}" to indicate the level of the tree, "," to separate element indices within a level, and the sign to indicate whether the element satisfied <code>predicate</code> (+ = yes, - = no).</p>
-    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character string indicating the path, positions and elements that satisfy <code>predicate</code>.</p>
+    <p>A <code>logical</code> indicator</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>tidyverse</span>)
 
-<span class='co'>#Find positions of divided data frames</span>
+<span class='co'>#1) Default</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>divide</span>(
-    <span class='no'>Sex</span>,
-    <span class='no'>HeartDisease</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>depths</span>(
-    <span class='kw'>predicate</span> <span class='kw'>=</span> <span class='no'>is.data.frame</span>
-  )</div><div class='output co'>#&gt; [1] "{1{-1{1,2,3,4,5,6,7},-2{1,2,3,4,5,6,7}},2{-1{1,2,3,4,5,6,7},-2{1,2,3,4,5,6,7}}}"</div><div class='input'>
+    <span class='fu'>map_lgl</span>(
+        <span class='no'>type_match</span>,
+        <span class='kw'>types</span> <span class='kw'>=</span> <span class='st'>"numeric"</span>
+    )</div><div class='output co'>#&gt;                   Age                   Sex             ChestPain 
+#&gt;                  TRUE                 FALSE                 FALSE 
+#&gt;                    BP           Cholesterol            BloodSugar 
+#&gt;                  TRUE                  TRUE                 FALSE 
+#&gt;             MaximumHR ExerciseInducedAngina          HeartDisease 
+#&gt;                  TRUE                 FALSE                 FALSE </div><div class='input'>
+<span class='co'>#2) Use negation</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>divide</span>(
-    <span class='no'>Sex</span>,
-    <span class='no'>HeartDisease</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>depths</span>(
-    <span class='kw'>predicate</span> <span class='kw'>=</span> <span class='no'>is.data.frame</span>,
-    <span class='kw'>bare</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-  )</div><div class='output co'>#&gt; [1] "{1{-1,-2},2{-1,-2}}"</div><div class='input'>
+    <span class='fu'>map_lgl</span>(
+        <span class='no'>type_match</span>,
+        <span class='kw'>types</span> <span class='kw'>=</span> <span class='st'>"numeric"</span>,
+        <span class='kw'>negated</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+    )</div><div class='output co'>#&gt;                   Age                   Sex             ChestPain 
+#&gt;                 FALSE                  TRUE                  TRUE 
+#&gt;                    BP           Cholesterol            BloodSugar 
+#&gt;                 FALSE                 FALSE                  TRUE 
+#&gt;             MaximumHR ExerciseInducedAngina          HeartDisease 
+#&gt;                 FALSE                  TRUE                  TRUE </div><div class='input'>
+<span class='co'>#3) Multiple types</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>divide</span>(
-    <span class='no'>Sex</span>,
-    <span class='no'>HeartDisease</span>,
-    <span class='kw'>depth</span> <span class='kw'>=</span> <span class='fl'>1</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>depths</span>(
-    <span class='kw'>predicate</span> <span class='kw'>=</span> <span class='no'>is.data.frame</span>,
-    <span class='kw'>bare</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-  )</div><div class='output co'>#&gt; [1] "{-1,-2,-3,-4}"</div><div class='input'>
-<span class='co'>#Make uneven list</span>
-<span class='no'>my_list</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-    <span class='no'>heart_disease</span>,
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-      <span class='no'>heart_disease</span>
-    ),
-    <span class='fl'>1</span>:<span class='fl'>10</span>
-  )
-
-<span class='no'>my_list</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>depths</span>(
-    <span class='no'>is.data.frame</span>,
-    <span class='kw'>bare</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-  )</div><div class='output co'>#&gt; [1] "{-1,2{-1},3}"</div><div class='input'>
-</div></pre>
+    <span class='fu'>map_lgl</span>(
+        <span class='no'>type_match</span>,
+        <span class='kw'>types</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"numeric"</span>, <span class='st'>"factor"</span>)
+    )</div><div class='output co'>#&gt;                   Age                   Sex             ChestPain 
+#&gt;                  TRUE                  TRUE                  TRUE 
+#&gt;                    BP           Cholesterol            BloodSugar 
+#&gt;                  TRUE                  TRUE                 FALSE 
+#&gt;             MaximumHR ExerciseInducedAngina          HeartDisease 
+#&gt;                  TRUE                  TRUE                  TRUE </div><div class='input'>
+<span class='co'>#4) Check other objects</span>
+<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>Sex</span> ~ <span class='no'>Age</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'>type_match</span>(
+        <span class='kw'>types</span> <span class='kw'>=</span> <span class='st'>"glm"</span>
+    )</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#details">Details</a></li>
-
       <li><a href="#value">Value</a></li>
       
       <li><a href="#examples">Examples</a></li>

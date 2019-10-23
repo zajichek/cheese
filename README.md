@@ -25,7 +25,6 @@ entirety.
 
 `install.packages("cheese")`
 
-  - From source **(currently under redevelopment; this version is
-    incomplete)**
+  - From source
 
 `devtools::install_github("zajichek/cheese")`
