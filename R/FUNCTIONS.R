@@ -1,7 +1,7 @@
 #Created: 2019-10-14
 #Author: Alex Zajichek
 #Package: cheese
-#Description: Function definitions used internally and available externally
+#Description: Function definitions for the package
 
 #Name: divide
 #Description: Stratify a data frame into a list
@@ -28,21 +28,21 @@ divide <-
       #Splice variable names; convert to list
       selected_vars <-
         tidyselect::vars_select(
-          dplyr::tbl_vars(data),
+          names(data),
           !!!quos
         ) %>%
         as.list() %>%
         unname()
       
       #Return error if no split variables entered
-      if(dplyr::near(length(selected_vars), 0))
+      if(length(selected_vars) == 0)
         stop("No columns registered.")
       
     }
     
     #Check that depth is numeric
     if(!methods::is(depth, "numeric"))
-      stop("Depth must be numeric")
+      stop("Depth must be numeric.")
     
     #If depth is negative, adjust from max depth
     if(depth < 0) {
@@ -61,18 +61,25 @@ divide <-
     depth <- round(depth)
     
     #Return data if depth is 0
-    if(dplyr::near(depth, 0))
+    if(depth == 0) {
+      
+      #Give warning
+      warning("Split depth is 0; returning original data.")
+      
+      #Return original data as a tibble
       return(data %>% tibble::as_tibble())
+      
+    }
     
     #Pull elements past position 'depth' into position 'depth'
     selected_vars[[depth]] <- 
-      selected_vars[seq(depth, length(selected_vars))] %>% 
+      selected_vars[seq.int(depth, length(selected_vars))] %>% 
       purrr::flatten_chr()
     
     #Only keep up to desired depth
     selected_vars <- selected_vars[seq_len(depth)]
     
-    #Set initial list to start recursion
+    #Set initial list to start loop
     data <-
       data %>%
       
@@ -86,44 +93,37 @@ divide <-
         sep = sep
       )
     
-    #Recursively split to desired depth if needed
+    #If needed, loop to split at desired depth
     if(depth > 1) {
       
-      data <-
-        purrr::reduce2(
-          .x = selected_vars[-1],
-          .y = 2:depth,
-          .f =
-            function(
-              .result, #Current data frame
-              .split_vars, #Variables to split at this depth
-              .depth #Depth to split at
-            ) {
-              
-              .result %>%
-                
-                #Split at leaf data frame
-                purrr::modify_depth(
-                  .depth = .depth - 1,
-                  ~
-                    .x %>%
-                    split(
-                      dplyr::select(., tidyselect::one_of(.split_vars)),
-                      drop = drop,
-                      sep = sep
-                    )
-                )
-            },
-          .init = data
-        )
+      for(i in seq_len(depth - 1)) {
+        
+        data <-
+          data %>%
+          
+          #Split at leaf data frames
+          purrr::modify_depth(
+            .depth = i,
+            ~
+              .x %>%
+              split(
+                dplyr::select(., tidyselect::one_of(selected_vars[[i + 1]])),
+                drop = drop,
+                sep = sep
+              )
+          )
+        
+      }
       
     }
     
-    #Remove all split variables in necessary
+    #Remove all split variables if necessary
     if(remove) {
       
       data <-
         data %>%
+        
+        #Alter at the leaves
         purrr::modify_depth(
           .depth = depth,
           ~
@@ -149,7 +149,7 @@ depths <-
   function(
     list, #A list, data frame or atomic vector
     predicate, #A binary function
-    bare = FALSE, #Only continue on bare lists
+    bare = TRUE, #Only continue on bare lists
     ... #Additional arguments for 'predicate'
   ) {
     
@@ -184,13 +184,10 @@ depths <-
       
       result <-
         
-        ifelse(
+        c(
           
-          #Check elements that are lists (including data.frames)
-          are_lists,
-          
-          #Concatenate with recursive function call for those elements
-          result %>%
+          #Recursive function call for list elements
+          result[are_lists] %>%
             stringr::str_c(
               list[are_lists] %>% 
                 purrr::map_chr(
@@ -201,10 +198,10 @@ depths <-
                 )
             ),
           
-          #Otherwise just return index
-          result
+          #Concatenate with indices of non-list elements
+          result[!are_lists]
           
-        ) 
+        )[order(order(are_lists, decreasing = TRUE))]
       
     } 
     

@@ -23,7 +23,7 @@ divide(
 \item{sep}{String to separate values of each stratification variable by. Defaults to "|". Only used when the number of stratification columns exceeds the desired depth.}
 }
 \details{
-For the \code{depth}, use positive integers to move from the root and negative integers to move from the leaves. The maximum depth will be used for integers larger than such.
+For the \code{depth}, use positive integers to move from the root and negative integers to move from the leaves. The maximum (minimum) depth will be used for integers larger (smaller) than such.
 }
 \value{
 A \code{list} with \code{tibble::tibble} objects at the leaves.
@@ -32,41 +32,63 @@ A \code{list} with \code{tibble::tibble} objects at the leaves.
 \examples{
 require(tidyverse)
 
-#1) Unquoted
+#Unquoted selection
 heart_disease \%>\%
     divide(
         Sex
     )
 
-#2) Using select helpers
+#Using select helpers
 heart_disease \%>\%
     divide(
         matches("^S")
     )
 
-#3) Reduce the depth
+#Reduced depth
 heart_disease \%>\%
     divide(
         Sex,
         HeartDisease,
         depth = 1
-    ) \%>\%
-    length() #Each combinations
+    )
     
-#4) Keep columns in result
+#Keep columns in result; change delimiter in names
 heart_disease \%>\%
     divide(
         Sex,
-        remove = FALSE
+        HeartDisease,
+        depth = 1,
+        remove = FALSE,
+        sep = ","
     )
 
-#5) Move from leaves
+#Move inward from maximum depth
 heart_disease \%>\%
     divide(
         Sex,
         HeartDisease,
         ChestPain,
         depth = -1
-    ) \%>\%
-    str()
+    )
+
+#No depth returns original data (and warning)
+heart_disease \%>\%
+    divide(
+        Sex,
+        depth = 0
+    )
+heart_disease \%>\%
+    divide(
+        Sex,
+        HeartDisease,
+        depth = -5
+    )
+
+#Larger than maximum depth returns maximum depth (default)
+heart_disease \%>\%
+    divide(
+        Sex,
+        depth = 100
+    )
+
 }  
