@@ -41,7 +41,7 @@ divide <-
     }
     
     #Check that depth is numeric
-    if(!methods::is(depth, "numeric"))
+    if(!is.numeric(depth))
       stop("Depth must be numeric.")
     
     #If depth is negative, adjust from max depth
@@ -56,9 +56,6 @@ divide <-
       depth <- min(depth, length(selected_vars))
       
     }
-    
-    #Round to nearest integer (in case decimal provided)
-    depth <- round(depth)
     
     #Return data if depth is 0
     if(depth == 0) {
@@ -219,6 +216,155 @@ depths <-
         .,
         "}"
       )
+    
+  }
+
+#Name: fasten
+#Description: Collapse a list of data frames of arbitrary depth to any depth
+fasten <-
+  function(
+    list, #A list with data frames at the leaves
+    into = NULL, #Character vector of variable names (use "" for NULL)
+    depth = 0 #Depth to collapse to
+  ) {
+    
+    #Check for a bare list
+    if(!rlang::is_bare_list(list))
+      stop("A bare list must be supplied.")
+    
+    #Check that depth is numeric
+    if(!is.numeric(depth))
+      stop("Depth must be numeric.")
+    
+    #Find depth of leaves
+    depth_string <- 
+      list %>%
+      
+      #Extract paths
+      depths(
+        predicate = is.data.frame,
+        bare = TRUE
+      ) %>%
+      
+      #Split into long character vector
+      stringr::str_split(
+        pattern = ""
+      ) %>%
+      
+      #Extract first element
+      purrr::pluck(1)
+    
+    #Check for a data frame
+    if(!any(depth_string == "-"))
+      stop("There must be data frames at the leaves.")
+    
+    #Get the depth where data frames are located
+    bind_depth <- cumsum(depth_string == "{")[min(which(depth_string == "-"))]
+    
+    #If depth is negative, adjust from max depth
+    if(depth < 0) {
+      
+      #Use zero if it goes beyond
+      depth <- max(bind_depth + depth, 0)
+      
+    } else {
+      
+      #Use maximum depth as the limit
+      depth <- min(depth, bind_depth)
+      
+    }
+    
+    #Return original list if no binding is needed
+    if(depth == bind_depth) {
+      
+      #Give warning
+      warning("Desired depth equal to current depth. Returning original list.")
+      
+      #Return original data as a tibble
+      return(list)
+      
+    }
+    
+    #Check if column names were provided
+    if(is.null(into)) {
+      
+      #Make vector of empty strings
+      into <- rep("", bind_depth - depth)
+      
+    } else {
+      
+      #Check if input is a character vector
+      if(!is.character(into)) {
+        
+        #Coerce to character
+        into <- as.character(into)
+        
+        #Give warning
+        warning("Coercing 'into' to character vector.")
+        
+      }
+      
+      #Check if enough column names were provided
+      if(length(into) < bind_depth - depth) {
+        
+        #Add on empty strings for sufficient length
+        into <- c(into, rep("", bind_depth - depth - length(into)))
+        
+      } else if(length(into) > bind_depth - depth) {
+        
+        #Give warning
+        warning(stringr::str_c(length(into), " column names given but only ", bind_depth - depth, " needed."))
+        
+        #Only take elements needed
+        into <- into[seq_len(bind_depth - depth)]
+        
+      }
+      
+    }
+    
+    #Loop to bind rows
+    while(bind_depth > depth) {
+      
+      #Get inner column name
+      .id <- into[length(into)]
+      
+      #Set to NULL if empty string
+      if(.id == "")
+        .id <- NULL
+      
+      if(bind_depth > 1) {
+        
+        list <-
+          list %>%
+          
+          #Bind in the interior of list
+          purrr::modify_depth(
+            .depth = bind_depth - 1,
+            dplyr::bind_rows,
+            .id = .id
+          )
+        
+      } else {
+        
+        list <-
+          list %>%
+          
+          #Bind at top level of list
+          dplyr::bind_rows(
+            .id = .id
+          )
+        
+      }
+      
+      #Move to next depth
+      bind_depth <- bind_depth - 1
+      
+      #Remove used column header
+      into <- into[-length(into)]
+      
+    }
+    
+    list
     
   }
 

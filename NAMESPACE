@@ -6,6 +6,7 @@ importFrom("stats", "IQR", "median", "na.omit", "sd", "terms", "glm")
 export("%>%",
        "divide",
        "depths",
+       "fasten",
        "stratiply",
        "stretch",
        "dish",
