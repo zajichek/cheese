@@ -368,6 +368,56 @@ fasten <-
     
   }
 
+#Name: pick
+#Description: Select a subset of a list
+pick <-
+  function(
+    list,
+    ...
+  ) {
+    
+    #Check if list is named
+    named <- !is.null(names(list))
+    
+    #Set default names as the index
+    if(!named) 
+      names(list) <- 1:length(list)
+    
+    #Make quosure
+    quos <- dplyr::quos(...)
+    
+    #Return error if no split variables entered
+    if(rlang::is_empty(quos)) {
+      
+      stop("No names provided.")
+      
+    } else {
+      
+      #Splice variable names; convert to list
+      selected_elements <-
+        tidyselect::vars_select(
+          names(list),
+          !!!quos
+        )
+      
+      #Return error if no split variables entered
+      if(length(selected_elements) == 0)
+        stop("No names registered.")
+      
+    }
+    
+    #Get subset of elements
+    list <- list[names(list) %in% selected_elements]
+    
+    #Remove added names if needed
+    if(!named)
+      list <- unname(list)
+    
+    #Return list
+    list
+    
+  }
+
 #Name: stratiply
 #Description: Stratify a data frame, apply a function, and collect results
 stratiply <-
