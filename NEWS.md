@@ -1,4 +1,4 @@
-# cheese 0.0.2
+# cheeese 0.1.0
 
 _This version is in development_
 
@@ -14,13 +14,12 @@ _This version is in development_
   
 * `stratiply`
 
-  - Retain original stratification columns by default when result is binded
-  - When result is unbinded, the depth reflects that of `divide`
+  - User in charge of binding back together (e.g. with `fasten`)
 
-* `stretch`
+* `stretch` (removed)
 
-  - Works when there are no `keep` variables
-  - Variables spread over the columns are right-most in the result
+  - Use `tidyr::pivot_wider` (starting version 1.0.0) for this functionality
+  - Use `<insert function>` to extract headers from wide frame
 
 * `univariate_table`
 
@@ -29,14 +28,15 @@ _This version is in development_
 
 ## New functions
 
-* `chop` removes or extracts a vector of patterns from the beginning or end of a vector of strings
-* `depths` traverses a list structure to find elements that satisfy a predicate
-* `explore` using flexible models to visually assess non-linear relationships and interactions
+* `depths` finds the depth(s) of elements that satisfy a predicate
+* `depths_string` finds paths and locations of elements that satisfy a predicate
 * `fasten` takes a divided data frame and merges it back together
 * `muddle` randomly permutes some or all of the columns of a data frame
 * `pick` selects a subset of a list as in `dplyr::select`
-* `regression_table` creates a custom table for regression models similar to `univariate_table`
-* `wander` reduces a set of columns from a `data.frame` by user-specified functions, stopping criteria, comparator values, etc.
+
+# cheese 0.0.2
+
+Minor update to documentation
 
 # cheese 0.0.1
 

@@ -2,7 +2,7 @@
 \alias{type_match}
 \title{Check if an object is at least one (or none) of the specified types}
 \description{
-This is a utility function to assess whether an object inherits at least one (or none) of the user-specified classes.
+Utility function to assess whether an object inherits at least one (or none) of the user-specified classes.
 }
 \usage{
 type_match(

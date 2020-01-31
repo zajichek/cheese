@@ -4,7 +4,9 @@
 #Description: Script for building dataset found in /data
 
 #Load packages
-require(tidyverse)
+require(readr)
+require(dplyr)
+require(forcats)
 
 #Read dataset from UCI repository
 heart_disease <-

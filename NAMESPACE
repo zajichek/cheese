@@ -5,11 +5,12 @@ importFrom("stats", "IQR", "median", "na.omit", "sd", "terms", "glm")
 
 export("%>%",
        "divide",
+       "depths_string",
        "depths",
        "fasten",
        "pick",
+       "muddle",
        "stratiply",
-       "stretch",
        "dish",
        "absorb",
        "type_match",

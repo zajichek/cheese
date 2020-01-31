@@ -26,7 +26,10 @@ divide(
 For the \code{depth}, use positive integers to move from the root and negative integers to move from the leaves. The maximum (minimum) depth will be used for integers larger (smaller) than such.
 }
 \value{
-A \code{list} with \code{tibble::tibble} objects at the leaves.
+\itemize{
+\item If the (implied) depth is not equal to zero, a \code{list} with \code{tibble::tibble} objects at the leaves.
+\item Otherwise, a \code{tibble::tibble}
+}
 }
 \author{Alex Zajichek}
 \examples{

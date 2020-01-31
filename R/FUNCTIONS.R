@@ -3,6 +3,35 @@
 #Package: cheese
 #Description: Function definitions for the package
 
+#Name: actual_depth
+#Description: Compute the explicit mapping depth based on what is implied by the input
+actual_depth <-
+  function(
+    depth, #An abstract depth
+    ref #A reference value for adjusting depth
+  ) {
+    
+    #Check that inputs are numeric
+    if(!is.numeric(depth) | !is.numeric(ref))
+      stop("Inputs must be numeric.")
+    
+    #If depth is negative, subtract from ref
+    if(depth < 0) {
+      
+      #Use zero if it goes beyond
+      depth <- max(ref + depth, 0)
+      
+    } else {
+      
+      #Use maximum depth as the limit
+      depth <- min(depth, ref)
+      
+    }
+    
+    depth
+    
+  }
+
 #Name: divide
 #Description: Stratify a data frame into a list
 divide <-
@@ -15,47 +44,26 @@ divide <-
     sep = "|" #Character to separate levels when necessary
   ) {
     
-    #Make quosure
-    quos <- dplyr::quos(...)
+    #Splice variable names
+    selected_vars <-
+      tidyselect::eval_select(
+        rlang::expr(c(...)),
+        data
+      ) 
     
     #Return error if no split variables entered
-    if(rlang::is_empty(quos)) {
+    if(length(selected_vars) == 0)
+      stop("No columns registered.")
       
-      stop("No columns provided.")
-      
-    } else {
-      
-      #Splice variable names; convert to list
-      selected_vars <-
-        tidyselect::vars_select(
-          names(data),
-          !!!quos
-        ) %>%
-        as.list() %>%
-        unname()
-      
-      #Return error if no split variables entered
-      if(length(selected_vars) == 0)
-        stop("No columns registered.")
-      
-    }
-    
-    #Check that depth is numeric
-    if(!is.numeric(depth))
-      stop("Depth must be numeric.")
-    
-    #If depth is negative, adjust from max depth
-    if(depth < 0) {
-      
-      #Use zero if it goes beyond
-      depth <- max(length(selected_vars) + depth, 0)
-      
-    } else {
-      
-      #Use maximum depth as the limit
-      depth <- min(depth, length(selected_vars))
-      
-    }
+    #Set values as names
+    selected_vars <- as.list(names(selected_vars))
+
+    #Get the depth
+    depth <-
+      actual_depth(
+        depth = depth,
+        ref = length(selected_vars)
+      )
     
     #Return data if depth is 0
     if(depth == 0) {
@@ -85,7 +93,7 @@ divide <-
       
       #Split by first variable(s)
       split(
-        dplyr::select(., tidyselect::one_of(selected_vars[[1]])),
+        dplyr::select(., tidyselect::all_of(selected_vars[[1]])),
         drop = drop,
         sep = sep
       )
@@ -104,7 +112,7 @@ divide <-
             ~
               .x %>%
               split(
-                dplyr::select(., tidyselect::one_of(selected_vars[[i + 1]])),
+                dplyr::select(., tidyselect::all_of(selected_vars[[i + 1]])),
                 drop = drop,
                 sep = sep
               )
@@ -140,9 +148,9 @@ divide <-
     
   }
 
-#Name: depths
-#Description: Traverse a list of arbitrary depth to find elements that satisfy a predicate
-depths <-
+#Name: depths_string
+#Description: Create representation of elements satisfying a predicate in a list structure
+depths_string <-
   function(
     list, #A list, data frame or atomic vector
     predicate, #A binary function
@@ -188,7 +196,7 @@ depths <-
             stringr::str_c(
               list[are_lists] %>% 
                 purrr::map_chr(
-                  .f = depths, 
+                  .f = depths_string, 
                   predicate = predicate,
                   bare = bare,
                   ...
@@ -219,6 +227,36 @@ depths <-
     
   }
 
+#Name: depths
+#Description: Find the depths in a list structure that satisfy a predicate
+depths <-
+  function(
+    list, #A list, data frame or atomic vector
+    predicate, #A binary function
+    bare = TRUE, #Only continue on bare lists
+    ... #Additional arguments for 'predicate'
+  ) {
+    
+    #Get string representation of structure
+    string <-
+      depths_string(
+        list = list,
+        predicate = predicate,
+        bare = bare,
+        ...
+      )
+    
+    #Split input into vectors of characters
+    string <- strsplit(string, split = "")[[1]]
+    
+    #Get the depth of each character
+    result <- cumsum(string == "{") - cumsum(string == "}")
+    
+    #Return depths that satisfied the predicate
+    unique(result[string == "-"])
+    
+  }
+
 #Name: fasten
 #Description: Collapse a list of data frames of arbitrary depth to any depth
 fasten <-
@@ -232,47 +270,30 @@ fasten <-
     if(!rlang::is_bare_list(list))
       stop("A bare list must be supplied.")
     
-    #Check that depth is numeric
-    if(!is.numeric(depth))
-      stop("Depth must be numeric.")
-    
     #Find depth of leaves
-    depth_string <- 
+    bind_depth <- 
       list %>%
       
-      #Extract paths
+      #Extract the depth
       depths(
         predicate = is.data.frame,
         bare = TRUE
-      ) %>%
-      
-      #Split into long character vector
-      stringr::str_split(
-        pattern = ""
-      ) %>%
-      
-      #Extract first element
-      purrr::pluck(1)
+      ) 
     
     #Check for a data frame
-    if(!any(depth_string == "-"))
+    if(length(bind_depth) == 0)
       stop("There must be data frames at the leaves.")
     
-    #Get the depth where data frames are located
-    bind_depth <- cumsum(depth_string == "{")[min(which(depth_string == "-"))]
+    #Check for single depth
+    if(length(bind_depth) > 1)
+      stop("All data frames must be at the same depth.")
     
-    #If depth is negative, adjust from max depth
-    if(depth < 0) {
-      
-      #Use zero if it goes beyond
-      depth <- max(bind_depth + depth, 0)
-      
-    } else {
-      
-      #Use maximum depth as the limit
-      depth <- min(depth, bind_depth)
-      
-    }
+    #Get implied depth
+    depth <-
+      actual_depth(
+        depth = depth,
+        ref = bind_depth
+      )
     
     #Return original list if no binding is needed
     if(depth == bind_depth) {
@@ -383,31 +404,19 @@ pick <-
     if(!named) 
       names(list) <- 1:length(list)
     
-    #Make quosure
-    quos <- dplyr::quos(...)
+    #Splice variable names
+    selected_vars <-
+      tidyselect::eval_select(
+        rlang::expr(c(...)),
+        list
+      ) 
     
     #Return error if no split variables entered
-    if(rlang::is_empty(quos)) {
-      
-      stop("No names provided.")
-      
-    } else {
-      
-      #Splice variable names; convert to list
-      selected_elements <-
-        tidyselect::vars_select(
-          names(list),
-          !!!quos
-        )
-      
-      #Return error if no split variables entered
-      if(length(selected_elements) == 0)
-        stop("No names registered.")
-      
-    }
+    if(length(selected_vars) == 0)
+      stop("No columns registered.")
     
     #Get subset of elements
-    list <- list[names(list) %in% selected_elements]
+    list <- list[selected_vars]
     
     #Remove added names if needed
     if(!named)
@@ -418,70 +427,89 @@ pick <-
     
   }
 
+#Name: muddle
+#Description: Randomly permute some or all columns in a data frame
+muddle <-
+  function(
+    data, #A data frame
+    at, #Columns to permute
+    ... #Arguments to pass to 'sample'
+  ) {
+    
+    #Set to all columns if missing input
+    if(missing(at))
+      at <- names(data)
+    
+    #Splice variable names
+    selected_vars <-
+      tidyselect::eval_select(
+        rlang::enquo(at),
+        data
+      ) 
+    
+    #Return error if no split variables entered
+    if(length(selected_vars) == 0)
+      stop("No columns registered.")
+    
+    #Shuffle desired variables
+    data %>%
+      map_at(
+        selected_vars,
+        sample,
+        ...
+      ) %>%
+      
+      #Combine columns back together
+      bind_cols
+    
+  }
+
 #Name: stratiply
-#Description: Stratify a data frame, apply a function, and collect results
+#Description: Stratify a data frame and apply a function
 stratiply <-
   function(
-    data, #Any data.frame
-    strata, #Stratification variables
+    data, #Any data frame
+    by, #Stratification variables
     f, #Function to apply to each strata
-    delimiter = "|", #Character to separate strata
-    bind = FALSE, #Should results be binded?
-    separate = TRUE, #Should strata be separated to original columns?
     ... #Additional arguments to pass to f
   ) { 
     
-    #Get variables
-    strata <-
-      tidyselect::vars_select(
-        names(data),
-        strata
-      )
+    #Splice variable names
+    selected_vars <-
+      tidyselect::eval_select(
+        rlang::enquo(by),
+        data
+      ) 
     
-    results <-
+    #Return error if no split variables entered
+    if(length(selected_vars) == 0)
+      stop("No columns registered.")
+    
+    data <-
       data %>%
       
       #Divide frame
-      divide(
-        strata,
-        sep = delimiter,
-        depth = 1
-      ) %>%
-      
-      #Apply function to each strata
-      purrr::map(f, ...)
+      divide(selected_vars)
     
-    #Post-process
-    if(bind) {
-      
-      results <-
-        results %>%
-        dplyr::bind_rows(
-          .id = ".strata"
-        )
-      
-      if(separate | length(strata) == 1) {
-        
-        results <-
-          results %>%
-          tidyr::separate(
-            col = .data$.strata,
-            into = strata,
-            sep = stringr::str_c("[", delimiter, "]"),
-            convert = TRUE
-          )
-        
-      } 
-      
-      results
-      
-    } else {
-      
-      results
-      
-    }
+    #Find mapping depth
+    mapping_depth <-
+      data %>%
+      depths(
+        predicate = is.data.frame,
+        bare = TRUE
+      )
+    
+    #Evaluate function at dedesired depth
+    data %>%
+      purrr::map_depth(
+        .depth = mapping_depth,
+        .f = f,
+        ...
+      )
     
   }
+
+#####START HERE TO FIX SUBSEQUENT FUNCTIONS AFTER PREVIOUS CHANGES
 
 #Name: stretch
 #Description: Span one or more columns over many columns
@@ -2304,3 +2332,17 @@ univariate_table <-
     }
     
   }
+
+###FUNCTIONS TO BE WRITTEN
+
+#Name: chop
+#Description: Remove or extract a vector of patterns from the beginning or end of a vector of strings
+
+#Name: explore
+#Description: Explore non-linear relationships and interactions with flexible models
+
+#Name: regression_table
+#Description: Make a custom table for regression models
+
+#Name: wander
+#Description: Reduce a set of columns from a data frame by user-specified functions, stopping criteria, comparator values, etc.
