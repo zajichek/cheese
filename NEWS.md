@@ -19,7 +19,7 @@ _This version is in development_
 * `stretch` (removed)
 
   - Use `tidyr::pivot_wider` (starting version 1.0.0) for this functionality
-  - Use `<insert function>` to extract headers from wide frame
+  - Use `grable` to create a `knitr::kable` with stacked headers
 
 * `univariate_table`
 
@@ -31,8 +31,8 @@ _This version is in development_
 * `depths` finds the depth(s) of elements that satisfy a predicate
 * `depths_string` finds paths and locations of elements that satisfy a predicate
 * `fasten` takes a divided data frame and merges it back together
+* `grable` makes a `knitr::kable` with stacked headers
 * `muddle` randomly permutes some or all of the columns of a data frame
-* `pick` selects a subset of a list as in `dplyr::select`
 
 # cheese 0.0.2
 

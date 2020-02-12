@@ -389,44 +389,6 @@ fasten <-
     
   }
 
-#Name: pick
-#Description: Select a subset of a list
-pick <-
-  function(
-    list,
-    ...
-  ) {
-    
-    #Check if list is named
-    named <- !is.null(names(list))
-    
-    #Set default names as the index
-    if(!named) 
-      names(list) <- 1:length(list)
-    
-    #Splice variable names
-    selected_vars <-
-      tidyselect::eval_select(
-        rlang::expr(c(...)),
-        list
-      ) 
-    
-    #Return error if no split variables entered
-    if(length(selected_vars) == 0)
-      stop("No columns registered.")
-    
-    #Get subset of elements
-    list <- list[selected_vars]
-    
-    #Remove added names if needed
-    if(!named)
-      list <- unname(list)
-    
-    #Return list
-    list
-    
-  }
-
 #Name: muddle
 #Description: Randomly permute some or all columns in a data frame
 muddle <-
@@ -453,14 +415,14 @@ muddle <-
     
     #Shuffle desired variables
     data %>%
-      map_at(
+      purrr::map_at(
         selected_vars,
         sample,
         ...
       ) %>%
       
       #Combine columns back together
-      bind_cols
+      dplyr::bind_cols()
     
   }
 
@@ -489,7 +451,7 @@ stratiply <-
       data %>%
       
       #Divide frame
-      divide(selected_vars)
+      divide(tidyselect::all_of(selected_vars))
     
     #Find mapping depth
     mapping_depth <-
@@ -509,234 +471,16 @@ stratiply <-
     
   }
 
-#####START HERE TO FIX SUBSEQUENT FUNCTIONS AFTER PREVIOUS CHANGES
-
-#Name: stretch
-#Description: Span one or more columns over many columns
-stretch <-
+#######COMPLETE UP TO THIS POINT
+#Name: grable
+#Description: Make a kable with stacked header
+grable <-
   function(
-    data, #Any data set
-    keys, #Keys to spread across columns
-    keep = NULL, #Variables to keep as their own column
-    send = NULL, #Variables to send to other columns
-    join = dplyr::full_join, #How should data be joined across strata?
-    .sep = "_", #How should resulting columns separate keys?
-    extract_keys_as_header = FALSE, #Should the keys be returned as a list component separate from the data?
-    keep_keys_in_header = TRUE, #Should the keys be left in header when extracted?
-    ... #Arguments to pass to the joining function
+    data
   ) {
     
-    #Stratify data according to keys
-    results <-
-      data %>%
-      
-      #Divide data
-      divide(
-        by = keys,
-        sep = .sep,
-        depth = 1
-      )
-    
-    #Stop if only 1 key
-    if(length(results) <= 1)
-      stop("Only 1 key found")
-    
-    #Get other variables
-    keep <-
-      tidyselect::vars_select(
-        names(results[[1]]),
-        keep
-      )
-    send <-
-      tidyselect::vars_select(
-        names(results[[1]]),
-        send
-      )
-    
-    #Remove overlapping send variables
-    if(any(send %in% keep)) {
-      
-      send <- send[!(send %in% keep)]
-      
-    }
-    
-    #Find set of variables to select from
-    if(length(keep) == 0) {
-      
-      if(length(send) == 0) {
-        
-        stop("keep and send cannot both be NULL")
-        
-      } else {
-        
-        #Send only matching columns, keep remaining as their own columns
-        keep <-
-          tidyselect::vars_select(
-            names(results[[1]]),
-            -send
-          )
-        
-      }
-      
-      
-    } else {
-      
-      #If both are supplied, remove unwanted columns from all frames
-      if(length(send) > 0) {
-        
-        results <-
-          results %>%
-          purrr::map(
-            ~
-              .x %>%
-              dplyr::select(
-                keep,
-                send
-              )
-          )
-        
-      } else {
-        
-        #Making send list for later use
-        send <-
-          tidyselect::vars_select(
-            names(results[[1]]),
-            -keep
-          )
-        
-      }
-      
-    }
-    
-    results <-
-      
-      #Recursively join
-      purrr::reduce2(
-        .x = results[-1],
-        .y = names(results)[-1],
-        function(.w, .x, .y) {
-          
-          #Set x and y for iteration
-          x <- .w
-          y <-
-            .x %>%
-            dplyr::rename_at(
-              dplyr::vars(
-                -tidyselect::one_of(keep)
-              ),
-              function(.z) {
-                
-                if(length(send) == 1) {
-                  
-                  .y
-                  
-                } else {
-                  
-                  stringr::str_c(.z, .sep, .y)
-                  
-                }
-                
-              }
-            )
-          
-          #Join if there are 'keep' variables
-          if(length(keep) > 0) {
-            
-            join(
-              x = x,
-              y = y,
-              by = keep,
-              ...
-            )
-            
-          } else {
-            
-            #Otherwise just bind columns together
-            dplyr::bind_cols(
-              x,
-              y
-            )
-          }
-          
-        },
-        .init =
-          results[[1]] %>%
-          dplyr::rename_at(
-            dplyr::vars(
-              -tidyselect::one_of(keep)
-            ),
-            function(.z) {
-              
-              if(length(send) == 1) {
-                
-                names(results)[1]
-                
-              } else {
-                
-                stringr::str_c(.z, .sep, names(results)[1])
-                
-              }
-              
-            }
-          )
-      )
-    
-    #Ensure that keep variables are left-most
-    if(length(keep) > 0) {
-      
-      results <-
-        results %>%
-        dplyr::select(
-          tidyselect::one_of(
-            keep
-          ),
-          tidyselect::everything()
-        )
-      
-    }
-    
-    #Extract keys and return list if requested
-    if(extract_keys_as_header & length(send) > 1) {
-      
-      #Remove header if requested
-      if(!keep_keys_in_header) {
-        
-        .result <-
-          results %>%
-          dplyr::rename_at(
-            dplyr::vars(
-              -tidyselect::one_of(keep)
-            ),
-            stringr::str_remove,
-            pattern = stringr::str_c("[", .sep, "].+")
-          )
-        
-      } else {
-        
-        .result <- results
-        
-      }
-      
-      list(
-        
-        #Extract header created from the keys
-        .header =
-          dplyr::if_else(
-            names(results) %in% keep, " ", stringr::str_extract(names(results), stringr::str_c("[", .sep, "].+")) %>% stringr::str_sub(2)
-          ),
-        
-        #Remove the key values from the result
-        .result = .result
-        
-      )
-      
-    } else {
-      
-      results
-      
-    }
   }
-
+  
 #Name: dish
 #Description: Dish out a function to parts of a data frame
 dish <-
@@ -2334,9 +2078,6 @@ univariate_table <-
   }
 
 ###FUNCTIONS TO BE WRITTEN
-
-#Name: chop
-#Description: Remove or extract a vector of patterns from the beginning or end of a vector of strings
 
 #Name: explore
 #Description: Explore non-linear relationships and interactions with flexible models
