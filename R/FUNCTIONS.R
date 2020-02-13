@@ -1,4 +1,5 @@
 #Created: 2019-10-14
+#Updated: 2020-02-12
 #Author: Alex Zajichek
 #Package: cheese
 #Description: Function definitions for the package
@@ -134,7 +135,7 @@ divide <-
           ~
             .x %>%
             dplyr::select(
-              -tidyselect::one_of(
+              -tidyselect::all_of(
                 selected_vars %>% 
                   purrr::flatten_chr()
               )
@@ -157,6 +158,10 @@ depths_string <-
     bare = TRUE, #Only continue on bare lists
     ... #Additional arguments for 'predicate'
   ) {
+    
+    #Check if function is supplied
+    if(missing(predicate))
+      stop("No predicate supplied.")
     
     #Get continuation function
     continue <- rlang::is_list
@@ -334,7 +339,7 @@ fasten <-
       } else if(length(into) > bind_depth - depth) {
         
         #Give warning
-        warning(stringr::str_c(length(into), " column names given but only ", bind_depth - depth, " needed."))
+        warning(paste0(length(into), " column names given but only ", bind_depth - depth, " needed."))
         
         #Only take elements needed
         into <- into[seq_len(bind_depth - depth)]
@@ -431,8 +436,8 @@ muddle <-
 stratiply <-
   function(
     data, #Any data frame
-    by, #Stratification variables
     f, #Function to apply to each strata
+    by, #Stratification variables
     ... #Additional arguments to pass to f
   ) { 
     
@@ -447,10 +452,14 @@ stratiply <-
     if(length(selected_vars) == 0)
       stop("No columns registered.")
     
+    #Check for a function
+    if(missing(f))
+      stop("No function supplied.")
+    
     data <-
       data %>%
       
-      #Divide frame
+      #Divide frame into a list
       divide(tidyselect::all_of(selected_vars))
     
     #Find mapping depth
@@ -461,7 +470,7 @@ stratiply <-
         bare = TRUE
       )
     
-    #Evaluate function at dedesired depth
+    #Evaluate function at desired depth
     data %>%
       purrr::map_depth(
         .depth = mapping_depth,
@@ -480,193 +489,158 @@ grable <-
   ) {
     
   }
-  
+
 #Name: dish
-#Description: Dish out a function to parts of a data frame
+#Description: Evaluate a function on parts of a data frame
 dish <-
   function(
-    data, #Any data frame
-    f, #First argument is left, second argument is right
-    left = NULL, #Variables to be included in the left side of the function
-    right = NULL, #Variables to be included in the right side of the function
-    each_left = TRUE, #Should each left variable be evaluated individually?
-    each_right = TRUE, #Should each right variable be evaluated individually?
-    bind = FALSE, #Should results be binded together?
-    ...
+    data, #A data frame
+    f, #A two-argument function
+    left, #Columns to be entered in arg1
+    right, #Columns to be entered in arg2
+    each_left = TRUE, #Should the left variables be entered individually as vectors?
+    each_right = TRUE, #Should the right variables be entered individually as vectors?
+    ... 
   ) {
     
-    #Extract variables
-    left <-
-      tidyselect::vars_select(
-        names(data),
-        left
-      )
-    right <-
-      tidyselect::vars_select(
-        names(data),
-        right
-      )
+    #Check for function
+    if(missing(f))
+      stop("No function supplied.")
     
-    #Remove overlapping variables
-    if(any(right %in% left)) {
+    #Check for left inputs
+    if(missing(left)) {
       
-      right <- right[!(right %in% left)]
-      
-    }
-    
-    #Create data sets
-    if(length(left) == 0) {
-      
-      if(length(right) == 0) {
+      #Check for right inputs
+      if(missing(right)) {
         
-        #Select everything for both sides
+        #Set both sides to all variables
         left <-
-          data %>%
-          dplyr::select(tidyselect::everything())
+          tidyselect::eval_select(
+            rlang::expr(names(data)),
+            data
+          )
+        
         right <- left
         
       } else {
         
-        #Left is everything not supplied in right
-        left <- 
-          data %>%
-          dplyr::select(-right)
+        #Splice right variables
         right <-
-          data %>%
-          dplyr::select(right)
+          tidyselect::eval_select(
+            rlang::enquo(right),
+            data
+          )
+        
+        #Check for registration
+        if(length(right) == 0)
+          stop("No right variables registered.")
+        
+        #Left variables are everything else
+        left <-
+          tidyselect::eval_select(
+            rlang::expr(names(data)[-right]),
+            data
+          )
         
       }
       
     } else {
       
-      if(length(right) == 0) {
+      #Splice left variables
+      left <-
+        tidyselect::eval_select(
+          rlang::enquo(left),
+          data
+        )
+      
+      #Check for registration
+      if(length(left) == 0)
+        stop("No left variables registered.")
+      
+      #Check for right inputs
+      if(missing(right)) {
         
-        #Right is everything not in left
+        #Right variables are everything else
         right <-
-          data %>%
-          dplyr::select(-left)
-        left <-
-          data %>%
-          dplyr::select(left)
+          tidyselect::eval_select(
+            rlang::expr(names(data)[-left]),
+            data
+          )
         
       } else {
         
-        #Select left variables
-        left <-
-          data %>%
-          dplyr::select(left)
-        
-        #Select right variables
+        #Splice right variables
         right <-
-          data %>%
-          dplyr::select(right)
+          tidyselect::eval_select(
+            rlang::enquo(right),
+            data
+          )
+        
+        #Check for registration
+        if(length(right) == 0)
+          stop("No right variables registered.")
         
       }
       
     }
     
+    #Select data subsets
+    left <- data %>% dplyr::select(tidyselect::all_of(left))
+    right <- data %>% dplyr::select(tidyselect::all_of(right))
+    
+    ###Evaluate function depending on 'each_' arguments
+    #Check for left evaluation
     if(each_left) {
       
+      #Check for right evaluation
       if(each_right) {
         
-        #Apply function to each left hand variable and each right hand variable
-        left_eval <-
-          left %>%
+        #Evaluate each left argument as a vector with each right argument as a vector
+        left %>%
+          
+          #For every left variable
           purrr::map(
-            function(.x) {
-              
-              right_eval <-
-                right %>%
-                purrr::map(
-                  function(.y) f(.x, .y, ...)
-                )
-              
-              #Check for binding
-              if(bind) {
-                right_eval %>%
-                  dplyr::bind_rows(
-                    .id = ".right"
-                  )
-              } else {
-                
-                right_eval
-                
-              }
-              
-            }
+            
+            #Evaluate the function for every right variable
+            function(.x)
+              right %>% purrr::map(function(.y) f(.x, .y, ...))
+            
           )
-        
-        #Check for binding
-        if(bind) {
-          
-          left_eval %>%
-            dplyr::bind_rows(
-              .id = ".left"
-            )
-          
-        } else {
-          
-          left_eval
-          
-        }
         
       } else {
         
-        #Apply function to each left hand variable but full right hand set
-        left_eval <-
-          left %>%
+        #Evaluate each left argument as a vector with the right columns in a single data frame
+        left %>%
+          
+          #For every left variable
           purrr::map(
-            function(.x) f(.x, right,...)
+            
+            #Evaluate the function with the right data frame
+            function(.x) f(.x, right, ...)
+            
           )
-        
-        #Check for binding
-        if(bind) {
-          
-          left_eval %>%
-            dplyr::bind_rows(
-              .id = ".left"
-            )
-          
-        } else {
-          
-          left_eval
-          
-        }
         
       }
       
     } else {
       
+      #Check for right evaluation
       if(each_right) {
         
-        #Apply function to each right hand variable but full left hand side
-        right_eval <- 
-          right %>%
+        #Evaluate each right argument as a vector with the left columns in a single data frame
+        right %>%
+          
+          #For every right variable
           purrr::map(
+            
+            #Evaluate the function with the left data frame
             function(.x) f(left, .x,...)
+            
           )
-        
-        #Check for binding
-        if(bind) {
-          
-          right_eval %>%
-            dplyr::bind_rows(
-              .id = ".right"
-            )
-          
-        } else {
-          
-          right_eval
-          
-        }
         
       } else {
         
-        #Give warning
-        if(bind)
-          warning("Binding has no effect when 'each_left' and 'each_right' are FALSE")
-        
-        #Apply function to full left hand side and full right hand side
+        #Evaluate with a data frame of left columns and data frame of right columns
         f(left, right, ...)
         
       }
