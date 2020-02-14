@@ -406,7 +406,7 @@ muddle <-
     #Set to all columns if missing input
     if(missing(at))
       at <- names(data)
-    
+
     #Splice variable names
     selected_vars <-
       tidyselect::eval_select(
@@ -441,6 +441,14 @@ stratiply <-
     ... #Additional arguments to pass to f
   ) { 
     
+    #Check for a function
+    if(missing(f))
+      stop("No function supplied.")
+    
+    #Check for inputs
+    if(missing(by))
+      stop("No columns supplied.")
+    
     #Splice variable names
     selected_vars <-
       tidyselect::eval_select(
@@ -451,10 +459,6 @@ stratiply <-
     #Return error if no split variables entered
     if(length(selected_vars) == 0)
       stop("No columns registered.")
-    
-    #Check for a function
-    if(missing(f))
-      stop("No function supplied.")
     
     data <-
       data %>%
@@ -477,16 +481,6 @@ stratiply <-
         .f = f,
         ...
       )
-    
-  }
-
-#######COMPLETE UP TO THIS POINT
-#Name: grable
-#Description: Make a kable with stacked header
-grable <-
-  function(
-    data
-  ) {
     
   }
 
@@ -653,175 +647,46 @@ dish <-
 #Description: Populate a custom text template with the values in a set of key-value pairs
 absorb <-
   function(
-    key, #Variable with the keys
-    value, #Variable with the values
-    text, #Custom text template with explicit keys where values should be absorbed into
-    sep = "|", #Values will be separated by this in the result if there are duplicate keys
-    print = FALSE, #Should the recursion process be displayed?
-    evaluate = FALSE #Should the resulting string be evaluated as an R expression?
+    key,
+    value,
+    text
   ) {
     
-    #Check that inputs are the same length
+    #Check that lengths match
     if(length(key) != length(value))
-      stop("keys and values must have the same length")
+      stop("Keys and values must hold the same number of elements.")
     
-    #Coerce the key to character
-    key <- as.character(key)
+    #Check text is a character vector
+    if(!is.character(text))
+      stop("Text input must be a vector of character strings.")
     
-    #Map over each element of text
-    filled_text <-
-      text %>%
-      
-      purrr::map_chr(
-        function(.text_i) {
-          
-          #Print original text if desired
-          if(print) 
-            print(.text_i)
-          
-          #Send key to recursion process
-          key %>%
-            purrr::reduce(
-              function(.x, .y) {
-                
-                #Fill value for this iteration
-                .text_ij <- stringr::str_replace_all(.x, .y, stringr::str_c(value[key == .y], collapse = sep))
-                
-                #Print intermediate result if desired
-                if(print)
-                  print(.text_ij)
-                
-                
-                .text_ij
-                
-              },
-              .init = .text_i
-            )
-          
-        }
-      )
+    #Convert values to characters
+    value <- as.character(value)
     
-    #Evaluate if requested
-    if(evaluate) {
-      
-      filled_text %>%
-        purrr::map(
-          ~
-            eval(
-              parse(
-                text = .x
-              )
-            )
-        )
-      
-    } else {
-      
-      filled_text
-      
-    }
-  }
-
-#Name: type_match
-#Description: Utility function to use in select columns
-type_match <-
-  function(
-    object,
-    types,
-    negated = FALSE
-  ) {
+    #Check for names
+    names <- names(text)
     
-    #Apply to columns that DONT match
-    if(negated) {
-      
-      all(
-        types %>%
-          purrr::map_lgl(
-            ~!methods::is(object, .x)
-          )
-      )
-      
-      #Apply to columns that do match        
-    } else {
-      
-      any(
-        types %>%
-          purrr::map_lgl(
-            ~methods::is(object, .x)
-          )
-      )
-      
-    }
+    #Replace all substrings in text with values that match the key
+    for(i in seq_along(key))
+      text <- text %>% stringr::str_replace_all(pattern = key[i], replacement = value[i])
+    
+    #Restore names if provided
+    if(!is.null(names))
+      names(text) <- names
+    
+    #Return result
+    text
     
   }
 
-#Name: typly
-#Description: Apply a function for specified types
-typly <-
+#######COMPLETE UP TO THIS POINT
+#Name: grable
+#Description: Make a kable with stacked header
+grable <-
   function(
-    data, #Any data set
-    types, #Character vector of data types to apply functions
-    f, #Function to apply
-    negated = FALSE, #Should the function be applied to variables not matching any types?
-    keep = FALSE, #Should non-matching columns be kept in result?
-    ... #Additional arguments passed to f
+    data
   ) {
     
-    #Filter columns if needed
-    if(!keep) {
-      
-      data[data %>% purrr::map_lgl(type_match, types = types, negated = negated)] %>%
-        
-        purrr::map(
-          #Apply function
-          function(.x) {
-            
-            #If argument is a function then evaluate
-            if(methods::is(f, "function")) {
-              
-              f(.x, ...)
-              
-              #If list of functions are provided, evaluate each        
-            } else {
-              
-              f %>%
-                purrr::map(
-                  function(.y) .y(.x, ...)
-                )
-              
-            }
-            
-          }
-        )
-      
-    } else {
-      
-      data %>%
-        
-        #Only apply function if condition holds
-        purrr::map_if(
-          function(.x) type_match(.x, types = types, negated = negated),
-          
-          #Apply function
-          function(.x) {
-            
-            #If argument is a function then evaluate
-            if(methods::is(f, "function")) {
-              
-              f(.x, ...)
-              
-              #If list of functions are provided, evaluate each        
-            } else {
-              
-              f %>%
-                purrr::map(
-                  function(.y) .y(.x, ...)
-                )
-              
-            }
-            
-          }
-        )
-    }
   }
 
 #Name: descriptives

@@ -12,8 +12,6 @@ export("%>%",
        "stratiply",
        "dish",
        "absorb",
-       "type_match",
-       "typly",
        "descriptives",
        "univariate_associations",
        "univariate_table")

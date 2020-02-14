@@ -4,6 +4,11 @@ _This version is in development_
 
 ## Changes to existing functions
 
+* `absorb`
+
+  - If there are duplicate keys, only the value from the first is used (unless the pattern is found again)
+  - User is in charge of evaluating expressions from the resulting strings
+
 * `divide`
 
   - Default behavior is now to split to a multi-level list depending on the number of split variables
@@ -14,12 +19,16 @@ _This version is in development_
   
 * `stratiply`
 
-  - User in charge of binding back together (e.g. with `fasten`)
+  - User is in charge of binding back together (e.g. with `fasten`)
 
 * `stretch` (removed)
 
   - Use `tidyr::pivot_wider` (starting version 1.0.0) for this functionality
   - Use `grable` to create a `knitr::kable` with stacked headers
+
+* `type_match` and `typly` (removed)
+
+  -Removed due to other existing functions serving their purpose
 
 * `univariate_table`
 
@@ -33,6 +42,10 @@ _This version is in development_
 * `fasten` takes a divided data frame and merges it back together
 * `grable` makes a `knitr::kable` with stacked headers
 * `muddle` randomly permutes some or all of the columns of a data frame
+
+# cheese 0.0.3
+
+Minor update to documentation
 
 # cheese 0.0.2
 
