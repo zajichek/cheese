@@ -649,7 +649,10 @@ absorb <-
   function(
     key,
     value,
-    text
+    text,
+    sep = "_",
+    trace = FALSE,
+    evaluate = FALSE
   ) {
     
     #Check that lengths match
@@ -660,35 +663,214 @@ absorb <-
     if(!is.character(text))
       stop("Text input must be a vector of character strings.")
     
-    #Convert values to characters
-    value <- as.character(value)
-    
     #Check for names
     names <- names(text)
     
-    #Replace all substrings in text with values that match the key
-    for(i in seq_along(key))
-      text <- text %>% stringr::str_replace_all(pattern = key[i], replacement = value[i])
+    #Put into data frame
+    lookup <-
+      tibble::tibble(
+        key = key,
+        value = value
+      ) %>%
+      
+      #Convert keys/values to character vectors
+      dplyr::mutate_all(
+        as.character
+      ) %>%
+      
+      #Concatenate values for each key
+      dplyr::group_by(
+        key
+      ) %>%
+      dplyr::summarise(
+        value = stringr::str_c(value, collapse = sep)
+      )
+    
+    #Repeat for each unique key
+    for(i in seq_len(nrow(lookup))) {
+      
+      #Replace all substrings in text with values that match the key
+      text <- text %>% stringr::str_replace_all(pattern = lookup$key[i], replacement = lookup$value[i])
+      
+      #Trace if desired
+      if(trace)
+        cat(text, "\n")
+      
+    }
     
     #Restore names if provided
     if(!is.null(names))
       names(text) <- names
+    
+    #Evaluate expressions if necessary
+    if(evaluate)
+      text <- text %>% purrr::map(~eval(parse(text = .x)))
     
     #Return result
     text
     
   }
 
-#######COMPLETE UP TO THIS POINT
-#Name: grable
-#Description: Make a kable with stacked header
-grable <-
+#Name: some_type
+#Description: Does an object conform to one or more types?
+some_type <-
   function(
-    data
+    object,
+    types
   ) {
+    
+    #Check for inputs
+    if(missing(object))
+      stop("No object supplied")
+    
+    #Check for types
+    if(missing(types))
+      stop("No types supplied")
+    
+    #Loop through input
+    match_found <- FALSE
+    for(i in seq_along(types)) {
+      
+      #Check if object type conforms
+      if(methods::is(object, types[i])) {
+        
+        #Change status; exit loop
+        match_found <- TRUE
+        break
+        
+      }
+      
+    }
+    
+    #Return indicator
+    match_found
     
   }
 
+#Name: typly
+#Description: Apply a function to columns conforming (or not) to the specified types
+typly <-
+  function(
+    data,
+    f,
+    types,
+    negated = FALSE,
+    ...
+  ) {
+    
+    #Check for a function
+    if(missing(f))
+      stop("No function supplied.")
+    
+    #Check for types
+    if(missing(types))
+      stop("No types supplied")
+    
+    #Test type matching
+    type_test <- 
+      data %>% 
+      
+      #Get a logical vector
+      purrr::map_lgl(
+        .f = some_type,
+        types = types
+      )
+    
+    #Negate if needed
+    if(negated)
+      type_test <- !type_test
+    
+    #If any conform, apply function
+    if(any(type_test)) {
+      
+      data %>%
+        
+        #Select columns with conforming types
+        dplyr::select_if(
+          type_test
+        ) %>%
+        
+        #Apply the function
+        purrr::map(
+          f,
+          ...
+        )
+      
+    } else {
+      
+      NULL
+      
+    }
+    
+    
+  }
+
+#Name: default_univariate_functions
+#Description: Provides list of functions for different types of data
+default_univariate_functions <-
+  function(useNA) {
+    
+    list(
+      
+      #Functions for all data
+      f_all =
+        list(
+          
+          length = length,
+          missing = ~sum(is.na(.)),
+          available = ~sum(!is.na(.)),
+          class = class,
+          unique = ~length(unique(.))
+          
+        ),
+      
+      #Functions for numeric data
+      f_numeric =
+        list(
+          
+          evaluated = ~"numeric",
+          mean = ~mean(., na.rm = TRUE),
+          sd = ~sd(., na.rm = TRUE),
+          min = ~min(., na.rm = TRUE),
+          q1 = ~quantile(., .25, na.rm = TRUE),
+          median = ~median(., na.rm = TRUE),
+          q3 = ~quantile(., .75, na.rm = TRUE),
+          max = ~max(., na.rm = TRUE),
+          iqr = ~IQR(., na.rm = TRUE),
+          range = ~diff(range(., na.rm = TRUE))
+          
+        ),
+      
+      #Functions for categorical data
+      f_categorical =
+        list(
+          
+          evaluated = ~"categorical",
+          count = table,
+          proportion = ~prop.table(table(., useNA = useNA)),
+          percent = ~prop.table(table(., useNA = useNA))*100
+          
+        ),
+      
+      #Functions for other data
+      f_other =
+        list(
+          
+          evaluated = ~"other"
+          
+        )
+      
+    ) %>%
+      
+      #Convert everything to a function
+      purrr::map_depth(
+        .depth = 2,
+        rlang::as_function
+      )
+    
+  }
+
+#######COMPLETE UP TO THIS POINT
 #Name: descriptives
 #Description: Compute descriptive statistics on columns of a data frame
 descriptives <-
@@ -850,6 +1032,15 @@ descriptives <-
             TRUE ~ .label
           )
       )
+  }
+
+#Name: grable
+#Description: Make a kable with stacked header
+grable <-
+  function(
+    data
+  ) {
+    
   }
 
 #Name: absorb_descriptive_variable

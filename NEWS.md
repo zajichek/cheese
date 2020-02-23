@@ -6,8 +6,11 @@ _This version is in development_
 
 * `absorb`
 
-  - If there are duplicate keys, only the value from the first is used (unless the pattern is found again)
-  - User is in charge of evaluating expressions from the resulting strings
+  - The `print` argument was renamed to `trace`
+
+* `descriptives`
+
+  - The `na.rm` and `useNA` arguments are no longer required for additional functions
 
 * `divide`
 
@@ -26,9 +29,13 @@ _This version is in development_
   - Use `tidyr::pivot_wider` (starting version 1.0.0) for this functionality
   - Use `grable` to create a `knitr::kable` with stacked headers
 
-* `type_match` and `typly` (removed)
+* `typly`
 
-  -Removed due to other existing functions serving their purpose
+  - Removed the `keep` argument
+
+* `type_match`
+
+  - Changed function name to `some_type`
 
 * `univariate_table`
 
@@ -37,9 +44,9 @@ _This version is in development_
 
 ## New functions
 
-* `depths` finds the depth(s) of elements that satisfy a predicate
+* `depths` finds the unique depth(s) of elements in a list that satisfy a predicate
 * `depths_string` finds paths and locations of elements that satisfy a predicate
-* `fasten` takes a divided data frame and merges it back together
+* `fasten` takes a divided data frame and binds it back together
 * `grable` makes a `knitr::kable` with stacked headers
 * `muddle` randomly permutes some or all of the columns of a data frame
 
