@@ -485,7 +485,7 @@ stratiply <-
   }
 
 #Name: dish
-#Description: Evaluate a function on parts of a data frame
+#Description: Evaluate a function on combinations of columns
 dish <-
   function(
     data, #A data frame
@@ -689,12 +689,12 @@ absorb <-
     #Repeat for each unique key
     for(i in seq_len(nrow(lookup))) {
       
-      #Replace all substrings in text with values that match the key
-      text <- text %>% stringr::str_replace_all(pattern = lookup$key[i], replacement = lookup$value[i])
-      
       #Trace if desired
       if(trace)
         cat(text, "\n")
+      
+      #Replace all substrings in text with values that match the key
+      text <- text %>% stringr::str_replace_all(pattern = lookup$key[i], replacement = lookup$value[i])
       
     }
     

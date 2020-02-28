@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Stratify a data frame, apply a function to each strata, and collect results — stratiply • cheese</title>
+<title>Stratify a data frame and apply a function — stratiply • cheese</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,7 @@
 
 
 
-<meta property="og:title" content="Stratify a data frame, apply a function to each strata, and collect results — stratiply" />
-
-<meta property="og:description" content="Calls &quot;divide&quot; to separate a data frame into one or more stratified frames, applies a function to each strata, and optionally collects the results and returns strata to their original columns." />
+<meta property="og:title" content="Stratify a data frame and apply a function — stratiply" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -66,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cheese</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -90,12 +88,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/zajichek/cheese">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -109,24 +102,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Stratify a data frame, apply a function to each strata, and collect results</h1>
+    <h1>Stratify a data frame and apply a function</h1>
     
     <div class="hidden name"><code>stratiply.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
-    <p>Calls <code>"divide"</code> to separate a data frame into one or more stratified frames, applies a function to each strata, and optionally collects the results and returns strata to their original columns.</p>
-    
+
     </div>
 
     <pre class="usage"><span class='fu'>stratiply</span>(
     <span class='no'>data</span>,
-    <span class='no'>strata</span>,
     <span class='no'>f</span>,
-    <span class='kw'>delimiter</span> <span class='kw'>=</span> <span class='st'>"|"</span>,
-    <span class='kw'>bind</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-    <span class='kw'>separate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='no'>by</span>,
     <span class='no'>...</span>
 )</pre>
     
@@ -135,27 +123,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>Any <code>data.frame</code>.</p></td>
-    </tr>
-    <tr>
-      <th>strata</th>
-      <td><p>A vector of column names or positions, or a <code><a href='https://rdrr.io/pkg/tidyselect/man/vars_select.html'>tidyselect::vars_select</a></code> helper.</p></td>
+      <td><p>A data frame.</p></td>
     </tr>
     <tr>
       <th>f</th>
-      <td><p>Any function that takes a <code>data.frame</code> as an argument.</p></td>
+      <td><p>A function that takes a <code>data.frame</code> as an argument.</p></td>
     </tr>
     <tr>
-      <th>delimiter</th>
-      <td><p>See the <code>sep</code> argument in <code>"divide"</code>. Also used for salvaging original columns.</p></td>
-    </tr>
-    <tr>
-      <th>bind</th>
-      <td><p>Should the results be binded back to a single <code>data.frame</code>? Defaults to <code>FALSE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>separate</th>
-      <td><p>If <code>bind = TRUE</code>, should the stratification variables be separated back to their original columns? Defaults to <code>TRUE</code>.</p></td>
+      <th>by</th>
+      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code>. Defaults to all columns.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -165,98 +141,177 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>If <code>bind = FALSE</code>, a named <code>list</code> with the results of <code>f</code> for each strata. Otherwise the results are binded to a single <code>data.frame</code>.</p>
+    <p>A list with the result of <code>f</code> at the leaves.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>tidyverse</span>)
 
-<span class='co'>#Return a list</span>
+<span class='co'>#Unquoted selection</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>stratiply</span>(
-        <span class='kw'>strata</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sex"</span>, <span class='st'>"HeartDisease"</span>),
-        <span class='kw'>f</span> <span class='kw'>=</span> <span class='no'>head</span>
-    )</div><div class='output co'>#&gt; $`Female|No`
-#&gt; <span style='color: #555555;'># A tibble: 6 x 7</span><span>
-#&gt;     Age ChestPain         BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'>1</span><span>    41 Atypical angi…   130         204 FALSE            172 No                
-#&gt; </span><span style='color: #555555;'>2</span><span>    57 Asymptomatic     120         354 FALSE            163 Yes               
-#&gt; </span><span style='color: #555555;'>3</span><span>    56 Atypical angi…   140         294 FALSE            153 No                
-#&gt; </span><span style='color: #555555;'>4</span><span>    48 Non-anginal p…   130         275 FALSE            139 No                
-#&gt; </span><span style='color: #555555;'>5</span><span>    58 Typical angina   150         283 TRUE             162 No                
-#&gt; </span><span style='color: #555555;'>6</span><span>    50 Non-anginal p…   120         219 FALSE            158 No                
+        <span class='no'>head</span>,
+        <span class='no'>Sex</span>
+    )</div><div class='output co'>#&gt; $Female
+#&gt; <span style='color: #555555;'># A tibble: 6 x 8</span><span>
+#&gt;     Age ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'>1</span><span>    41 Atypical…   130         204 FALSE            172 No              
+#&gt; </span><span style='color: #555555;'>2</span><span>    62 Asymptom…   140         268 FALSE            160 No              
+#&gt; </span><span style='color: #555555;'>3</span><span>    57 Asymptom…   120         354 FALSE            163 Yes             
+#&gt; </span><span style='color: #555555;'>4</span><span>    56 Atypical…   140         294 FALSE            153 No              
+#&gt; </span><span style='color: #555555;'>5</span><span>    48 Non-angi…   130         275 FALSE            139 No              
+#&gt; </span><span style='color: #555555;'>6</span><span>    58 Typical …   150         283 TRUE             162 No              
+#&gt; </span><span style='color: #555555;'># … with 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
 #&gt; 
-#&gt; $`Male|No`
-#&gt; </span><span style='color: #555555;'># A tibble: 6 x 7</span><span>
-#&gt;     Age ChestPain         BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'>1</span><span>    63 Typical angina   145         233 TRUE             150 No                
-#&gt; </span><span style='color: #555555;'>2</span><span>    37 Non-anginal p…   130         250 FALSE            187 No                
-#&gt; </span><span style='color: #555555;'>3</span><span>    56 Atypical angi…   120         236 FALSE            178 No                
-#&gt; </span><span style='color: #555555;'>4</span><span>    57 Asymptomatic     140         192 FALSE            148 No                
-#&gt; </span><span style='color: #555555;'>5</span><span>    44 Atypical angi…   120         263 FALSE            173 No                
-#&gt; </span><span style='color: #555555;'>6</span><span>    52 Non-anginal p…   172         199 TRUE             162 No                
-#&gt; 
-#&gt; $`Female|Yes`
-#&gt; </span><span style='color: #555555;'># A tibble: 6 x 7</span><span>
-#&gt;     Age ChestPain       BP Cholesterol BloodSugar MaximumHR ExerciseInducedAngi…
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>               
-#&gt; </span><span style='color: #555555;'>1</span><span>    62 Asymptomatic   140         268 FALSE            160 No                  
-#&gt; </span><span style='color: #555555;'>2</span><span>    65 Asymptomatic   150         225 FALSE            114 No                  
-#&gt; </span><span style='color: #555555;'>3</span><span>    61 Asymptomatic   130         330 FALSE            169 No                  
-#&gt; </span><span style='color: #555555;'>4</span><span>    51 Asymptomatic   130         305 FALSE            142 Yes                 
-#&gt; </span><span style='color: #555555;'>5</span><span>    62 Asymptomatic   160         164 FALSE            145 No                  
-#&gt; </span><span style='color: #555555;'>6</span><span>    60 Asymptomatic   150         258 FALSE            157 No                  
-#&gt; 
-#&gt; $`Male|Yes`
-#&gt; </span><span style='color: #555555;'># A tibble: 6 x 7</span><span>
-#&gt;     Age ChestPain         BP Cholesterol BloodSugar MaximumHR ExerciseInducedAn…
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'>1</span><span>    67 Asymptomatic     160         286 FALSE            108 Yes               
-#&gt; </span><span style='color: #555555;'>2</span><span>    67 Asymptomatic     120         229 FALSE            129 Yes               
-#&gt; </span><span style='color: #555555;'>3</span><span>    63 Asymptomatic     130         254 FALSE            147 No                
-#&gt; </span><span style='color: #555555;'>4</span><span>    53 Asymptomatic     140         203 TRUE             155 Yes               
-#&gt; </span><span style='color: #555555;'>5</span><span>    56 Non-anginal p…   130         256 TRUE             142 Yes               
-#&gt; </span><span style='color: #555555;'>6</span><span>    48 Atypical angi…   110         229 FALSE            168 No                
+#&gt; $Male
+#&gt; </span><span style='color: #555555;'># A tibble: 6 x 8</span><span>
+#&gt;     Age ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'>1</span><span>    63 Typical …   145         233 TRUE             150 No              
+#&gt; </span><span style='color: #555555;'>2</span><span>    67 Asymptom…   160         286 FALSE            108 Yes             
+#&gt; </span><span style='color: #555555;'>3</span><span>    67 Asymptom…   120         229 FALSE            129 Yes             
+#&gt; </span><span style='color: #555555;'>4</span><span>    37 Non-angi…   130         250 FALSE            187 No              
+#&gt; </span><span style='color: #555555;'>5</span><span>    56 Atypical…   120         236 FALSE            178 No              
+#&gt; </span><span style='color: #555555;'>6</span><span>    63 Asymptom…   130         254 FALSE            147 No              
+#&gt; </span><span style='color: #555555;'># … with 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
 #&gt; </div><div class='input'>
-<span class='co'>#Separated strata column</span>
+<span class='co'>#Select helper</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>stratiply</span>(
-        <span class='kw'>strata</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sex"</span>, <span class='st'>"HeartDisease"</span>),
         <span class='kw'>f</span> <span class='kw'>=</span> <span class='no'>head</span>,
-        <span class='kw'>bind</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-    )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 24 x 9</span><span>
-#&gt;    Sex   HeartDisease   Age ChestPain    BP Cholesterol BloodSugar MaximumHR
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Fema… No              41 Atypical…   130         204 FALSE            172
-#&gt; </span><span style='color: #555555;'> 2</span><span> Fema… No              57 Asymptom…   120         354 FALSE            163
-#&gt; </span><span style='color: #555555;'> 3</span><span> Fema… No              56 Atypical…   140         294 FALSE            153
-#&gt; </span><span style='color: #555555;'> 4</span><span> Fema… No              48 Non-angi…   130         275 FALSE            139
-#&gt; </span><span style='color: #555555;'> 5</span><span> Fema… No              58 Typical …   150         283 TRUE             162
-#&gt; </span><span style='color: #555555;'> 6</span><span> Fema… No              50 Non-angi…   120         219 FALSE            158
-#&gt; </span><span style='color: #555555;'> 7</span><span> Male  No              63 Typical …   145         233 TRUE             150
-#&gt; </span><span style='color: #555555;'> 8</span><span> Male  No              37 Non-angi…   130         250 FALSE            187
-#&gt; </span><span style='color: #555555;'> 9</span><span> Male  No              56 Atypical…   120         236 FALSE            178
-#&gt; </span><span style='color: #555555;'>10</span><span> Male  No              57 Asymptom…   140         192 FALSE            148
-#&gt; </span><span style='color: #555555;'># … with 14 more rows, and 1 more variable: ExerciseInducedAngina </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span></div><div class='input'>
-<span class='co'>#Custom function</span>
+        <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'>starts_with</span>(<span class='st'>"S"</span>)
+    )</div><div class='output co'>#&gt; $Female
+#&gt; </span><span style='color: #555555;'># A tibble: 6 x 8</span><span>
+#&gt;     Age ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'>1</span><span>    41 Atypical…   130         204 FALSE            172 No              
+#&gt; </span><span style='color: #555555;'>2</span><span>    62 Asymptom…   140         268 FALSE            160 No              
+#&gt; </span><span style='color: #555555;'>3</span><span>    57 Asymptom…   120         354 FALSE            163 Yes             
+#&gt; </span><span style='color: #555555;'>4</span><span>    56 Atypical…   140         294 FALSE            153 No              
+#&gt; </span><span style='color: #555555;'>5</span><span>    48 Non-angi…   130         275 FALSE            139 No              
+#&gt; </span><span style='color: #555555;'>6</span><span>    58 Typical …   150         283 TRUE             162 No              
+#&gt; </span><span style='color: #555555;'># … with 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt; 
+#&gt; $Male
+#&gt; </span><span style='color: #555555;'># A tibble: 6 x 8</span><span>
+#&gt;     Age ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'>1</span><span>    63 Typical …   145         233 TRUE             150 No              
+#&gt; </span><span style='color: #555555;'>2</span><span>    67 Asymptom…   160         286 FALSE            108 Yes             
+#&gt; </span><span style='color: #555555;'>3</span><span>    67 Asymptom…   120         229 FALSE            129 Yes             
+#&gt; </span><span style='color: #555555;'>4</span><span>    37 Non-angi…   130         250 FALSE            187 No              
+#&gt; </span><span style='color: #555555;'>5</span><span>    56 Atypical…   120         236 FALSE            178 No              
+#&gt; </span><span style='color: #555555;'>6</span><span>    63 Asymptom…   130         254 FALSE            147 No              
+#&gt; </span><span style='color: #555555;'># … with 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>
+#&gt; </div><div class='input'>
+<span class='co'>#Use additional arguments for the function</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>stratiply</span>(
-        <span class='kw'>strata</span> <span class='kw'>=</span> <span class='fu'>matches</span>(<span class='st'>"^(S|H)"</span>),
-        <span class='kw'>f</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>)
-            <span class='no'>x</span> <span class='kw'>%&gt;%</span>
-            <span class='fu'>select_if</span>(<span class='no'>is.numeric</span>) <span class='kw'>%&gt;%</span>
-            <span class='fu'>map</span>(<span class='no'>mean</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-        <span class='kw'>bind</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-        <span class='kw'>separate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-    )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 6</span><span>
-#&gt;   Sex    HeartDisease   Age    BP Cholesterol MaximumHR
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Female No            54.6  129.        257.      154.
-#&gt; </span><span style='color: #555555;'>2</span><span> Male   No            51.0  130.        232.      162.
-#&gt; </span><span style='color: #555555;'>3</span><span> Female Yes           59.1  147.        276.      143.
-#&gt; </span><span style='color: #555555;'>4</span><span> Male   Yes           56.1  132.        246.      138.</div></span></pre>
+  <span class='fu'>stratiply</span>(
+        <span class='kw'>f</span> <span class='kw'>=</span> <span class='no'>glm</span>,
+        <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>Sex</span>,
+        <span class='kw'>formula</span> <span class='kw'>=</span> <span class='no'>HeartDisease</span> ~ <span class='no'>.</span>,
+        <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>
+  )</div><div class='output co'>#&gt; $Female
+#&gt; 
+#&gt; Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])
+#&gt; 
+#&gt; Coefficients:
+#&gt;               (Intercept)                        Age  
+#&gt;                -26.201202                   0.063173  
+#&gt;  ChestPainAtypical angina  ChestPainNon-anginal pain  
+#&gt;                 16.672159                  14.881710  
+#&gt;     ChestPainAsymptomatic                         BP  
+#&gt;                 18.613467                   0.045810  
+#&gt;               Cholesterol             BloodSugarTRUE  
+#&gt;                  0.002053                   1.766565  
+#&gt;                 MaximumHR   ExerciseInducedAnginaYes  
+#&gt;                 -0.021872                   1.040728  
+#&gt; 
+#&gt; Degrees of Freedom: 96 Total (i.e. Null);  87 Residual
+#&gt; Null Deviance:	    110.7 
+#&gt; Residual Deviance: 56.66 	AIC: 76.66
+#&gt; 
+#&gt; $Male
+#&gt; 
+#&gt; Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])
+#&gt; 
+#&gt; Coefficients:
+#&gt;               (Intercept)                        Age  
+#&gt;                  0.141398                   0.024326  
+#&gt;  ChestPainAtypical angina  ChestPainNon-anginal pain  
+#&gt;                 -0.470775                   0.107361  
+#&gt;     ChestPainAsymptomatic                         BP  
+#&gt;                  1.552618                   0.011718  
+#&gt;               Cholesterol             BloodSugarTRUE  
+#&gt;                  0.009023                  -0.343345  
+#&gt;                 MaximumHR   ExerciseInducedAnginaYes  
+#&gt;                 -0.037817                   0.524487  
+#&gt; 
+#&gt; Degrees of Freedom: 205 Total (i.e. Null);  196 Residual
+#&gt; Null Deviance:	    283.2 
+#&gt; Residual Deviance: 191.5 	AIC: 211.5
+#&gt; </div><div class='input'>
+<span class='co'>#Use mixed selections to split by desired columns</span>
+<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>stratiply</span>(
+        <span class='kw'>f</span> <span class='kw'>=</span> <span class='no'>glm</span>,
+        <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>Sex</span>, <span class='no'>is.logical</span>),
+        <span class='kw'>formula</span> <span class='kw'>=</span> <span class='no'>HeartDisease</span> ~ <span class='no'>Age</span>,
+        <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>
+  )</div><div class='output co'>#&gt; $Female
+#&gt; $Female$`FALSE`
+#&gt; 
+#&gt; Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          Age  
+#&gt;    -5.17802      0.06904  
+#&gt; 
+#&gt; Degrees of Freedom: 84 Total (i.e. Null);  83 Residual
+#&gt; Null Deviance:	    90.33 
+#&gt; Residual Deviance: 84.84 	AIC: 88.84
+#&gt; 
+#&gt; $Female$`TRUE`
+#&gt; 
+#&gt; Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          Age  
+#&gt;     4.29409     -0.07303  
+#&gt; 
+#&gt; Degrees of Freedom: 11 Total (i.e. Null);  10 Residual
+#&gt; Null Deviance:	    16.64 
+#&gt; Residual Deviance: 15.96 	AIC: 19.96
+#&gt; 
+#&gt; 
+#&gt; $Male
+#&gt; $Male$`FALSE`
+#&gt; 
+#&gt; Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          Age  
+#&gt;    -3.58959      0.07275  
+#&gt; 
+#&gt; Degrees of Freedom: 172 Total (i.e. Null);  171 Residual
+#&gt; Null Deviance:	    236.8 
+#&gt; Residual Deviance: 220.3 	AIC: 224.3
+#&gt; 
+#&gt; $Male$`TRUE`
+#&gt; 
+#&gt; Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          Age  
+#&gt;    -4.28261      0.07483  
+#&gt; 
+#&gt; Degrees of Freedom: 32 Total (i.e. Null);  31 Residual
+#&gt; Null Deviance:	    45.72 
+#&gt; Residual Deviance: 43.66 	AIC: 47.66
+#&gt; 
+#&gt; </div><div class='input'>  
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

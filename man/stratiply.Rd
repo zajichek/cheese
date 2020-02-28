@@ -4,15 +4,15 @@
 \usage{
 stratiply(
     data,
-    by,
     f,
+    by,
     ...
 )
 }
 \arguments{
-\item{data}{A \code{data.frame}.}
-\item{by}{Columns or positions, or a \code{tidyselect::vars_select} helper.}
+\item{data}{A data frame.}
 \item{f}{A function that takes a \code{data.frame} as an argument.}
+\item{by}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers}. Defaults to all columns.}
 \item{...}{Additional arguments passed to \code{f}.}
 }
 \value{
@@ -22,25 +22,36 @@ A list with the result of \code{f} at the leaves.
 \examples{
 require(tidyverse)
 
+#Unquoted selection
 heart_disease \%>\%
     stratiply(
-        by = c("Sex", "HeartDisease"),
-        f = head
+        head,
+        Sex
     )
 
 #Select helper
 heart_disease \%>\%
     stratiply(
-        by = starts_with("S"),
-        f = head
+        f = head,
+        by = starts_with("S")
     )
     
-#Custom function
+#Use additional arguments for the function
 heart_disease \%>\%
   stratiply(
-        by = "Sex",
         f = glm,
+        by = Sex,
         formula = HeartDisease ~ .,
         family = "binomial"
+  )
+
+#Use mixed selections to split by desired columns
+heart_disease \%>\%
+  stratiply(
+        f = glm,
+        by = c(Sex, is.logical),
+        formula = HeartDisease ~ Age,
+        family = "binomial"
   ) 
+  
 }

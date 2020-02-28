@@ -12,19 +12,15 @@ Status](https://www.r-pkg.org/badges/version/cheese)](https://cran.r-project.org
 
 # Introduction
 
-The `cheese` package contains tools aimed to assist in building analysis
-workflows and presentation-ready results while maintaining flexibility
-and an intuitive interface. There are also functions available for
-general programming use. It is highly dependent on the `tidyverse` and
-is recommedended it be installed and loaded prior to use in its
-entirety.
+The `cheese` package contains general and specialized tools when
+building an analysis workflow.
 
 # Installation
 
-  - From CRAN
+  - From CRAN (current version 0.0.3)
 
 `install.packages("cheese")`
 
-  - From source
+  - From source (in development)
 
 `devtools::install_github("zajichek/cheese")`

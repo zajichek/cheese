@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Apply function(s) to elements conforming to specified type(s) — typly • cheese</title>
+<title>Evaluate a function on columns conforming to one or more (or no) specified types — typly • cheese</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,7 @@
 
 
 
-<meta property="og:title" content="Apply function(s) to elements conforming to specified type(s) — typly" />
-
-<meta property="og:description" content="Evaluates a function or a list of function on all elements of list or data.frame that inherit at least one of the allowable types specified by the user. An option is available to evaluate the function(s) on all elements that do not match." />
+<meta property="og:title" content="Evaluate a function on columns conforming to one or more (or no) specified types — typly" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -66,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cheese</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -90,12 +88,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/zajichek/cheese">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -109,23 +102,20 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Apply function(s) to elements conforming to specified type(s)</h1>
+    <h1>Evaluate a function on columns conforming to one or more (or no) specified types</h1>
     
     <div class="hidden name"><code>typly.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
-    <p>Evaluates a function or a list of function on all elements of <code>list</code> or <code>data.frame</code> that inherit at least one of the allowable types specified by the user. An option is available to evaluate the function(s) on all elements that do not match.</p>
-    
+
     </div>
 
     <pre class="usage"><span class='fu'>typly</span>(
     <span class='no'>data</span>,
-    <span class='no'>types</span>,
     <span class='no'>f</span>,
+    <span class='no'>types</span>,
     <span class='kw'>negated</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-    <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
     <span class='no'>...</span>
 )</pre>
     
@@ -134,23 +124,19 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A <code>data.frame</code> or <code>list</code>.</p></td>
-    </tr>
-    <tr>
-      <th>types</th>
-      <td><p>A character vector of allowable data types identifying columns in which function(s) should be applied.</p></td>
+      <td><p>A data frame.</p></td>
     </tr>
     <tr>
       <th>f</th>
-      <td><p>A <code>function</code> or <code>list</code> of <code>function</code>s.</p></td>
+      <td><p>A <code>function</code>.</p></td>
+    </tr>
+    <tr>
+      <th>types</th>
+      <td><p>A character vector of classes to check against <code>object</code>.</p></td>
     </tr>
     <tr>
       <th>negated</th>
-      <td><p>Should the function(s) be applied to columns that don't match any <code>types</code>? Defaults to <code>FALSE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>keep</th>
-      <td><p>Should the non-matching columns be kept as is? Defaults to <code>FALSE</code>.</p></td>
+      <td><p>Should the function be applied to columns that don't match any <code>types</code>? Defaults to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -160,7 +146,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>list</code> with the result(s) of <code>f</code> for each applicable column.</p>
+    <p>A <code>list</code> with the result of <code>f</code> for each column.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -168,81 +154,25 @@
 
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
 
-    <span class='co'>#Compute means and medians on numeric data</span>
+    <span class='co'>#Compute means on numeric or logical data</span>
     <span class='fu'>typly</span>(
-        <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"numeric"</span>, <span class='st'>"logical"</span>),
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-            <span class='kw'>mean</span> <span class='kw'>=</span> <span class='no'>mean</span>,
-            <span class='kw'>median</span> <span class='kw'>=</span> <span class='no'>median</span>
-        ),
-        <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+        <span class='kw'>f</span> <span class='kw'>=</span> <span class='no'>mean</span>,
+        <span class='kw'>types</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"numeric"</span>, <span class='st'>"logical"</span>),
         <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-    ) <span class='kw'>%&gt;%</span>
-
-    <span class='co'>#Compute table</span>
-    <span class='fu'>typly</span>(
-        <span class='st'>"factor"</span>,
-        <span class='no'>table</span>,
-        <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
     )</div><div class='output co'>#&gt; $Age
-#&gt; $Age$mean
 #&gt; [1] 54.43894
 #&gt; 
-#&gt; $Age$median
-#&gt; [1] 56
-#&gt; 
-#&gt; 
-#&gt; $Sex
-#&gt; .x
-#&gt; Female   Male 
-#&gt;     97    206 
-#&gt; 
-#&gt; $ChestPain
-#&gt; .x
-#&gt;   Typical angina  Atypical angina Non-anginal pain     Asymptomatic 
-#&gt;               23               50               86              144 
-#&gt; 
 #&gt; $BP
-#&gt; $BP$mean
 #&gt; [1] 131.6898
 #&gt; 
-#&gt; $BP$median
-#&gt; [1] 130
-#&gt; 
-#&gt; 
 #&gt; $Cholesterol
-#&gt; $Cholesterol$mean
 #&gt; [1] 246.6931
 #&gt; 
-#&gt; $Cholesterol$median
-#&gt; [1] 241
-#&gt; 
-#&gt; 
 #&gt; $BloodSugar
-#&gt; $BloodSugar$mean
 #&gt; [1] 0.1485149
 #&gt; 
-#&gt; $BloodSugar$median
-#&gt; [1] FALSE
-#&gt; 
-#&gt; 
 #&gt; $MaximumHR
-#&gt; $MaximumHR$mean
 #&gt; [1] 149.6073
-#&gt; 
-#&gt; $MaximumHR$median
-#&gt; [1] 153
-#&gt; 
-#&gt; 
-#&gt; $ExerciseInducedAngina
-#&gt; .x
-#&gt;  No Yes 
-#&gt; 204  99 
-#&gt; 
-#&gt; $HeartDisease
-#&gt; .x
-#&gt;  No Yes 
-#&gt; 164 139 
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

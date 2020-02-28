@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cheese</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -87,12 +87,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/zajichek/cheese">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -107,18 +102,31 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/zajichek/cheese/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      
     </div>
 
-    <div id="cheese-0-0-2" class="section level1">
+    <div id="cheeese-0-1-0" class="section level1">
 <h1 class="page-header">
-<a href="#cheese-0-0-2" class="anchor"></a>cheese 0.0.2<small> Unreleased </small>
+<a href="#cheeese-0-1-0" class="anchor"></a>cheeese 0.1.0<small> Unreleased </small>
 </h1>
 <p><em>This version is in development</em></p>
 <div id="changes-to-existing-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-existing-functions" class="anchor"></a>Changes to existing functions</h2>
 <ul>
+<li>
+<p><code>absorb</code></p>
+<ul>
+<li>The <code>print</code> argument was renamed to <code>trace</code>
+</li>
+</ul>
+</li>
+<li>
+<p><code>descriptives</code></p>
+<ul>
+<li>The <code>na.rm</code> and <code>useNA</code> arguments are no longer required for additional functions</li>
+</ul>
+</li>
 <li>
 <p><code>divide</code></p>
 <ul>
@@ -133,16 +141,27 @@
 <li>
 <p><code>stratiply</code></p>
 <ul>
-<li>Retain original stratification columns by default when result is binded</li>
-<li>When result is unbinded, the depth reflects that of <code>divide</code>
-</li>
+<li>User is in charge of binding back together (e.g. with <code>fasten</code>)</li>
 </ul>
 </li>
 <li>
-<p><code>stretch</code></p>
+<p><code>stretch</code> (removed)</p>
 <ul>
-<li>Works when there are no <code>keep</code> variables</li>
-<li>Variables spread over the columns are right-most in the result</li>
+<li>Use <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">tidyr::pivot_wider</a></code> (starting version 1.0.0) for this functionality</li>
+<li>Use <code>grable</code> to create a <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable</a></code> with stacked headers</li>
+</ul>
+</li>
+<li>
+<p><code>typly</code></p>
+<ul>
+<li>Removed the <code>keep</code> argument</li>
+</ul>
+</li>
+<li>
+<p><code>type_match</code></p>
+<ul>
+<li>Changed function name to <code>some_type</code>
+</li>
 </ul>
 </li>
 <li>
@@ -159,25 +178,29 @@
 <a href="#new-functions" class="anchor"></a>New functions</h2>
 <ul>
 <li>
-<code>chop</code> removes or extracts a vector of patterns from the beginning or end of a vector of strings</li>
+<code>depths</code> finds the unique depth(s) of elements in a list that satisfy a predicate</li>
 <li>
-<code>depths</code> traverses a list structure to find elements that satisfy a predicate</li>
+<code>depths_string</code> finds paths and locations of elements that satisfy a predicate</li>
 <li>
-<code>explore</code> using flexible models to visually assess non-linear relationships and interactions</li>
+<code>fasten</code> takes a divided data frame and binds it back together</li>
 <li>
-<code>fasten</code> takes a divided data frame and merges it back together</li>
+<code>grable</code> makes a <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable</a></code> with stacked headers</li>
 <li>
 <code>muddle</code> randomly permutes some or all of the columns of a data frame</li>
-<li>
-<code>pick</code> selects a subset of a list as in <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code>
-</li>
-<li>
-<code>regression_table</code> creates a custom table for regression models similar to <code>univariate_table</code>
-</li>
-<li>
-<code>wander</code> reduces a set of columns from a <code>data.frame</code> by user-specified functions, stopping criteria, comparator values, etc.</li>
 </ul>
 </div>
+</div>
+    <div id="cheese-0-0-3" class="section level1">
+<h1 class="page-header">
+<a href="#cheese-0-0-3" class="anchor"></a>cheese 0.0.3<small> 2020-02-12 </small>
+</h1>
+<p>Minor update to documentation</p>
+</div>
+    <div id="cheese-0-0-2" class="section level1">
+<h1 class="page-header">
+<a href="#cheese-0-0-2" class="anchor"></a>cheese 0.0.2<small> 2020-01-24 </small>
+</h1>
+<p>Minor update to documentation</p>
 </div>
     <div id="cheese-0-0-1" class="section level1">
 <h1 class="page-header">
@@ -191,6 +214,8 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#cheeese-0-1-0">0.1.0</a></li>
+        <li><a href="#cheese-0-0-3">0.0.3</a></li>
         <li><a href="#cheese-0-0-2">0.0.2</a></li>
         <li><a href="#cheese-0-0-1">0.0.1</a></li>
       </ul>

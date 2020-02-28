@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dish out a function to combinations of variables — dish • cheese</title>
+<title>Evaluate a two-argument function with combinations of columns — dish • cheese</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,7 @@
 
 
 
-<meta property="og:title" content="Dish out a function to combinations of variables — dish" />
-
-<meta property="og:description" content="Evaluates a two argument function on subsets of a data frame by evaluating each combination of columns or subsets." />
+<meta property="og:title" content="Evaluate a two-argument function with combinations of columns — dish" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -66,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cheese</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -90,12 +88,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/zajichek/cheese">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -109,25 +102,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Dish out a function to combinations of variables</h1>
+    <h1>Evaluate a two-argument function with combinations of columns</h1>
     
     <div class="hidden name"><code>dish.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
-    <p>Evaluates a two argument function on subsets of a data frame by evaluating each combination of columns or subsets.</p>
-    
+
     </div>
 
     <pre class="usage"><span class='fu'>dish</span>(
     <span class='no'>data</span>,
     <span class='no'>f</span>,
-    <span class='kw'>left</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-    <span class='kw'>right</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <span class='no'>left</span>,
+    <span class='no'>right</span>,
     <span class='kw'>each_left</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
     <span class='kw'>each_right</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>bind</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
     <span class='no'>...</span>
 )</pre>
     
@@ -140,27 +130,23 @@
     </tr>
     <tr>
       <th>f</th>
-      <td><p>Any <code>function</code> that takes a <code>vector</code> and/or <code>data.frame</code> in the first two arguments.</p></td>
+      <td><p>A <code>function</code> that takes a <code>vector</code> and/or <code>data.frame</code> in the first two arguments.</p></td>
     </tr>
     <tr>
       <th>left</th>
-      <td><p>Variables to be used in the first argument of <code>f</code>. If <code>NULL</code> (default), all variables except those in <code>right</code> are used. Has <code><a href='https://rdrr.io/pkg/tidyselect/man/vars_select.html'>tidyselect::vars_select</a></code> capabilities.</p></td>
+      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code> to be evaluated in the first argument of <code>f</code></p></td>
     </tr>
     <tr>
       <th>right</th>
-      <td><p>Variables to be used in the second argument of <code>f</code>. If <code>NULL</code> (default), all variables except those in <code>left</code> are used. Has <code><a href='https://rdrr.io/pkg/tidyselect/man/vars_select.html'>tidyselect::vars_select</a></code> capabilities.</p></td>
+      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code> to be evaluated in the second argument of <code>f</code></p></td>
     </tr>
     <tr>
       <th>each_left</th>
-      <td><p>Should each <code>left</code> variable be separately evaluated in <code>f</code>? Defaults to <code>TRUE</code>. If <code>FALSE</code>, <code>left</code> is entered into <code>f</code> as a <code>data.frame</code>.</p></td>
+      <td><p>Should each <code>left</code> variable be indivdually evaluated in <code>f</code>? Defaults to <code>TRUE</code>. If <code>FALSE</code>, <code>left</code> is entered into <code>f</code> as a <code>data.frame</code>.</p></td>
     </tr>
     <tr>
       <th>each_right</th>
       <td><p>Should each <code>right</code> variable be separately evaluated in <code>f</code>? Defaults to <code>TRUE</code>. If <code>FALSE</code>, <code>right</code> is entered into <code>f</code> as a <code>data.frame</code>.</p></td>
-    </tr>
-    <tr>
-      <th>bind</th>
-      <td><p>Should results be binded into a single <code>data.frame</code>? Defaults to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -170,13 +156,13 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>list</code> (if <code>bind = FALSE</code>) or a <code>tibble</code> (if <code>bind = TRUE</code>) with the results of <code>f</code> evaluated on data subsets.</p>
+    <p>A <code>list</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>tidyverse</span>)
 
-<span class='co'>#1) Default uses every variable on both sides</span>
+<span class='co'>#All variables on both sides</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>select_if</span>(
         <span class='no'>is.numeric</span>
@@ -239,7 +225,7 @@
 #&gt; [1] 1
 #&gt; 
 #&gt; </div><div class='input'>
-<span class='co'>#2) Simple regression of Age and BP on each variable</span>
+<span class='co'>#Simple regression of each numeric variable on each other variable</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>dish</span>(
         <span class='kw'>f</span> <span class='kw'>=</span>
@@ -250,23 +236,27 @@
                     <span class='kw'>Estimate</span> <span class='kw'>=</span> <span class='no'>mod</span>$<span class='no'>coef</span>
                 )
             },
-        <span class='kw'>left</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Age"</span>, <span class='st'>"BP"</span>),
-        <span class='kw'>bind</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-    )</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 32 x 4</span><span>
-#&gt;    .left .right      Parameter         Estimate
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Age   Sex         (Intercept)        55.7   
-#&gt; </span><span style='color: #555555;'> 2</span><span> Age   Sex         xMale              -</span><span style='color: #BB0000;'>1.89</span><span>  
-#&gt; </span><span style='color: #555555;'> 3</span><span> Age   ChestPain   (Intercept)        55.9   
-#&gt; </span><span style='color: #555555;'> 4</span><span> Age   ChestPain   xAtypical angina   -</span><span style='color: #BB0000;'>4.51</span><span>  
-#&gt; </span><span style='color: #555555;'> 5</span><span> Age   ChestPain   xNon-anginal pain  -</span><span style='color: #BB0000;'>2.17</span><span>  
-#&gt; </span><span style='color: #555555;'> 6</span><span> Age   ChestPain   xAsymptomatic      -</span><span style='color: #BB0000;'>0.147</span><span> 
-#&gt; </span><span style='color: #555555;'> 7</span><span> Age   Cholesterol (Intercept)        45.4   
-#&gt; </span><span style='color: #555555;'> 8</span><span> Age   Cholesterol x                   0.036</span><span style='text-decoration: underline;'>5</span><span>
-#&gt; </span><span style='color: #555555;'> 9</span><span> Age   BloodSugar  (Intercept)        54.0   
-#&gt; </span><span style='color: #555555;'>10</span><span> Age   BloodSugar  xTRUE               3.01  
-#&gt; </span><span style='color: #555555;'># … with 22 more rows</span><span></div><div class='input'>
-<span class='co'>#3) Multiple regression with Age, BP on all variables simultaneously</span>
+        <span class='kw'>left</span> <span class='kw'>=</span> <span class='no'>is.numeric</span>
+    ) <span class='kw'>%&gt;%</span>
+
+    <span class='co'>#Bind rows together</span>
+    <span class='fu'>fasten</span>(
+        <span class='kw'>into</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Outcome"</span>, <span class='st'>"Predictor"</span>)
+    )</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 48 x 4</span><span>
+#&gt;    Outcome Predictor             Parameter         Estimate
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> Age     Sex                   (Intercept)         55.7  
+#&gt; </span><span style='color: #555555;'> 2</span><span> Age     Sex                   xMale               -</span><span style='color: #BB0000;'>1.89</span><span> 
+#&gt; </span><span style='color: #555555;'> 3</span><span> Age     ChestPain             (Intercept)         55.9  
+#&gt; </span><span style='color: #555555;'> 4</span><span> Age     ChestPain             xAtypical angina    -</span><span style='color: #BB0000;'>4.51</span><span> 
+#&gt; </span><span style='color: #555555;'> 5</span><span> Age     ChestPain             xNon-anginal pain   -</span><span style='color: #BB0000;'>2.17</span><span> 
+#&gt; </span><span style='color: #555555;'> 6</span><span> Age     ChestPain             xAsymptomatic       -</span><span style='color: #BB0000;'>0.147</span><span>
+#&gt; </span><span style='color: #555555;'> 7</span><span> Age     BloodSugar            (Intercept)         54.0  
+#&gt; </span><span style='color: #555555;'> 8</span><span> Age     BloodSugar            xTRUE                3.01 
+#&gt; </span><span style='color: #555555;'> 9</span><span> Age     ExerciseInducedAngina (Intercept)         53.9  
+#&gt; </span><span style='color: #555555;'>10</span><span> Age     ExerciseInducedAngina xYes                 1.76 
+#&gt; </span><span style='color: #555555;'># … with 38 more rows</span><span></div><div class='input'>
+<span class='co'>#Multiple regression of each numeric variable on all others simultaneously</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>dish</span>(
         <span class='kw'>f</span> <span class='kw'>=</span>
@@ -277,32 +267,27 @@
                     <span class='kw'>Estimate</span> <span class='kw'>=</span> <span class='no'>mod</span>$<span class='no'>coef</span>
                 )
             },
-        <span class='kw'>left</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Age"</span>, <span class='st'>"BP"</span>),
-        <span class='kw'>each_right</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-        <span class='kw'>bind</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-    )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 20 x 3</span><span>
-#&gt;    .left Parameter                 Estimate
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Age   (Intercept)                72.9   
-#&gt; </span><span style='color: #555555;'> 2</span><span> Age   SexMale                    -</span><span style='color: #BB0000;'>2.16</span><span>  
-#&gt; </span><span style='color: #555555;'> 3</span><span> Age   ChestPainAtypical angina   -</span><span style='color: #BB0000;'>3.74</span><span>  
-#&gt; </span><span style='color: #555555;'> 4</span><span> Age   ChestPainNon-anginal pain  -</span><span style='color: #BB0000;'>2.80</span><span>  
-#&gt; </span><span style='color: #555555;'> 5</span><span> Age   ChestPainAsymptomatic      -</span><span style='color: #BB0000;'>3.10</span><span>  
-#&gt; </span><span style='color: #555555;'> 6</span><span> Age   Cholesterol                 0.032</span><span style='text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #555555;'> 7</span><span> Age   BloodSugarTRUE              2.80  
-#&gt; </span><span style='color: #555555;'> 8</span><span> Age   MaximumHR                  -</span><span style='color: #BB0000;'>0.153</span><span> 
-#&gt; </span><span style='color: #555555;'> 9</span><span> Age   ExerciseInducedAnginaYes   -</span><span style='color: #BB0000;'>1.91</span><span>  
-#&gt; </span><span style='color: #555555;'>10</span><span> Age   HeartDiseaseYes             2.23  
-#&gt; </span><span style='color: #555555;'>11</span><span> BP    (Intercept)               130.    
-#&gt; </span><span style='color: #555555;'>12</span><span> BP    SexMale                    -</span><span style='color: #BB0000;'>4.61</span><span>  
-#&gt; </span><span style='color: #555555;'>13</span><span> BP    ChestPainAtypical angina  -</span><span style='color: #BB0000;'>11.8</span><span>   
-#&gt; </span><span style='color: #555555;'>14</span><span> BP    ChestPainNon-anginal pain -</span><span style='color: #BB0000;'>11.0</span><span>   
-#&gt; </span><span style='color: #555555;'>15</span><span> BP    ChestPainAsymptomatic     -</span><span style='color: #BB0000;'>11.8</span><span>   
-#&gt; </span><span style='color: #555555;'>16</span><span> BP    Cholesterol                 0.032</span><span style='text-decoration: underline;'>8</span><span>
-#&gt; </span><span style='color: #555555;'>17</span><span> BP    BloodSugarTRUE              8.08  
-#&gt; </span><span style='color: #555555;'>18</span><span> BP    MaximumHR                   0.016</span><span style='text-decoration: underline;'>6</span><span>
-#&gt; </span><span style='color: #555555;'>19</span><span> BP    ExerciseInducedAnginaYes    0.665 
-#&gt; </span><span style='color: #555555;'>20</span><span> BP    HeartDiseaseYes             6.88  </div><div class='input'>
+        <span class='kw'>left</span> <span class='kw'>=</span> <span class='no'>is.numeric</span>,
+        <span class='kw'>each_right</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+    ) <span class='kw'>%&gt;%</span>
+
+    <span class='co'>#Bind rows together</span>
+    <span class='fu'>fasten</span>(
+        <span class='kw'>into</span> <span class='kw'>=</span> <span class='st'>"Outcome"</span>
+    )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 32 x 3</span><span>
+#&gt;    Outcome Parameter                 Estimate
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> Age     (Intercept)                 56.8  
+#&gt; </span><span style='color: #555555;'> 2</span><span> Age     SexMale                     -</span><span style='color: #BB0000;'>3.53</span><span> 
+#&gt; </span><span style='color: #555555;'> 3</span><span> Age     ChestPainAtypical angina    -</span><span style='color: #BB0000;'>4.28</span><span> 
+#&gt; </span><span style='color: #555555;'> 4</span><span> Age     ChestPainNon-anginal pain   -</span><span style='color: #BB0000;'>2.51</span><span> 
+#&gt; </span><span style='color: #555555;'> 5</span><span> Age     ChestPainAsymptomatic       -</span><span style='color: #BB0000;'>2.08</span><span> 
+#&gt; </span><span style='color: #555555;'> 6</span><span> Age     BloodSugarTRUE               2.90 
+#&gt; </span><span style='color: #555555;'> 7</span><span> Age     ExerciseInducedAnginaYes    -</span><span style='color: #BB0000;'>0.294</span><span>
+#&gt; </span><span style='color: #555555;'> 8</span><span> Age     HeartDiseaseYes              4.59 
+#&gt; </span><span style='color: #555555;'> 9</span><span> BP      (Intercept)                141.   
+#&gt; </span><span style='color: #555555;'>10</span><span> BP      SexMale                     -</span><span style='color: #BB0000;'>5.43</span><span> 
+#&gt; </span><span style='color: #555555;'># … with 22 more rows</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

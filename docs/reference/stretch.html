@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cheese</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -90,12 +90,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/zajichek/cheese">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -141,15 +136,15 @@
     </tr>
     <tr>
       <th>keys</th>
-      <td><p>A vector of column names or positions, or a <code><a href='https://rdrr.io/pkg/tidyselect/man/vars_select.html'>tidyselect::vars_select</a></code> helper.</p></td>
+      <td><p>A vector of column names or positions, or a <code><a href='https://tidyselect.r-lib.org/reference/vars_select.html'>tidyselect::vars_select</a></code> helper.</p></td>
     </tr>
     <tr>
       <th>keep</th>
-      <td><p>Variables to remain as their own columns. If <code>NULL</code> (default), all variables except those in <code>send</code> are chosen, excluding the <code>keys</code>. Has <code><a href='https://rdrr.io/pkg/tidyselect/man/vars_select.html'>tidyselect::vars_select</a></code> capabilities.</p></td>
+      <td><p>Variables to remain as their own columns. If <code>NULL</code> (default), all variables except those in <code>send</code> are chosen, excluding the <code>keys</code>. Has <code><a href='https://tidyselect.r-lib.org/reference/vars_select.html'>tidyselect::vars_select</a></code> capabilities.</p></td>
     </tr>
     <tr>
       <th>send</th>
-      <td><p>Variables to send into new columns for each key. If <code>NULL</code> (default), all variables except those in <code>keep</code> are chosen, excluding the <code>keys</code>. Has <code><a href='https://rdrr.io/pkg/tidyselect/man/vars_select.html'>tidyselect::vars_select</a></code> capabilities.</p></td>
+      <td><p>Variables to send into new columns for each key. If <code>NULL</code> (default), all variables except those in <code>keep</code> are chosen, excluding the <code>keys</code>. Has <code><a href='https://tidyselect.r-lib.org/reference/vars_select.html'>tidyselect::vars_select</a></code> capabilities.</p></td>
     </tr>
     <tr>
       <th>join</th>
@@ -202,41 +197,21 @@
     <span class='fu'>stretch</span>(
         <span class='kw'>keys</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sex"</span>, <span class='st'>"BloodSugar"</span>),
         <span class='kw'>keep</span> <span class='kw'>=</span> <span class='st'>"HeartDisease"</span>
-    )</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 13</span><span>
-#&gt;   HeartDisease Mean_Female_FAL… SD_Female_FALSE Median_Female_F… Mean_Male_FALSE
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> No                       54.0           10.4              53.5            50.2
-#&gt; </span><span style='color: #555555;'>2</span><span> Yes                      59.7            3.61             61              55.8
-#&gt; </span><span style='color: #555555;'># … with 8 more variables: SD_Male_FALSE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Median_Male_FALSE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Mean_Female_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, SD_Female_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Median_Female_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Mean_Male_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, SD_Male_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Median_Male_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+    )</div><div class='output co'>#&gt; <span class='error'>Error in stretch(., keys = c("Sex", "BloodSugar"), keep = "HeartDisease"): could not find function "stretch"</span></div><div class='input'>
 <span class='co'>#2) If "HeartDisease" wasn't fully crossed, use different joining to get only matching groups</span>
 <span class='no'>temp_summary</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>stretch</span>(
         <span class='kw'>keys</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sex"</span>, <span class='st'>"BloodSugar"</span>),
         <span class='kw'>keep</span> <span class='kw'>=</span> <span class='st'>"HeartDisease"</span>,
         <span class='kw'>join</span> <span class='kw'>=</span> <span class='no'>inner_join</span>
-    )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 13</span><span>
-#&gt;   HeartDisease Mean_Female_FAL… SD_Female_FALSE Median_Female_F… Mean_Male_FALSE
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> No                       54.0           10.4              53.5            50.2
-#&gt; </span><span style='color: #555555;'>2</span><span> Yes                      59.7            3.61             61              55.8
-#&gt; </span><span style='color: #555555;'># … with 8 more variables: SD_Male_FALSE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Median_Male_FALSE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Mean_Female_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, SD_Female_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Median_Female_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Mean_Male_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, SD_Male_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Median_Male_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+    )</div><div class='output co'>#&gt; <span class='error'>Error in stretch(., keys = c("Sex", "BloodSugar"), keep = "HeartDisease",     join = inner_join): could not find function "stretch"</span></div><div class='input'>
 <span class='co'>#3) Only send two of the summaries</span>
 <span class='no'>temp_summary</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>stretch</span>(
         <span class='kw'>keys</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sex"</span>, <span class='st'>"BloodSugar"</span>),
         <span class='kw'>keep</span> <span class='kw'>=</span> <span class='st'>"HeartDisease"</span>,
         <span class='kw'>send</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Mean"</span>, <span class='st'>"Median"</span>)
-    )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 9</span><span>
-#&gt;   HeartDisease Mean_Female_FAL… Median_Female_F… Mean_Male_FALSE
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> No                       54.0             53.5            50.2
-#&gt; </span><span style='color: #555555;'>2</span><span> Yes                      59.7             61              55.8
-#&gt; </span><span style='color: #555555;'># … with 5 more variables: Median_Male_FALSE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Mean_Female_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Median_Female_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Mean_Male_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Median_Male_TRUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+    )</div><div class='output co'>#&gt; <span class='error'>Error in stretch(., keys = c("Sex", "BloodSugar"), keep = "HeartDisease",     send = c("Mean", "Median")): could not find function "stretch"</span></div><div class='input'>
 <span class='co'>#4) Clean HTML table with keys spanned over columns</span>
 <span class='no'>result</span> <span class='kw'>&lt;-</span>
     <span class='no'>temp_summary</span> <span class='kw'>%&gt;%</span>
@@ -245,71 +220,13 @@
         <span class='kw'>keep</span> <span class='kw'>=</span> <span class='st'>"HeartDisease"</span>,
         <span class='kw'>extract_keys_as_header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
         <span class='kw'>keep_keys_in_header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-    )
-<span class='no'>result</span>$<span class='no'>.result</span> <span class='kw'>%&gt;%</span>
+    )</div><div class='output co'>#&gt; <span class='error'>Error in stretch(., keys = c("Sex", "BloodSugar"), keep = "HeartDisease",     extract_keys_as_header = TRUE, keep_keys_in_header = FALSE): could not find function "stretch"</span></div><div class='input'><span class='no'>result</span>$<span class='no'>.result</span> <span class='kw'>%&gt;%</span>
     <span class='kw pkg'>knitr</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span>(<span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"html"</span>) <span class='kw'>%&gt;%</span>
     <span class='kw pkg'>kableExtra</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span>() <span class='kw'>%&gt;%</span>
     <span class='kw pkg'>kableExtra</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/add_header_above.html'>add_header_above</a></span>(
         <span class='kw pkg'>kableExtra</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/auto_index.html'>auto_index</a></span>(<span class='no'>result</span>$<span class='no'>.header</span>)
-    )</div><div class='output co'>#&gt; &lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
-#&gt;  &lt;thead&gt;
-#&gt; &lt;tr&gt;
-#&gt; &lt;th style="border-bottom:hidden" colspan="1"&gt;&lt;/th&gt;
-#&gt; &lt;th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Female_FALSE&lt;/div&gt;&lt;/th&gt;
-#&gt; &lt;th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Male_FALSE&lt;/div&gt;&lt;/th&gt;
-#&gt; &lt;th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Female_TRUE&lt;/div&gt;&lt;/th&gt;
-#&gt; &lt;th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Male_TRUE&lt;/div&gt;&lt;/th&gt;
-#&gt; &lt;/tr&gt;
-#&gt;   &lt;tr&gt;
-#&gt;    &lt;th style="text-align:left;"&gt; HeartDisease &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; SD &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; Median &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; SD &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; Median &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; SD &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; Median &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; SD &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; Median &lt;/th&gt;
-#&gt;   &lt;/tr&gt;
-#&gt;  &lt;/thead&gt;
-#&gt; &lt;tbody&gt;
-#&gt;   &lt;tr&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 54.03030 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 10.408532 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 53.5 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 50.21333 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 8.819961 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 51.0 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 60.33333 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 6.653320 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 59 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 54.70588 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 6.761700 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 53 &lt;/td&gt;
-#&gt;   &lt;/tr&gt;
-#&gt;   &lt;tr&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; Yes &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 59.68421 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 3.606362 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 61.0 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 55.75510 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 8.560351 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 57.5 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 57.16667 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 7.808115 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 58 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 58.12500 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 7.116881 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 58 &lt;/td&gt;
-#&gt;   &lt;/tr&gt;
-#&gt; &lt;/tbody&gt;
-#&gt; &lt;/table&gt;</div><div class='input'>    
-</div></span></pre>
+    )</div><div class='output co'>#&gt; <span class='error'>Error in eval(lhs, parent, parent): object 'result' not found</span></div><div class='input'>    
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

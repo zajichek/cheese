@@ -5,13 +5,13 @@
 \usage{
 muddle(
     data,
-    at = names(data),
+    at,
     ...
 )
 }
 \arguments{
-\item{data}{A \code{data.frame}.}
-\item{at}{Columns or positions to permute, or a \code{tidyselect::vars_select} helper. Defaults to all columns.}
+\item{data}{A data frame.}
+\item{at}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers}. Defaults to all columns.}
 \item{...}{Additional arguments passed to \code{base::sample}}
 }.
 \value{
@@ -32,7 +32,13 @@ heart_disease \%>\%
 #Permute select columns
 heart_disease \%>\%
   muddle(
-    at = c("Age", "Sex")
+    at = c(Age, Sex)
+  )
+
+#Using a select helper
+heart_disease \%>\%
+  muddle(
+    at = matches("^S")
   )
 
 #Pass other arguments
