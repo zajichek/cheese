@@ -13,7 +13,4 @@ export("%>%",
        "dish",
        "absorb",
        "some_type",
-       "typly",
-       "descriptives",
-       "univariate_associations",
-       "univariate_table")
+       "typly")
