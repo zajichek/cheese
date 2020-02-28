@@ -12,8 +12,8 @@ muddle(
 \arguments{
 \item{data}{A data frame.}
 \item{at}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers}. Defaults to all columns.}
-\item{...}{Additional arguments passed to \code{base::sample}}
-}.
+\item{...}{Additional arguments passed to \code{base::sample}.}
+}
 \value{
 A \code{tibble::tibble}
 }
