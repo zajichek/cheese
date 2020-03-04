@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if an object conforms to one or more of the specified types — some_type • cheese</title>
+<title>Is an object one of the specified types? — some_type • cheese</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,9 @@
 
 
 
-<meta property="og:title" content="Check if an object conforms to one or more of the specified types — some_type" />
+<meta property="og:title" content="Is an object one of the specified types? — some_type" />
+
+<meta property="og:description" content="Check if an object inherits one (or more) of a vector classes." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -102,13 +104,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if an object conforms to one or more of the specified types</h1>
+    <h1>Is an object one of the specified types?</h1>
     
     <div class="hidden name"><code>some_type.Rd</code></div>
     </div>
 
     <div class="ref-description">
-
+    
+    <p>Check if an object inherits one (or more) of a vector classes.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>some_type</span>(
@@ -125,20 +129,19 @@
     </tr>
     <tr>
       <th>types</th>
-      <td><p>A character vector of classes to check against <code>object</code>.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/character.html'>base::character</a></code> vector of classes to test against.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>logical</code> indicator</p>
+    <p>A <code><a href='https://rdrr.io/r/base/logical.html'>base::logical</a></code> indicator</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>tidyverse</span>)
-
+    <pre class="examples"><div class='input'><span class='co'>#Columns of a data frame</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>map_lgl</span>(
+    <span class='kw pkg'>purrr</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/purrr/man/map.html'>map_lgl</a></span>(
         <span class='no'>some_type</span>,
         <span class='kw'>types</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"numeric"</span>, <span class='st'>"logical"</span>)
     )</div><div class='output co'>#&gt;                   Age                   Sex             ChestPain 

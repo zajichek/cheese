@@ -1,6 +1,9 @@
 \name{stratiply}
 \alias{stratiply}
 \title{Stratify a data frame and apply a function}
+\description{
+Split a \code{base::data.frame} by any number of columns and apply a function to subset.
+}
 \usage{
 stratiply(
     data,
@@ -10,18 +13,16 @@ stratiply(
 )
 }
 \arguments{
-\item{data}{A data frame.}
-\item{f}{A function that takes a \code{data.frame} as an argument.}
-\item{by}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers}. Defaults to all columns.}
+\item{data}{A \code{base::data.frame}.}
+\item{f}{A function that takes a \code{base::data.frame} as an argument.}
+\item{by}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers}}
 \item{...}{Additional arguments passed to \code{f}.}
 }
 \value{
-A list with the result of \code{f} at the leaves.
+A \code{base::list}
 }
 \author{Alex Zajichek}
 \examples{
-require(tidyverse)
-
 #Unquoted selection
 heart_disease \%>\%
     stratiply(

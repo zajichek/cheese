@@ -1,6 +1,9 @@
 \name{some_type}
 \alias{some_type}
-\title{Check if an object conforms to one or more of the specified types}
+\title{Is an object one of the specified types?}
+\description{
+Check if an object inherits one (or more) of a vector classes.
+}
 \usage{
 some_type(
     object,
@@ -9,17 +12,16 @@ some_type(
 }
 \arguments{
 \item{object}{Any \code{R} object.}
-\item{types}{A character vector of classes to check against \code{object}.}
+\item{types}{A \code{base::character} vector of classes to test against.}
 }
 \value{
-A \code{logical} indicator
+A \code{base::logical} indicator
 }
 \author{Alex Zajichek}
 \examples{
-require(tidyverse)
-
+#Columns of a data frame
 heart_disease \%>\%
-    map_lgl(
+    purrr::map_lgl(
         some_type,
         types = c("numeric", "logical")
     )

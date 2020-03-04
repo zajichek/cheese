@@ -34,7 +34,7 @@
 
 <meta property="og:title" content="Divide a data frame into a list — divide" />
 
-<meta property="og:description" content="Separate a data.frame into a list of any depth by one or more stratification columns whose levels become the names." />
+<meta property="og:description" content="Separate a base::data.frame into a base::list of any depth by one or more stratification columns whose levels become the names." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -111,7 +111,7 @@
 
     <div class="ref-description">
     
-    <p>Separate a <code>data.frame</code> into a list of any depth by one or more stratification columns whose levels become the names.</p>
+    <p>Separate a <code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a></code> into a <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code> of any depth by one or more stratification columns whose levels become the names.</p>
     
     </div>
 
@@ -129,15 +129,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>Any <code>data.frame</code>.</p></td>
+      <td><p>Any <code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Selection of columns to split by. See <code><a href='https://dplyr.tidyverse.org/reference/select.html'>?dplyr::select</a></code> for details.</p></td>
+      <td><p>Selection of columns to split by. See <code><a href='https://rdrr.io/pkg/dplyr/man/select.html'>dplyr::select</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>depth</th>
-      <td><p>Depth to split the list to. Defaults to <code>Inf</code>. See details for more information.</p></td>
+      <td><p>Depth to split to. Defaults to <code>Inf</code>. See details for more information.</p></td>
     </tr>
     <tr>
       <th>remove</th>
@@ -149,7 +149,7 @@
     </tr>
     <tr>
       <th>sep</th>
-      <td><p>String to separate values of each stratification variable by. Defaults to "|". Only used when the number of stratification columns exceeds the desired depth.</p></td>
+      <td><p>String to separate values of each stratification variable by. Defaults to <code><a href='https://rdrr.io/r/base/Logic.html'>"|"</a></code>. Only used when the number of stratification columns exceeds the desired depth.</p></td>
     </tr>
     </table>
     
@@ -159,18 +159,11 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-<ul>
-<li><p>If the (implied) depth is not equal to zero, a <code>list</code> with <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble</a></code> objects at the leaves.</p></li>
-<li><p>Otherwise, a <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble</a></code></p></li>
-</ul>
-
+    <p>A <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>tidyverse</span>)
-
-<span class='co'>#Unquoted selection</span>
+    <pre class="examples"><div class='input'><span class='co'>#Unquoted selection</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>divide</span>(
         <span class='no'>Sex</span>

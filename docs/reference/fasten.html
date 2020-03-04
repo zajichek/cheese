@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bind lists of data frames back together — fasten • cheese</title>
+<title>Bind a list of data frames back together — fasten • cheese</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
 
 
-<meta property="og:title" content="Bind lists of data frames back together — fasten" />
+<meta property="og:title" content="Bind a list of data frames back together — fasten" />
 
-<meta property="og:description" content="Take a list with data frames at the leaves and bind them back together (row-wise)." />
+<meta property="og:description" content="Merge a base::list of arbitrary depth with base::data.frame's at the leaves row-wise." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -104,14 +104,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Bind lists of data frames back together</h1>
+    <h1>Bind a list of data frames back together</h1>
     
     <div class="hidden name"><code>fasten.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Take a list with data frames at the leaves and bind them back together (row-wise).</p>
+    <p>Merge a <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code> of arbitrary depth with <code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a></code>'s at the leaves row-wise.</p>
     
     </div>
 
@@ -126,11 +126,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>list</th>
-      <td><p>A <code>list</code> with data frames at the leaves.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code> with <code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a></code>'s at the leaves.</p></td>
     </tr>
     <tr>
       <th>into</th>
-      <td><p>A character vector of resulting column names. Defaults to <code>NULL</code>.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/character.html'>base::character</a></code> vector of resulting column names. Defaults to <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>depth</th>
@@ -140,26 +140,18 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For the <code>into</code> argument, use empty strings <code>""</code> to omit column creation when rows are binded. Use positive integers for the <code>depth</code> to move from the root and negative integers to move from the leaves. The maximum (minimum) depth will be used for integers larger (smaller) than such. The leaves of the input <code>list</code> should be at the same depth.</p>
+    <p>Use empty strings <code>""</code> in the <code>into</code> argument to omit column creation when rows are binded. Use positive integers for the <code>depth</code> to move from the root and negative integers to move from the leaves. The maximum (minimum) depth will be used for integers larger (smaller) than such. The leaves of the input <code>list</code> should be at the same depth.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-<ul>
-<li><p>If the (implied) depth is equal to zero, a <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble</a></code>.</p></li>
-<li><p>Otherwise, a <code>list</code> with <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble</a></code> objects at the leaves.</p></li>
-</ul>
-
+    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble</a></code> or reduced <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>tidyverse</span>)
-
-<span class='co'>#Make a divided data frame</span>
+    <pre class="examples"><div class='input'><span class='co'>#Make a divided data frame</span>
 <span class='no'>list</span> <span class='kw'>&lt;-</span>
   <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>divide</span>(
+  <span class='fu'><a href='divide.html'>divide</a></span>(
     <span class='no'>Sex</span>,
     <span class='no'>HeartDisease</span>,
     <span class='no'>ChestPain</span>
@@ -567,9 +559,7 @@
 #&gt; </span><span style='color: #555555;'> 8</span><span>    41   105         198 FALSE            168 No                   
 #&gt; </span><span style='color: #555555;'> 9</span><span>    45   130         234 FALSE            175 No                   
 #&gt; </span><span style='color: #555555;'>10</span><span>    55   135         250 FALSE            161 No                   
-#&gt; </span><span style='color: #555555;'># … with 293 more rows</span><span></div><div class='input'>
-
-</div></span></pre>
+#&gt; </span><span style='color: #555555;'># … with 293 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

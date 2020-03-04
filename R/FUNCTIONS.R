@@ -94,7 +94,7 @@ divide <-
       
       #Split by first variable(s)
       split(
-        dplyr::select(., tidyselect::all_of(selected_vars[[1]])),
+        dplyr::select(data, tidyselect::all_of(selected_vars[[1]])),
         drop = drop,
         sep = sep
       )
@@ -113,7 +113,7 @@ divide <-
             ~
               .x %>%
               split(
-                dplyr::select(., tidyselect::all_of(selected_vars[[i + 1]])),
+                dplyr::select(.x, tidyselect::all_of(selected_vars[[i + 1]])),
                 drop = drop,
                 sep = sep
               )
@@ -215,20 +215,15 @@ depths_string <-
       
     } 
     
-    #Return current result
-    result %>%
-      
-      #Collapse indices
+    #Collapse indices and add boundaries
+    stringr::str_c(
+      "{",
       stringr::str_c(
+        result,
         collapse = ","
-      ) %>%
-      
-      #Add boundaries
-      stringr::str_c(
-        "{",
-        .,
-        "}"
-      )
+      ),
+      "}"
+    )
     
   }
 

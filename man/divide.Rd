@@ -2,7 +2,7 @@
 \alias{divide}
 \title{Divide a data frame into a list}
 \description{
-Separate a \code{data.frame} into a list of any depth by one or more stratification columns whose levels become the names.
+Separate a \code{base::data.frame} into a \code{base::list} of any depth by one or more stratification columns whose levels become the names.
 }
 \usage{
 divide(
@@ -15,26 +15,21 @@ divide(
 )
 }
 \arguments{
-\item{data}{Any \code{data.frame}.}
-\item{...}{Selection of columns to split by. See \code{?dplyr::select} for details.}
-\item{depth}{Depth to split the list to. Defaults to \code{Inf}. See details for more information.}
+\item{data}{Any \code{base::data.frame}.}
+\item{...}{Selection of columns to split by. See \code{dplyr::select} for details.}
+\item{depth}{Depth to split to. Defaults to \code{Inf}. See details for more information.}
 \item{remove}{Should the stratfication columns be removed? Defaults to \code{TRUE}.}
 \item{drop}{Should unused combinations of stratification variables be dropped? Defaults to \code{TRUE}.}
-\item{sep}{String to separate values of each stratification variable by. Defaults to "|". Only used when the number of stratification columns exceeds the desired depth.}
+\item{sep}{String to separate values of each stratification variable by. Defaults to \code{"|"}. Only used when the number of stratification columns exceeds the desired depth.}
 }
 \details{
 For the \code{depth}, use positive integers to move from the root and negative integers to move from the leaves. The maximum (minimum) depth will be used for integers larger (smaller) than such.
 }
 \value{
-\itemize{
-\item If the (implied) depth is not equal to zero, a \code{list} with \code{tibble::tibble} objects at the leaves.
-\item Otherwise, a \code{tibble::tibble}
-}
+A \code{base::list}
 }
 \author{Alex Zajichek}
 \examples{
-require(tidyverse)
-
 #Unquoted selection
 heart_disease \%>\%
     divide(

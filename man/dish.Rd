@@ -1,6 +1,9 @@
 \name{dish}
 \alias{dish}
 \title{Evaluate a two-argument function with combinations of columns}
+\description{
+Split up columns into groups and apply a function to combinations of those columns with control over whether each group is entered as a single \code{base::data.frame} or individual \code{base::vector}'s.
+}
 \usage{
 dish(
     data,
@@ -13,24 +16,22 @@ dish(
 )
 }
 \arguments{
-\item{data}{A \code{data.frame}.}
-\item{f}{A \code{function} that takes a \code{vector} and/or \code{data.frame} in the first two arguments.}    
-\item{left}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers} to be evaluated in the first argument of \code{f}}
-\item{right}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers} to be evaluated in the second argument of \code{f}}
-\item{each_left}{Should each \code{left} variable be indivdually evaluated in \code{f}? Defaults to \code{TRUE}. If \code{FALSE}, \code{left} is entered into \code{f} as a \code{data.frame}.}
-\item{each_right}{Should each \code{right} variable be separately evaluated in \code{f}? Defaults to \code{TRUE}. If \code{FALSE}, \code{right} is entered into \code{f} as a \code{data.frame}.}
+\item{data}{A \code{base::data.frame}.}
+\item{f}{A \code{function} that takes a \code{base::vector} and/or \code{base::data.frame} in the first two arguments.}    
+\item{left}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers} to be evaluated in the first argument of \code{f}.}
+\item{right}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers} to be evaluated in the second argument of \code{f}.}
+\item{each_left}{Should each \code{left} variable be indivdually evaluated in \code{f}? Defaults to \code{TRUE}. If \code{FALSE}, \code{left} columns are entered into \code{f} as a single \code{data.frame}.}
+\item{each_right}{Should each \code{right} variable be individually evaluated in \code{f}? Defaults to \code{TRUE}. If \code{FALSE}, \code{right} columns are entered into \code{f} as a single \code{data.frame}.}
 \item{...}{Additional arguments to be passed to \code{f}.}
 }
 \value{
-A \code{list} 
+A \code{base::list} 
 }
 \author{Alex Zajichek}
 \examples{
-require(tidyverse)
-
 #All variables on both sides
 heart_disease \%>\%
-    select_if(
+    dplyr::select_if(
         is.numeric
     ) \%>\%
     dish(
@@ -43,7 +44,7 @@ heart_disease \%>\%
         f =
             function(y, x) {
                 mod <- lm(y ~ x)
-                tibble(
+                tibble::tibble(
                     Parameter = names(mod$coef),
                     Estimate = mod$coef
                 )
@@ -62,7 +63,7 @@ heart_disease \%>\%
         f =
             function(y, x) {
                 mod <- lm(y ~ ., data = x)
-                tibble(
+                tibble::tibble(
                     Parameter = names(mod$coef),
                     Estimate = mod$coef
                 )

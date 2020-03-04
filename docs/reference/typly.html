@@ -33,6 +33,8 @@
 
 
 <meta property="og:title" content="Evaluate a function on columns conforming to one or more (or no) specified types — typly" />
+
+<meta property="og:description" content="Apply a function to columns in a base::data.frame that inherit one of the specified types." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -108,7 +110,9 @@
     </div>
 
     <div class="ref-description">
-
+    
+    <p>Apply a function to columns in a <code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a></code> that inherit one of the specified types.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>typly</span>(
@@ -124,7 +128,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A data frame.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a></code>.</p></td>
     </tr>
     <tr>
       <th>f</th>
@@ -132,7 +136,7 @@
     </tr>
     <tr>
       <th>types</th>
-      <td><p>A character vector of classes to check against <code>object</code>.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/character.html'>base::character</a></code> vector of classes to test against.</p></td>
     </tr>
     <tr>
       <th>negated</th>
@@ -146,13 +150,11 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>list</code> with the result of <code>f</code> for each column.</p>
+    <p>A <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>tidyverse</span>)
-
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
+    <pre class="examples"><div class='input'><span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
 
     <span class='co'>#Compute means on numeric or logical data</span>
     <span class='fu'>typly</span>(

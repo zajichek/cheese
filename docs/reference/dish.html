@@ -33,6 +33,8 @@
 
 
 <meta property="og:title" content="Evaluate a two-argument function with combinations of columns — dish" />
+
+<meta property="og:description" content="Split up columns into groups and apply a function to combinations of those columns with control over whether each group is entered as a single base::data.frame or individual base::vector's." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -108,7 +110,9 @@
     </div>
 
     <div class="ref-description">
-
+    
+    <p>Split up columns into groups and apply a function to combinations of those columns with control over whether each group is entered as a single <code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a></code> or individual <code><a href='https://rdrr.io/r/base/vector.html'>base::vector</a></code>'s.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>dish</span>(
@@ -126,27 +130,27 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A <code>data.frame</code>.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a></code>.</p></td>
     </tr>
     <tr>
       <th>f</th>
-      <td><p>A <code>function</code> that takes a <code>vector</code> and/or <code>data.frame</code> in the first two arguments.</p></td>
+      <td><p>A <code>function</code> that takes a <code><a href='https://rdrr.io/r/base/vector.html'>base::vector</a></code> and/or <code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a></code> in the first two arguments.</p></td>
     </tr>
     <tr>
       <th>left</th>
-      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code> to be evaluated in the first argument of <code>f</code></p></td>
+      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::select_helpers</a></code> to be evaluated in the first argument of <code>f</code>.</p></td>
     </tr>
     <tr>
       <th>right</th>
-      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code> to be evaluated in the second argument of <code>f</code></p></td>
+      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::select_helpers</a></code> to be evaluated in the second argument of <code>f</code>.</p></td>
     </tr>
     <tr>
       <th>each_left</th>
-      <td><p>Should each <code>left</code> variable be indivdually evaluated in <code>f</code>? Defaults to <code>TRUE</code>. If <code>FALSE</code>, <code>left</code> is entered into <code>f</code> as a <code>data.frame</code>.</p></td>
+      <td><p>Should each <code>left</code> variable be indivdually evaluated in <code>f</code>? Defaults to <code>TRUE</code>. If <code>FALSE</code>, <code>left</code> columns are entered into <code>f</code> as a single <code>data.frame</code>.</p></td>
     </tr>
     <tr>
       <th>each_right</th>
-      <td><p>Should each <code>right</code> variable be separately evaluated in <code>f</code>? Defaults to <code>TRUE</code>. If <code>FALSE</code>, <code>right</code> is entered into <code>f</code> as a <code>data.frame</code>.</p></td>
+      <td><p>Should each <code>right</code> variable be individually evaluated in <code>f</code>? Defaults to <code>TRUE</code>. If <code>FALSE</code>, <code>right</code> columns are entered into <code>f</code> as a single <code>data.frame</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -156,15 +160,13 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>list</code></p>
+    <p>A <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>tidyverse</span>)
-
-<span class='co'>#All variables on both sides</span>
+    <pre class="examples"><div class='input'><span class='co'>#All variables on both sides</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>select_if</span>(
+    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/select_all.html'>select_if</a></span>(
         <span class='no'>is.numeric</span>
     ) <span class='kw'>%&gt;%</span>
     <span class='fu'>dish</span>(
@@ -231,7 +233,7 @@
         <span class='kw'>f</span> <span class='kw'>=</span>
             <span class='kw'>function</span>(<span class='no'>y</span>, <span class='no'>x</span>) {
                 <span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>y</span> ~ <span class='no'>x</span>)
-                <span class='fu'>tibble</span>(
+                <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
                     <span class='kw'>Parameter</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mod</span>$<span class='no'>coef</span>),
                     <span class='kw'>Estimate</span> <span class='kw'>=</span> <span class='no'>mod</span>$<span class='no'>coef</span>
                 )
@@ -240,7 +242,7 @@
     ) <span class='kw'>%&gt;%</span>
 
     <span class='co'>#Bind rows together</span>
-    <span class='fu'>fasten</span>(
+    <span class='fu'><a href='fasten.html'>fasten</a></span>(
         <span class='kw'>into</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Outcome"</span>, <span class='st'>"Predictor"</span>)
     )</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 48 x 4</span><span>
 #&gt;    Outcome Predictor             Parameter         Estimate
@@ -262,7 +264,7 @@
         <span class='kw'>f</span> <span class='kw'>=</span>
             <span class='kw'>function</span>(<span class='no'>y</span>, <span class='no'>x</span>) {
                 <span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>y</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>x</span>)
-                <span class='fu'>tibble</span>(
+                <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
                     <span class='kw'>Parameter</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mod</span>$<span class='no'>coef</span>),
                     <span class='kw'>Estimate</span> <span class='kw'>=</span> <span class='no'>mod</span>$<span class='no'>coef</span>
                 )
@@ -272,7 +274,7 @@
     ) <span class='kw'>%&gt;%</span>
 
     <span class='co'>#Bind rows together</span>
-    <span class='fu'>fasten</span>(
+    <span class='fu'><a href='fasten.html'>fasten</a></span>(
         <span class='kw'>into</span> <span class='kw'>=</span> <span class='st'>"Outcome"</span>
     )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 32 x 3</span><span>
 #&gt;    Outcome Parameter                 Estimate
