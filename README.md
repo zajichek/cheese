@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# cheese
+# <img src="man/figures/cheese.jpg" width="200" />
 
 <!-- badges: start -->
 
@@ -11,9 +11,6 @@ Status](https://www.r-pkg.org/badges/version/cheese)](https://cran.r-project.org
 <!-- badges: end -->
 
 # Introduction
-
-The `cheese` package contains general and specialized tools when
-building an analysis workflow.
 
 # Installation
 

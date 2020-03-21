@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
-# cheese
+# <img src="man/figures/cheese.jpg" width="200" />
 
 <!-- badges: start -->
 [![CRAN Status](https://www.r-pkg.org/badges/version/cheese)](https://cran.r-project.org/package=cheese)
@@ -20,7 +20,6 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 # Introduction
-The `cheese` package contains general and specialized tools when building an analysis workflow. 
 
 # Installation
 
