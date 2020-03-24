@@ -853,3 +853,171 @@ default_univariate_functions <-
       )
     
   }
+
+#Name: descriptives_component
+#Description: Internal function to build a subset of the descriptives() call for a given result
+descriptives_component <-
+  function(res) {
+    
+    #Set up template
+    result <-
+      tibble::tribble(
+        ~value_name, ~value_numeric, ~value_character, ~value_list, ~value_order
+      )
+    
+    #Check if result has names
+    names <- NA_character_
+    if(rlang::is_named(res)) 
+      names <- names(res)
+    
+    #If result is numeric, it goes in the numeric column
+    if(is.numeric(res)) {
+      
+      temp_result <-
+        tibble::tibble(
+          value_numeric = res
+        )
+      
+    } else if(is.character(res)) {
+      
+      temp_result <-
+        tibble::tibble(
+          value_character = res
+        )
+      
+    } else {
+      
+      temp_result <-
+        tibble::tibble(
+          value_list = list(res)
+        )
+      
+    }
+    
+    #Set names/indices
+    temp_result$value_name <- names
+    temp_result$value_order <- seq_along(names)
+    
+    #Bind template with result
+    result %>%
+      dplyr::bind_rows(
+        temp_result
+      )
+    
+  }
+
+#Name: descriptives
+#Description: Compute descriptive statistics on columns of a data frame
+descriptives <-
+  function(
+    data,
+    f_all = NULL,
+    f_numeric = NULL,
+    numeric_types = "numeric",
+    f_categorical = NULL,
+    categorical_types = "factor",
+    f_other = NULL,
+    useNA = c("ifany", "no", "always"),
+    round = 2
+  ) {
+    
+    #Get default functions
+    useNA <- match.arg(useNA)
+    default_functions <- default_univariate_functions(useNA = useNA)
+    
+    #Add user-specified functions
+    f_all <- c(f_all, default_functions$f_all)
+    f_numeric <- c(f_numeric, default_functions$f_numeric)
+    f_categorical <- c(f_categorical, default_functions$f_categorical)
+    
+    ###Evaluate functions for...
+    #All columns
+    all_results <-
+      f_all %>%
+      
+      #Apply each function to each column
+      purrr::map(
+        ~
+          data %>%
+          purrr::map(
+            .f = .x
+          )
+      )
+    
+    #Numeric columns
+    numeric_results <-
+      f_numeric %>%
+      
+      #Apply function for each type
+      purrr::map(
+        typly,
+        data = data,
+        types = numeric_types
+      ) 
+    
+    #Categorical columns
+    categorical_results <-
+      f_categorical %>%
+      
+      #Apply function for each type
+      purrr::map(
+        typly,
+        data = data,
+        types = categorical_types
+      )
+    
+    #Other columns
+    other_results <- NULL
+    if(!is.null(f_other)) {
+      
+      other_results <-
+        f_other %>%
+        
+        #Apply function excluding each type
+        purrr::map(
+          typly,
+          data = data,
+          types = c(numeric_types, categorical_types),
+          negated = TRUE
+        )
+      
+    }
+    
+    #Get column indices
+    columns <- names(data)
+    
+    #Build a data frame with the results
+    list(
+      all = all_results,
+      numeric = numeric_results,
+      categorical = categorical_results,
+      other = other_results
+    ) %>%
+      purrr::map_depth(
+        .depth = 3,
+        descriptives_component
+      ) %>%
+      
+      #Bind columns
+      fasten(
+        into = c("type", "key", "column")
+      ) %>%
+      
+      #Join to get column order
+      dplyr::inner_join(
+        y =
+          tibble::tibble(
+            column = columns,
+            column_order = seq_along(columns)
+          ),
+        by = "column"
+      ) %>%
+      
+      #Rearrange
+      dplyr::arrange(
+        column_order,
+        key,
+        value_order
+      )
+    
+  }
