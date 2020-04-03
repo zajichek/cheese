@@ -24,10 +24,10 @@ _This version is in development_
 
   - User is in charge of binding back together (e.g. with `fasten`)
 
-* `stretch` (removed)
+* `stretch`
 
-  - Use `tidyr::pivot_wider` (starting version 1.0.0) for this functionality
-  - Use `grable` to create a `knitr::kable` with stacked headers
+  - The `keep` argument is removed
+  - The `keys` argument is replaced with `key` and `send` argument replaced with `value`
 
 * `typly`
 

@@ -799,6 +799,110 @@ typly <-
     
   }
 
+#Name: stretch
+#Description: Span keys and values across the columns
+stretch <-
+  function(
+    data,
+    key,
+    value,
+    sep = "_"
+  ) {
+    
+    #Check for keys
+    if(missing(key))
+      stop("No key(s) supplied.")
+    
+    #Splice the keys
+    key <-
+      tidyselect::eval_select(
+        rlang::enquo(key),
+        data
+      ) %>%
+      names
+    
+    #Check for registration
+    if(length(key) == 0)
+      stop("No key(s) registered")
+    
+    ##Create a single column for the keys
+    data <-
+      data %>%
+      
+      #Combine columns together
+      tidyr::unite(
+        col = ".keys",
+        key,
+        sep = sep,
+        remove = TRUE
+      ) 
+    
+    #Check for values
+    if(missing(value))
+      stop("No value(s) supplied.")
+    
+    #Splice the keys
+    value <-
+      tidyselect::eval_select(
+        rlang::enquo(value),
+        data
+      ) 
+    
+    #Check for registration
+    if(length(value) == 0)
+      stop("No value(s) registered")
+    
+    #Check for multiple values
+    multi_value <- length(value) > 1
+    
+    #Use names for selection if more than one value
+    if(multi_value)
+      value <- names(value)
+    
+    #For each value column...
+    for(i in seq_along(value)) {
+      
+      #Extract the current value
+      value_i <- value[i]
+      
+      #Make a temporary data frame
+      temp_dat <-
+        data %>%
+        
+        #Remove all value columns except the current one
+        dplyr::select(
+          -tidyselect::all_of(
+            setdiff(value, value_i)
+          )
+        )
+      
+      #Append keys if needed
+      if(multi_value) {
+        
+        temp_dat <-
+          temp_dat %>%
+          
+          #Append key column
+          dplyr::mutate_at(
+            ".keys",
+            ~paste0(.x, sep, value_i)
+          )
+        
+      }
+      
+      temp_dat %>% 
+        
+        #Send this value across the columns
+        tidyr::spread(
+          key = ".keys",
+          value = value[i]
+        ) %>%
+        print
+      
+    }
+    
+  }
+
 #Name: default_univariate_functions
 #Description: Provides list of functions for different types of data
 default_univariate_functions <-

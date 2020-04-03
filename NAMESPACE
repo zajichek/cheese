@@ -13,4 +13,5 @@ export("%>%",
        "dish",
        "absorb",
        "some_type",
-       "typly")
+       "typly",
+       "stretch")
