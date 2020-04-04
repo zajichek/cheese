@@ -28,6 +28,7 @@ _This version is in development_
 
   - The `keep` argument is removed
   - The `keys` argument is replaced with `key` and `send` argument replaced with `value`
+  - Extracting keys from the header is now done with `grable`
 
 * `typly`
 

@@ -34,7 +34,7 @@
 
 <meta property="og:title" content="Span keys and values across the columns — stretch" />
 
-<meta property="og:description" content="Select one or more key columns to be spread across the columns for one or value columns" />
+<meta property="og:description" content="Pivot one or more values across the columns by one or more keys" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,7 +116,7 @@
 
     <div class="ref-description">
     
-    <p>Select one or more key columns to be spread across the columns for one or value columns</p>
+    <p>Pivot one or more values across the columns by one or more keys</p>
     
     </div>
 
@@ -144,9 +144,13 @@
     </tr>
     <tr>
       <th>sep</th>
-      <td><p>String to separate keys/values by in the resulting column names. Defaults to "_". Only used when there are more than one keys or more than one values.</p></td>
+      <td><p>String to separate keys/values by in the resulting column names. Defaults to "_". Only used when there are more than one keys/values.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>In the case of multiple <code>value</code>'s, the labels are always appended to the end of the resulting columns.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -155,6 +159,8 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
+<span class='co'>#Make a summary table</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
 <span class='no'>data</span> <span class='kw'>&lt;-</span>
   <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(
@@ -177,21 +183,41 @@
   <span class='fu'>stretch</span>(
     <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>BloodSugar</span>, <span class='no'>HeartDisease</span>),
     <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>Mean</span>, <span class='no'>SD</span>, <span class='no'>Random</span>)
-  )</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 5</span><span>
-#&gt;   Sex    FALSE_No_Mean FALSE_Yes_Mean TRUE_No_Mean TRUE_Yes_Mean
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Female          54.0           59.7         60.3          57.2
-#&gt; </span><span style='color: #555555;'>2</span><span> Male            50.2           55.8         54.7          58.1
-#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
-#&gt;   Sex    FALSE_No_SD FALSE_Yes_SD TRUE_No_SD TRUE_Yes_SD
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Female       10.4          3.61       6.65        7.81
-#&gt; </span><span style='color: #555555;'>2</span><span> Male          8.82         8.56       6.76        7.12
-#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
-#&gt;   Sex    FALSE_No_Random FALSE_Yes_Random TRUE_No_Random TRUE_Yes_Random
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'>1</span><span> Female 0               0                0              1              
-#&gt; </span><span style='color: #555555;'>2</span><span> Male   1               0                0              0              </div><div class='input'>
+  )</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 13</span><span>
+#&gt;   Sex   FALSE_No_Mean FALSE_No_Random FALSE_No_SD FALSE_Yes_Mean
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> Fema…          54.0 0                     10.4            59.7
+#&gt; </span><span style='color: #555555;'>2</span><span> Male           50.2 1                      8.82           55.8
+#&gt; </span><span style='color: #555555;'># … with 8 more variables: FALSE_Yes_Random </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, FALSE_Yes_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   TRUE_No_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, TRUE_No_Random </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, TRUE_No_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   TRUE_Yes_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, TRUE_Yes_Random </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, TRUE_Yes_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+<span class='no'>data</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>stretch</span>(
+    <span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>is.factor</span>,
+    <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>is.numeric</span>
+  )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 11</span><span>
+#&gt;   BloodSugar Female_No_0_Mean Female_No_0_SD Female_Yes_1_Me… Female_Yes_1_SD
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> FALSE                  54.0          10.4              59.7            3.61
+#&gt; </span><span style='color: #555555;'>2</span><span> TRUE                   60.3           6.65             57.2            7.81
+#&gt; </span><span style='color: #555555;'># … with 6 more variables: Male_No_1_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_No_1_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   Male_Yes_0_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_Yes_0_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_Yes_1_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   Male_Yes_1_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+<span class='no'>data</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>stretch</span>(
+    <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>is.factor</span>, <span class='no'>is.logical</span>),
+    <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>is.numeric</span>
+  )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 16</span><span>
+#&gt;   Female_No_0_FAL… Female_No_0_FAL… Female_No_0_TRU… Female_No_0_TRU…
+#&gt;              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>             54.0             10.4             60.3             6.65
+#&gt; </span><span style='color: #555555;'># … with 12 more variables: Female_Yes_1_FALSE_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   Female_Yes_1_FALSE_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Female_Yes_1_TRUE_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   Female_Yes_1_TRUE_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_No_1_FALSE_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   Male_No_1_FALSE_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_No_1_TRUE_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   Male_No_1_TRUE_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_Yes_0_FALSE_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   Male_Yes_0_FALSE_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_Yes_1_TRUE_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   Male_Yes_1_TRUE_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -199,6 +225,8 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#value">Value</a></li>
       
       <li><a href="#examples">Examples</a></li>

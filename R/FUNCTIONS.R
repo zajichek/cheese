@@ -825,18 +825,6 @@ stretch <-
     if(length(key) == 0)
       stop("No key(s) registered")
     
-    ##Create a single column for the keys
-    data <-
-      data %>%
-      
-      #Combine columns together
-      tidyr::unite(
-        col = ".keys",
-        key,
-        sep = sep,
-        remove = TRUE
-      ) 
-    
     #Check for values
     if(missing(value))
       stop("No value(s) supplied.")
@@ -846,20 +834,30 @@ stretch <-
       tidyselect::eval_select(
         rlang::enquo(value),
         data
-      ) 
+      ) %>% 
+      names
     
     #Check for registration
     if(length(value) == 0)
       stop("No value(s) registered")
     
-    #Check for multiple values
-    multi_value <- length(value) > 1
+    ##Create a single column for the keys
+    data <-
+      data %>%
+      
+      #Combine columns together
+      tidyr::unite(
+        col = ".key",
+        key,
+        sep = sep,
+        remove = TRUE
+      ) 
     
-    #Use names for selection if more than one value
-    if(multi_value)
-      value <- names(value)
+    #Gather id variables
+    id_vars <- setdiff(names(data), c(".key", value))
     
     #For each value column...
+    result <- list()
     for(i in seq_along(value)) {
       
       #Extract the current value
@@ -877,30 +875,61 @@ stretch <-
         )
       
       #Append keys if needed
-      if(multi_value) {
+      if(length(value) > 1) {
         
         temp_dat <-
           temp_dat %>%
           
           #Append key column
           dplyr::mutate_at(
-            ".keys",
+            ".key",
             ~paste0(.x, sep, value_i)
           )
         
       }
       
-      temp_dat %>% 
+      result[[i]] <-
+        temp_dat %>% 
         
         #Send this value across the columns
         tidyr::spread(
-          key = ".keys",
+          key = ".key",
           value = value[i]
-        ) %>%
-        print
+        ) 
       
     }
     
+    #Combine based on presence of id columns
+    if(length(id_vars) > 0) {
+      
+      result <-
+        result %>%
+        
+        #Iteratively join
+        purrr::reduce(
+          .f = dplyr::inner_join,
+          by = id_vars
+        )
+      
+    } else {
+      
+      result <-
+        result %>%
+        dplyr::bind_cols()
+      
+    }
+    
+    #Rearrange the columns
+    names <- names(result)
+    result %>%
+      dplyr::select(
+        tidyselect::all_of(
+          c(
+            id_vars,
+            sort(setdiff(names, id_vars))
+          )
+        )
+      )
   }
 
 #Name: default_univariate_functions
