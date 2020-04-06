@@ -932,6 +932,99 @@ stretch <-
       )
   }
 
+#Name: grable
+#Description: Make a hierarchical kable 
+grable <-
+  function(
+    data, #A dataset
+    at, #Columns to include in hierarchy
+    sep = "_", #Delimiter for parsing
+    reverse = FALSE, #Stack in opposite direction?
+    format = c("html", "latex"), #Rendering format
+    ... #Arguments passed to kableExtra::kable_styling
+  ) {
+    
+    #Set to all columns if missing input
+    if(missing(at)) {
+      
+      #Extract all indices
+      at <- seq_along(names(data))
+      
+      #Set names
+      names(at) <- names(data)
+      
+    }
+    
+    #Splice variable names
+    selected_vars <-
+      tidyselect::eval_select(
+        rlang::enquo(at),
+        data
+      ) 
+    
+    #Return error if no split variables entered
+    if(length(selected_vars) == 0)
+      stop("No columns registered.")
+    
+    #Split to create header matrix
+    headers <- 
+      selected_vars %>% 
+      names %>% 
+      stringr::str_split(
+        pattern = sep,
+        simplify = TRUE
+      )
+    
+    #Iterable index vector
+    index <- rev(seq_len(ncol(headers)))
+    
+    #Reverse if needed
+    if(reverse)
+      index <- rev(index)
+    
+    #Replace names of data with first level
+    names(data)[selected_vars] <- headers[,index[1]]
+    
+    #Get format
+    format <- match.arg(format)
+    
+    #Make initial kable
+    result <-
+      data %>%
+      knitr::kable(
+        format = format
+      ) %>%
+      kableExtra::kable_styling(...)
+    
+    #Iteratively add layers
+    if(length(index) > 1) {
+      
+      #Make a template
+      template <- rep(" ", ncol(data))
+      
+      for(i in 2:length(index)) {
+        
+        #Make index
+        temp_template <- template
+        temp_template[selected_vars] <- headers[,index[i]]
+        
+        #Add empty spots 
+        result <-
+          result %>%
+          kableExtra::add_header_above(
+            kableExtra::auto_index(
+              temp_template
+            )
+          )
+        
+      }
+      
+    }
+    
+    result
+    
+  }
+
 #Name: default_univariate_functions
 #Description: Provides list of functions for different types of data
 default_univariate_functions <-

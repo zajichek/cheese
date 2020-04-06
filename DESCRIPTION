@@ -1,6 +1,6 @@
 Package: cheese
 Version: 0.1.0
-Date: 2020-02-01
+Date: 2020-04-06
 Title: Tools for Intuitive and Flexible Statistical Analysis Workflows
 Authors@R: person(given = "Alex", family = "Zajichek", email = "alexzajichek@gmail.com", role = c("aut", "cre"))
 Description: Contains flexible and intuitive functions to assist in carrying out tasks in a statistical analysis and to get from the raw data to presentation-ready results. A user-friendly interface is used in specialized functions that are aimed at common tasks such as building a univariate descriptive table for variables in a dataset. These high-level functions are built on a collection of low(er)-level functions that may be useful for aspects of a custom statistical analysis workflow or for general programming use. 
