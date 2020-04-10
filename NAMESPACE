@@ -15,4 +15,5 @@ export("%>%",
        "some_type",
        "typly",
        "stretch",
-       "grable")
+       "grable",
+       "descriptives")

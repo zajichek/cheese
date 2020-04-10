@@ -1064,7 +1064,7 @@ default_univariate_functions <-
       f_categorical =
         list(
           
-          count = table,
+          count = ~table(., useNA = useNA),
           proportion = ~prop.table(table(., useNA = useNA)),
           percent = ~prop.table(table(., useNA = useNA))*100
           
@@ -1083,52 +1083,35 @@ default_univariate_functions <-
 #Name: descriptives_component
 #Description: Internal function to build a subset of the descriptives() call for a given result
 descriptives_component <-
-  function(res) {
+  function(res, na_string) {
     
-    #Set up template
-    result <-
-      tibble::tribble(
-        ~value_name, ~value_numeric, ~value_character, ~value_list, ~value_order
-      )
+    #Check if the input is numeric or character
+    if(!some_type(res, c("numeric", "character", "logical", "Date", "table")))
+      stop("Function must return a an atomic vector or table.")
     
     #Check if result has names
     names <- NA_character_
-    if(rlang::is_named(res)) 
-      names <- names(res)
+    if(!is.null(names(res))) 
+      names <- dplyr::coalesce(names(res), na_string)
     
-    #If result is numeric, it goes in the numeric column
-    if(is.numeric(res)) {
-      
-      temp_result <-
-        tibble::tibble(
-          value_numeric = res
-        )
-      
-    } else if(is.character(res)) {
-      
-      temp_result <-
-        tibble::tibble(
-          value_character = res
-        )
-      
-    } else {
-      
-      temp_result <-
-        tibble::tibble(
-          value_list = list(res)
-        )
-      
-    }
+    #Extract values from a table
+    if(is.table(res))
+      res <- as.numeric(res)
     
-    #Set names/indices
-    temp_result$value_name <- names
-    temp_result$value_order <- seq_along(names)
-    
-    #Bind template with result
-    result %>%
-      dplyr::bind_rows(
-        temp_result
+    #Add result to a data frame
+    temp_result <-
+      tibble::tibble(
+        value_order = seq_along(res),
+        value_name = names,
+        value_num = res
       )
+    
+    #Change label for non-numeric output
+    if(!some_type(res, "numeric"))
+      names(temp_result)[3] <- "value_chr"
+    
+    #Return results
+    temp_result
     
   }
 
@@ -1144,7 +1127,8 @@ descriptives <-
     categorical_types = "factor",
     f_other = NULL,
     useNA = c("ifany", "no", "always"),
-    round = 2
+    round = 2,
+    na_string = "(missing)"
   ) {
     
     #Get default functions
@@ -1221,29 +1205,54 @@ descriptives <-
     ) %>%
       purrr::map_depth(
         .depth = 3,
-        descriptives_component
+        descriptives_component,
+        na_string = na_string
       ) %>%
       
       #Bind columns
       fasten(
-        into = c("type", "key", "column")
+        into = c("type", "key", "column_name")
       ) %>%
       
       #Join to get column order
       dplyr::inner_join(
         y =
           tibble::tibble(
-            column = columns,
-            column_order = seq_along(columns)
+            column_name = columns,
+            column = seq_along(columns)
           ),
-        by = "column"
+        by = "column_name"
       ) %>%
       
-      #Rearrange
-      dplyr::arrange(
-        column_order,
-        key,
-        value_order
+      #Rearrange columns
+      dplyr::select(
+        tidyselect::all_of(
+          c(
+            "column",
+            "column_name",
+            "type",
+            "key"
+          )
+        ),
+        tidyselect::everything()
+      ) %>%
+      
+      #Add consolidated summary column
+      dplyr::mutate(
+        value_combo = dplyr::coalesce(as.character(round(value_num, round)), value_chr)
+      ) %>%
+      
+      #Rearrange rows
+      dplyr::arrange_at(
+        dplyr::vars(
+          tidyselect::all_of(
+            c(
+              "column",
+              "type",
+              "key",
+              "value_order"
+            )
+          )
+        )
       )
-    
   }
