@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 # Introduction
+The `cheese` package contains tools for working with data during statistical analysis--promoting flexible, intuitive, and reproducible workflows.
 
 # Installation
 

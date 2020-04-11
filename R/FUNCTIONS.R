@@ -1257,3 +1257,151 @@ descriptives <-
       )
   }
 
+#Name: univariate_associations
+#Description: Evaluate a list of functions to a variable for each response
+univariate_associations <-
+  function(
+    data,
+    f,
+    responses,
+    predictors
+  ) {
+    
+    #Check for function
+    if(missing(f))
+      stop("No function(s) supplied.")
+    
+    #Check for response inputs
+    if(missing(responses)) {
+      
+      #Check for predictor inputs
+      if(missing(predictors)) {
+        
+        #Set both sides to all variables
+        responses <-
+          tidyselect::eval_select(
+            rlang::expr(names(data)),
+            data
+          )
+        
+        predictors <- responses
+        
+      } else {
+        
+        #Splice predictor variables
+        predictors <-
+          tidyselect::eval_select(
+            rlang::enquo(predictors),
+            data
+          )
+        
+        #Check for registration
+        if(length(predictors) == 0)
+          stop("No predictor variables registered.")
+        
+        #Response variables are everything else
+        response <-
+          tidyselect::eval_select(
+            rlang::expr(names(data)[-predictors]),
+            data
+          )
+        
+      }
+      
+    } else {
+      
+      #Splice response variables
+      responses <-
+        tidyselect::eval_select(
+          rlang::enquo(responses),
+          data
+        )
+      
+      #Check for registration
+      if(length(responses) == 0)
+        stop("No response variables registered.")
+      
+      #Check for predictor inputs
+      if(missing(predictors)) {
+        
+        #Predictor variables are everything else
+        predictors <-
+          tidyselect::eval_select(
+            rlang::expr(names(data)[-responses]),
+            data
+          )
+        
+      } else {
+        
+        #Splice predictor variables
+        predictors <-
+          tidyselect::eval_select(
+            rlang::enquo(predictors),
+            data
+          )
+        
+        #Check for registration
+        if(length(predictors) == 0)
+          stop("No predictor variables registered.")
+        
+      }
+      
+    }
+    
+    #Make f a list if its a single function
+    if(methods::is(f, "function"))
+      f <- list(f)
+    
+    f %>%
+      
+      #Map each function
+      purrr::imap(
+        ~
+          data %>% 
+          
+          #Get list of association statistics
+          dish(
+            f = .x,
+            left = tidyselect::all_of(responses),
+            right = tidyselect::all_of(predictors)
+          ) %>%
+          
+          #Convert result to tibble
+          purrr::map_depth(
+            .depth = 2,
+            ~
+              .x %>%
+              
+              #Make tibble
+              tibble::enframe(
+                value = "value"
+              ) %>%
+              
+              #Remove key
+              dplyr::select(
+                -tidyselect::all_of("name")
+              )
+          ) %>%
+          
+          #Zip up result
+          fasten(
+            into = c("response", "predictor")
+          ) %>%
+          
+          #Rename value to match function
+          dplyr::rename_at(
+            "value",
+            function(x) .y
+          )
+      ) %>%
+      
+      #Iteratively join
+      purrr::reduce(
+        dplyr::inner_join,
+        by =
+          c(
+            "response",
+            "predictor"
+          )
+      )
+  } 

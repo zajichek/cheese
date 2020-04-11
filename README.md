@@ -12,6 +12,10 @@ Status](https://www.r-pkg.org/badges/version/cheese)](https://cran.r-project.org
 
 # Introduction
 
+The `cheese` package contains tools for working with data during
+statistical analysis–promoting flexible, intuitive, and reproducible
+workflows.
+
 # Installation
 
   - From CRAN (current version 0.0.3)

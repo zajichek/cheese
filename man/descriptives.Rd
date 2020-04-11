@@ -65,15 +65,20 @@ heart_disease \%>\%
 heart_disease \%>\%
     descriptives(
         categorical_types = c("logical", "factor")
-    )
+    ) \%>\%
+    
+    #Extract info from the column
+    dplyr::filter(
+        col_lab == "BloodSugar"
+    ) 
 
-#Only apply "other" functions to numeric types
+#Nothing treated as numeric
 heart_disease \%>\%
     descriptives(
         numeric_types = NULL
     )
 
-#Compute a custom function
+#Evaluate a custom function
 heart_disease \%>\%
     descriptives(
         f_numeric = 
@@ -85,13 +90,6 @@ heart_disease \%>\%
     #Extract info from the custom function
     dplyr::filter(
         fun_key == "cv"
-    ) \%>\%
-    
-    #Remove irrelevant columns
-    dplyr::select(
-        -val_ind,
-        -val_lab,
-        -val_chr
-    )
+    ) 
 
 }
