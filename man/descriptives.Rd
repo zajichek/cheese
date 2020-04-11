@@ -32,21 +32,26 @@ descriptives(
 }
  
 \details{
-The \code{min, max, median, iqr, mean, sd} are automatically computed for numeric data and \code{table, prop.table*100} for categorical data. The sample size, number of missing values, number of nonmissing values, the number of unique values, the \code{class} are automatically computed on all columns. 
+The following \code{fun_key}'s are available by default for the specified types:
+\itemize{
+\item ALL: \code{length, missing, available, class, unique}
+\item Numeric: \code{mean, sd, min, q1, median, q3, max, iqr, range}
+\item Categorical: \code{count, proportion, percent}
+}
 }
 
 \value{
 A \code{tibble::tibble} with the following columns:
 \itemize{
-\item \code{column}: Position/index of the input dataset
-\item \code{column_name}: Label of the column
-\item \code{type}: Set of column types function was applied to
-\item \code{key}: Name of function that was evaluated
-\item \code{value_order}: Position of the value within the function result
-\item \code{value_name}: Label extracted from the result with \code{base::names}
-\item \code{value_num}: Numeric results
-\item \code{value_chr}: Non-numeric results
-\item \code{value_combo}: Output combined with rounding applied to numeric values
+\item \code{fun_eval}: Column types function was applied to
+\item \code{fun_key}: Name of function that was evaluated
+\item \code{col_ind}: Index from input dataset
+\item \code{col_lab}: Label of the column
+\item \code{val_ind}: Index of the value within the function result
+\item \code{val_lab}: Label extracted from the result with \code{base::names}
+\item \code{val_dbl}: Numeric result
+\item \code{val_chr}: Non-numeric result
+\item \code{val_cbn}: Combination of (rounded) numeric and non-numeric values
 }
 }
 
@@ -75,6 +80,18 @@ heart_disease \%>\%
             list(
                 cv = function(x) sd(x, na.rm = TRUE)/mean(x, na.rm = TRUE)
             )
+    ) \%>\%
+    
+    #Extract info from the custom function
+    dplyr::filter(
+        fun_key == "cv"
+    ) \%>\%
+    
+    #Remove irrelevant columns
+    dplyr::select(
+        -val_ind,
+        -val_lab,
+        -val_chr
     )
 
 }

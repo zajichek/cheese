@@ -13,9 +13,8 @@ _This version is in development_
   - The `na.rm` and `useNA` arguments are no longer required for additional functions
   - Added `na_string` argument to for filling in `NA` result names
   - Removed leading dots (e.g. `.value`) from result columns
-  - Added dedicated columns for the `type` of function and `name` in result
-  - Added `column` and `column_name` to indicate the position and label of the variable, respectively
-  - Function result columns have a `value_` prefix
+  - Added dedicated columns for the data type a function was evaluated for, and the names of a result
+  - Function, column, and result attributes have `fun_`, `col_`, and `val_` prefixes, respectively
 
 * `divide`
 

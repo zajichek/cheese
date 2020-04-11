@@ -1101,14 +1101,14 @@ descriptives_component <-
     #Add result to a data frame
     temp_result <-
       tibble::tibble(
-        value_order = seq_along(res),
-        value_name = names,
-        value_num = res
+        val_ind = seq_along(res),
+        val_lab = names,
+        val_dbl = res
       )
     
     #Change label for non-numeric output
     if(!some_type(res, "numeric"))
-      names(temp_result)[3] <- "value_chr"
+      names(temp_result)[3] <- "val_chr"
     
     #Return results
     temp_result
@@ -1211,27 +1211,27 @@ descriptives <-
       
       #Bind columns
       fasten(
-        into = c("type", "key", "column_name")
+        into = c("fun_eval", "fun_key", "col_lab")
       ) %>%
       
       #Join to get column order
       dplyr::inner_join(
         y =
           tibble::tibble(
-            column_name = columns,
-            column = seq_along(columns)
+            col_lab = columns,
+            col_ind = seq_along(columns)
           ),
-        by = "column_name"
+        by = "col_lab"
       ) %>%
       
       #Rearrange columns
       dplyr::select(
         tidyselect::all_of(
           c(
-            "column",
-            "column_name",
-            "type",
-            "key"
+            "fun_eval",
+            "fun_key",
+            "col_ind",
+            "col_lab"
           )
         ),
         tidyselect::everything()
@@ -1239,7 +1239,7 @@ descriptives <-
       
       #Add consolidated summary column
       dplyr::mutate(
-        value_combo = dplyr::coalesce(as.character(round(value_num, round)), value_chr)
+        val_cbn = dplyr::coalesce(as.character(round(val_dbl, round)), val_chr)
       ) %>%
       
       #Rearrange rows
@@ -1247,12 +1247,13 @@ descriptives <-
         dplyr::vars(
           tidyselect::all_of(
             c(
-              "column",
-              "type",
-              "key",
-              "value_order"
+              "fun_eval",
+              "fun_key",
+              "col_ind",
+              "val_ind"
             )
           )
         )
       )
   }
+

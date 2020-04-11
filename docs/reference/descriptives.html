@@ -180,20 +180,25 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>min, max, median, iqr, mean, sd</code> are automatically computed for numeric data and <code>table, prop.table*100</code> for categorical data. The sample size, number of missing values, number of nonmissing values, the number of unique values, the <code>class</code> are automatically computed on all columns.</p>
+    <p>The following <code>fun_key</code>'s are available by default for the specified types:</p><ul>
+<li><p>ALL: <code>length, missing, available, class, unique</code></p></li>
+<li><p>Numeric: <code>mean, sd, min, q1, median, q3, max, iqr, range</code></p></li>
+<li><p>Categorical: <code>count, proportion, percent</code></p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble</a></code> with the following columns:</p><ul>
-<li><p><code>column</code>: Position/index of the input dataset</p></li>
-<li><p><code>column_name</code>: Label of the column</p></li>
-<li><p><code>type</code>: Set of column types function was applied to</p></li>
-<li><p><code>key</code>: Name of function that was evaluated</p></li>
-<li><p><code>value_order</code>: Position of the value within the function result</p></li>
-<li><p><code>value_name</code>: Label extracted from the result with <code><a href='https://rdrr.io/r/base/names.html'>base::names</a></code></p></li>
-<li><p><code>value_num</code>: Numeric results</p></li>
-<li><p><code>value_chr</code>: Non-numeric results</p></li>
-<li><p><code>value_combo</code>: Output combined with rounding applied to numeric values</p></li>
+<li><p><code>fun_eval</code>: Column types function was applied to</p></li>
+<li><p><code>fun_key</code>: Name of function that was evaluated</p></li>
+<li><p><code>col_ind</code>: Index from input dataset</p></li>
+<li><p><code>col_lab</code>: Label of the column</p></li>
+<li><p><code>val_ind</code>: Index of the value within the function result</p></li>
+<li><p><code>val_lab</code>: Label extracted from the result with <code><a href='https://rdrr.io/r/base/names.html'>base::names</a></code></p></li>
+<li><p><code>val_dbl</code>: Numeric result</p></li>
+<li><p><code>val_chr</code>: Non-numeric result</p></li>
+<li><p><code>val_cbn</code>: Combination of (rounded) numeric and non-numeric values</p></li>
 </ul>
 
     
@@ -202,55 +207,55 @@
     <pre class="examples"><div class='input'><span class='co'>#Default</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>descriptives</span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 111 x 9</span><span>
-#&gt;    column column_name type  key   value_order value_name value_num value_chr
-#&gt;     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
-#&gt; </span><span style='color: #555555;'> 1</span><span>      1 Age         all   avai…           1 </span><span style='color: #BB0000;'>NA</span><span>             303   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 2</span><span>      1 Age         all   class           1 </span><span style='color: #BB0000;'>NA</span><span>              </span><span style='color: #BB0000;'>NA</span><span>   numeric  
-#&gt; </span><span style='color: #555555;'> 3</span><span>      1 Age         all   leng…           1 </span><span style='color: #BB0000;'>NA</span><span>             303   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 4</span><span>      1 Age         all   miss…           1 </span><span style='color: #BB0000;'>NA</span><span>               0   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 5</span><span>      1 Age         all   uniq…           1 </span><span style='color: #BB0000;'>NA</span><span>              41   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 6</span><span>      1 Age         nume… iqr             1 </span><span style='color: #BB0000;'>NA</span><span>              13   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 7</span><span>      1 Age         nume… max             1 </span><span style='color: #BB0000;'>NA</span><span>              77   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 8</span><span>      1 Age         nume… mean            1 </span><span style='color: #BB0000;'>NA</span><span>              54.4 </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 9</span><span>      1 Age         nume… medi…           1 </span><span style='color: #BB0000;'>NA</span><span>              56   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'>10</span><span>      1 Age         nume… min             1 </span><span style='color: #BB0000;'>NA</span><span>              29   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'># … with 101 more rows, and 1 more variable: value_combo </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+#&gt;    fun_eval fun_key  col_ind col_lab     val_ind val_lab val_dbl val_chr val_cbn
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
+#&gt; </span><span style='color: #555555;'> 1</span><span> all      availab…       1 Age               1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 2</span><span> all      availab…       2 Sex               1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 3</span><span> all      availab…       3 ChestPain         1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 4</span><span> all      availab…       4 BP                1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 5</span><span> all      availab…       5 Cholesterol       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 6</span><span> all      availab…       6 BloodSugar        1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 7</span><span> all      availab…       7 MaximumHR         1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 8</span><span> all      availab…       8 ExerciseIn…       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 9</span><span> all      availab…       9 HeartDisea…       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'>10</span><span> all      class          1 Age               1 </span><span style='color: #BB0000;'>NA</span><span>           </span><span style='color: #BB0000;'>NA</span><span> numeric numeric
+#&gt; </span><span style='color: #555555;'># … with 101 more rows</span><span></div><div class='input'>
 <span class='co'>#Allow logicals as categorical</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>descriptives</span>(
         <span class='kw'>categorical_types</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"logical"</span>, <span class='st'>"factor"</span>)
     )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 117 x 9</span><span>
-#&gt;    column column_name type  key   value_order value_name value_num value_chr
-#&gt;     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
-#&gt; </span><span style='color: #555555;'> 1</span><span>      1 Age         all   avai…           1 </span><span style='color: #BB0000;'>NA</span><span>             303   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 2</span><span>      1 Age         all   class           1 </span><span style='color: #BB0000;'>NA</span><span>              </span><span style='color: #BB0000;'>NA</span><span>   numeric  
-#&gt; </span><span style='color: #555555;'> 3</span><span>      1 Age         all   leng…           1 </span><span style='color: #BB0000;'>NA</span><span>             303   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 4</span><span>      1 Age         all   miss…           1 </span><span style='color: #BB0000;'>NA</span><span>               0   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 5</span><span>      1 Age         all   uniq…           1 </span><span style='color: #BB0000;'>NA</span><span>              41   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 6</span><span>      1 Age         nume… iqr             1 </span><span style='color: #BB0000;'>NA</span><span>              13   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 7</span><span>      1 Age         nume… max             1 </span><span style='color: #BB0000;'>NA</span><span>              77   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 8</span><span>      1 Age         nume… mean            1 </span><span style='color: #BB0000;'>NA</span><span>              54.4 </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 9</span><span>      1 Age         nume… medi…           1 </span><span style='color: #BB0000;'>NA</span><span>              56   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'>10</span><span>      1 Age         nume… min             1 </span><span style='color: #BB0000;'>NA</span><span>              29   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'># … with 107 more rows, and 1 more variable: value_combo </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+#&gt;    fun_eval fun_key  col_ind col_lab     val_ind val_lab val_dbl val_chr val_cbn
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
+#&gt; </span><span style='color: #555555;'> 1</span><span> all      availab…       1 Age               1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 2</span><span> all      availab…       2 Sex               1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 3</span><span> all      availab…       3 ChestPain         1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 4</span><span> all      availab…       4 BP                1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 5</span><span> all      availab…       5 Cholesterol       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 6</span><span> all      availab…       6 BloodSugar        1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 7</span><span> all      availab…       7 MaximumHR         1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 8</span><span> all      availab…       8 ExerciseIn…       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 9</span><span> all      availab…       9 HeartDisea…       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'>10</span><span> all      class          1 Age               1 </span><span style='color: #BB0000;'>NA</span><span>           </span><span style='color: #BB0000;'>NA</span><span> numeric numeric
+#&gt; </span><span style='color: #555555;'># … with 107 more rows</span><span></div><div class='input'>
 <span class='co'>#Only apply "other" functions to numeric types</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>descriptives</span>(
         <span class='kw'>numeric_types</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
     )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 75 x 9</span><span>
-#&gt;    column column_name type  key   value_order value_name value_num value_chr
-#&gt;     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
-#&gt; </span><span style='color: #555555;'> 1</span><span>      1 Age         all   avai…           1 </span><span style='color: #BB0000;'>NA</span><span>               303 </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 2</span><span>      1 Age         all   class           1 </span><span style='color: #BB0000;'>NA</span><span>                </span><span style='color: #BB0000;'>NA</span><span> numeric  
-#&gt; </span><span style='color: #555555;'> 3</span><span>      1 Age         all   leng…           1 </span><span style='color: #BB0000;'>NA</span><span>               303 </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 4</span><span>      1 Age         all   miss…           1 </span><span style='color: #BB0000;'>NA</span><span>                 0 </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 5</span><span>      1 Age         all   uniq…           1 </span><span style='color: #BB0000;'>NA</span><span>                41 </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 6</span><span>      2 Sex         all   avai…           1 </span><span style='color: #BB0000;'>NA</span><span>               303 </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 7</span><span>      2 Sex         all   class           1 </span><span style='color: #BB0000;'>NA</span><span>                </span><span style='color: #BB0000;'>NA</span><span> factor   
-#&gt; </span><span style='color: #555555;'> 8</span><span>      2 Sex         all   leng…           1 </span><span style='color: #BB0000;'>NA</span><span>               303 </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 9</span><span>      2 Sex         all   miss…           1 </span><span style='color: #BB0000;'>NA</span><span>                 0 </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'>10</span><span>      2 Sex         all   uniq…           1 </span><span style='color: #BB0000;'>NA</span><span>                 2 </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'># … with 65 more rows, and 1 more variable: value_combo </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+#&gt;    fun_eval fun_key  col_ind col_lab     val_ind val_lab val_dbl val_chr val_cbn
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
+#&gt; </span><span style='color: #555555;'> 1</span><span> all      availab…       1 Age               1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 2</span><span> all      availab…       2 Sex               1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 3</span><span> all      availab…       3 ChestPain         1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 4</span><span> all      availab…       4 BP                1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 5</span><span> all      availab…       5 Cholesterol       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 6</span><span> all      availab…       6 BloodSugar        1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 7</span><span> all      availab…       7 MaximumHR         1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 8</span><span> all      availab…       8 ExerciseIn…       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'> 9</span><span> all      availab…       9 HeartDisea…       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
+#&gt; </span><span style='color: #555555;'>10</span><span> all      class          1 Age               1 </span><span style='color: #BB0000;'>NA</span><span>           </span><span style='color: #BB0000;'>NA</span><span> numeric numeric
+#&gt; </span><span style='color: #555555;'># … with 65 more rows</span><span></div><div class='input'>
 <span class='co'>#Compute a custom function</span>
 <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
     <span class='fu'>descriptives</span>(
@@ -258,20 +263,25 @@
             <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
                 <span class='kw'>cv</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)/<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
             )
-    )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 115 x 9</span><span>
-#&gt;    column column_name type  key   value_order value_name value_num value_chr
-#&gt;     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
-#&gt; </span><span style='color: #555555;'> 1</span><span>      1 Age         all   avai…           1 </span><span style='color: #BB0000;'>NA</span><span>           303     </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 2</span><span>      1 Age         all   class           1 </span><span style='color: #BB0000;'>NA</span><span>            </span><span style='color: #BB0000;'>NA</span><span>     numeric  
-#&gt; </span><span style='color: #555555;'> 3</span><span>      1 Age         all   leng…           1 </span><span style='color: #BB0000;'>NA</span><span>           303     </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 4</span><span>      1 Age         all   miss…           1 </span><span style='color: #BB0000;'>NA</span><span>             0     </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 5</span><span>      1 Age         all   uniq…           1 </span><span style='color: #BB0000;'>NA</span><span>            41     </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 6</span><span>      1 Age         nume… cv              1 </span><span style='color: #BB0000;'>NA</span><span>             0.166 </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 7</span><span>      1 Age         nume… iqr             1 </span><span style='color: #BB0000;'>NA</span><span>            13     </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 8</span><span>      1 Age         nume… max             1 </span><span style='color: #BB0000;'>NA</span><span>            77     </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'> 9</span><span>      1 Age         nume… mean            1 </span><span style='color: #BB0000;'>NA</span><span>            54.4   </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'>10</span><span>      1 Age         nume… medi…           1 </span><span style='color: #BB0000;'>NA</span><span>            56     </span><span style='color: #BB0000;'>NA</span><span>       
-#&gt; </span><span style='color: #555555;'># … with 105 more rows, and 1 more variable: value_combo </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+    ) <span class='kw'>%&gt;%</span>
+
+    <span class='co'>#Extract info from the custom function</span>
+    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
+        <span class='no'>fun_key</span> <span class='kw'>==</span> <span class='st'>"cv"</span>
+    ) <span class='kw'>%&gt;%</span>
+
+    <span class='co'>#Remove irrelevant columns</span>
+    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(
+        -<span class='no'>val_ind</span>,
+        -<span class='no'>val_lab</span>,
+        -<span class='no'>val_chr</span>
+    )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 6</span><span>
+#&gt;   fun_eval fun_key col_ind col_lab     val_dbl val_cbn
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
+#&gt; </span><span style='color: #555555;'>1</span><span> numeric  cv            1 Age           0.166 0.17   
+#&gt; </span><span style='color: #555555;'>2</span><span> numeric  cv            4 BP            0.134 0.13   
+#&gt; </span><span style='color: #555555;'>3</span><span> numeric  cv            5 Cholesterol   0.210 0.21   
+#&gt; </span><span style='color: #555555;'>4</span><span> numeric  cv            7 MaximumHR     0.153 0.15   </div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
