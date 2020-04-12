@@ -1405,3 +1405,162 @@ univariate_associations <-
           )
       )
   } 
+
+#Name: absorb_descriptive_variable
+#Description: Absorbs values into a custom text string for a specific variable produced by descriptives
+absorb_descriptive_variable <-
+  function(
+    variable,
+    numeric_summary,
+    categorical_summary,
+    other_summary,
+    all_summary,
+    evaluate
+  ) {
+    
+    #Vector function evaluation types
+    eval_types <- unique(variable$fun_eval)
+    
+    #Set parameters for summarizing
+    if("numeric" %in% eval_types) {
+      
+      use_summary <- numeric_summary
+      use_filter <- c("all", "numeric")
+      use_groups <- "val_ind"
+      
+    } else if("categorical" %in% eval_types) {
+      
+      use_summary <- categorical_summary
+      use_filter <- "categorical"
+      use_groups <- c("val_ind", "val_lab")
+      
+    } else {
+      
+      use_summary <- other_summary
+      use_filter <- c("all", "other")
+      use_groups <- "val_ind"
+      
+    }
+    
+    #Populate strings templates
+    results <-
+      variable %>%
+      
+      #Filter to categorical functions only
+      dplyr::filter(
+        fun_eval %in% use_filter
+      ) %>%
+      
+      #For each level
+      dplyr::group_by_at(
+        dplyr::vars(
+          tidyselect::all_of(use_groups)
+        )
+      ) %>%
+      
+      #Absorb the strings
+      dplyr::do(
+        absorb(
+          key = .data$fun_key,
+          value = .data$val_cbn,
+          text = use_summary,
+          evaluate = evaluate
+        ) %>%
+          
+          #Make a bindable tibble
+          as.list() %>%
+          purrr::map_df(~tibble::tibble(sum_val = as.character(.x)), .id = "sum_lab")
+      ) %>%
+      dplyr::ungroup()
+    
+    #Add all summary if requested
+    if(!is.null(all_summary)) {
+      
+      #Filter to subset with all functions
+      variable_all <-
+        variable %>%
+        dplyr::filter(
+          fun_eval == "all"
+        )
+      
+      #Add extra row for categorical variables only
+      val_lab_all <- 1
+      if("categorical" %in% eval_types)
+        val_lab_all <- 0
+      
+      results <- 
+        results %>%
+        
+        #Bind additional summary to results
+        dplyr::bind_rows(
+          
+          absorb(
+            key = variable_all$fun_key,
+            value = variable_all$val_cbn,
+            text = all_summary,
+            evaluate = evaluate
+          ) %>%
+            
+            #Make a bindable tibble
+            as.list() %>%
+            purrr::map_df(~tibble::tibble(sum_val = as.character(.x)), .id = "sum_lab") %>%
+            
+            #Put index at zero
+            tibble::add_column(
+              val_ind = val_lab_all
+            )
+          
+        )
+      
+    }
+    
+    results
+    
+  }
+
+#Name: absorb_descriptives
+#Description: Gathers the absorbed descriptives for all variables
+absorb_descriptives <-
+  function(
+    data,
+    numeric_summary,
+    categorical_summary,
+    other_summary,
+    all_summary,
+    evaluate,
+    ...
+  ) {
+    
+    data %>%
+      
+      #Get descriptive statistics
+      descriptives(...) %>%
+      
+      #Absorb into text strings for each variable
+      stratiply(
+        f = absorb_descriptive_variable,
+        by = col_ind,
+        numeric_summary = numeric_summary,
+        categorical_summary = categorical_summary,
+        other_summary = other_summary,
+        all_summary = all_summary,
+        evaluate = evaluate
+      ) %>%
+      
+      #Bind back together
+      dplyr::bind_rows(
+        .id = "col_ind"
+      ) %>%
+      
+      #Convert to factor to maintain order of summaries
+      dplyr::mutate(
+        sum_lab = forcats::as_factor(sum_lab)
+      ) %>%
+      
+      #Spread over the columns
+      tidyr::spread(
+        key = sum_lab,
+        value = sum_val
+      ) 
+    
+  }

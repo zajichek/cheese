@@ -1,4 +1,4 @@
-# cheeese 0.1.0
+# cheese 0.1.0
 
 _This version is in development_
 
