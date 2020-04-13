@@ -1300,7 +1300,7 @@ univariate_associations <-
           stop("No predictor variables registered.")
         
         #Response variables are everything else
-        response <-
+        responses <-
           tidyselect::eval_select(
             rlang::expr(names(data)[-predictors]),
             data
@@ -1422,23 +1422,22 @@ absorb_descriptive_variable <-
     eval_types <- unique(variable$fun_eval)
     
     #Set parameters for summarizing
+    use_groups <- c("col_lab", "val_ind")
     if("numeric" %in% eval_types) {
       
       use_summary <- numeric_summary
-      use_filter <- c("all", "numeric")
-      use_groups <- "val_ind"
+      use_filter <- "numeric"
       
     } else if("categorical" %in% eval_types) {
       
       use_summary <- categorical_summary
       use_filter <- "categorical"
-      use_groups <- c("val_ind", "val_lab")
+      use_groups <- c(use_groups, "val_lab")
       
     } else {
       
       use_summary <- other_summary
-      use_filter <- c("all", "other")
-      use_groups <- "val_ind"
+      use_filter <- "other"
       
     }
     
@@ -1507,6 +1506,7 @@ absorb_descriptive_variable <-
             
             #Put index at zero
             tibble::add_column(
+              col_lab = variable_all$col_lab[1],
               val_ind = val_lab_all
             )
           
