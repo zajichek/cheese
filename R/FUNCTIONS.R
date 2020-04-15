@@ -941,6 +941,7 @@ grable <-
     sep = "_", #Delimiter for parsing
     reverse = FALSE, #Stack in opposite direction?
     format = c("html", "latex"), #Rendering format
+    caption = NULL, #Table caption
     ... #Arguments passed to kableExtra::kable_styling
   ) {
     
@@ -992,7 +993,8 @@ grable <-
     result <-
       data %>%
       knitr::kable(
-        format = format
+        format = format,
+        caption = caption
       ) %>%
       kableExtra::kable_styling(...)
     
@@ -1562,5 +1564,416 @@ absorb_descriptives <-
         key = sum_lab,
         value = sum_val
       ) 
+    
+  }
+
+#Name: univariate_table
+#Description: Create a custom table with univariate descriptive statistics
+univariate_table <-
+  function(
+    data,
+    strata = NULL,
+    associations = NULL,
+    numeric_summary = c(Summary = "median (q1, q3)"),
+    categorical_summary = c(Summary = "count (percent%)"),
+    other_summary = c(Summary = "unique"),
+    all_summary = NULL,
+    evaluate = FALSE,
+    add_n = FALSE,
+    sep = "_",
+    variableName = "Variable",
+    levelName = "Level",
+    fill_blanks = "",
+    format = c("html", "latex", "markdown", "pandoc", "none"),
+    caption = NULL,
+    ...
+  ) {
+    
+    #Set default values
+    col_strata <- NULL
+    row_strata <- character(0)
+    
+    #Extract all stratification variables
+    strata_vars <- all.vars(strata)
+    
+    #Summarize entire data set if no stratification columns
+    if(length(strata_vars) == 0) {
+      
+      results <-
+        data %>%
+        absorb_descriptives(
+          numeric_summary = numeric_summary,
+          categorical_summary = categorical_summary,
+          other_summary = other_summary,
+          all_summary = all_summary,
+          evaluate = evaluate,
+          ...
+        )
+      
+      #Otherwise summarize within each group  
+    } else {
+      
+      results <-
+        data %>%
+        stratiply(
+          f = absorb_descriptives,
+          by = tidyselect::all_of(strata_vars),
+          numeric_summary = numeric_summary,
+          categorical_summary = categorical_summary,
+          other_summary = other_summary,
+          all_summary = all_summary,
+          evaluate = evaluate,
+          ...
+        ) %>%
+        
+        #Bind back together
+        fasten(
+          into = strata_vars
+        )
+      
+      #Differentiate row/column strata
+      col_strata <- colnames(attr(terms(strata), "factors"))
+      row_strata <- setdiff(strata_vars, col_strata)
+      
+      #Merge column strata into single group
+      if(!is.null(col_strata)) {
+        
+        #For the results
+        results <-
+          results %>%
+          tidyr::unite(
+            col = "col_strata",
+            tidyselect::all_of(col_strata),
+            sep = sep
+          )
+        
+        #In a temporary dataset
+        temp_data <-
+          data %>%
+          tidyr::unite(
+            col = "col_strata",
+            tidyselect::all_of(col_strata),
+            sep = sep
+          )
+        
+      }
+      
+    }
+    
+    #Compute association statistics if applicable
+    association_results <- NULL
+    if(!is.null(associations)) {
+      
+      #Ensure column strata are available
+      if(is.null(col_strata))
+        stop("Association metrics can only be computed with column strata.")
+      
+      #If there are row strata, run association metrics within
+      if(length(row_strata) > 0) {
+        
+        association_results <-
+          temp_data %>%
+          
+          #Evaluate functions on each row strata
+          stratiply(
+            f = univariate_associations,
+            by = tidyselect::all_of(row_strata),
+            associations,
+            predictors = tidyselect::all_of("col_strata")
+          ) %>%
+          
+          #Bind results together
+          fasten(
+            into = row_strata
+          ) 
+        
+      } else {
+        
+        association_results <-
+          temp_data %>%
+          univariate_associations(
+            f = associations,
+            predictors = tidyselect::all_of("col_strata")
+          )
+        
+      }
+      
+      association_results <-
+        association_results %>%
+        
+        #Remove predictor column
+        dplyr::select(
+          -predictor
+        )
+      
+    }
+    
+    #Compute stratification group sample size if requested
+    if(add_n & !is.null(col_strata)) {
+      
+      results <-
+        results %>%
+        
+        #Join to get sample size
+        dplyr::inner_join(
+          y = 
+            temp_data %>%
+            
+            #For each strata
+            dplyr::group_by(
+              col_strata
+            ) %>%
+            
+            #Compute the sample size
+            dplyr::summarise(
+              col_N = dplyr::n()
+            ),
+          by = "col_strata"
+        ) %>%
+        
+        #Concatenate to levels
+        dplyr::mutate(
+          col_strata = paste0(col_strata, " (N=", col_N, ")")
+        ) %>%
+        
+        #Remove sample size column
+        dplyr::select(
+          -col_N
+        )
+      
+    }
+    
+    #Span results across columns
+    if(!is.null(col_strata)) {
+      
+      results <-
+        results %>%
+        
+        #Convert to factor to maintain order (NEED TO UPDATE stretch TO ENSURE THIS)
+        dplyr::mutate_at(
+          "col_strata",
+          forcats::as_factor
+        ) %>%
+        
+        #Send all results across by the strata
+        stretch(
+          key = tidyselect::all_of("col_strata"),
+          value = -tidyselect::any_of(c(row_strata, "col_strata", "col_ind", "col_lab", "val_ind", "val_lab"))
+        )
+      
+    }
+    
+    #Gather association metrics
+    if(!is.null(association_results)) {
+      
+      results <-
+        results %>%
+        
+        #Join on required columns
+        dplyr::inner_join(
+          y = association_results,
+          by = c(row_strata, "col_lab" = "response")
+        )
+      
+    }
+    
+    #Arrange results by indices
+    results <-
+      results %>%
+      dplyr::arrange_at(
+        dplyr::vars(
+          tidyselect::all_of(c(row_strata, "col_ind", "val_ind"))
+        )
+      ) %>%
+      
+      #Remove index columns
+      dplyr::select(
+        -col_ind,
+        -val_ind
+      ) %>%
+      
+      #Provide specified column names
+      dplyr::rename_all(
+        dplyr::recode,
+        col_lab = variableName,
+        val_lab = levelName
+      ) %>%
+      
+      #Fill in empty values
+      dplyr::mutate_if(
+        is.character,
+        dplyr::coalesce,
+        fill_blanks
+      )
+    
+    #Proceed depending on render format
+    format <- match.arg(format)
+    if(format %in% c("html", "latex")) {
+      
+      #Make sequences up to collapse
+      collapse_set1 <- seq_len(which(names(results) == variableName))
+      collapse_set2 <- NULL
+      if(!is.null(associations))
+        collapse_set2 <- which(names(results) %in% setdiff(names(association_results), c(row_strata, "col_lab", "response")))
+      print(collapse_set2)
+      #If there are no col strata, make kable
+      if(is.null(col_strata)) {
+        
+        results <-
+          results %>%
+          knitr::kable(
+            format = format,
+            caption = caption
+          ) %>%
+          kableExtra::kable_styling(
+            full_width = FALSE,
+            bootstrap_options = c("striped", "responsive"),
+            latex_options = c("striped", "responsive")
+          )
+        
+      } else {
+        
+        #Make a grable
+        results <-
+          results %>%
+          grable(
+            at = -tidyselect::any_of(c(row_strata, variableName, levelName, names(association_results))),
+            sep = sep,
+            format = format,
+            caption = caption
+          ) 
+        
+      }
+      
+      #Remove duplicate rows
+      results %>%
+        kableExtra::collapse_rows(c(collapse_set1, collapse_set2), valign = "top")
+      
+    } else {
+      
+      #Remove duplicate association metrics
+      if(!is.null(associations)) {
+        
+        results <-
+          results %>%
+          
+          #Remove duplicate values
+          dplyr::group_by_at(
+            dplyr::vars(
+              tidyselect::all_of(c(row_strata, variableName))
+            )
+          ) %>%
+          dplyr::mutate_at(
+            dplyr::vars(
+              tidyselect::all_of(setdiff(names(association_results), c(row_strata, "col_lab", "response")))
+            ),
+            ~
+              dplyr::case_when(
+                duplicated(.x) ~ fill_blanks,
+                TRUE ~ as.character(.x)
+              )
+          ) %>%
+          dplyr::ungroup()
+        
+      }
+      
+      #Apply within row strata
+      if(length(row_strata) > 0) {
+        
+        results <-
+          results %>%
+          
+          #Group by row strata
+          dplyr::group_by_at(
+            dplyr::vars(
+              tidyselect::all_of(row_strata)
+            )
+          )
+        
+      }
+      
+      #Remove duplicate variable names
+      results <-
+        results %>%
+        dplyr::mutate_at(
+          dplyr::vars(
+            tidyselect::all_of(variableName)
+          ),
+          ~
+            dplyr::case_when(
+              duplicated(.x) ~ fill_blanks,
+              TRUE ~ as.character(.x)
+            )
+        ) %>%
+        dplyr::ungroup()
+      
+      #Remove duplicate row strata if needed
+      if(length(row_strata) > 0) {
+        
+        #Iteratively group and remove if needed
+        if(length(row_strata) > 1) {
+          
+          for(i in rev(seq_len(length(row_strata) - 1))) {
+            
+            results <-
+              results %>%
+              
+              #Group by everything up to this variable
+              dplyr::group_by_at(
+                dplyr::vars(
+                  tidyselect::all_of(row_strata[seq_len(i)])
+                )
+              ) %>%
+              
+              #Remove duplicates for this variable
+              dplyr::mutate_at(
+                dplyr::vars(
+                  tidyselect::all_of(row_strata[i + 1])
+                ),
+                ~
+                  dplyr::case_when(
+                    duplicated(.x) ~ fill_blanks,
+                    TRUE ~ as.character(.x)
+                  )
+              ) %>%
+              dplyr::ungroup()
+            
+          }
+          
+        }
+        
+        #Remove duplicate for remaining row strata
+        results <-
+          results %>%
+          dplyr::mutate_at(
+            dplyr::vars(
+              tidyselect::all_of(row_strata[1])
+            ),
+            ~
+              dplyr::case_when(
+                duplicated(.x) ~ fill_blanks,
+                TRUE ~ as.character(.x)
+              )
+          ) %>%
+          dplyr::ungroup()
+        
+      }
+      
+      #Return frame if no format requested
+      if(format == "none") {
+        
+        results
+        
+      } else {
+        
+        results %>%
+          knitr::kable(
+            format = format,
+            caption = caption
+          )
+        
+      }
+      
+    }
     
   }

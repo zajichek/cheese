@@ -17,4 +17,5 @@ export("%>%",
        "stretch",
        "grable",
        "descriptives",
-       "univariate_associations")
+       "univariate_associations",
+       "univariate_table")

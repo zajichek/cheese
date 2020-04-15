@@ -11,6 +11,7 @@ grable(
     sep = "_",
     reverse = FALSE,
     format = c("html", "latex"),
+    caption = NULL,
     ...
 )
 }
@@ -20,6 +21,7 @@ grable(
 \item{sep}{String to separate the columns. Defaults to "_".}
 \item{reverse}{Should the layers be added in the opposite direction? Defaults to \code{FALSE}.}
 \item{format}{Format for rendering the table. Must be "html" (default) or "latex".}
+\item{caption}{Optional caption for the table}
 \item{...}{Arguments to pass to \code{kableExtra::kable_styling}}
 }
 \value{
