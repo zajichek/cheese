@@ -1,5 +1,5 @@
 ---
-title: "Tutorial on cheese"
+title: "Making cheese"
 author: Alex Zajichek
 date: "`r format(Sys.time(), '%m/%d/%Y')`"
 output: 
