@@ -46,6 +46,7 @@ _This version is in development_
 
   - Default access to 25th and 75th percentiles for string templates with `"q1"` and `"q3"`, respectively
   - Use `"median (q1, q3)"` as the default string template for numeric variables
+  - Columns identified as `other` are not displayed by default
 
 ## New functions
 

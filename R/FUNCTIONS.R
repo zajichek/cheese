@@ -799,6 +799,77 @@ typly <-
     
   }
 
+#Name: order_levels
+#Description: Returns order of combinations of levels
+order_levels <-
+  function(
+    data,
+    sep = "_"
+  ) {
+    
+    #Find set of unique values for each variable
+    sets <- 
+      data %>%
+      purrr::map(unique)
+    
+    #Get rank order of levels within each column
+    ranks <-
+      sets %>%
+      purrr::map_df(
+        ~
+          tibble::tibble(
+            name = as.character(.x),
+            value = order(.x)
+          ),
+        .id = "column"
+      )
+    
+    sets %>%
+      
+      #Convert to character
+      purrr::map(as.character) %>%
+      
+      #Get cross-product for levels
+      purrr::cross_df() %>%
+      
+      #Add group identifier
+      dplyr::mutate(
+        .id = seq_len(nrow(.))
+      ) %>%
+      
+      #Send down the rows
+      tidyr::gather(
+        key = "column",
+        value = "name",
+        -tidyselect::all_of(".id")
+      ) %>%
+      
+      #Get rank of each level within each column
+      dplyr::inner_join(
+        y = ranks,
+        by = c("column", "name")
+      ) %>%
+      
+      #Within each combination
+      dplyr::group_by_at(
+        tidyselect::all_of(".id")
+      ) %>%
+      
+      #Concatenate the levels
+      dplyr::summarise(
+        index = paste(value, collapse = ""),
+        name = paste(name, collapse = sep)
+      ) %>%
+      dplyr::ungroup() %>%
+      
+      #Keep rank and level
+      dplyr::transmute(
+        index = order(order(index)),
+        name = name
+      )
+    
+  }
+
 #Name: stretch
 #Description: Span keys and values across the columns
 stretch <-
@@ -820,6 +891,16 @@ stretch <-
         data
       ) %>%
       names
+    
+    #Gather column order for keys
+    column_order <-
+      data %>%
+      dplyr::select(
+        tidyselect::all_of(key)
+      ) %>%
+      order_levels(
+        sep = sep
+      )
     
     #Check for registration
     if(length(key) == 0)
@@ -853,8 +934,18 @@ stretch <-
         remove = TRUE
       ) 
     
+    #Filter column ordering to those existing in the data
+    column_order <-
+      column_order %>%
+      dplyr::filter(
+        name %in% purrr::pluck(data, ".key")
+      )
+    
     #Gather id variables
     id_vars <- setdiff(names(data), c(".key", value))
+    
+    #Collect column ordering
+    temp_column_order <- tibble::tibble()
     
     #For each value column...
     result <- list()
@@ -884,6 +975,21 @@ stretch <-
           dplyr::mutate_at(
             ".key",
             ~paste0(.x, sep, value_i)
+          )
+        
+        #Add to column ordering
+        temp_column_order <-
+          temp_column_order %>%
+          dplyr::bind_rows(
+            
+            column_order %>%
+              
+              #Append value name and add index
+              dplyr::mutate(
+                name = paste0(name, sep, value_i),
+                val_index = i
+              )
+            
           )
         
       }
@@ -919,18 +1025,39 @@ stretch <-
       
     }
     
+    #Find final sorting order
+    if(nrow(temp_column_order) == 0)
+      temp_column_order <- column_order
+    
+    column_order <-
+      temp_column_order %>%
+      
+      #Arrange by indices
+      dplyr::arrange_at(
+        dplyr::vars(
+          tidyselect::any_of(
+            c(
+              "index",
+              "val_index"
+            )
+          )
+        )
+      ) %>%
+      
+      #Extract vector
+      dplyr::pull(name)
+    
     #Rearrange the columns
-    names <- names(result)
     result %>%
       dplyr::select(
         tidyselect::all_of(
           c(
             id_vars,
-            sort(setdiff(names, id_vars))
+            column_order
           )
         )
       )
-  }
+  } 
 
 #Name: grable
 #Description: Make a hierarchical kable 

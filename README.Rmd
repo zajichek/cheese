@@ -69,9 +69,12 @@ heart_disease %>%
   )
 #Use string templates to customize cell appearance
 heart_disease %>%
-  dplyr::select_if(is.numeric) %>%
   univariate_table(
     format = format,
+    categorical_summary = 
+      c(
+        `Count (%)` = "count (percent%)"
+      ),
     numeric_summary = 
       c(
         `Median (Q1, Q3)` = "median (q1, q3)",
@@ -87,7 +90,7 @@ heart_disease %>%
 
 ## General functions
 ```{r}
-#Run stratified multiple regression models for multiple outcomes
+#Run stratified univariate regression models for multiple outcomes
 models <-
   heart_disease %>%
   
@@ -97,16 +100,14 @@ models <-
     f =
       ~.x %>%
       
-      #Regress some outcomes on all other variables
+      #Regress some outcomes on all other variables individually
       dish(
         left = c(ExerciseInducedAngina, HeartDisease),
-        right = -c(ChestPain, ExerciseInducedAngina, HeartDisease),
-        each_right = FALSE,
-        f = function(y, x) glm(y ~ ., data = x, family = "binomial")
+        f = function(y, x) glm(y ~ x, family = "binomial")
       )
   )
 
-summary(models$Female$HeartDisease)
+summary(models$Female$HeartDisease$Age)
 
 #Find the depths of the list structure that are glm's
 model_depth <-
@@ -136,7 +137,7 @@ model_effects <-
   
   #Bind rows up to the stratification variable
   fasten(
-    into = "Outcome",
+    into = c("Outcome", "Predictor"),
     depth = 1
   )
 model_effects

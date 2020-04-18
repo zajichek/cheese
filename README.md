@@ -112,9 +112,12 @@ heart_disease %>%
 ``` r
 #Use string templates to customize cell appearance
 heart_disease %>%
-  dplyr::select_if(is.numeric) %>%
   univariate_table(
     format = format,
+    categorical_summary = 
+      c(
+        `Count (%)` = "count (percent%)"
+      ),
     numeric_summary = 
       c(
         `Median (Q1, Q3)` = "median (q1, q3)",
@@ -127,17 +130,32 @@ heart_disease %>%
   )
 ```
 
-| Variable    | Median (Q1, Q3)  | Mean (SD)      | \# missing |
-| :---------- | :--------------- | :------------- | :--------- |
-| Age         | 56 (48, 61)      | 54.44 (9.04)   | 0 of 303   |
-| BP          | 130 (120, 140)   | 131.69 (17.6)  | 0 of 303   |
-| Cholesterol | 241 (211, 275)   | 246.69 (51.78) | 0 of 303   |
-| MaximumHR   | 153 (133.5, 166) | 149.61 (22.88) | 0 of 303   |
+| Variable              | Level            | Median (Q1, Q3)  | Mean (SD)      | \# missing | Count (%)    |
+| :-------------------- | :--------------- | :--------------- | :------------- | :--------- | :----------- |
+| Age                   |                  | 56 (48, 61)      | 54.44 (9.04)   | 0 of 303   |              |
+| Sex                   |                  |                  |                | 0 of 303   |              |
+|                       | Female           |                  |                |            | 97 (32.01%)  |
+|                       | Male             |                  |                |            | 206 (67.99%) |
+| ChestPain             |                  |                  |                | 0 of 303   |              |
+|                       | Typical angina   |                  |                |            | 23 (7.59%)   |
+|                       | Atypical angina  |                  |                |            | 50 (16.5%)   |
+|                       | Non-anginal pain |                  |                |            | 86 (28.38%)  |
+|                       | Asymptomatic     |                  |                |            | 144 (47.52%) |
+| BP                    |                  | 130 (120, 140)   | 131.69 (17.6)  | 0 of 303   |              |
+| Cholesterol           |                  | 241 (211, 275)   | 246.69 (51.78) | 0 of 303   |              |
+| BloodSugar            |                  |                  |                | 0 of 303   |              |
+| MaximumHR             |                  | 153 (133.5, 166) | 149.61 (22.88) | 0 of 303   |              |
+| ExerciseInducedAngina |                  |                  |                | 0 of 303   |              |
+|                       | No               |                  |                |            | 204 (67.33%) |
+|                       | Yes              |                  |                |            | 99 (32.67%)  |
+| HeartDisease          |                  |                  |                | 0 of 303   |              |
+|                       | No               |                  |                |            | 164 (54.13%) |
+|                       | Yes              |                  |                |            | 139 (45.87%) |
 
 ## General functions
 
 ``` r
-#Run stratified multiple regression models for multiple outcomes
+#Run stratified univariate regression models for multiple outcomes
 models <-
   heart_disease %>%
   
@@ -147,42 +165,36 @@ models <-
     f =
       ~.x %>%
       
-      #Regress some outcomes on all other variables
+      #Regress some outcomes on all other variables individually
       dish(
         left = c(ExerciseInducedAngina, HeartDisease),
-        right = -c(ChestPain, ExerciseInducedAngina, HeartDisease),
-        each_right = FALSE,
-        f = function(y, x) glm(y ~ ., data = x, family = "binomial")
+        f = function(y, x) glm(y ~ x, family = "binomial")
       )
   )
 
-summary(models$Female$HeartDisease)
+summary(models$Female$HeartDisease$Age)
 #> 
 #> Call:
-#> glm(formula = y ~ ., family = "binomial", data = x)
+#> glm(formula = y ~ x, family = "binomial")
 #> 
 #> Deviance Residuals: 
 #>     Min       1Q   Median       3Q      Max  
-#> -1.7077  -0.7092  -0.4425   0.2726   2.5685  
+#> -1.1870  -0.8324  -0.6500   1.4148   1.9950  
 #> 
 #> Coefficients:
-#>                 Estimate Std. Error z value Pr(>|z|)   
-#> (Intercept)    -5.065838   3.420928  -1.481  0.13865   
-#> Age             0.001257   0.036131   0.035  0.97225   
-#> BP              0.052462   0.017342   3.025  0.00248 **
-#> Cholesterol     0.004080   0.004231   0.964  0.33496   
-#> BloodSugarTRUE  0.566391   0.721140   0.785  0.43221   
-#> MaximumHR      -0.029809   0.015049  -1.981  0.04762 * 
+#>             Estimate Std. Error z value Pr(>|z|)   
+#> (Intercept) -4.27420    1.62356  -2.633  0.00847 **
+#> x            0.05654    0.02769   2.042  0.04118 * 
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
 #> (Dispersion parameter for binomial family taken to be 1)
 #> 
-#>     Null deviance: 110.710  on 96  degrees of freedom
-#> Residual deviance:  87.757  on 91  degrees of freedom
-#> AIC: 99.757
+#>     Null deviance: 110.71  on 96  degrees of freedom
+#> Residual deviance: 106.13  on 95  degrees of freedom
+#> AIC: 110.13
 #> 
-#> Number of Fisher Scoring iterations: 5
+#> Number of Fisher Scoring iterations: 4
 
 #Find the depths of the list structure that are glm's
 model_depth <-
@@ -192,7 +204,7 @@ model_depth <-
       types = "glm"
     )
 model_depth
-#> [1] 2
+#> [1] 3
 
 #Gather model effect estimates
 model_effects <-
@@ -213,41 +225,39 @@ model_effects <-
   
   #Bind rows up to the stratification variable
   fasten(
-    into = "Outcome",
+    into = c("Outcome", "Predictor"),
     depth = 1
   )
 model_effects
 #> $Female
-#> # A tibble: 12 x 3
-#>    Outcome               Term           Estimate
-#>    <chr>                 <chr>             <dbl>
-#>  1 ExerciseInducedAngina (Intercept)    -2.05   
-#>  2 ExerciseInducedAngina Age            -0.0549 
-#>  3 ExerciseInducedAngina BP              0.0442 
-#>  4 ExerciseInducedAngina Cholesterol     0.00378
-#>  5 ExerciseInducedAngina BloodSugarTRUE  0.497  
-#>  6 ExerciseInducedAngina MaximumHR      -0.0215 
-#>  7 HeartDisease          (Intercept)    -5.07   
-#>  8 HeartDisease          Age             0.00126
-#>  9 HeartDisease          BP              0.0525 
-#> 10 HeartDisease          Cholesterol     0.00408
-#> 11 HeartDisease          BloodSugarTRUE  0.566  
-#> 12 HeartDisease          MaximumHR      -0.0298 
+#> # A tibble: 28 x 4
+#>    Outcome               Predictor   Term               Estimate
+#>    <chr>                 <chr>       <chr>                 <dbl>
+#>  1 ExerciseInducedAngina Age         (Intercept)        -1.46   
+#>  2 ExerciseInducedAngina Age         x                   0.00416
+#>  3 ExerciseInducedAngina ChestPain   (Intercept)       -17.6    
+#>  4 ExerciseInducedAngina ChestPain   xAtypical angina   15.5    
+#>  5 ExerciseInducedAngina ChestPain   xNon-anginal pain  14.8    
+#>  6 ExerciseInducedAngina ChestPain   xAsymptomatic      17.4    
+#>  7 ExerciseInducedAngina BP          (Intercept)        -6.47   
+#>  8 ExerciseInducedAngina BP          x                   0.0383 
+#>  9 ExerciseInducedAngina Cholesterol (Intercept)        -2.06   
+#> 10 ExerciseInducedAngina Cholesterol x                   0.00315
+#> # … with 18 more rows
 #> 
 #> $Male
-#> # A tibble: 12 x 3
-#>    Outcome               Term           Estimate
-#>    <chr>                 <chr>             <dbl>
-#>  1 ExerciseInducedAngina (Intercept)     6.81   
-#>  2 ExerciseInducedAngina Age            -0.00766
-#>  3 ExerciseInducedAngina BP             -0.00865
-#>  4 ExerciseInducedAngina Cholesterol     0.00555
-#>  5 ExerciseInducedAngina BloodSugarTRUE  0.0604 
-#>  6 ExerciseInducedAngina MaximumHR      -0.0486 
-#>  7 HeartDisease          (Intercept)     4.00   
-#>  8 HeartDisease          Age             0.0220 
-#>  9 HeartDisease          BP              0.00578
-#> 10 HeartDisease          Cholesterol     0.00923
-#> 11 HeartDisease          BloodSugarTRUE -0.325  
-#> 12 HeartDisease          MaximumHR      -0.0521
+#> # A tibble: 28 x 4
+#>    Outcome               Predictor   Term              Estimate
+#>    <chr>                 <chr>       <chr>                <dbl>
+#>  1 ExerciseInducedAngina Age         (Intercept)       -2.44   
+#>  2 ExerciseInducedAngina Age         x                  0.0356 
+#>  3 ExerciseInducedAngina ChestPain   (Intercept)       -1.32   
+#>  4 ExerciseInducedAngina ChestPain   xAtypical angina  -1.39   
+#>  5 ExerciseInducedAngina ChestPain   xNon-anginal pain -0.219  
+#>  6 ExerciseInducedAngina ChestPain   xAsymptomatic      1.71   
+#>  7 ExerciseInducedAngina BP          (Intercept)        0.0385 
+#>  8 ExerciseInducedAngina BP          x                 -0.00424
+#>  9 ExerciseInducedAngina Cholesterol (Intercept)       -1.70   
+#> 10 ExerciseInducedAngina Cholesterol x                  0.00494
+#> # … with 18 more rows
 ```
