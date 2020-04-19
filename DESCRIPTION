@@ -3,7 +3,7 @@ Version: 0.1.0
 Date: 2020-04-17
 Title: Tools for Working with Data During Statistical Analysis
 Authors@R: person(given = "Alex", family = "Zajichek", email = "alexzajichek@gmail.com", role = c("aut", "cre"))
-Description: Contains tools for working with data during statistical analysis, promoting flexible, intuitive, and reproducible workflows. There are tools designated for specific statistical tasks such building a custom univariate descriptive table, and computing pairwise association statistics. These are built on a collection of data manipulation tools designed for general use that are motivated by the functional programming concept.
+Description: Contains tools for working with data during statistical analysis, promoting flexible, intuitive, and reproducible workflows. There are functions designated for specific statistical tasks such building a custom univariate descriptive table, computing pairwise association statistics, etc. These are built on a collection of data manipulation tools designed for general use that are motivated by the functional programming concept.
 URL: https://zajichek.github.io/cheese, https://github.com/zajichek/cheese
 License: MIT + file LICENSE
 Depends: 

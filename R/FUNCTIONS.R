@@ -1762,29 +1762,6 @@ univariate_table <-
       col_strata <- colnames(attr(terms(strata), "factors"))
       row_strata <- setdiff(strata_vars, col_strata)
       
-      #Merge column strata into single group
-      if(!is.null(col_strata)) {
-        
-        #For the results
-        results <-
-          results %>%
-          tidyr::unite(
-            col = "col_strata",
-            tidyselect::all_of(col_strata),
-            sep = sep
-          )
-        
-        #In a temporary dataset
-        temp_data <-
-          data %>%
-          tidyr::unite(
-            col = "col_strata",
-            tidyselect::all_of(col_strata),
-            sep = sep
-          )
-        
-      }
-      
     }
     
     #Compute association statistics if applicable
@@ -1794,6 +1771,17 @@ univariate_table <-
       #Ensure column strata are available
       if(is.null(col_strata))
         stop("Association metrics can only be computed with column strata.")
+      
+      #Create secondary dataset
+      temp_data <-
+        data %>%
+        
+        #Combine column strata so they are compared across all groups
+        tidyr::unite(
+          col = "col_strata",
+          tidyselect::all_of(col_strata),
+          sep = sep
+        )
       
       #If there are row strata, run association metrics within
       if(length(row_strata) > 0) {
@@ -1844,23 +1832,37 @@ univariate_table <-
         #Join to get sample size
         dplyr::inner_join(
           y = 
-            temp_data %>%
+            data %>%
             
-            #For each strata
-            dplyr::group_by(
-              col_strata
+            #Group by column strata
+            dplyr::group_by_at(
+              dplyr::vars(
+                tidyselect::all_of(col_strata)
+              )
             ) %>%
             
-            #Compute the sample size
+            #Compute sample size
             dplyr::summarise(
               col_N = dplyr::n()
+            ) %>%
+            dplyr::ungroup() %>%
+            
+            #Convert to character types
+            dplyr::mutate_at(
+              dplyr::vars(
+                tidyselect::all_of(col_strata)
+              ),
+              as.character
             ),
-          by = "col_strata"
+          by = col_strata
         ) %>%
         
-        #Concatenate to levels
-        dplyr::mutate(
-          col_strata = paste0(col_strata, " (N=", col_N, ")")
+        #Concatenate sample size to last col_strata 
+        dplyr::mutate_at(
+          dplyr::vars(
+            tidyselect::all_of(col_strata[length(col_strata)])
+          ),
+          ~paste0(.x, " (N=", col_N, ")")
         ) %>%
         
         #Remove sample size column
@@ -1876,16 +1878,18 @@ univariate_table <-
       results <-
         results %>%
         
-        #Convert to factor to maintain order (NEED TO UPDATE stretch TO ENSURE THIS)
+        #Convert to factor to maintain order
         dplyr::mutate_at(
-          "col_strata",
+          dplyr::vars(
+            tidyselect::all_of(col_strata)
+          ),
           forcats::as_factor
         ) %>%
         
         #Send all results across by the strata
         stretch(
-          key = tidyselect::all_of("col_strata"),
-          value = -tidyselect::any_of(c(row_strata, "col_strata", "col_ind", "col_lab", "val_ind", "val_lab"))
+          key = tidyselect::all_of(col_strata),
+          value = -tidyselect::any_of(c(row_strata, col_strata, "col_ind", "col_lab", "val_ind", "val_lab"))
         )
       
     }

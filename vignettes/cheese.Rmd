@@ -1,7 +1,5 @@
 ---
 title: "Making cheese"
-author: Alex Zajichek
-date: "`r format(Sys.time(), '%m/%d/%Y')`"
 output: 
     rmarkdown::html_vignette
 vignette: >
@@ -10,4 +8,38 @@ vignette: >
     \usepackage[utf8]{inputenc}
 ---
 
-# Introduction
+The goal of the `cheese` package is to provide tools for easing the creation of clean, flexible, intuitive, and reproducible code when working with you're data during statistical analysis. Being able to structure the code and produce presentation-ready results for the analysis process in a way that is robust to updates in the data, changes in methodological specfications, etc. can not only be a huge time saver, but also help mitigate errors associated with monotonous tasks (e.g. copy/pasting results into a separate table). The dataset used throughout the tutorial comes from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Heart+Disease).
+
+```{r}
+#Load the package
+require(cheese)
+
+#Look at the data
+heart_disease
+
+```
+
+Details of the pre-processing steps of the raw data to what is found within the package can be found on the package's Github site [here](https://github.com/zajichek/cheese/blob/master/data-raw/heart_disease.R).
+
+# Summarizing data
+```{r}
+heart_disease %>%
+  univariate_table()
+
+heart_disease %>%
+  univariate_table(
+    strata = ~ Sex,
+    add_n = TRUE
+  )
+```
+
+# Distorting relationships to explore effects
+```{r}
+n <- 1000
+x1 <- rnorm(n)
+x2 <- runif(n, min = .25, max = .75)
+x3 <- rbinom(n, size = 1, prob = x2)
+
+```
+
+

@@ -70,13 +70,11 @@
 
       
 
-      </header><div class="row">
+      </header><script src="cheese_files/kePrint-0.0.1/kePrint.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Making cheese</h1>
-                        <h4 class="author">Alex Zajichek</h4>
             
-            <h4 class="date">04/18/2020</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/zajichek/cheese/blob/master/vignettes/cheese.Rmd"><code>vignettes/cheese.Rmd</code></a></small>
       <div class="hidden name"><code>cheese.Rmd</code></div>
@@ -85,9 +83,362 @@
 
     
     
-<div id="introduction" class="section level1">
+<p>The goal of the <code>cheese</code> package is to provide tools for easing the creation of clean, flexible, intuitive, and reproducible code when working with you’re data during statistical analysis. Being able to structure the code and produce presentation-ready results for the analysis process in a way that is robust to updates in the data, changes in methodological specfications, etc. can not only be a huge time saver, but also help mitigate errors associated with monotonous tasks (e.g. copy/pasting results into a separate table). The dataset used throughout the tutorial comes from the <a href="http://archive.ics.uci.edu/ml/datasets/Heart+Disease">UCI Machine Learning Repository</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#Load the package</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(cheese)</a></code></pre></div>
+<pre><code>## Loading required package: cheese</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">#Look at the data</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">heart_disease</a></code></pre></div>
+<pre><code>## # A tibble: 303 x 9
+##      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR
+##    &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt;
+##  1    63 Male  Typical …   145         233 TRUE             150
+##  2    67 Male  Asymptom…   160         286 FALSE            108
+##  3    67 Male  Asymptom…   120         229 FALSE            129
+##  4    37 Male  Non-angi…   130         250 FALSE            187
+##  5    41 Fema… Atypical…   130         204 FALSE            172
+##  6    56 Male  Atypical…   120         236 FALSE            178
+##  7    62 Fema… Asymptom…   140         268 FALSE            160
+##  8    57 Fema… Asymptom…   120         354 FALSE            163
+##  9    63 Male  Asymptom…   130         254 FALSE            147
+## 10    53 Male  Asymptom…   140         203 TRUE             155
+## # … with 293 more rows, and 2 more variables: ExerciseInducedAngina &lt;fct&gt;,
+## #   HeartDisease &lt;fct&gt;</code></pre>
+<p>Details of the pre-processing steps of the raw data to what is found within the package can be found on the package’s Github site <a href="https://github.com/zajichek/cheese/blob/master/data-raw/heart_disease.R">here</a>.</p>
+<div id="summarizing-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
+<a href="#summarizing-data" class="anchor"></a>Summarizing data</h1>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/univariate_table.html">univariate_table</a></span>()</a></code></pre></div>
+<pre><code>## NULL</code></pre>
+<table class="table table table-striped table-responsive">
+<thead><tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:left;">
+Level
+</th>
+<th style="text-align:left;">
+Summary
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Age
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+56 (48, 61)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
+Sex
+</td>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+97 (32.01%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+206 (67.99%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+ChestPain
+</td>
+<td style="text-align:left;">
+Typical angina
+</td>
+<td style="text-align:left;">
+23 (7.59%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atypical angina
+</td>
+<td style="text-align:left;">
+50 (16.5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Non-anginal pain
+</td>
+<td style="text-align:left;">
+86 (28.38%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Asymptomatic
+</td>
+<td style="text-align:left;">
+144 (47.52%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BP
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+130 (120, 140)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cholesterol
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+241 (211, 275)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MaximumHR
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+153 (133.5, 166)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
+ExerciseInducedAngina
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+204 (67.33%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+99 (32.67%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
+HeartDisease
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+164 (54.13%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+139 (45.87%)
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/univariate_table.html">univariate_table</a></span>(</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">    <span class="dt">strata =</span> <span class="op">~</span><span class="st"> </span>Sex,</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="dt">add_n =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">  )</a></code></pre></div>
+<pre><code>## NULL</code></pre>
+<table class="table table">
+<thead><tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:left;">
+Level
+</th>
+<th style="text-align:left;">
+Female (N=97)
+</th>
+<th style="text-align:left;">
+Male (N=206)
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Age
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+57 (50, 63)
+</td>
+<td style="text-align:left;">
+54.5 (47, 59.75)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+ChestPain
+</td>
+<td style="text-align:left;">
+Typical angina
+</td>
+<td style="text-align:left;">
+4 (4.12%)
+</td>
+<td style="text-align:left;">
+19 (9.22%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atypical angina
+</td>
+<td style="text-align:left;">
+18 (18.56%)
+</td>
+<td style="text-align:left;">
+32 (15.53%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Non-anginal pain
+</td>
+<td style="text-align:left;">
+35 (36.08%)
+</td>
+<td style="text-align:left;">
+51 (24.76%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Asymptomatic
+</td>
+<td style="text-align:left;">
+40 (41.24%)
+</td>
+<td style="text-align:left;">
+104 (50.49%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BP
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+132 (120, 140)
+</td>
+<td style="text-align:left;">
+130 (120, 140)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cholesterol
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+254 (215, 302)
+</td>
+<td style="text-align:left;">
+235 (208.75, 268.5)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MaximumHR
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+157 (142, 165)
+</td>
+<td style="text-align:left;">
+150.5 (132, 167.5)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
+ExerciseInducedAngina
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+75 (77.32%)
+</td>
+<td style="text-align:left;">
+129 (62.62%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+22 (22.68%)
+</td>
+<td style="text-align:left;">
+77 (37.38%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
+HeartDisease
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+72 (74.23%)
+</td>
+<td style="text-align:left;">
+92 (44.66%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+25 (25.77%)
+</td>
+<td style="text-align:left;">
+114 (55.34%)
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="distorting-relationships-to-explore-effects" class="section level1">
+<h1 class="hasAnchor">
+<a href="#distorting-relationships-to-explore-effects" class="anchor"></a>Distorting relationships to explore effects</h1>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">n &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">x1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(n)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">x2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(n, <span class="dt">min =</span> <span class="fl">.25</span>, <span class="dt">max =</span> <span class="fl">.75</span>)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">x3 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span>(n, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> x2)</a></code></pre></div>
 </div>
   </div>
 
@@ -96,7 +447,8 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#introduction">Introduction</a></li>
+<li><a href="#summarizing-data">Summarizing data</a></li>
+      <li><a href="#distorting-relationships-to-explore-effects">Distorting relationships to explore effects</a></li>
       </ul>
 </div>
       </div>
