@@ -1764,65 +1764,6 @@ univariate_table <-
       
     }
     
-    #Compute association statistics if applicable
-    association_results <- NULL
-    if(!is.null(associations)) {
-      
-      #Ensure column strata are available
-      if(is.null(col_strata))
-        stop("Association metrics can only be computed with column strata.")
-      
-      #Create secondary dataset
-      temp_data <-
-        data %>%
-        
-        #Combine column strata so they are compared across all groups
-        tidyr::unite(
-          col = "col_strata",
-          tidyselect::all_of(col_strata),
-          sep = sep
-        )
-      
-      #If there are row strata, run association metrics within
-      if(length(row_strata) > 0) {
-        
-        association_results <-
-          temp_data %>%
-          
-          #Evaluate functions on each row strata
-          stratiply(
-            f = univariate_associations,
-            by = tidyselect::all_of(row_strata),
-            associations,
-            predictors = tidyselect::all_of("col_strata")
-          ) %>%
-          
-          #Bind results together
-          fasten(
-            into = row_strata
-          ) 
-        
-      } else {
-        
-        association_results <-
-          temp_data %>%
-          univariate_associations(
-            f = associations,
-            predictors = tidyselect::all_of("col_strata")
-          )
-        
-      }
-      
-      association_results <-
-        association_results %>%
-        
-        #Remove predictor column
-        dplyr::select(
-          -predictor
-        )
-      
-    }
-    
     #Compute stratification group sample size if requested
     if(add_n & !is.null(col_strata)) {
       
@@ -1895,15 +1836,85 @@ univariate_table <-
     }
     
     #Gather association metrics
-    if(!is.null(association_results)) {
+    association_results <- NULL
+    if(!is.null(associations)) {
       
+      #Ensure column strata are available
+      if(is.null(col_strata))
+        stop("Association metrics can only be computed with column strata.")
+      
+      #Create secondary dataset
+      temp_data <-
+        data %>%
+        
+        #Combine column strata so they are compared across all groups
+        tidyr::unite(
+          col = "col_strata",
+          tidyselect::all_of(col_strata),
+          sep = sep
+        )
+      
+      #If there are row strata, run association metrics within
+      if(length(row_strata) > 0) {
+        
+        association_results <-
+          temp_data %>%
+          
+          #Evaluate functions on each row strata
+          stratiply(
+            f = univariate_associations,
+            by = tidyselect::all_of(row_strata),
+            associations,
+            predictors = tidyselect::all_of("col_strata")
+          ) %>%
+          
+          #Bind results together
+          fasten(
+            into = row_strata
+          ) 
+        
+      } else {
+        
+        association_results <-
+          temp_data %>%
+          univariate_associations(
+            f = associations,
+            predictors = tidyselect::all_of("col_strata")
+          )
+        
+      }
+      
+      #Determine index to join on depending on type (0 for categorical, 1 for everything else)
+      association_results$val_ind <- as.numeric(!(association_results$response %in% unique(results$col_lab[results$val_ind != 1])))
+      
+      #Join back to results
       results <-
         results %>%
         
         #Join on required columns
-        dplyr::inner_join(
-          y = association_results,
-          by = c(row_strata, "col_lab" = "response")
+        dplyr::full_join(
+          y = 
+            association_results %>%
+            
+            #Join to get the col_ind
+            dplyr::inner_join(
+              y = 
+                results %>%
+                
+                #Get distinct col_ind, col_labs
+                dplyr::select(
+                  col_ind,
+                  col_lab
+                ) %>%
+                dplyr::distinct(),
+              by = c("response" = "col_lab")
+            ) %>%
+            
+            #Remove predictor column
+            dplyr::select(
+              -predictor
+            ),
+          by = c(row_strata, "col_ind", "col_lab" = "response", "val_ind")
         )
       
     }
@@ -1946,7 +1957,7 @@ univariate_table <-
       collapse_set2 <- NULL
       if(!is.null(associations))
         collapse_set2 <- which(names(results) %in% setdiff(names(association_results), c(row_strata, "col_lab", "response")))
-      print(collapse_set2)
+      
       #If there are no col strata, make kable
       if(is.null(col_strata)) {
         
