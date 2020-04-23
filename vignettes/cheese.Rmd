@@ -8,7 +8,7 @@ vignette: >
     \usepackage[utf8]{inputenc}
 ---
 
-Structuring code that is robust to updates in the data, changes in methodological specfications, etc., and can get to presentation-ready results in an automated way can mitigate errors from painful, tedious tasks--it can also be a huge time saver. The `cheese` package was designed with this philosophy in mind, heavily influenced by (and explicit dependencies on) [`tidy`](tidyverse.org) concepts. Its intention is to provide general tools for working with data and results during statistical analysis, in addition to a collection of functions designated for specific statistical tasks.
+Structuring code that is robust to updates in the data, changes in methodological specfications, etc., and can get to presentation-ready results in an automated way can mitigate errors from painful, tedious tasks--it can also be a huge time saver. The `cheese` package was designed with this philosophy in mind, heavily influenced by (and explicit dependencies on) [`tidy`](https://www.tidyverse.org/) concepts. Its intention is to provide general tools for working with data and results during statistical analysis, in addition to a collection of functions designated for specific statistical tasks.
 
 The dataset used throughout the tutorial comes from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Heart+Disease).
 
