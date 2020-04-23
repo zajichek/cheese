@@ -1,0 +1,35 @@
+---
+title: "Building a descriptive analysis"
+output: 
+    rmarkdown::html_vignette
+vignette: >
+    %\VignetteIndexEntry{Building a descriptive analysis}
+    %\VignetteEngine{knitr::rmarkdown}
+    \usepackage[utf8]{inputenc}
+---
+
+Once a dataset is cleaned and ready for statistical analysis, the first step is typically to summarize it. The `univariate_table()` function makes it easy to create a custom descriptive analysis while consistently producing clean, presentation-ready output. It is built to integrate directly into your work flow (e.g. R markdown) but can also be called from the console. Its different components/features are driven by many general-use functions found within the package. When using RStudio, it will show up in the 'Viewer' pane by default as an html table.
+
+```{r}
+require(cheese)
+
+heart_disease %>%
+  univariate_table()
+
+heart_disease %>%
+  univariate_table(
+    strata = ~ Sex,
+    add_n = TRUE
+  )
+```
+
+# Custom string templates
+
+## Adding user-specified functions
+
+# Stratified analysis
+
+## Association metrics
+
+# Miscellaneous
+

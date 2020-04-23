@@ -3,4 +3,5 @@ pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
   cheese: cheese.html
+  describe: describe.html
 

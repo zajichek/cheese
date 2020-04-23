@@ -47,7 +47,6 @@ _This version is in development_
   - Default access to 25th and 75th percentiles for string templates with `"q1"` and `"q3"`, respectively
   - Uses `"median (q1, q3)"` as the default string template for numeric variables
   - Columns identified as `other` are not displayed by default
-  - User is in charge of reordering, relabeling, and releveling data prior to the function call
   - Stratification variables are displayed as a hierarchy, and the sample size is always shown for the lowest group
   - Row stratification variables are displayed consistently across rendering types to maintain headers
 

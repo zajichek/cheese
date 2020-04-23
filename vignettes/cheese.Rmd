@@ -3,12 +3,12 @@ title: "Making cheese"
 output: 
     rmarkdown::html_vignette
 vignette: >
-    %\VignetteIndexEntry{Tutorial on cheese}
+    %\VignetteIndexEntry{Functions in the cheese package}
     %\VignetteEngine{knitr::rmarkdown}
     \usepackage[utf8]{inputenc}
 ---
 
-Structuring code that is robust to updates in the data, changes in methodological specfications, etc., and can get to presentation-ready results in an automated way can mitigate errors from painful, tedious tasks--it can also be a huge time saver. The `cheese` package was designed with this philosophy in mind, heavily influenced by (and explicit dependencies on) [`tidy`](https://www.tidyverse.org/) concepts. Its intention is to provide general tools for working with data and results during statistical analysis, in addition to a collection of functions designated for specific statistical tasks.
+Structuring code that is robust to updates in the data, changes in methodological specfications, etc., and can get to presentation-ready results in an automated way can mitigate errors caused by painful, tedious tasks--it can also be a huge time saver. The `cheese` package was designed with this philosophy in mind, heavily influenced by (and explicit dependencies on) [`tidy`](https://www.tidyverse.org/) concepts. Its intention is to provide general tools for working with data and results during statistical analysis, in addition to a collection of functions designated for specific statistical tasks.
 
 The dataset used throughout the tutorial comes from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Heart+Disease).
 
@@ -22,24 +22,3 @@ heart_disease
 ```
 
 Details of the pre-processing steps of the raw data to what is found within the package can be found on the package's Github site [here](https://github.com/zajichek/cheese/blob/master/data-raw/heart_disease.R).
-
-# Building a descriptive table
-
-```{r}
-heart_disease %>%
-  univariate_table()
-
-heart_disease %>%
-  univariate_table(
-    strata = ~ Sex,
-    add_n = TRUE
-  )
-```
-
-## Custom string templates
-
-## Stratified analysis
-
-### Association metrics
-
-
