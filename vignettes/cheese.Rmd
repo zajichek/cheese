@@ -8,7 +8,7 @@ vignette: >
     \usepackage[utf8]{inputenc}
 ---
 
-Being able to structure code that can get to presentation-ready results in an automated way, and is robust to updates in the data, changes in methodological specfications, etc. can not only be a huge time saver, but also help mitigate errors from tedious tasks. The `cheese` package was designed with this philosophy in mind, providing tools for working with data and results during statistical analysis.
+Structuring code that is robust to updates in the data, changes in methodological specfications, etc., and can get to presentation-ready results in an automated way can mitigate errors from painful, tedious tasks--it can also be a huge time saver. The `cheese` package was designed with this philosophy in mind, heavily influenced by (and explicit dependencies on) [`tidy`](tidyverse.org) concepts. Its intention is to provide general tools for working with data and results during statistical analysis, in addition to a collection of functions designated for specific statistical tasks.
 
 The dataset used throughout the tutorial comes from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Heart+Disease).
 
@@ -23,7 +23,8 @@ heart_disease
 
 Details of the pre-processing steps of the raw data to what is found within the package can be found on the package's Github site [here](https://github.com/zajichek/cheese/blob/master/data-raw/heart_disease.R).
 
-# Summarizing data
+# Building a descriptive table
+
 ```{r}
 heart_disease %>%
   univariate_table()
@@ -35,6 +36,10 @@ heart_disease %>%
   )
 ```
 
+## Custom string templates
 
+## Stratified analysis
+
+### Association metrics
 
 

@@ -20,7 +20,7 @@ _This version is in development_
 
   - Default behavior is now to split to a multi-level list depending on the number of split variables
   - Control over the depth at which the list is split to
-  - Select split variables unquoted, quoted, or with select helpers as in `dplyr::select`
+  - Select split variables unquoted, quoted, or with select helpers as in `dplyr::select()`
   - Control over whether unused split combinations are dropped with the `drop` argument
   - Control over whether stratification variables are removed from the split frames with the `remove` argument
   
@@ -32,7 +32,7 @@ _This version is in development_
 
   - The `keep` argument is removed
   - The `keys` argument is replaced with `key` and `send` argument replaced with `value`
-  - Extracting keys from the header is now done with `grable`
+  - Extracting keys from the header is now done with `grable()`.
 
 * `typly`
 
@@ -45,8 +45,11 @@ _This version is in development_
 * `univariate_table`
 
   - Default access to 25th and 75th percentiles for string templates with `"q1"` and `"q3"`, respectively
-  - Use `"median (q1, q3)"` as the default string template for numeric variables
+  - Uses `"median (q1, q3)"` as the default string template for numeric variables
   - Columns identified as `other` are not displayed by default
+  - User is in charge of reordering, relabeling, and releveling data prior to the function call
+  - Stratification variables are displayed as a hierarchy, and the sample size is always shown for the lowest group
+  - Row stratification variables are displayed consistently across rendering types to maintain headers
 
 ## New functions
 

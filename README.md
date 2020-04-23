@@ -65,6 +65,7 @@ heart_disease %>%
   univariate_table(
     format = format
   )
+#> NULL
 ```
 
 | Variable              | Level            | Summary          |
@@ -92,6 +93,7 @@ heart_disease %>%
     strata = ~ Sex,
     add_n = TRUE
   )
+#> NULL
 ```
 
 | Variable              | Level            | Female (N=97)  | Male (N=206)        |
@@ -128,29 +130,30 @@ heart_disease %>%
         `# missing` = "missing of length"
       )
   )
+#> NULL
 ```
 
-| Variable              | Level            | Median (Q1, Q3)  | Mean (SD)      | \# missing | Count (%)    |
-| :-------------------- | :--------------- | :--------------- | :------------- | :--------- | :----------- |
-| Age                   |                  | 56 (48, 61)      | 54.44 (9.04)   | 0 of 303   |              |
-| Sex                   |                  |                  |                | 0 of 303   |              |
-|                       | Female           |                  |                |            | 97 (32.01%)  |
-|                       | Male             |                  |                |            | 206 (67.99%) |
-| ChestPain             |                  |                  |                | 0 of 303   |              |
-|                       | Typical angina   |                  |                |            | 23 (7.59%)   |
-|                       | Atypical angina  |                  |                |            | 50 (16.5%)   |
-|                       | Non-anginal pain |                  |                |            | 86 (28.38%)  |
-|                       | Asymptomatic     |                  |                |            | 144 (47.52%) |
-| BP                    |                  | 130 (120, 140)   | 131.69 (17.6)  | 0 of 303   |              |
-| Cholesterol           |                  | 241 (211, 275)   | 246.69 (51.78) | 0 of 303   |              |
-| BloodSugar            |                  |                  |                | 0 of 303   |              |
-| MaximumHR             |                  | 153 (133.5, 166) | 149.61 (22.88) | 0 of 303   |              |
-| ExerciseInducedAngina |                  |                  |                | 0 of 303   |              |
-|                       | No               |                  |                |            | 204 (67.33%) |
-|                       | Yes              |                  |                |            | 99 (32.67%)  |
-| HeartDisease          |                  |                  |                | 0 of 303   |              |
-|                       | No               |                  |                |            | 164 (54.13%) |
-|                       | Yes              |                  |                |            | 139 (45.87%) |
+| Variable              | Level            | Median (Q1, Q3)  | Mean (SD)      | Count (%)    | \# missing |
+| :-------------------- | :--------------- | :--------------- | :------------- | :----------- | :--------- |
+| Age                   |                  | 56 (48, 61)      | 54.44 (9.04)   |              | 0 of 303   |
+| Sex                   |                  |                  |                |              | 0 of 303   |
+|                       | Female           |                  |                | 97 (32.01%)  |            |
+|                       | Male             |                  |                | 206 (67.99%) |            |
+| ChestPain             |                  |                  |                |              | 0 of 303   |
+|                       | Typical angina   |                  |                | 23 (7.59%)   |            |
+|                       | Atypical angina  |                  |                | 50 (16.5%)   |            |
+|                       | Non-anginal pain |                  |                | 86 (28.38%)  |            |
+|                       | Asymptomatic     |                  |                | 144 (47.52%) |            |
+| BP                    |                  | 130 (120, 140)   | 131.69 (17.6)  |              | 0 of 303   |
+| Cholesterol           |                  | 241 (211, 275)   | 246.69 (51.78) |              | 0 of 303   |
+| BloodSugar            |                  |                  |                |              | 0 of 303   |
+| MaximumHR             |                  | 153 (133.5, 166) | 149.61 (22.88) |              | 0 of 303   |
+| ExerciseInducedAngina |                  |                  |                |              | 0 of 303   |
+|                       | No               |                  |                | 204 (67.33%) |            |
+|                       | Yes              |                  |                | 99 (32.67%)  |            |
+| HeartDisease          |                  |                  |                |              | 0 of 303   |
+|                       | No               |                  |                | 164 (54.13%) |            |
+|                       | Yes              |                  |                | 139 (45.87%) |            |
 
 ## General functions
 

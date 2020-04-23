@@ -1577,29 +1577,41 @@ absorb_descriptive_variable <-
       #Filter to categorical functions only
       dplyr::filter(
         fun_eval %in% use_filter
-      ) %>%
+      )
+    
+    #Check if results exist
+    if(nrow(results) > 0) {
       
-      #For each level
-      dplyr::group_by_at(
-        dplyr::vars(
-          tidyselect::all_of(use_groups)
-        )
-      ) %>%
-      
-      #Absorb the strings
-      dplyr::do(
-        absorb(
-          key = .data$fun_key,
-          value = .data$val_cbn,
-          text = use_summary,
-          evaluate = evaluate
+      results <-
+        results %>%
+        
+        #For each level
+        dplyr::group_by_at(
+          dplyr::vars(
+            tidyselect::all_of(use_groups)
+          )
         ) %>%
-          
-          #Make a bindable tibble
-          as.list() %>%
-          purrr::map_df(~tibble::tibble(sum_val = as.character(.x)), .id = "sum_lab")
-      ) %>%
-      dplyr::ungroup()
+        
+        #Absorb the strings
+        dplyr::do(
+          absorb(
+            key = .data$fun_key,
+            value = .data$val_cbn,
+            text = use_summary,
+            evaluate = evaluate
+          ) %>%
+            
+            #Make a bindable tibble
+            as.list() %>%
+            purrr::map_df(~tibble::tibble(sum_val = as.character(.x)), .id = "sum_lab")
+        ) %>%
+        dplyr::ungroup()
+      
+    } else {
+      
+      results <- NULL
+      
+    }
     
     #Add all summary if requested
     if(!is.null(all_summary)) {
@@ -1765,53 +1777,116 @@ univariate_table <-
     }
     
     #Compute stratification group sample size if requested
-    if(add_n & !is.null(col_strata)) {
+    if(add_n) {
       
-      results <-
-        results %>%
+      #Check for column strata
+      if(!is.null(col_strata)) {
         
-        #Join to get sample size
-        dplyr::inner_join(
-          y = 
-            data %>%
-            
-            #Group by column strata
-            dplyr::group_by_at(
-              dplyr::vars(
-                tidyselect::all_of(col_strata)
-              )
-            ) %>%
-            
-            #Compute sample size
-            dplyr::summarise(
-              col_N = dplyr::n()
-            ) %>%
-            dplyr::ungroup() %>%
-            
-            #Convert to character types
-            dplyr::mutate_at(
-              dplyr::vars(
-                tidyselect::all_of(col_strata)
+        results <-
+          results %>%
+          
+          #Join to get sample size
+          dplyr::inner_join(
+            y = 
+              data %>%
+              
+              #Group by column strata
+              dplyr::group_by_at(
+                dplyr::vars(
+                  tidyselect::all_of(col_strata)
+                )
+              ) %>%
+              
+              #Compute sample size
+              dplyr::summarise(
+                col_N = dplyr::n()
+              ) %>%
+              dplyr::ungroup() %>%
+              
+              #Convert to character types
+              dplyr::mutate_at(
+                dplyr::vars(
+                  tidyselect::all_of(col_strata)
+                ),
+                as.character
               ),
-              as.character
+            by = col_strata
+          ) %>%
+          
+          #Concatenate sample size to last col_strata 
+          dplyr::mutate_at(
+            dplyr::vars(
+              tidyselect::all_of(col_strata[length(col_strata)])
             ),
-          by = col_strata
-        ) %>%
+            ~paste0(.x, " (N=", col_N, ")")
+          ) %>%
+          
+          #Remove sample size column
+          dplyr::select(
+            -col_N
+          )
         
-        #Concatenate sample size to last col_strata 
-        dplyr::mutate_at(
-          dplyr::vars(
-            tidyselect::all_of(col_strata[length(col_strata)])
-          ),
-          ~paste0(.x, " (N=", col_N, ")")
-        ) %>%
+      }
+      
+      #Check for row strata
+      if(length(row_strata) > 0) {
         
-        #Remove sample size column
-        dplyr::select(
-          -col_N
-        )
+        results <-
+          results %>%
+          
+          #Join to get sample size
+          dplyr::inner_join(
+            y = 
+              data %>%
+              
+              #Group by column strata
+              dplyr::group_by_at(
+                dplyr::vars(
+                  tidyselect::all_of(row_strata)
+                )
+              ) %>%
+              
+              #Compute sample size
+              dplyr::summarise(
+                row_N = dplyr::n()
+              ) %>%
+              dplyr::ungroup() %>%
+              
+              #Convert to character types
+              dplyr::mutate_at(
+                dplyr::vars(
+                  tidyselect::all_of(row_strata)
+                ),
+                as.character
+              ),
+            by = row_strata
+          ) %>%
+          
+          #Concatenate sample size to last col_strata 
+          dplyr::mutate_at(
+            dplyr::vars(
+              tidyselect::all_of(row_strata[length(row_strata)])
+            ),
+            ~paste0(.x, " (N=", row_N, ")")
+          ) %>%
+          
+          #Remove sample size column
+          dplyr::select(
+            -row_N
+          )
+        
+      }
       
     }
+    
+    results <-
+      results %>%
+      
+      #Ensure all_summary are the last columns
+      dplyr::select(
+        -tidyselect::any_of(names(all_summary)),
+        tidyselect::any_of(names(all_summary))
+      )
     
     #Span results across columns
     if(!is.null(col_strata)) {
@@ -1857,6 +1932,55 @@ univariate_table <-
       #If there are row strata, run association metrics within
       if(length(row_strata) > 0) {
         
+        #Append the sample size to the row strata variable so joining works
+        if(add_n) {
+          
+          temp_data <-
+            temp_data %>%
+            
+            #Join to get sample size
+            dplyr::inner_join(
+              y = 
+                data %>%
+                
+                #Group by column strata
+                dplyr::group_by_at(
+                  dplyr::vars(
+                    tidyselect::all_of(row_strata)
+                  )
+                ) %>%
+                
+                #Compute sample size
+                dplyr::summarise(
+                  row_N = dplyr::n()
+                ) %>%
+                dplyr::ungroup() %>%
+                
+                #Convert to character types
+                dplyr::mutate_at(
+                  dplyr::vars(
+                    tidyselect::all_of(row_strata)
+                  ),
+                  as.character
+                ),
+              by = row_strata
+            ) %>%
+            
+            #Concatenate sample size to last col_strata 
+            dplyr::mutate_at(
+              dplyr::vars(
+                tidyselect::all_of(row_strata[length(row_strata)])
+              ),
+              ~paste0(.x, " (N=", row_N, ")")
+            ) %>%
+            
+            #Remove sample size column
+            dplyr::select(
+              -row_N
+            )
+          
+        }
+        
         association_results <-
           temp_data %>%
           
@@ -1887,33 +2011,34 @@ univariate_table <-
       #Determine index to join on depending on type (0 for categorical, 1 for everything else)
       association_results$val_ind <- as.numeric(!(association_results$response %in% unique(results$col_lab[results$val_ind != 1])))
       
+      #Join to get the col_ind
+      association_results <-
+        association_results %>%
+        dplyr::inner_join(
+          y = 
+            results %>%
+            
+            #Get distinct col_ind, col_labs
+            dplyr::select(
+              col_ind,
+              col_lab
+            ) %>%
+            dplyr::distinct(),
+          by = c("response" = "col_lab")
+        ) %>%
+        
+        #Remove predictor column
+        dplyr::select(
+          -predictor
+        )
+      
       #Join back to results
       results <-
         results %>%
         
         #Join on required columns
         dplyr::full_join(
-          y = 
-            association_results %>%
-            
-            #Join to get the col_ind
-            dplyr::inner_join(
-              y = 
-                results %>%
-                
-                #Get distinct col_ind, col_labs
-                dplyr::select(
-                  col_ind,
-                  col_lab
-                ) %>%
-                dplyr::distinct(),
-              by = c("response" = "col_lab")
-            ) %>%
-            
-            #Remove predictor column
-            dplyr::select(
-              -predictor
-            ),
+          y = association_results,
           by = c(row_strata, "col_ind", "col_lab" = "response", "val_ind")
         )
       
@@ -1968,9 +2093,7 @@ univariate_table <-
             caption = caption
           ) %>%
           kableExtra::kable_styling(
-            full_width = FALSE,
-            bootstrap_options = c("striped", "responsive"),
-            latex_options = c("striped", "responsive")
+            full_width = FALSE
           )
         
       } else {
@@ -1982,7 +2105,8 @@ univariate_table <-
             at = -tidyselect::any_of(c(row_strata, variableName, levelName, names(association_results))),
             sep = sep,
             format = format,
-            caption = caption
+            caption = caption,
+            full_width = FALSE
           ) 
         
       }
@@ -2007,7 +2131,7 @@ univariate_table <-
           ) %>%
           dplyr::mutate_at(
             dplyr::vars(
-              tidyselect::all_of(setdiff(names(association_results), c(row_strata, "col_lab", "response")))
+              tidyselect::all_of(setdiff(names(association_results), c(row_strata, "col_lab", "response", "val_ind", "col_ind")))
             ),
             ~
               dplyr::case_when(

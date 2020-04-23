@@ -141,7 +141,7 @@
 <ul>
 <li>Default behavior is now to split to a multi-level list depending on the number of split variables</li>
 <li>Control over the depth at which the list is split to</li>
-<li>Select split variables unquoted, quoted, or with select helpers as in <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code>
+<li>Select split variables unquoted, quoted, or with select helpers as in <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code>
 </li>
 <li>Control over whether unused split combinations are dropped with the <code>drop</code> argument</li>
 <li>Control over whether stratification variables are removed from the split frames with the <code>remove</code> argument</li>
@@ -159,8 +159,7 @@
 <li>The <code>keep</code> argument is removed</li>
 <li>The <code>keys</code> argument is replaced with <code>key</code> and <code>send</code> argument replaced with <code>value</code>
 </li>
-<li>Extracting keys from the header is now done with <code>grable</code>
-</li>
+<li>Extracting keys from the header is now done with <code><a href="../reference/grable.html">grable()</a></code>.</li>
 </ul>
 </li>
 <li>
@@ -180,8 +179,11 @@
 <p><code>univariate_table</code></p>
 <ul>
 <li>Default access to 25th and 75th percentiles for string templates with <code>"q1"</code> and <code>"q3"</code>, respectively</li>
-<li>Use <code>"median (q1, q3)"</code> as the default string template for numeric variables</li>
+<li>Uses <code>"median (q1, q3)"</code> as the default string template for numeric variables</li>
 <li>Columns identified as <code>other</code> are not displayed by default</li>
+<li>User is in charge of reordering, relabeling, and releveling data prior to the function call</li>
+<li>Stratification variables are displayed as a hierarchy, and the sample size is always shown for the lowest group</li>
+<li>Row stratification variables are displayed consistently across rendering types to maintain headers</li>
 </ul>
 </li>
 </ul>
