@@ -2,3 +2,32 @@ destination: docs
 template:
   params:
     bootswatch: yeti
+
+reference:
+- title: Data and lists
+  contents:
+  - divide
+  - fasten
+
+- title: Applying functions
+  contents:
+  - depths
+  - dish
+  - stratiply
+  - typly
+  
+- title: Univariate analysis
+  contents:
+  - descriptives
+  - univariate_associations
+  - univariate_table
+
+- title: Miscellaneous
+  contents:
+  - absorb
+  - grable
+  - heart_disease
+  - muddle
+  - some_type
+  - stretch
+  

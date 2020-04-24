@@ -26,6 +26,13 @@ heart_disease %>%
 # Custom string templates
 
 ## Adding user-specified functions
+The `descriptives()` function is the workhorse behind computation of the summary statistics, and any of its arguments can be used. In the example, you'll notice that one of columns did not appear in the table. By default, only `factor()` and `numeric()` types are placed into the result, though there are (at least) three (3) ways to include it:
+
+### Change column type prior to function call
+
+### Change scope of what column types are evaluated by what function sets
+
+### Allow evaluation by its own set of functions
 
 # Stratified analysis
 

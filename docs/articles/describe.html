@@ -425,6 +425,19 @@ Yes
 <div id="adding-user-specified-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#adding-user-specified-functions" class="anchor"></a>Adding user-specified functions</h2>
+<p>The <code><a href="../reference/descriptives.html">descriptives()</a></code> function is the workhorse behind computation of the summary statistics, and any of its arguments can be used. In the example, you’ll notice that one of columns did not appear in the table. By default, only <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code> and <code><a href="https://rdrr.io/r/base/numeric.html">numeric()</a></code> types are placed into the result, though there are (at least) three (3) ways to include it:</p>
+<div id="change-column-type-prior-to-function-call" class="section level3">
+<h3 class="hasAnchor">
+<a href="#change-column-type-prior-to-function-call" class="anchor"></a>Change column type prior to function call</h3>
+</div>
+<div id="change-scope-of-what-column-types-are-evaluated-by-what-function-sets" class="section level3">
+<h3 class="hasAnchor">
+<a href="#change-scope-of-what-column-types-are-evaluated-by-what-function-sets" class="anchor"></a>Change scope of what column types are evaluated by what function sets</h3>
+</div>
+<div id="allow-evaluation-by-its-own-set-of-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#allow-evaluation-by-its-own-set-of-functions" class="anchor"></a>Allow evaluation by its own set of functions</h3>
+</div>
 </div>
 </div>
 <div id="stratified-analysis" class="section level1">

@@ -95,8 +95,11 @@
 
     
     
-<p>Structuring code that is robust to updates in the data, changes in methodological specfications, etc., and can get to presentation-ready results in an automated way can mitigate errors caused by painful, tedious tasks–it can also be a huge time saver. The <code>cheese</code> package was designed with this philosophy in mind, heavily influenced by (and explicit dependencies on) <a href="https://www.tidyverse.org/"><code>tidy</code></a> concepts. Its intention is to provide general tools for working with data and results during statistical analysis, in addition to a collection of functions designated for specific statistical tasks.</p>
-<p>The dataset used throughout the tutorial comes from the <a href="http://archive.ics.uci.edu/ml/datasets/Heart+Disease">UCI Machine Learning Repository</a>.</p>
+<p>Structuring code that is robust to updates in the data, changes in methodological specfications, etc., and can get to presentation-ready results in an automated way can mitigate errors caused by painful, tedious tasks–it can also be a huge time saver. The <code>cheese</code> package was designed with this philosophy in mind, heavily influenced by (and explicit dependencies on) <a href="https://www.tidyverse.org/"><code>tidy</code></a> concepts. Its intention is to provide general tools for working with data and results during statistical analysis, in addition to a collection of functions designated for specific statistical tasks. Let’s take a closer look:</p>
+<div id="heart-disease" class="section level3">
+<h3 class="hasAnchor">
+<a href="#heart-disease" class="anchor"></a>Heart disease</h3>
+<p>The dataset used throughout this tutorial comes from the <a href="http://archive.ics.uci.edu/ml/datasets/Heart+Disease">UCI Machine Learning Repository</a>. Details of the pre-processing steps of the raw data to what is found within the package can be found on the package’s Github site <a href="https://github.com/zajichek/cheese/blob/master/data-raw/heart_disease.R">here</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#Load the package</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(cheese)</a></code></pre></div>
 <pre><code>## Loading required package: cheese</code></pre>
@@ -117,7 +120,7 @@
 ## 10    53 Male  Asymptom…   140         203 TRUE             155
 ## # … with 293 more rows, and 2 more variables: ExerciseInducedAngina &lt;fct&gt;,
 ## #   HeartDisease &lt;fct&gt;</code></pre>
-<p>Details of the pre-processing steps of the raw data to what is found within the package can be found on the package’s Github site <a href="https://github.com/zajichek/cheese/blob/master/data-raw/heart_disease.R">here</a>.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
