@@ -4,11 +4,11 @@ template:
     bootswatch: yeti
 
 reference:
-- title: Data and lists
+- title: Splitting and binding data
   contents:
   - divide
   - fasten
-
+  
 - title: Applying functions
   contents:
   - depths
@@ -30,4 +30,3 @@ reference:
   - muddle
   - some_type
   - stretch
-  

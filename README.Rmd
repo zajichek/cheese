@@ -49,6 +49,12 @@ These are built on a collection of data manipulation tools designed for general 
 #Load package
 require(cheese)
 
+#Make a descriptive table
+heart_disease %>%
+  univariate_table(
+    format = "markdown" #Could also render as "html", "latex", "pandoc", or "none"
+  )
+#Run some models
 heart_disease %>%
 
   #Apply a function to subsets of the data
@@ -69,12 +75,6 @@ heart_disease %>%
       into = c("Outcome", "Predictor"),
       depth = 1
     )
-
-#Make a descriptive table
-heart_disease %>%
-  univariate_table(
-    format = "markdown" #Could also render as "html", "latex", "pandoc", or "none"
-  )
 ```
 
 See the package vignettes and documentation for more thorough examples.

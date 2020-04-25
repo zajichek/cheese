@@ -8,17 +8,121 @@ vignette: >
     \usepackage[utf8]{inputenc}
 ---
 
-Structuring code that is robust to updates in the data, changes in methodological specfications, etc., and can get to presentation-ready results in an automated way can mitigate errors caused by painful, tedious tasks--it can also be a huge time saver. The `cheese` package was designed with this philosophy in mind, heavily influenced by (and explicit dependencies on) [`tidy`](https://www.tidyverse.org/) concepts. Its intention is to provide general tools for working with data and results during statistical analysis, in addition to a collection of functions designated for specific statistical tasks. Let's take a closer look:
+Structuring code that is robust to updates in the data, changes in methodological specfications, etc., and can get to presentation-ready results in an automated way can mitigate errors caused by painful, tedious tasks--it can also be a huge time saver. The `cheese` package was designed with this philosophy in mind, heavily influenced by (and explicit dependencies on) [`tidy`](https://www.tidyverse.org/) concepts. Its intention is to provide general tools for working with data and results during statistical analysis, in addition to a collection of functions designated for specific statistical tasks. 
 
-### Heart disease
-The dataset used throughout this tutorial comes from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Heart+Disease). Details of the pre-processing steps of the raw data to what is found within the package can be found on the package's Github site [here](https://github.com/zajichek/cheese/blob/master/data-raw/heart_disease.R).
+Let's take a closer look:
 
 ```{r}
 #Load the package
 require(cheese)
+```
 
+### Heart disease dataset
+This data comes from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Heart+Disease), containing a collection of demographic and clinical characteristics from `r nrow(heart_disease)` patients. It was subsequently processed and cleaned into a format suitable for analysis--details of which can be found [here](https://github.com/zajichek/cheese/blob/master/data-raw/heart_disease.R).
+
+```{r}
 #Look at the data
 heart_disease
-
 ```
+
+The functions that will be introduced are roughly in order of their development, as many build off of one another. Also, selection of columns are done with non-standard evaluation (NSE) or with `tidyselect::select_helpers`.
+
+# Splitting and binding data
+`divide()` is used to easily split up a data frame into a list of subsets. Suppose you want to split the data by sex and heart disease status:
+
+```{r}
+div_dat <-
+  heart_disease %>%
+    divide(
+      Sex,
+      HeartDisease
+    )
+div_dat
+```
+
+The default behavior is to continually split the data in a hierarchical structure based on the order of the input columns, and to remove them from the result. The `keep` argument can be used to retain the columns in the data frames.
+
+`fasten()` allows you to take a list structure containing data frames of arbitrary depth, and roll them back up into a single data frame. This is useful when a statistical process is mapped to many subsets, and you want to be able to easily collect the results without repeatedly binding data. You can call the function with the divided data from above:
+
+```{r}
+div_dat %>%
+  fasten()
+```
+
+It was binded back to the original number of rows, but it lost the columns it was split by. The `into` argument can be used to handle this:
+
+```{r}
+div_dat %>%
+  fasten(
+    into = c("Sex", "HeartDisease")
+  )
+```
+
+The positions of the `into` values always lineup with the level of the list hierarchy. So, for example, if you don't care about retaining the heart disease status, you can do this:
+
+```{r}
+div_dat %>%
+  fasten(
+    into = "Sex"
+  )
+```
+
+In contrast, if you want to forgo the sex indicator, empty strings will need to be used as placeholders so the names are applied at the correct levels.
+
+```{r}
+div_dat %>%
+  fasten(
+    into = c("", "HeartDisease")
+  )
+```
+
+Obviously, the classes of the split columns are not retained from the original data since the splitting and binding processes are independent.
+
+## Adjusting the depth
+As shown above, the default behavior for these functions is to split or bind "as much as possible". However, it can be useful to have control over the shape of the split. This is where the `depth` argument comes in. Suppose you want the same data frames at the leaves of the list, but only one (1) level deep:
+
+```{r}
+heart_disease %>%
+  divide(
+    Sex,
+    HeartDisease,
+    depth = 1
+  )
+```
+
+You now have list with four (4) elements containing the subsets--the names of which are the concatenated (see the `sep` argument) levels of the split columns. This argument also works when binding data. Going back to the original divided data frame, you may only want to bind the internal lists.
+
+```{r}
+div_dat %>%
+  fasten(
+    into = "HeartDisease",
+    depth = 1
+  )
+```
+
+Note that the positions of the `into` values are directly related to how shallow/deep you want the result to be.
+
+The depth can also be controlled relative to the leaves by using negative integers. This can be useful if it is unclear how deep the list will be (or is). In the example above, suppose you didn't know how deep the list was, but you knew the heart disease status was the most internal split, and thus wanted to bind it.
+
+```{r}
+div_dat %>%
+  fasten(
+    into = "HeartDisease",
+    depth = -1
+  )
+```
+
+The new depth is one (1) less than the input. In this case, the same result was achieved because of the symmetry. 
+
+# Applying functions
+-This collection of functions are motivated by the functional programming concept, but are used for different contexts/purposes
+
+## Row subsets
+
+## Across column sets
+
+## Types
+
+## Traversing lists to identify objects
+
 

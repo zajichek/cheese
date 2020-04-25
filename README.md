@@ -55,6 +55,32 @@ selection as in `dplyr::select`. Here are a few:
 require(cheese)
 #> Loading required package: cheese
 
+#Make a descriptive table
+heart_disease %>%
+  univariate_table(
+    format = "markdown" #Could also render as "html", "latex", "pandoc", or "none"
+  )
+```
+
+| Variable              | Level            | Summary          |
+| :-------------------- | :--------------- | :--------------- |
+| Age                   |                  | 56 (48, 61)      |
+| Sex                   | Female           | 97 (32.01%)      |
+|                       | Male             | 206 (67.99%)     |
+| ChestPain             | Typical angina   | 23 (7.59%)       |
+|                       | Atypical angina  | 50 (16.5%)       |
+|                       | Non-anginal pain | 86 (28.38%)      |
+|                       | Asymptomatic     | 144 (47.52%)     |
+| BP                    |                  | 130 (120, 140)   |
+| Cholesterol           |                  | 241 (211, 275)   |
+| MaximumHR             |                  | 153 (133.5, 166) |
+| ExerciseInducedAngina | No               | 204 (67.33%)     |
+|                       | Yes              | 99 (32.67%)      |
+| HeartDisease          | No               | 164 (54.13%)     |
+|                       | Yes              | 139 (45.87%)     |
+
+``` r
+#Run some models
 heart_disease %>%
 
   #Apply a function to subsets of the data
@@ -106,29 +132,6 @@ heart_disease %>%
 #>  9 ExerciseInducedAngina Cholesterol (Intercept)       -1.70   
 #> 10 ExerciseInducedAngina Cholesterol x                  0.00494
 #> # … with 18 more rows
-
-#Make a descriptive table
-heart_disease %>%
-  univariate_table(
-    format = "markdown" #Could also render as "html", "latex", "pandoc", or "none"
-  )
 ```
-
-| Variable              | Level            | Summary          |
-| :-------------------- | :--------------- | :--------------- |
-| Age                   |                  | 56 (48, 61)      |
-| Sex                   | Female           | 97 (32.01%)      |
-|                       | Male             | 206 (67.99%)     |
-| ChestPain             | Typical angina   | 23 (7.59%)       |
-|                       | Atypical angina  | 50 (16.5%)       |
-|                       | Non-anginal pain | 86 (28.38%)      |
-|                       | Asymptomatic     | 144 (47.52%)     |
-| BP                    |                  | 130 (120, 140)   |
-| Cholesterol           |                  | 241 (211, 275)   |
-| MaximumHR             |                  | 153 (133.5, 166) |
-| ExerciseInducedAngina | No               | 204 (67.33%)     |
-|                       | Yes              | 99 (32.67%)      |
-| HeartDisease          | No               | 164 (54.13%)     |
-|                       | Yes              | 139 (45.87%)     |
 
 See the package vignettes and documentation for more thorough examples.

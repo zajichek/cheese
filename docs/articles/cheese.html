@@ -95,14 +95,15 @@
 
     
     
-<p>Structuring code that is robust to updates in the data, changes in methodological specfications, etc., and can get to presentation-ready results in an automated way can mitigate errors caused by painful, tedious tasks–it can also be a huge time saver. The <code>cheese</code> package was designed with this philosophy in mind, heavily influenced by (and explicit dependencies on) <a href="https://www.tidyverse.org/"><code>tidy</code></a> concepts. Its intention is to provide general tools for working with data and results during statistical analysis, in addition to a collection of functions designated for specific statistical tasks. Let’s take a closer look:</p>
-<div id="heart-disease" class="section level3">
-<h3 class="hasAnchor">
-<a href="#heart-disease" class="anchor"></a>Heart disease</h3>
-<p>The dataset used throughout this tutorial comes from the <a href="http://archive.ics.uci.edu/ml/datasets/Heart+Disease">UCI Machine Learning Repository</a>. Details of the pre-processing steps of the raw data to what is found within the package can be found on the package’s Github site <a href="https://github.com/zajichek/cheese/blob/master/data-raw/heart_disease.R">here</a>.</p>
+<p>Structuring code that is robust to updates in the data, changes in methodological specfications, etc., and can get to presentation-ready results in an automated way can mitigate errors caused by painful, tedious tasks–it can also be a huge time saver. The <code>cheese</code> package was designed with this philosophy in mind, heavily influenced by (and explicit dependencies on) <a href="https://www.tidyverse.org/"><code>tidy</code></a> concepts. Its intention is to provide general tools for working with data and results during statistical analysis, in addition to a collection of functions designated for specific statistical tasks.</p>
+<p>Let’s take a closer look:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#Load the package</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(cheese)</a></code></pre></div>
 <pre><code>## Loading required package: cheese</code></pre>
+<div id="heart-disease-dataset" class="section level3">
+<h3 class="hasAnchor">
+<a href="#heart-disease-dataset" class="anchor"></a>Heart disease dataset</h3>
+<p>This data comes from the <a href="http://archive.ics.uci.edu/ml/datasets/Heart+Disease">UCI Machine Learning Repository</a>, containing a collection of demographic and clinical characteristics from 303 patients. It was subsequently processed and cleaned into a format suitable for analysis–details of which can be found <a href="https://github.com/zajichek/cheese/blob/master/data-raw/heart_disease.R">here</a>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">#Look at the data</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">heart_disease</a></code></pre></div>
 <pre><code>## # A tibble: 303 x 9
@@ -120,10 +121,356 @@
 ## 10    53 Male  Asymptom…   140         203 TRUE             155
 ## # … with 293 more rows, and 2 more variables: ExerciseInducedAngina &lt;fct&gt;,
 ## #   HeartDisease &lt;fct&gt;</code></pre>
+<p>The functions that will be introduced are roughly in order of their development, as many build off of one another. Also, selection of columns are done with non-standard evaluation (NSE) or with <code><a href="https://tidyselect.r-lib.org/reference/select_helpers.html">tidyselect::select_helpers</a></code>.</p>
+</div>
+<div id="splitting-and-binding-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#splitting-and-binding-data" class="anchor"></a>Splitting and binding data</h1>
+<p><code><a href="../reference/divide.html">divide()</a></code> is used to easily split up a data frame into a list of subsets. Suppose you want to split the data by sex and heart disease status:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">div_dat &lt;-</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span>heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/divide.html">divide</a></span>(</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">      Sex,</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">      HeartDisease</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">    )</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">div_dat</a></code></pre></div>
+<pre><code>## $Female
+## $Female$No
+## # A tibble: 72 x 7
+##      Age ChestPain     BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+##    &lt;dbl&gt; &lt;fct&gt;      &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt; &lt;fct&gt;           
+##  1    41 Atypical …   130         204 FALSE            172 No              
+##  2    57 Asymptoma…   120         354 FALSE            163 Yes             
+##  3    56 Atypical …   140         294 FALSE            153 No              
+##  4    48 Non-angin…   130         275 FALSE            139 No              
+##  5    58 Typical a…   150         283 TRUE             162 No              
+##  6    50 Non-angin…   120         219 FALSE            158 No              
+##  7    58 Non-angin…   120         340 FALSE            172 No              
+##  8    66 Typical a…   150         226 FALSE            114 No              
+##  9    69 Typical a…   140         239 FALSE            151 No              
+## 10    71 Atypical …   160         302 FALSE            162 No              
+## # … with 62 more rows
+## 
+## $Female$Yes
+## # A tibble: 25 x 7
+##      Age ChestPain     BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+##    &lt;dbl&gt; &lt;fct&gt;      &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt; &lt;fct&gt;           
+##  1    62 Asymptoma…   140         268 FALSE            160 No              
+##  2    65 Asymptoma…   150         225 FALSE            114 No              
+##  3    61 Asymptoma…   130         330 FALSE            169 No              
+##  4    51 Asymptoma…   130         305 FALSE            142 Yes             
+##  5    62 Asymptoma…   160         164 FALSE            145 No              
+##  6    60 Asymptoma…   150         258 FALSE            157 No              
+##  7    61 Asymptoma…   145         307 FALSE            146 Yes             
+##  8    43 Asymptoma…   132         341 TRUE             136 Yes             
+##  9    62 Non-angin…   130         263 FALSE             97 No              
+## 10    63 Asymptoma…   150         407 FALSE            154 No              
+## # … with 15 more rows
+## 
+## 
+## $Male
+## $Male$No
+## # A tibble: 92 x 7
+##      Age ChestPain     BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+##    &lt;dbl&gt; &lt;fct&gt;      &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt; &lt;fct&gt;           
+##  1    63 Typical a…   145         233 TRUE             150 No              
+##  2    37 Non-angin…   130         250 FALSE            187 No              
+##  3    56 Atypical …   120         236 FALSE            178 No              
+##  4    57 Asymptoma…   140         192 FALSE            148 No              
+##  5    44 Atypical …   120         263 FALSE            173 No              
+##  6    52 Non-angin…   172         199 TRUE             162 No              
+##  7    57 Non-angin…   150         168 FALSE            174 No              
+##  8    54 Asymptoma…   140         239 FALSE            160 No              
+##  9    49 Atypical …   130         266 FALSE            171 No              
+## 10    64 Typical a…   110         211 FALSE            144 Yes             
+## # … with 82 more rows
+## 
+## $Male$Yes
+## # A tibble: 114 x 7
+##      Age ChestPain     BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+##    &lt;dbl&gt; &lt;fct&gt;      &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt; &lt;fct&gt;           
+##  1    67 Asymptoma…   160         286 FALSE            108 Yes             
+##  2    67 Asymptoma…   120         229 FALSE            129 Yes             
+##  3    63 Asymptoma…   130         254 FALSE            147 No              
+##  4    53 Asymptoma…   140         203 TRUE             155 Yes             
+##  5    56 Non-angin…   130         256 TRUE             142 Yes             
+##  6    48 Atypical …   110         229 FALSE            168 No              
+##  7    58 Atypical …   120         284 FALSE            160 No              
+##  8    58 Non-angin…   132         224 FALSE            173 No              
+##  9    60 Asymptoma…   130         206 FALSE            132 Yes             
+## 10    40 Asymptoma…   110         167 FALSE            114 Yes             
+## # … with 104 more rows</code></pre>
+<p>The default behavior is to continually split the data in a hierarchical structure based on the order of the input columns, and to remove them from the result. The <code>keep</code> argument can be used to retain the columns in the data frames.</p>
+<p><code><a href="../reference/fasten.html">fasten()</a></code> allows you to take a list structure containing data frames of arbitrary depth, and roll them back up into a single data frame. This is useful when a statistical process is mapped to many subsets, and you want to be able to easily collect the results without repeatedly binding data. You can call the function with the divided data from above:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">div_dat <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/fasten.html">fasten</a></span>()</a></code></pre></div>
+<pre><code>## # A tibble: 303 x 7
+##      Age ChestPain     BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+##    &lt;dbl&gt; &lt;fct&gt;      &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt; &lt;fct&gt;           
+##  1    41 Atypical …   130         204 FALSE            172 No              
+##  2    57 Asymptoma…   120         354 FALSE            163 Yes             
+##  3    56 Atypical …   140         294 FALSE            153 No              
+##  4    48 Non-angin…   130         275 FALSE            139 No              
+##  5    58 Typical a…   150         283 TRUE             162 No              
+##  6    50 Non-angin…   120         219 FALSE            158 No              
+##  7    58 Non-angin…   120         340 FALSE            172 No              
+##  8    66 Typical a…   150         226 FALSE            114 No              
+##  9    69 Typical a…   140         239 FALSE            151 No              
+## 10    71 Atypical …   160         302 FALSE            162 No              
+## # … with 293 more rows</code></pre>
+<p>It was binded back to the original number of rows, but it lost the columns it was split by. The <code>into</code> argument can be used to handle this:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">div_dat <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/fasten.html">fasten</a></span>(</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">    <span class="dt">into =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sex"</span>, <span class="st">"HeartDisease"</span>)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">  )</a></code></pre></div>
+<pre><code>## # A tibble: 303 x 9
+##    Sex   HeartDisease   Age ChestPain    BP Cholesterol BloodSugar
+##    &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;     
+##  1 Fema… No              41 Atypical…   130         204 FALSE     
+##  2 Fema… No              57 Asymptom…   120         354 FALSE     
+##  3 Fema… No              56 Atypical…   140         294 FALSE     
+##  4 Fema… No              48 Non-angi…   130         275 FALSE     
+##  5 Fema… No              58 Typical …   150         283 TRUE      
+##  6 Fema… No              50 Non-angi…   120         219 FALSE     
+##  7 Fema… No              58 Non-angi…   120         340 FALSE     
+##  8 Fema… No              66 Typical …   150         226 FALSE     
+##  9 Fema… No              69 Typical …   140         239 FALSE     
+## 10 Fema… No              71 Atypical…   160         302 FALSE     
+## # … with 293 more rows, and 2 more variables: MaximumHR &lt;dbl&gt;,
+## #   ExerciseInducedAngina &lt;fct&gt;</code></pre>
+<p>The positions of the <code>into</code> values always lineup with the level of the list hierarchy. So, for example, if you don’t care about retaining the heart disease status, you can do this:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">div_dat <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/fasten.html">fasten</a></span>(</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">    <span class="dt">into =</span> <span class="st">"Sex"</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">  )</a></code></pre></div>
+<pre><code>## # A tibble: 303 x 8
+##    Sex     Age ChestPain    BP Cholesterol BloodSugar MaximumHR
+##    &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt;
+##  1 Fema…    41 Atypical…   130         204 FALSE            172
+##  2 Fema…    57 Asymptom…   120         354 FALSE            163
+##  3 Fema…    56 Atypical…   140         294 FALSE            153
+##  4 Fema…    48 Non-angi…   130         275 FALSE            139
+##  5 Fema…    58 Typical …   150         283 TRUE             162
+##  6 Fema…    50 Non-angi…   120         219 FALSE            158
+##  7 Fema…    58 Non-angi…   120         340 FALSE            172
+##  8 Fema…    66 Typical …   150         226 FALSE            114
+##  9 Fema…    69 Typical …   140         239 FALSE            151
+## 10 Fema…    71 Atypical…   160         302 FALSE            162
+## # … with 293 more rows, and 1 more variable: ExerciseInducedAngina &lt;fct&gt;</code></pre>
+<p>In contrast, if you want to forgo the sex indicator, empty strings will need to be used as placeholders so the names are applied at the correct levels.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">div_dat <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/fasten.html">fasten</a></span>(</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">    <span class="dt">into =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">""</span>, <span class="st">"HeartDisease"</span>)</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">  )</a></code></pre></div>
+<pre><code>## # A tibble: 303 x 8
+##    HeartDisease   Age ChestPain    BP Cholesterol BloodSugar MaximumHR
+##    &lt;chr&gt;        &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt;
+##  1 No              41 Atypical…   130         204 FALSE            172
+##  2 No              57 Asymptom…   120         354 FALSE            163
+##  3 No              56 Atypical…   140         294 FALSE            153
+##  4 No              48 Non-angi…   130         275 FALSE            139
+##  5 No              58 Typical …   150         283 TRUE             162
+##  6 No              50 Non-angi…   120         219 FALSE            158
+##  7 No              58 Non-angi…   120         340 FALSE            172
+##  8 No              66 Typical …   150         226 FALSE            114
+##  9 No              69 Typical …   140         239 FALSE            151
+## 10 No              71 Atypical…   160         302 FALSE            162
+## # … with 293 more rows, and 1 more variable: ExerciseInducedAngina &lt;fct&gt;</code></pre>
+<p>Obviously, the classes of the split columns are not retained from the original data since the splitting and binding processes are independent.</p>
+<div id="adjusting-the-depth" class="section level2">
+<h2 class="hasAnchor">
+<a href="#adjusting-the-depth" class="anchor"></a>Adjusting the depth</h2>
+<p>As shown above, the default behavior for these functions is to split or bind “as much as possible”. However, it can be useful to have control over the shape of the split. This is where the <code>depth</code> argument comes in. Suppose you want the same data frames at the leaves of the list, but only one (1) level deep:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/divide.html">divide</a></span>(</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">    Sex,</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">    HeartDisease,</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">    <span class="dt">depth =</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">  )</a></code></pre></div>
+<pre><code>## $`Female|No`
+## # A tibble: 72 x 7
+##      Age ChestPain     BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+##    &lt;dbl&gt; &lt;fct&gt;      &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt; &lt;fct&gt;           
+##  1    41 Atypical …   130         204 FALSE            172 No              
+##  2    57 Asymptoma…   120         354 FALSE            163 Yes             
+##  3    56 Atypical …   140         294 FALSE            153 No              
+##  4    48 Non-angin…   130         275 FALSE            139 No              
+##  5    58 Typical a…   150         283 TRUE             162 No              
+##  6    50 Non-angin…   120         219 FALSE            158 No              
+##  7    58 Non-angin…   120         340 FALSE            172 No              
+##  8    66 Typical a…   150         226 FALSE            114 No              
+##  9    69 Typical a…   140         239 FALSE            151 No              
+## 10    71 Atypical …   160         302 FALSE            162 No              
+## # … with 62 more rows
+## 
+## $`Male|No`
+## # A tibble: 92 x 7
+##      Age ChestPain     BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+##    &lt;dbl&gt; &lt;fct&gt;      &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt; &lt;fct&gt;           
+##  1    63 Typical a…   145         233 TRUE             150 No              
+##  2    37 Non-angin…   130         250 FALSE            187 No              
+##  3    56 Atypical …   120         236 FALSE            178 No              
+##  4    57 Asymptoma…   140         192 FALSE            148 No              
+##  5    44 Atypical …   120         263 FALSE            173 No              
+##  6    52 Non-angin…   172         199 TRUE             162 No              
+##  7    57 Non-angin…   150         168 FALSE            174 No              
+##  8    54 Asymptoma…   140         239 FALSE            160 No              
+##  9    49 Atypical …   130         266 FALSE            171 No              
+## 10    64 Typical a…   110         211 FALSE            144 Yes             
+## # … with 82 more rows
+## 
+## $`Female|Yes`
+## # A tibble: 25 x 7
+##      Age ChestPain     BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+##    &lt;dbl&gt; &lt;fct&gt;      &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt; &lt;fct&gt;           
+##  1    62 Asymptoma…   140         268 FALSE            160 No              
+##  2    65 Asymptoma…   150         225 FALSE            114 No              
+##  3    61 Asymptoma…   130         330 FALSE            169 No              
+##  4    51 Asymptoma…   130         305 FALSE            142 Yes             
+##  5    62 Asymptoma…   160         164 FALSE            145 No              
+##  6    60 Asymptoma…   150         258 FALSE            157 No              
+##  7    61 Asymptoma…   145         307 FALSE            146 Yes             
+##  8    43 Asymptoma…   132         341 TRUE             136 Yes             
+##  9    62 Non-angin…   130         263 FALSE             97 No              
+## 10    63 Asymptoma…   150         407 FALSE            154 No              
+## # … with 15 more rows
+## 
+## $`Male|Yes`
+## # A tibble: 114 x 7
+##      Age ChestPain     BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+##    &lt;dbl&gt; &lt;fct&gt;      &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt; &lt;fct&gt;           
+##  1    67 Asymptoma…   160         286 FALSE            108 Yes             
+##  2    67 Asymptoma…   120         229 FALSE            129 Yes             
+##  3    63 Asymptoma…   130         254 FALSE            147 No              
+##  4    53 Asymptoma…   140         203 TRUE             155 Yes             
+##  5    56 Non-angin…   130         256 TRUE             142 Yes             
+##  6    48 Atypical …   110         229 FALSE            168 No              
+##  7    58 Atypical …   120         284 FALSE            160 No              
+##  8    58 Non-angin…   132         224 FALSE            173 No              
+##  9    60 Asymptoma…   130         206 FALSE            132 Yes             
+## 10    40 Asymptoma…   110         167 FALSE            114 Yes             
+## # … with 104 more rows</code></pre>
+<p>You now have list with four (4) elements containing the subsets–the names of which are the concatenated (see the <code>sep</code> argument) levels of the split columns. This argument also works when binding data. Going back to the original divided data frame, you may only want to bind the internal lists.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">div_dat <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/fasten.html">fasten</a></span>(</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">    <span class="dt">into =</span> <span class="st">"HeartDisease"</span>,</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">    <span class="dt">depth =</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">  )</a></code></pre></div>
+<pre><code>## $Female
+## # A tibble: 97 x 8
+##    HeartDisease   Age ChestPain    BP Cholesterol BloodSugar MaximumHR
+##    &lt;chr&gt;        &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt;
+##  1 No              41 Atypical…   130         204 FALSE            172
+##  2 No              57 Asymptom…   120         354 FALSE            163
+##  3 No              56 Atypical…   140         294 FALSE            153
+##  4 No              48 Non-angi…   130         275 FALSE            139
+##  5 No              58 Typical …   150         283 TRUE             162
+##  6 No              50 Non-angi…   120         219 FALSE            158
+##  7 No              58 Non-angi…   120         340 FALSE            172
+##  8 No              66 Typical …   150         226 FALSE            114
+##  9 No              69 Typical …   140         239 FALSE            151
+## 10 No              71 Atypical…   160         302 FALSE            162
+## # … with 87 more rows, and 1 more variable: ExerciseInducedAngina &lt;fct&gt;
+## 
+## $Male
+## # A tibble: 206 x 8
+##    HeartDisease   Age ChestPain    BP Cholesterol BloodSugar MaximumHR
+##    &lt;chr&gt;        &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt;
+##  1 No              63 Typical …   145         233 TRUE             150
+##  2 No              37 Non-angi…   130         250 FALSE            187
+##  3 No              56 Atypical…   120         236 FALSE            178
+##  4 No              57 Asymptom…   140         192 FALSE            148
+##  5 No              44 Atypical…   120         263 FALSE            173
+##  6 No              52 Non-angi…   172         199 TRUE             162
+##  7 No              57 Non-angi…   150         168 FALSE            174
+##  8 No              54 Asymptom…   140         239 FALSE            160
+##  9 No              49 Atypical…   130         266 FALSE            171
+## 10 No              64 Typical …   110         211 FALSE            144
+## # … with 196 more rows, and 1 more variable: ExerciseInducedAngina &lt;fct&gt;</code></pre>
+<p>Note that the positions of the <code>into</code> values are directly related to how shallow/deep you want the result to be.</p>
+<p>The depth can also be controlled relative to the leaves by using negative integers. This can be useful if it is unclear how deep the list will be (or is). In the example above, suppose you didn’t know how deep the list was, but you knew the heart disease status was the most internal split, and thus wanted to bind it.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">div_dat <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/fasten.html">fasten</a></span>(</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">    <span class="dt">into =</span> <span class="st">"HeartDisease"</span>,</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">    <span class="dt">depth =</span> <span class="dv">-1</span></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">  )</a></code></pre></div>
+<pre><code>## $Female
+## # A tibble: 97 x 8
+##    HeartDisease   Age ChestPain    BP Cholesterol BloodSugar MaximumHR
+##    &lt;chr&gt;        &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt;
+##  1 No              41 Atypical…   130         204 FALSE            172
+##  2 No              57 Asymptom…   120         354 FALSE            163
+##  3 No              56 Atypical…   140         294 FALSE            153
+##  4 No              48 Non-angi…   130         275 FALSE            139
+##  5 No              58 Typical …   150         283 TRUE             162
+##  6 No              50 Non-angi…   120         219 FALSE            158
+##  7 No              58 Non-angi…   120         340 FALSE            172
+##  8 No              66 Typical …   150         226 FALSE            114
+##  9 No              69 Typical …   140         239 FALSE            151
+## 10 No              71 Atypical…   160         302 FALSE            162
+## # … with 87 more rows, and 1 more variable: ExerciseInducedAngina &lt;fct&gt;
+## 
+## $Male
+## # A tibble: 206 x 8
+##    HeartDisease   Age ChestPain    BP Cholesterol BloodSugar MaximumHR
+##    &lt;chr&gt;        &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt;
+##  1 No              63 Typical …   145         233 TRUE             150
+##  2 No              37 Non-angi…   130         250 FALSE            187
+##  3 No              56 Atypical…   120         236 FALSE            178
+##  4 No              57 Asymptom…   140         192 FALSE            148
+##  5 No              44 Atypical…   120         263 FALSE            173
+##  6 No              52 Non-angi…   172         199 TRUE             162
+##  7 No              57 Non-angi…   150         168 FALSE            174
+##  8 No              54 Asymptom…   140         239 FALSE            160
+##  9 No              49 Atypical…   130         266 FALSE            171
+## 10 No              64 Typical …   110         211 FALSE            144
+## # … with 196 more rows, and 1 more variable: ExerciseInducedAngina &lt;fct&gt;</code></pre>
+<p>The new depth is one (1) less than the input. In this case, the same result was achieved because of the symmetry.</p>
+</div>
+</div>
+<div id="applying-functions" class="section level1">
+<h1 class="hasAnchor">
+<a href="#applying-functions" class="anchor"></a>Applying functions</h1>
+<p>-This collection of functions are motivated by the functional programming concept, but are used for different contexts/purposes</p>
+<div id="row-subsets" class="section level2">
+<h2 class="hasAnchor">
+<a href="#row-subsets" class="anchor"></a>Row subsets</h2>
+</div>
+<div id="across-column-sets" class="section level2">
+<h2 class="hasAnchor">
+<a href="#across-column-sets" class="anchor"></a>Across column sets</h2>
+</div>
+<div id="types" class="section level2">
+<h2 class="hasAnchor">
+<a href="#types" class="anchor"></a>Types</h2>
+</div>
+<div id="traversing-lists-to-identify-objects" class="section level2">
+<h2 class="hasAnchor">
+<a href="#traversing-lists-to-identify-objects" class="anchor"></a>Traversing lists to identify objects</h2>
+</div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li>
+<a href="#splitting-and-binding-data">Splitting and binding data</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#adjusting-the-depth">Adjusting the depth</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#applying-functions">Applying functions</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#row-subsets">Row subsets</a></li>
+      <li><a href="#across-column-sets">Across column sets</a></li>
+      <li><a href="#types">Types</a></li>
+      <li><a href="#traversing-lists-to-identify-objects">Traversing lists to identify objects</a></li>
+      </ul>
+</li>
+      </ul>
+</div>
       </div>
 
 </div>
