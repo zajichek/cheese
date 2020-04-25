@@ -431,18 +431,272 @@
 <div id="applying-functions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#applying-functions" class="anchor"></a>Applying functions</h1>
-<p>-This collection of functions are motivated by the functional programming concept, but are used for different contexts/purposes</p>
-<div id="row-subsets" class="section level2">
+<p>The next set of functions are rooted in functional programming (i.e. <a href="https://purrr.tidyverse.org/"><code>purrr</code></a>). In each instance, given a pre-defined function, you can easily control the scope of the data in which it is evaluated on. This is an incredibly useful and efficient philosphy for generating reusable code that is non-repetitive.</p>
+<div id="pairwise-combinations-of-column-sets" class="section level2">
 <h2 class="hasAnchor">
-<a href="#row-subsets" class="anchor"></a>Row subsets</h2>
+<a href="#pairwise-combinations-of-column-sets" class="anchor"></a>Pairwise combinations of column sets</h2>
+<p>Often times a statistical analysis is concerned with mulitple outcomes/targets, though each one potentially uses the same set of explanatory variables. You could of course hard code the specific analysis steps for each outcome (e.g. formulas, etc.), but then the code becomes repetitive. You could also make separate datasets for each outcome with the associated predictors and then apply the same analysis process to each dataset, but then you waste resources by storing multiple copies of the same data in memory. <code><a href="../reference/dish.html">dish()</a></code> allows you to distribute a function to various pairwise sets of columns from the same dataset in a single call. The motivation described above is merely that–this is a completely generalizable function that can be applied to any context.</p>
+<p>As a simple first example, lets compute the Pearson correlation of blood pressure and cholesterol with all numeric columns:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/dish.html">dish</a></span>(</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">    <span class="dt">f =</span> cor,</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">    <span class="dt">left =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(BP, Cholesterol),</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">    <span class="dt">right =</span> is.numeric</a>
+<a class="sourceLine" id="cb21-6" data-line-number="6">  )</a></code></pre></div>
+<pre><code>## $BP
+## $BP$Age
+## [1] 0.2849459
+## 
+## $BP$BP
+## [1] 1
+## 
+## $BP$Cholesterol
+## [1] 0.1301201
+## 
+## $BP$MaximumHR
+## [1] -0.04535088
+## 
+## 
+## $Cholesterol
+## $Cholesterol$Age
+## [1] 0.2089503
+## 
+## $Cholesterol$BP
+## [1] 0.1301201
+## 
+## $Cholesterol$Cholesterol
+## [1] 1
+## 
+## $Cholesterol$MaximumHR
+## [1] -0.003431832</code></pre>
+<p>The <code>left</code> argument controls which columns are entered in the first argument of <code>f</code>, and the <code>right</code> argument controls which columns are entered into the second. In the example, you’ll notice that the <code>left</code> columns were also included in the set of <code>right</code> columns, because they are, in fact, <code><a href="https://rdrr.io/r/base/numeric.html">numeric()</a></code>. If you didn’t want this, you can omit the <code>right</code> argument, which will then include everything not in <code>left</code> as the second argument of <code>f</code>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select_all.html">select_if</a></span>(is.numeric) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#Need to do this so only numeric columns are evaluated</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/dish.html">dish</a></span>(</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">    <span class="dt">f =</span> cor,</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">    <span class="dt">left =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(BP, Cholesterol)</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">  )</a></code></pre></div>
+<pre><code>## $BP
+## $BP$Age
+## [1] 0.2849459
+## 
+## $BP$MaximumHR
+## [1] -0.04535088
+## 
+## 
+## $Cholesterol
+## $Cholesterol$Age
+## [1] 0.2089503
+## 
+## $Cholesterol$MaximumHR
+## [1] -0.003431832</code></pre>
+<p>Now lets suppose you want to regress both blood pressure and cholesterol on all other variables in the dataset. The <code>each_</code> arguments allow you to control whether the column sets are entered into the function individually as vectors, or together in a single data frame. By default, every thing is entered into <code>f</code> as vectors, so you’ll need to use this argument here:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/dish.html">dish</a></span>(</a>
+<a class="sourceLine" id="cb25-3" data-line-number="3">    <span class="dt">f =</span> <span class="cf">function</span>(y, x) <span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> x),</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4">    <span class="dt">left =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(BP, Cholesterol),</a>
+<a class="sourceLine" id="cb25-5" data-line-number="5">    <span class="dt">each_right =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb25-6" data-line-number="6">  )</a></code></pre></div>
+<pre><code>## $BP
+## 
+## Call:
+## lm(formula = y ~ ., data = x)
+## 
+## Coefficients:
+##               (Intercept)                        Age  
+##                  97.09264                    0.50748  
+##                   SexMale   ChestPainAtypical angina  
+##                  -3.95940                   -9.84788  
+## ChestPainNon-anginal pain      ChestPainAsymptomatic  
+##                  -9.56350                  -10.11788  
+##            BloodSugarTRUE                  MaximumHR  
+##                   6.70106                    0.09688  
+##  ExerciseInducedAnginaYes            HeartDiseaseYes  
+##                   1.72906                    6.00819  
+## 
+## 
+## $Cholesterol
+## 
+## Call:
+## lm(formula = y ~ ., data = x)
+## 
+## Coefficients:
+##               (Intercept)                        Age  
+##                  127.5108                     1.2471  
+##                   SexMale   ChestPainAtypical angina  
+##                  -23.6185                     8.8270  
+## ChestPainNon-anginal pain      ChestPainAsymptomatic  
+##                    5.7660                     8.0778  
+##            BloodSugarTRUE                  MaximumHR  
+##                   -0.7327                     0.3491  
+##  ExerciseInducedAnginaYes            HeartDiseaseYes  
+##                    7.8039                    12.5303</code></pre>
 </div>
-<div id="across-column-sets" class="section level2">
+<div id="subsets-of-data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#across-column-sets" class="anchor"></a>Across column sets</h2>
+<a href="#subsets-of-data" class="anchor"></a>Subsets of data</h2>
+<p><code><a href="../reference/stratiply.html">stratiply()</a></code> streamlines the familiar <code><a href="https://rdrr.io/r/base/split.html">split()</a></code> then <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code> approach by making it simple to select the stratification columns, and apply a function to each subset. Let’s run a multiple logistic regression model using heart disease as the outcome, stratified by sex:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/stratiply.html">stratiply</a></span>(</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">    <span class="dt">f =</span> glm,</a>
+<a class="sourceLine" id="cb27-4" data-line-number="4">    <span class="dt">by =</span> Sex,</a>
+<a class="sourceLine" id="cb27-5" data-line-number="5">    <span class="dt">formula =</span> HeartDisease <span class="op">~</span><span class="st"> </span>. <span class="op">-</span>ChestPain,</a>
+<a class="sourceLine" id="cb27-6" data-line-number="6">    <span class="dt">family =</span> <span class="st">"binomial"</span></a>
+<a class="sourceLine" id="cb27-7" data-line-number="7">  )</a></code></pre></div>
+<pre><code>## $Female
+## 
+## Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])
+## 
+## Coefficients:
+##              (Intercept)                       Age  
+##                 -6.95485                   0.03362  
+##                       BP               Cholesterol  
+##                  0.04366                   0.00354  
+##           BloodSugarTRUE                 MaximumHR  
+##                  0.47028                  -0.02465  
+## ExerciseInducedAnginaYes  
+##                  2.12039  
+## 
+## Degrees of Freedom: 96 Total (i.e. Null);  90 Residual
+## Null Deviance:       110.7 
+## Residual Deviance: 76.21     AIC: 90.21
+## 
+## $Male
+## 
+## Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])
+## 
+## Coefficients:
+##              (Intercept)                       Age  
+##                 1.877142                  0.024853  
+##                       BP               Cholesterol  
+##                 0.007710                  0.008718  
+##           BloodSugarTRUE                 MaximumHR  
+##                -0.390310                 -0.042231  
+## ExerciseInducedAnginaYes  
+##                 1.106387  
+## 
+## Degrees of Freedom: 205 Total (i.e. Null);  199 Residual
+## Null Deviance:       283.2 
+## Residual Deviance: 211.2     AIC: 225.2</code></pre>
+<p>Adding multiple stratification columns will produce a deeper list:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/stratiply.html">stratiply</a></span>(</a>
+<a class="sourceLine" id="cb29-3" data-line-number="3">    <span class="dt">f =</span> glm,</a>
+<a class="sourceLine" id="cb29-4" data-line-number="4">    <span class="dt">by =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(Sex, ExerciseInducedAngina),</a>
+<a class="sourceLine" id="cb29-5" data-line-number="5">    <span class="dt">formula =</span> HeartDisease <span class="op">~</span><span class="st"> </span>. <span class="op">-</span>ChestPain,</a>
+<a class="sourceLine" id="cb29-6" data-line-number="6">    <span class="dt">family =</span> <span class="st">"binomial"</span></a>
+<a class="sourceLine" id="cb29-7" data-line-number="7">  )</a></code></pre></div>
+<pre><code>## $Female
+## $Female$No
+## 
+## Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])
+## 
+## Coefficients:
+##    (Intercept)             Age              BP     Cholesterol  
+##       -9.58123         0.01027         0.07213         0.00406  
+## BloodSugarTRUE       MaximumHR  
+##        0.65807        -0.02540  
+## 
+## Degrees of Freedom: 74 Total (i.e. Null);  69 Residual
+## Null Deviance:       62.53 
+## Residual Deviance: 49.93     AIC: 61.93
+## 
+## $Female$Yes
+## 
+## Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])
+## 
+## Coefficients:
+##    (Intercept)             Age              BP     Cholesterol  
+##       3.850121        0.049450        0.012214        0.001458  
+## BloodSugarTRUE       MaximumHR  
+##       0.945153       -0.056538  
+## 
+## Degrees of Freedom: 21 Total (i.e. Null);  16 Residual
+## Null Deviance:       28.84 
+## Residual Deviance: 23.36     AIC: 35.36
+## 
+## 
+## $Male
+## $Male$No
+## 
+## Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])
+## 
+## Coefficients:
+##    (Intercept)             Age              BP     Cholesterol  
+##       2.728309        0.053058       -0.003653        0.005387  
+## BloodSugarTRUE       MaximumHR  
+##      -1.106214       -0.042036  
+## 
+## Degrees of Freedom: 128 Total (i.e. Null);  123 Residual
+## Null Deviance:       174 
+## Residual Deviance: 142.3     AIC: 154.3
+## 
+## $Male$Yes
+## 
+## Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])
+## 
+## Coefficients:
+##    (Intercept)             Age              BP     Cholesterol  
+##        0.70070        -0.01348         0.03561         0.01342  
+## BloodSugarTRUE       MaximumHR  
+##        1.09404        -0.04531  
+## 
+## Degrees of Freedom: 76 Total (i.e. Null);  71 Residual
+## Null Deviance:       75.94 
+## Residual Deviance: 60.53     AIC: 72.53</code></pre>
 </div>
-<div id="types" class="section level2">
+<div id="distributing-to-specific-classes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#types" class="anchor"></a>Types</h2>
+<a href="#distributing-to-specific-classes" class="anchor"></a>Distributing to specific classes</h2>
+<p><code><a href="../reference/typly.html">typly()</a></code> allows you to apply a function to columns whose type conforms to at least one (or none) of the set of candidates. It is similar to <code><a href="https://purrr.tidyverse.org/reference/map_if.html">purrr::map_if()</a></code>, but uses <code><a href="https://rdrr.io/r/methods/is.html">methods::is()</a></code> for determining types, and only returns the results for the selected columns:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/typly.html">typly</a></span>(</a>
+<a class="sourceLine" id="cb31-3" data-line-number="3">    <span class="dt">f =</span> mean,</a>
+<a class="sourceLine" id="cb31-4" data-line-number="4">    <span class="dt">types =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"numeric"</span>, <span class="st">"logical"</span>)</a>
+<a class="sourceLine" id="cb31-5" data-line-number="5">  )</a></code></pre></div>
+<pre><code>## $Age
+## [1] 54.43894
+## 
+## $BP
+## [1] 131.6898
+## 
+## $Cholesterol
+## [1] 246.6931
+## 
+## $BloodSugar
+## [1] 0.1485149
+## 
+## $MaximumHR
+## [1] 149.6073</code></pre>
+<p>You can use the <code>negated</code> argument to apply the function to columns that are not any of the listed types:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/typly.html">typly</a></span>(</a>
+<a class="sourceLine" id="cb33-3" data-line-number="3">    <span class="dt">f =</span> table,</a>
+<a class="sourceLine" id="cb33-4" data-line-number="4">    <span class="dt">types =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"numeric"</span>, <span class="st">"logical"</span>),</a>
+<a class="sourceLine" id="cb33-5" data-line-number="5">    <span class="dt">negated =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb33-6" data-line-number="6">    <span class="dt">useNA =</span> <span class="st">"always"</span></a>
+<a class="sourceLine" id="cb33-7" data-line-number="7">  )</a></code></pre></div>
+<pre><code>## $Sex
+## 
+## Female   Male   &lt;NA&gt; 
+##     97    206      0 
+## 
+## $ChestPain
+## 
+##   Typical angina  Atypical angina Non-anginal pain     Asymptomatic 
+##               23               50               86              144 
+##             &lt;NA&gt; 
+##                0 
+## 
+## $ExerciseInducedAngina
+## 
+##   No  Yes &lt;NA&gt; 
+##  204   99    0 
+## 
+## $HeartDisease
+## 
+##   No  Yes &lt;NA&gt; 
+##  164  139    0</code></pre>
 </div>
 <div id="traversing-lists-to-identify-objects" class="section level2">
 <h2 class="hasAnchor">
@@ -463,9 +717,9 @@
 </li>
       <li>
 <a href="#applying-functions">Applying functions</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#row-subsets">Row subsets</a></li>
-      <li><a href="#across-column-sets">Across column sets</a></li>
-      <li><a href="#types">Types</a></li>
+<li><a href="#pairwise-combinations-of-column-sets">Pairwise combinations of column sets</a></li>
+      <li><a href="#subsets-of-data">Subsets of data</a></li>
+      <li><a href="#distributing-to-specific-classes">Distributing to specific classes</a></li>
       <li><a href="#traversing-lists-to-identify-objects">Traversing lists to identify objects</a></li>
       </ul>
 </li>

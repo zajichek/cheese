@@ -115,13 +115,85 @@ div_dat %>%
 The new depth is one (1) less than the input. In this case, the same result was achieved because of the symmetry. 
 
 # Applying functions
--This collection of functions are motivated by the functional programming concept, but are used for different contexts/purposes
+The next set of functions are rooted in functional programming (i.e. [`purrr`](https://purrr.tidyverse.org/)). In each instance, given a pre-defined function, you can easily control the scope of the data in which it is evaluated on. This is an incredibly useful and efficient philosphy for generating reusable code that is non-repetitive.
 
-## Row subsets
+## Pairwise combinations of column sets
+Often times a statistical analysis is concerned with mulitple outcomes/targets, though each one potentially uses the same set of explanatory variables. You could of course hard code the specific analysis steps for each outcome (e.g. formulas, etc.), but then the code becomes repetitive. You could also make separate datasets for each outcome with the associated predictors and then apply the same analysis process to each dataset, but then you waste resources by storing multiple copies of the same data in memory. `dish()` allows you to distribute a function to various pairwise sets of columns from the same dataset in a single call. The motivation described above is merely that--this is a completely generalizable function that can be applied to any context.
 
-## Across column sets
+As a simple first example, lets compute the Pearson correlation of blood pressure and cholesterol with all numeric columns:
+```{r}
+heart_disease %>%
+  dish(
+    f = cor,
+    left = c(BP, Cholesterol),
+    right = is.numeric
+  )
+```
 
-## Types
+The `left` argument controls which columns are entered in the first argument of `f`, and the `right` argument controls which columns are entered into the second. In the example, you'll notice that the `left` columns were also included in the set of `right` columns, because they are, in fact, `numeric()`. If you didn't want this, you can omit the `right` argument, which will then include everything not in `left` as the second argument of `f`:
+```{r}
+heart_disease %>%
+  dplyr::select_if(is.numeric) %>% #Need to do this so only numeric columns are evaluated
+  dish(
+    f = cor,
+    left = c(BP, Cholesterol)
+  )
+```
+
+Now lets suppose you want to regress both blood pressure and cholesterol on all other variables in the dataset. The `each_` arguments allow you to control whether the column sets are entered into the function individually as vectors, or together in a single data frame. By default, every thing is entered into `f` as vectors, so you'll need to use this argument here:
+```{r}
+heart_disease %>%
+  dish(
+    f = function(y, x) lm(y ~ ., data = x),
+    left = c(BP, Cholesterol),
+    each_right = FALSE
+  )
+```
+
+## Subsets of data
+`stratiply()` streamlines the familiar `split()` then `purrr::map()` approach by making it simple to select the stratification columns, and apply a function to each subset. Let's run a multiple logistic regression model using heart disease as the outcome, stratified by sex:
+```{r}
+heart_disease %>%
+  stratiply(
+    f = glm,
+    by = Sex,
+    formula = HeartDisease ~ . -ChestPain,
+    family = "binomial"
+  )
+```
+
+Adding multiple stratification columns will produce a deeper list:
+
+```{r}
+heart_disease %>%
+  stratiply(
+    f = glm,
+    by = c(Sex, ExerciseInducedAngina),
+    formula = HeartDisease ~ . -ChestPain,
+    family = "binomial"
+  )
+```
+
+## Distributing to specific classes
+`typly()` allows you to apply a function to columns whose type conforms to at least one (or none) of the set of candidates. It is similar to `purrr::map_if()`, but uses `methods::is()` for determining types, and only returns the results for the selected columns:
+```{r}
+heart_disease %>%
+  typly(
+    f = mean,
+    types = c("numeric", "logical")
+  )
+```
+
+You can use the `negated` argument to apply the function to columns that are not any of the listed types:
+```{r}
+heart_disease %>%
+  typly(
+    f = table,
+    types = c("numeric", "logical"),
+    negated = TRUE,
+    useNA = "always"
+  )
+```
 
 ## Traversing lists to identify objects
 
