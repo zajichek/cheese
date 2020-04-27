@@ -82,7 +82,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="cheese_files/kePrint-0.0.1/kePrint.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Making cheese</h1>
@@ -121,12 +121,12 @@
 ## 10    53 Male  Asymptom…   140         203 TRUE             155
 ## # … with 293 more rows, and 2 more variables: ExerciseInducedAngina &lt;fct&gt;,
 ## #   HeartDisease &lt;fct&gt;</code></pre>
-<p>The functions that will be introduced are roughly in order of their development, as many build off of one another. Also, selection of columns are done with non-standard evaluation (NSE) or with <code><a href="https://tidyselect.r-lib.org/reference/select_helpers.html">tidyselect::select_helpers</a></code>.</p>
+<p>The functions that will be introduced are roughly in order of their development, as many build off of one another. Selection of columns is done with non-standard evaluation (NSE) or with <code><a href="https://tidyselect.r-lib.org/reference/select_helpers.html">tidyselect::select_helpers</a></code>, where applicable.</p>
 </div>
 <div id="splitting-and-binding-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#splitting-and-binding-data" class="anchor"></a>Splitting and binding data</h1>
-<p><code><a href="../reference/divide.html">divide()</a></code> is used to easily split up a data frame into a list of subsets. Suppose you want to split the data by sex and heart disease status:</p>
+<p><code><a href="../reference/divide.html">divide()</a></code> is used to split up a data frame into a list of subsets. Suppose you want to split the example dataset by sex and heart disease status:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">div_dat &lt;-</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span>heart_disease <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="../reference/divide.html">divide</a></span>(</a>
@@ -200,8 +200,8 @@
 ##  9    60 Asymptoma…   130         206 FALSE            132 Yes             
 ## 10    40 Asymptoma…   110         167 FALSE            114 Yes             
 ## # … with 104 more rows</code></pre>
-<p>The default behavior is to continually split the data in a hierarchical structure based on the order of the input columns, and to remove them from the result. The <code>keep</code> argument can be used to retain the columns in the data frames.</p>
-<p><code><a href="../reference/fasten.html">fasten()</a></code> allows you to take a list structure containing data frames of arbitrary depth, and roll them back up into a single data frame. This is useful when a statistical process is mapped to many subsets, and you want to be able to easily collect the results without repeatedly binding data. You can call the function with the divided data from above:</p>
+<p>The default behavior is to continually split the data in a hierarchical structure based on the order of the input columns, and to remove them from the result. The <code>keep</code> argument can be used to retain the column(s) in the data frames.</p>
+<p><code><a href="../reference/fasten.html">fasten()</a></code> allows you to take a list structure that contains data frames at an arbitrary depth, and roll them back up into a single data frame. This is useful when a statistical process needs to be mapped to many subsets, and you want to be able to easily collect the results without repeatedly binding data. You can call the function with the divided data from above:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">div_dat <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/fasten.html">fasten</a></span>()</a></code></pre></div>
 <pre><code>## # A tibble: 303 x 7
@@ -280,7 +280,7 @@
 <div id="adjusting-the-depth" class="section level2">
 <h2 class="hasAnchor">
 <a href="#adjusting-the-depth" class="anchor"></a>Adjusting the depth</h2>
-<p>As shown above, the default behavior for these functions is to split or bind “as much as possible”. However, it can be useful to have control over the shape of the split. This is where the <code>depth</code> argument comes in. Suppose you want the same data frames at the leaves of the list, but only one (1) level deep:</p>
+<p>As shown above, the default behavior for these functions is to split or bind “as much as possible”. However, it can be useful to have control over the shape of the split. This is where the <code>depth</code> argument comes in. Suppose you want the same data frames at the leaves of the list, but only one level deep:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/divide.html">divide</a></span>(</a>
 <a class="sourceLine" id="cb15-3" data-line-number="3">    Sex,</a>
@@ -350,7 +350,8 @@
 ##  9    60 Asymptoma…   130         206 FALSE            132 Yes             
 ## 10    40 Asymptoma…   110         167 FALSE            114 Yes             
 ## # … with 104 more rows</code></pre>
-<p>You now have list with four (4) elements containing the subsets–the names of which are the concatenated (see the <code>sep</code> argument) levels of the split columns. This argument also works when binding data. Going back to the original divided data frame, you may only want to bind the internal lists.</p>
+<p>You now have list with four elements containing the subsets–the names of which are the concatenated levels of the split columns (see the <code>sep</code> argument).</p>
+<p>This argument also works when binding data. Going back to the original divided data frame, you may only want to bind the internal lists.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">div_dat <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/fasten.html">fasten</a></span>(</a>
 <a class="sourceLine" id="cb17-3" data-line-number="3">    <span class="dt">into =</span> <span class="st">"HeartDisease"</span>,</a>
@@ -425,7 +426,7 @@
 ##  9 No              49 Atypical…   130         266 FALSE            171
 ## 10 No              64 Typical …   110         211 FALSE            144
 ## # … with 196 more rows, and 1 more variable: ExerciseInducedAngina &lt;fct&gt;</code></pre>
-<p>The new depth is one (1) less than the input. In this case, the same result was achieved because of the symmetry.</p>
+<p>The new depth is one less than the input. In this case, the same result was achieved because of the symmetry.</p>
 </div>
 </div>
 <div id="applying-functions" class="section level1">
@@ -435,7 +436,7 @@
 <div id="pairwise-combinations-of-column-sets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pairwise-combinations-of-column-sets" class="anchor"></a>Pairwise combinations of column sets</h2>
-<p>Often times a statistical analysis is concerned with mulitple outcomes/targets, though each one potentially uses the same set of explanatory variables. You could of course hard code the specific analysis steps for each outcome (e.g. formulas, etc.), but then the code becomes repetitive. You could also make separate datasets for each outcome with the associated predictors and then apply the same analysis process to each dataset, but then you waste resources by storing multiple copies of the same data in memory. <code><a href="../reference/dish.html">dish()</a></code> allows you to distribute a function to various pairwise sets of columns from the same dataset in a single call. The motivation described above is merely that–this is a completely generalizable function that can be applied to any context.</p>
+<p>Often times a statistical analysis is concerned with mulitple outcomes/targets, though each one potentially uses the same set of explanatory variables. You could of course hard code the specific analysis steps for each outcome (e.g. formulas, etc.), but then the code becomes repetitive. You could also make separate datasets for each outcome with the associated predictors and then apply the same analysis process to each dataset, but then you waste resources by storing multiple copies of the same data in memory. <code><a href="../reference/dish.html">dish()</a></code> allows you to distribute a function to various pairwise sets of columns from the same dataset in a single call. The motivation described above is merely that–this is a generalizable function that can be applied to any context.</p>
 <p>As a simple first example, lets compute the Pearson correlation of blood pressure and cholesterol with all numeric columns:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/dish.html">dish</a></span>(</a>
@@ -490,7 +491,7 @@
 ## 
 ## $Cholesterol$MaximumHR
 ## [1] -0.003431832</code></pre>
-<p>Now lets suppose you want to regress both blood pressure and cholesterol on all other variables in the dataset. The <code>each_</code> arguments allow you to control whether the column sets are entered into the function individually as vectors, or together in a single data frame. By default, every thing is entered into <code>f</code> as vectors, so you’ll need to use this argument here:</p>
+<p>Now lets suppose you want to regress both blood pressure and cholesterol on all other variables in the dataset. The <code>each_</code> arguments allow you to control whether the column sets are entered into the function individually as vectors, or together in a single data frame. The former is the default, so you’ll need to use this argument here:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb25-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/dish.html">dish</a></span>(</a>
 <a class="sourceLine" id="cb25-3" data-line-number="3">    <span class="dt">f =</span> <span class="cf">function</span>(y, x) <span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> x),</a>
@@ -648,7 +649,7 @@
 <div id="distributing-to-specific-classes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#distributing-to-specific-classes" class="anchor"></a>Distributing to specific classes</h2>
-<p><code><a href="../reference/typly.html">typly()</a></code> allows you to apply a function to columns whose type conforms to at least one (or none) of the set of candidates. It is similar to <code><a href="https://purrr.tidyverse.org/reference/map_if.html">purrr::map_if()</a></code>, but uses <code><a href="https://rdrr.io/r/methods/is.html">methods::is()</a></code> for determining types, and only returns the results for the selected columns:</p>
+<p><code><a href="../reference/typly.html">typly()</a></code> allows you to apply a function to columns of a data frame whose type inherits at least one (or none) of the specified candidates. It is similar to <code><a href="https://purrr.tidyverse.org/reference/map_if.html">purrr::map_if()</a></code>, but uses <code><a href="https://rdrr.io/r/methods/is.html">methods::is()</a></code> for determining types (see <code><a href="../reference/some_type.html">some_type()</a></code>), and only returns the results for the selected columns:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/typly.html">typly</a></span>(</a>
 <a class="sourceLine" id="cb31-3" data-line-number="3">    <span class="dt">f =</span> mean,</a>
@@ -698,10 +699,1262 @@
 ##   No  Yes &lt;NA&gt; 
 ##  164  139    0</code></pre>
 </div>
-<div id="traversing-lists-to-identify-objects" class="section level2">
-<h2 class="hasAnchor">
-<a href="#traversing-lists-to-identify-objects" class="anchor"></a>Traversing lists to identify objects</h2>
 </div>
+<div id="populating-key-value-pairs-into-custom-string-templates" class="section level1">
+<h1 class="hasAnchor">
+<a href="#populating-key-value-pairs-into-custom-string-templates" class="anchor"></a>Populating key-value pairs into custom string templates</h1>
+<p><code><a href="../reference/absorb.html">absorb()</a></code> allows you to create collections of strings that use keys as placeholders, which are then populated by the values. This is useful for setting up results of your analysis to be presented in a specific format that is independent of the dataset at hand. Here’s a simple example:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw"><a href="../reference/absorb.html">absorb</a></span>(</a>
+<a class="sourceLine" id="cb35-2" data-line-number="2">  <span class="dt">key =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"var"</span>),</a>
+<a class="sourceLine" id="cb35-3" data-line-number="3">  <span class="dt">value =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"10"</span>, <span class="st">"2"</span>, <span class="st">"4"</span>),</a>
+<a class="sourceLine" id="cb35-4" data-line-number="4">  <span class="dt">text =</span> </a>
+<a class="sourceLine" id="cb35-5" data-line-number="5">    <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(</a>
+<a class="sourceLine" id="cb35-6" data-line-number="6">      <span class="st">"MEAN: mean, SD: sd"</span>,</a>
+<a class="sourceLine" id="cb35-7" data-line-number="7">      <span class="st">"VAR: var = sd^2"</span>,</a>
+<a class="sourceLine" id="cb35-8" data-line-number="8">      <span class="dt">MEAN =</span> <span class="st">"mean"</span></a>
+<a class="sourceLine" id="cb35-9" data-line-number="9">    )</a>
+<a class="sourceLine" id="cb35-10" data-line-number="10">)</a></code></pre></div>
+<pre><code>##                                                  MEAN 
+## "MEAN: 10, SD: 2"    "VAR: 4 = 2^2"              "10"</code></pre>
+<p>The input <code>text</code> is scanned to look for the keys (interpreted as regular expressions) and are replaced with the corresponding values.</p>
+<p>Let’s look at a more useful example. Suppose we have a collection summary statistics for patient age by angina and heart disease status:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">age_stats &lt;-</a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="st">  </span>heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(</a>
+<a class="sourceLine" id="cb37-4" data-line-number="4">    ExerciseInducedAngina,</a>
+<a class="sourceLine" id="cb37-5" data-line-number="5">    HeartDisease</a>
+<a class="sourceLine" id="cb37-6" data-line-number="6">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(</a>
+<a class="sourceLine" id="cb37-8" data-line-number="8">    <span class="dt">mean =</span> <span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(Age), <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb37-9" data-line-number="9">    <span class="dt">sd =</span> <span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(Age), <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb37-10" data-line-number="10">    <span class="dt">median =</span> <span class="kw"><a href="https://rdrr.io/r/stats/median.html">median</a></span>(Age),</a>
+<a class="sourceLine" id="cb37-11" data-line-number="11">    <span class="dt">iqr =</span> <span class="kw"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span>(Age)</a>
+<a class="sourceLine" id="cb37-12" data-line-number="12">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-13" data-line-number="13"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-14" data-line-number="14"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(</a>
+<a class="sourceLine" id="cb37-15" data-line-number="15">    <span class="dt">key =</span> <span class="st">"key"</span>,</a>
+<a class="sourceLine" id="cb37-16" data-line-number="16">    <span class="dt">value =</span> <span class="st">"value"</span>,</a>
+<a class="sourceLine" id="cb37-17" data-line-number="17">    <span class="op">-</span>ExerciseInducedAngina,</a>
+<a class="sourceLine" id="cb37-18" data-line-number="18">    <span class="op">-</span>HeartDisease</a>
+<a class="sourceLine" id="cb37-19" data-line-number="19">  )</a>
+<a class="sourceLine" id="cb37-20" data-line-number="20">age_stats</a></code></pre></div>
+<pre><code>## # A tibble: 16 x 4
+##    ExerciseInducedAngina HeartDisease key    value
+##    &lt;fct&gt;                 &lt;fct&gt;        &lt;chr&gt;  &lt;dbl&gt;
+##  1 No                    No           mean   52.4 
+##  2 No                    Yes          mean   57.1 
+##  3 Yes                   No           mean   53.6 
+##  4 Yes                   Yes          mean   56.2 
+##  5 No                    No           sd      9.68
+##  6 No                    Yes          sd      7.56
+##  7 Yes                   No           sd      8.54
+##  8 Yes                   Yes          sd      8.27
+##  9 No                    No           median 52   
+## 10 No                    Yes          median 58   
+## 11 Yes                   No           median 53   
+## 12 Yes                   Yes          median 57   
+## 13 No                    No           iqr    15   
+## 14 No                    Yes          iqr    10   
+## 15 Yes                   No           iqr    12.5 
+## 16 Yes                   Yes          iqr     8.25</code></pre>
+<p>Next, you can specify the string format you want to nicely summarise the information in each group:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">age_stats <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(</a>
+<a class="sourceLine" id="cb39-3" data-line-number="3">    ExerciseInducedAngina,</a>
+<a class="sourceLine" id="cb39-4" data-line-number="4">    HeartDisease</a>
+<a class="sourceLine" id="cb39-5" data-line-number="5">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb39-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(</a>
+<a class="sourceLine" id="cb39-7" data-line-number="7">    <span class="dt">Summary =</span> </a>
+<a class="sourceLine" id="cb39-8" data-line-number="8">      <span class="kw"><a href="../reference/absorb.html">absorb</a></span>(</a>
+<a class="sourceLine" id="cb39-9" data-line-number="9">        <span class="dt">key =</span> key,</a>
+<a class="sourceLine" id="cb39-10" data-line-number="10">        <span class="dt">value =</span> value,</a>
+<a class="sourceLine" id="cb39-11" data-line-number="11">        <span class="dt">text =</span> </a>
+<a class="sourceLine" id="cb39-12" data-line-number="12">          <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(</a>
+<a class="sourceLine" id="cb39-13" data-line-number="13">            <span class="st">"mean (sd) | median (iqr)"</span></a>
+<a class="sourceLine" id="cb39-14" data-line-number="14">          )</a>
+<a class="sourceLine" id="cb39-15" data-line-number="15">      )</a>
+<a class="sourceLine" id="cb39-16" data-line-number="16">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb39-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>()</a></code></pre></div>
+<pre><code>## # A tibble: 4 x 3
+##   ExerciseInducedAngina HeartDisease Summary                 
+##   &lt;fct&gt;                 &lt;fct&gt;        &lt;chr&gt;                   
+## 1 No                    No           52.42 (9.68) | 52 (15)  
+## 2 No                    Yes          57.1 (7.56) | 58 (10)   
+## 3 Yes                   No           53.61 (8.54) | 53 (12.5)
+## 4 Yes                   Yes          56.24 (8.27) | 57 (8.25)</code></pre>
+<p>Of course, this is much more useful when the summary data is already in the format of <code>age_stats</code>.</p>
+<div id="concatenating-repetitive-keys" class="section level2">
+<h2 class="hasAnchor">
+<a href="#concatenating-repetitive-keys" class="anchor"></a>Concatenating repetitive keys</h2>
+<p>In the case where the key pattern found in the string template is repeated, its values are collapsed into a concatenated string:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw"><a href="../reference/absorb.html">absorb</a></span>(</a>
+<a class="sourceLine" id="cb41-2" data-line-number="2">  <span class="dt">key =</span> age_stats<span class="op">$</span>key,</a>
+<a class="sourceLine" id="cb41-3" data-line-number="3">  <span class="dt">value =</span> age_stats<span class="op">$</span>value,</a>
+<a class="sourceLine" id="cb41-4" data-line-number="4">  <span class="dt">text =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"(mean) / (sd)"</span>, <span class="st">"median"</span>)</a>
+<a class="sourceLine" id="cb41-5" data-line-number="5">)</a></code></pre></div>
+<pre><code>## [1] "(52.42_57.1_53.61_56.24) / (9.68_7.56_8.54_8.27)"
+## [2] "52_58_53_57"</code></pre>
+<p>The <code>sep</code> argument can be used to customize how values are separated.</p>
+</div>
+<div id="evaluating-strings-as-expressions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#evaluating-strings-as-expressions" class="anchor"></a>Evaluating strings as expressions</h2>
+<p>It may be useful in some cases to evaluate the resulting string as an expression. You can setup the prior example so that the result contains valid expressions:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw"><a href="../reference/absorb.html">absorb</a></span>(</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2">  <span class="dt">key =</span> age_stats<span class="op">$</span>key,</a>
+<a class="sourceLine" id="cb43-3" data-line-number="3">  <span class="dt">value =</span> age_stats<span class="op">$</span>value,</a>
+<a class="sourceLine" id="cb43-4" data-line-number="4">  <span class="dt">text =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"(mean) / (sd)"</span>, <span class="st">"median"</span>),</a>
+<a class="sourceLine" id="cb43-5" data-line-number="5">  <span class="dt">sep =</span> <span class="st">"+"</span>,</a>
+<a class="sourceLine" id="cb43-6" data-line-number="6">  <span class="dt">evaluate =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb43-7" data-line-number="7">  <span class="dt">trace =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb43-8" data-line-number="8">)</a></code></pre></div>
+<pre><code>## (mean) / (sd) median 
+## (mean) / (sd) median 
+## (52.42+57.1+53.61+56.24) / (sd) median 
+## (52.42+57.1+53.61+56.24) / (sd) 52+58+53+57</code></pre>
+<pre><code>## [[1]]
+## [1] 6.442584
+## 
+## [[2]]
+## [1] 220</code></pre>
+<p>These statistics are not entirely useful here, but you get the point.</p>
+</div>
+</div>
+<div id="traversing-lists-to-identify-objects" class="section level1">
+<h1 class="hasAnchor">
+<a href="#traversing-lists-to-identify-objects" class="anchor"></a>Traversing lists to identify objects</h1>
+<p><code><a href="../reference/depths.html">depths()</a></code> and <code><a href="../reference/depths.html">depths_string()</a></code> are used for traversing a list structure to find the elements that satisfy a predicate. The former produces a vector of the unique depths that contain at least one element where <code>predicate</code> is true, and the latter creates a string representation of the traversal with the actual positions.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="co">#Make a divided data frame</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2">div_dat1 &lt;-</a>
+<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="st">  </span>heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb46-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/divide.html">divide</a></span>(</a>
+<a class="sourceLine" id="cb46-5" data-line-number="5">    Sex,</a>
+<a class="sourceLine" id="cb46-6" data-line-number="6">    HeartDisease</a>
+<a class="sourceLine" id="cb46-7" data-line-number="7">  )</a>
+<a class="sourceLine" id="cb46-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb46-9" data-line-number="9"><span class="co">#Find the depths of the data frames</span></a>
+<a class="sourceLine" id="cb46-10" data-line-number="10">div_dat1 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb46-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="../reference/depths.html">depths</a></span>(</a>
+<a class="sourceLine" id="cb46-12" data-line-number="12">    <span class="dt">predicate =</span> is.data.frame</a>
+<a class="sourceLine" id="cb46-13" data-line-number="13">  )</a></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">div_dat1 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/depths.html">depths_string</a></span>(</a>
+<a class="sourceLine" id="cb48-3" data-line-number="3">    <span class="dt">predicate =</span> is.data.frame</a>
+<a class="sourceLine" id="cb48-4" data-line-number="4">  )</a></code></pre></div>
+<pre><code>## [1] "{1{-1,-2},2{-1,-2}}"</code></pre>
+<p>In the string result, the brackets represent the level of the list, and the integers represent the index at that level, which are negative if <code>predicate</code> is true for that element.</p>
+<p>By default, the algorithm continues when <code><a href="https://rlang.r-lib.org/reference/bare-type-predicates.html">rlang::is_bare_list()</a></code> so that the traversal can end with list-like objects. However, the <code>bare</code> argument can be used to traverse deeper into the list:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">div_dat1 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/depths.html">depths_string</a></span>(</a>
+<a class="sourceLine" id="cb50-3" data-line-number="3">    <span class="dt">predicate =</span> is.data.frame,</a>
+<a class="sourceLine" id="cb50-4" data-line-number="4">    <span class="dt">bare =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb50-5" data-line-number="5">  )</a></code></pre></div>
+<pre><code>## [1] "{1{-1{1,2,3,4,5,6,7},-2{1,2,3,4,5,6,7}},2{-1{1,2,3,4,5,6,7},-2{1,2,3,4,5,6,7}}}"</code></pre>
+<p>Now it also evaluated the columns of each data frame in the list, though it still found the correct positions where the predicate held.</p>
+</div>
+<div id="distorting-relationships-between-columns" class="section level1">
+<h1 class="hasAnchor">
+<a href="#distorting-relationships-between-columns" class="anchor"></a>Distorting relationships between columns</h1>
+<p><code><a href="../reference/muddle.html">muddle()</a></code> can be used to randomly shuffle columns in a data frame. This is a convenient way to remove confounding when exploring the effects of a variable on an outcome.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">123</span>)</a>
+<a class="sourceLine" id="cb52-2" data-line-number="2">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb52-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/muddle.html">muddle</a></span>()</a></code></pre></div>
+<pre><code>## # A tibble: 303 x 9
+##      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR
+##    &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt;
+##  1    43 Fema… Non-angi…   130         214 FALSE            120
+##  2    44 Male  Asymptom…   130         204 FALSE            143
+##  3    68 Fema… Asymptom…   128         242 FALSE            125
+##  4    35 Fema… Asymptom…   120         269 FALSE            163
+##  5    45 Fema… Atypical…   138         240 FALSE            169
+##  6    54 Male  Asymptom…   128         209 FALSE            182
+##  7    61 Male  Asymptom…   100         258 FALSE            152
+##  8    57 Fema… Asymptom…   152         229 FALSE            142
+##  9    67 Male  Non-angi…   110         283 FALSE            138
+## 10    51 Fema… Atypical…   125         204 TRUE             161
+## # … with 293 more rows, and 2 more variables: ExerciseInducedAngina &lt;fct&gt;,
+## #   HeartDisease &lt;fct&gt;</code></pre>
+<p>All columns are permuted by default. Use the <code>at</code> argument to only shuffle certain ones:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/muddle.html">muddle</a></span>(</a>
+<a class="sourceLine" id="cb54-3" data-line-number="3">    <span class="dt">at =</span> Age</a>
+<a class="sourceLine" id="cb54-4" data-line-number="4">  )</a></code></pre></div>
+<pre><code>## # A tibble: 303 x 9
+##      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR
+##    &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt;
+##  1    47 Male  Typical …   145         233 TRUE             150
+##  2    49 Male  Asymptom…   160         286 FALSE            108
+##  3    59 Male  Asymptom…   120         229 FALSE            129
+##  4    35 Male  Non-angi…   130         250 FALSE            187
+##  5    44 Fema… Atypical…   130         204 FALSE            172
+##  6    29 Male  Atypical…   120         236 FALSE            178
+##  7    45 Fema… Asymptom…   140         268 FALSE            160
+##  8    59 Fema… Asymptom…   120         354 FALSE            163
+##  9    46 Male  Asymptom…   130         254 FALSE            147
+## 10    54 Male  Asymptom…   140         203 TRUE             155
+## # … with 293 more rows, and 2 more variables: ExerciseInducedAngina &lt;fct&gt;,
+## #   HeartDisease &lt;fct&gt;</code></pre>
+<p>Additional arguments can be passed to <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code> as well. For example, you might want five random values from each column:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb56-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/muddle.html">muddle</a></span>(</a>
+<a class="sourceLine" id="cb56-3" data-line-number="3">    <span class="dt">size =</span> <span class="dv">5</span></a>
+<a class="sourceLine" id="cb56-4" data-line-number="4">  )</a></code></pre></div>
+<pre><code>## # A tibble: 5 x 9
+##     Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR
+##   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt;
+## 1    54 Fema… Asymptom…   136         275 TRUE             163
+## 2    62 Male  Asymptom…   125         271 FALSE            195
+## 3    52 Male  Non-angi…   150         286 FALSE            105
+## 4    64 Male  Asymptom…   106         273 FALSE            163
+## 5    54 Male  Atypical…   120         199 FALSE            182
+## # … with 2 more variables: ExerciseInducedAngina &lt;fct&gt;, HeartDisease &lt;fct&gt;</code></pre>
+</div>
+<div id="spanning-keys-and-values-across-the-columns" class="section level1">
+<h1 class="hasAnchor">
+<a href="#spanning-keys-and-values-across-the-columns" class="anchor"></a>Spanning keys and values across the columns</h1>
+<p><code><a href="../reference/stretch.html">stretch()</a></code> is for spanning keys and values across the columns. It is similar to <code><a href="https://tidyr.tidyverse.org/reference/spread.html">tidyr::spread()</a></code>, but allows for any number of keys and values to be selected. It’s functionality is more so targeted at setting up your results to be presented in a table, rather than for general data manipulation. Thus, the resulting column names and orderings are setup to make it a seamless transition.</p>
+<p>To illustrate, lets first collect the parameter estimates and standard errors from multiple regression models using blood pressure and cholesterol as outcomes, stratified by sex:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1">mod_results &lt;-</a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"><span class="st">  </span>heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="st">  </span></a>
+<a class="sourceLine" id="cb58-4" data-line-number="4"><span class="st">  </span><span class="co">#For each sex</span></a>
+<a class="sourceLine" id="cb58-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/stratiply.html">stratiply</a></span>(</a>
+<a class="sourceLine" id="cb58-6" data-line-number="6">    <span class="dt">by =</span> Sex,</a>
+<a class="sourceLine" id="cb58-7" data-line-number="7">    <span class="dt">f =</span></a>
+<a class="sourceLine" id="cb58-8" data-line-number="8">      <span class="op">~</span>.x <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb58-9" data-line-number="9"><span class="st">      </span></a>
+<a class="sourceLine" id="cb58-10" data-line-number="10"><span class="st">      </span><span class="co">#Collect coefficients and standard errors for model estimates on multiple outcomes</span></a>
+<a class="sourceLine" id="cb58-11" data-line-number="11"><span class="st">      </span><span class="kw"><a href="../reference/dish.html">dish</a></span>(</a>
+<a class="sourceLine" id="cb58-12" data-line-number="12">        <span class="dt">f =</span> <span class="cf">function</span>(y, x) {</a>
+<a class="sourceLine" id="cb58-13" data-line-number="13">          model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> x)</a>
+<a class="sourceLine" id="cb58-14" data-line-number="14">          tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(</a>
+<a class="sourceLine" id="cb58-15" data-line-number="15">            <span class="dt">Parameter =</span> <span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(model<span class="op">$</span>coefficients),</a>
+<a class="sourceLine" id="cb58-16" data-line-number="16">            <span class="dt">Estimate =</span> model<span class="op">$</span>coefficients,</a>
+<a class="sourceLine" id="cb58-17" data-line-number="17">            <span class="dt">SE =</span> <span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/vcov.html">vcov</a></span>(model)))</a>
+<a class="sourceLine" id="cb58-18" data-line-number="18">          )</a>
+<a class="sourceLine" id="cb58-19" data-line-number="19">        },</a>
+<a class="sourceLine" id="cb58-20" data-line-number="20">        <span class="dt">left =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(BP, Cholesterol),</a>
+<a class="sourceLine" id="cb58-21" data-line-number="21">        <span class="dt">each_right =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb58-22" data-line-number="22">      ) </a>
+<a class="sourceLine" id="cb58-23" data-line-number="23">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb58-24" data-line-number="24"><span class="st">  </span></a>
+<a class="sourceLine" id="cb58-25" data-line-number="25"><span class="st">  </span><span class="co">#Gather results into a single data frame</span></a>
+<a class="sourceLine" id="cb58-26" data-line-number="26"><span class="st">  </span><span class="kw"><a href="../reference/fasten.html">fasten</a></span>(</a>
+<a class="sourceLine" id="cb58-27" data-line-number="27">    <span class="dt">into =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sex"</span>, <span class="st">"Outcome"</span>)</a>
+<a class="sourceLine" id="cb58-28" data-line-number="28">  )</a>
+<a class="sourceLine" id="cb58-29" data-line-number="29">mod_results</a></code></pre></div>
+<pre><code>## # A tibble: 36 x 5
+##    Sex    Outcome     Parameter                 Estimate      SE
+##    &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;                        &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Female BP          (Intercept)                 93.7   24.7   
+##  2 Female BP          Age                          0.533  0.210 
+##  3 Female BP          ChestPainAtypical angina   -16.3    9.73  
+##  4 Female BP          ChestPainNon-anginal pain  -15.3    9.15  
+##  5 Female BP          ChestPainAsymptomatic      -14.2    9.64  
+##  6 Female BP          BloodSugarTRUE               6.92   5.53  
+##  7 Female BP          MaximumHR                    0.123  0.0993
+##  8 Female BP          ExerciseInducedAnginaYes     8.00   4.89  
+##  9 Female BP          HeartDiseaseYes             12.1    5.21  
+## 10 Female Cholesterol (Intercept)                -12.1   91.6   
+## # … with 26 more rows</code></pre>
+<p>Now lets span the estimates and standard errors across the columns for both outcomes:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1">straught1 &lt;-</a>
+<a class="sourceLine" id="cb60-2" data-line-number="2"><span class="st">  </span>mod_results <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb60-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/stretch.html">stretch</a></span>(</a>
+<a class="sourceLine" id="cb60-4" data-line-number="4">    <span class="dt">key =</span> Outcome,</a>
+<a class="sourceLine" id="cb60-5" data-line-number="5">    <span class="dt">value =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(Estimate, SE)</a>
+<a class="sourceLine" id="cb60-6" data-line-number="6">  )</a>
+<a class="sourceLine" id="cb60-7" data-line-number="7">straught1</a></code></pre></div>
+<pre><code>## # A tibble: 18 x 6
+##    Sex    Parameter     BP_Estimate   BP_SE Cholesterol_Est… Cholesterol_SE
+##    &lt;chr&gt;  &lt;chr&gt;               &lt;dbl&gt;   &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Female (Intercept)       93.7    24.7             -12.1           91.6  
+##  2 Female Age                0.533   0.210             2.30           0.779
+##  3 Female BloodSugarTR…      6.92    5.53             24.6           20.6  
+##  4 Female ChestPainAsy…    -14.2     9.64             34.0           35.8  
+##  5 Female ChestPainAty…    -16.3     9.73             22.7           36.1  
+##  6 Female ChestPainNon…    -15.3     9.15             34.1           34.0  
+##  7 Female ExerciseIndu…      8.00    4.89              8.14          18.2  
+##  8 Female HeartDisease…     12.1     5.21              5.88          19.3  
+##  9 Female MaximumHR          0.123   0.0993            0.720          0.369
+## 10 Male   (Intercept)      105.     14.7             151.            38.7  
+## 11 Male   Age                0.480   0.142             0.765          0.374
+## 12 Male   BloodSugarTR…      4.96    3.12             -6.85           8.23 
+## 13 Male   ChestPainAsy…    -10.0     4.25              3.38          11.2  
+## 14 Male   ChestPainAty…     -8.61    4.68              9.55          12.3  
+## 15 Male   ChestPainNon…     -6.99    4.31             -0.802         11.4  
+## 16 Male   ExerciseIndu…     -1.08    2.78              6.88           7.33 
+## 17 Male   HeartDisease…      3.07    2.80             13.4            7.39 
+## 18 Male   MaximumHR          0.0392  0.0601            0.239          0.158</code></pre>
+<p>The <code>sep</code> argument controls how the new column names are concatenated.</p>
+<p>Now suppose you wanted to also span sex across the columns. It can just be added to the keys:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1">straught2 &lt;-</a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="st">  </span>mod_results <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb62-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/stretch.html">stretch</a></span>(</a>
+<a class="sourceLine" id="cb62-4" data-line-number="4">    <span class="dt">key =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(Sex, Outcome),</a>
+<a class="sourceLine" id="cb62-5" data-line-number="5">    <span class="dt">value =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(Estimate, SE)</a>
+<a class="sourceLine" id="cb62-6" data-line-number="6">  )</a>
+<a class="sourceLine" id="cb62-7" data-line-number="7">straught2</a></code></pre></div>
+<pre><code>## # A tibble: 9 x 9
+##   Parameter Female_BP_Estim… Female_BP_SE Female_Choleste… Female_Choleste…
+##   &lt;chr&gt;                &lt;dbl&gt;        &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+## 1 (Interce…           93.7        24.7             -12.1             91.6  
+## 2 Age                  0.533       0.210             2.30             0.779
+## 3 BloodSug…            6.92        5.53             24.6             20.6  
+## 4 ChestPai…          -14.2         9.64             34.0             35.8  
+## 5 ChestPai…          -16.3         9.73             22.7             36.1  
+## 6 ChestPai…          -15.3         9.15             34.1             34.0  
+## 7 Exercise…            8.00        4.89              8.14            18.2  
+## 8 HeartDis…           12.1         5.21              5.88            19.3  
+## 9 MaximumHR            0.123       0.0993            0.720            0.369
+## # … with 4 more variables: Male_BP_Estimate &lt;dbl&gt;, Male_BP_SE &lt;dbl&gt;,
+## #   Male_Cholesterol_Estimate &lt;dbl&gt;, Male_Cholesterol_SE &lt;dbl&gt;</code></pre>
+<p>Notice how the resulting columns are positioned. They are sequentially sorted starting with the outer-most key in a hierarchical manner. Since there are multiple <code>value</code> columns in this example, their names are also appended to the result in the order in which they were requested.</p>
+<div id="stacking-headers-in-a-table" class="section level2">
+<h2 class="hasAnchor">
+<a href="#stacking-headers-in-a-table" class="anchor"></a>Stacking headers in a table</h2>
+<p><code><a href="../reference/grable.html">grable()</a></code> stands for “graded table”. It is used to stack headers into a <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable()</a></code> in an automated fashion by iteratively parsing the column names by the specified delimiter. The result of <code><a href="../reference/stretch.html">stretch()</a></code> was purposely made to flow directly into this function.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1">straught1 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb64-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/grable.html">grable</a></span>(</a>
+<a class="sourceLine" id="cb64-3" data-line-number="3">    <span class="dt">at =</span> <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(Sex, Parameter)</a>
+<a class="sourceLine" id="cb64-4" data-line-number="4">  )</a></code></pre></div>
+<table class="table table">
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="2">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+BP
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Cholesterol
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Sex
+</th>
+<th style="text-align:left;">
+Parameter
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+93.7187493
+</td>
+<td style="text-align:right;">
+24.6536900
+</td>
+<td style="text-align:right;">
+-12.1297785
+</td>
+<td style="text-align:right;">
+91.6044593
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+Age
+</td>
+<td style="text-align:right;">
+0.5330329
+</td>
+<td style="text-align:right;">
+0.2096016
+</td>
+<td style="text-align:right;">
+2.2975419
+</td>
+<td style="text-align:right;">
+0.7788061
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+BloodSugarTRUE
+</td>
+<td style="text-align:right;">
+6.9178015
+</td>
+<td style="text-align:right;">
+5.5329199
+</td>
+<td style="text-align:right;">
+24.5796821
+</td>
+<td style="text-align:right;">
+20.5583885
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+ChestPainAsymptomatic
+</td>
+<td style="text-align:right;">
+-14.1810178
+</td>
+<td style="text-align:right;">
+9.6423236
+</td>
+<td style="text-align:right;">
+34.0195680
+</td>
+<td style="text-align:right;">
+35.8274902
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+ChestPainAtypical angina
+</td>
+<td style="text-align:right;">
+-16.3247037
+</td>
+<td style="text-align:right;">
+9.7289213
+</td>
+<td style="text-align:right;">
+22.6736038
+</td>
+<td style="text-align:right;">
+36.1492568
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+ChestPainNon-anginal pain
+</td>
+<td style="text-align:right;">
+-15.3471449
+</td>
+<td style="text-align:right;">
+9.1541813
+</td>
+<td style="text-align:right;">
+34.1239627
+</td>
+<td style="text-align:right;">
+34.0137249
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+ExerciseInducedAnginaYes
+</td>
+<td style="text-align:right;">
+7.9952541
+</td>
+<td style="text-align:right;">
+4.8947727
+</td>
+<td style="text-align:right;">
+8.1371920
+</td>
+<td style="text-align:right;">
+18.1872573
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+HeartDiseaseYes
+</td>
+<td style="text-align:right;">
+12.0913966
+</td>
+<td style="text-align:right;">
+5.2058240
+</td>
+<td style="text-align:right;">
+5.8795266
+</td>
+<td style="text-align:right;">
+19.3430149
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+MaximumHR
+</td>
+<td style="text-align:right;">
+0.1226586
+</td>
+<td style="text-align:right;">
+0.0992801
+</td>
+<td style="text-align:right;">
+0.7201695
+</td>
+<td style="text-align:right;">
+0.3688901
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+105.2923383
+</td>
+<td style="text-align:right;">
+14.6933205
+</td>
+<td style="text-align:right;">
+150.9743256
+</td>
+<td style="text-align:right;">
+38.7467039
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+Age
+</td>
+<td style="text-align:right;">
+0.4800104
+</td>
+<td style="text-align:right;">
+0.1417168
+</td>
+<td style="text-align:right;">
+0.7654107
+</td>
+<td style="text-align:right;">
+0.3737111
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+BloodSugarTRUE
+</td>
+<td style="text-align:right;">
+4.9616363
+</td>
+<td style="text-align:right;">
+3.1197639
+</td>
+<td style="text-align:right;">
+-6.8540853
+</td>
+<td style="text-align:right;">
+8.2269061
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+ChestPainAsymptomatic
+</td>
+<td style="text-align:right;">
+-10.0474949
+</td>
+<td style="text-align:right;">
+4.2547960
+</td>
+<td style="text-align:right;">
+3.3795322
+</td>
+<td style="text-align:right;">
+11.2200180
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+ChestPainAtypical angina
+</td>
+<td style="text-align:right;">
+-8.6148546
+</td>
+<td style="text-align:right;">
+4.6798629
+</td>
+<td style="text-align:right;">
+9.5540927
+</td>
+<td style="text-align:right;">
+12.3409315
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+ChestPainNon-anginal pain
+</td>
+<td style="text-align:right;">
+-6.9875791
+</td>
+<td style="text-align:right;">
+4.3056911
+</td>
+<td style="text-align:right;">
+-0.8015539
+</td>
+<td style="text-align:right;">
+11.3542299
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+ExerciseInducedAnginaYes
+</td>
+<td style="text-align:right;">
+-1.0827067
+</td>
+<td style="text-align:right;">
+2.7780388
+</td>
+<td style="text-align:right;">
+6.8846691
+</td>
+<td style="text-align:right;">
+7.3257672
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+HeartDiseaseYes
+</td>
+<td style="text-align:right;">
+3.0740495
+</td>
+<td style="text-align:right;">
+2.8029917
+</td>
+<td style="text-align:right;">
+13.4020228
+</td>
+<td style="text-align:right;">
+7.3915687
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+MaximumHR
+</td>
+<td style="text-align:right;">
+0.0391572
+</td>
+<td style="text-align:right;">
+0.0600935
+</td>
+<td style="text-align:right;">
+0.2387579
+</td>
+<td style="text-align:right;">
+0.1584683
+</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>at</code> argument specifies which columns should be spanned in the header. Let’s try it with the two-key example from above:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">straught2 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb65-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/grable.html">grable</a></span>(</a>
+<a class="sourceLine" id="cb65-3" data-line-number="3">    <span class="dt">at =</span> <span class="op">-</span>Parameter</a>
+<a class="sourceLine" id="cb65-4" data-line-number="4">  )</a></code></pre></div>
+<table class="table table">
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Female
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Male
+</div>
+</th>
+</tr>
+<tr>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+BP
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Cholesterol
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+BP
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Cholesterol
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Parameter
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+SE
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+93.7187493
+</td>
+<td style="text-align:right;">
+24.6536900
+</td>
+<td style="text-align:right;">
+-12.1297785
+</td>
+<td style="text-align:right;">
+91.6044593
+</td>
+<td style="text-align:right;">
+105.2923383
+</td>
+<td style="text-align:right;">
+14.6933205
+</td>
+<td style="text-align:right;">
+150.9743256
+</td>
+<td style="text-align:right;">
+38.7467039
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Age
+</td>
+<td style="text-align:right;">
+0.5330329
+</td>
+<td style="text-align:right;">
+0.2096016
+</td>
+<td style="text-align:right;">
+2.2975419
+</td>
+<td style="text-align:right;">
+0.7788061
+</td>
+<td style="text-align:right;">
+0.4800104
+</td>
+<td style="text-align:right;">
+0.1417168
+</td>
+<td style="text-align:right;">
+0.7654107
+</td>
+<td style="text-align:right;">
+0.3737111
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BloodSugarTRUE
+</td>
+<td style="text-align:right;">
+6.9178015
+</td>
+<td style="text-align:right;">
+5.5329199
+</td>
+<td style="text-align:right;">
+24.5796821
+</td>
+<td style="text-align:right;">
+20.5583885
+</td>
+<td style="text-align:right;">
+4.9616363
+</td>
+<td style="text-align:right;">
+3.1197639
+</td>
+<td style="text-align:right;">
+-6.8540853
+</td>
+<td style="text-align:right;">
+8.2269061
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ChestPainAsymptomatic
+</td>
+<td style="text-align:right;">
+-14.1810178
+</td>
+<td style="text-align:right;">
+9.6423236
+</td>
+<td style="text-align:right;">
+34.0195680
+</td>
+<td style="text-align:right;">
+35.8274902
+</td>
+<td style="text-align:right;">
+-10.0474949
+</td>
+<td style="text-align:right;">
+4.2547960
+</td>
+<td style="text-align:right;">
+3.3795322
+</td>
+<td style="text-align:right;">
+11.2200180
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ChestPainAtypical angina
+</td>
+<td style="text-align:right;">
+-16.3247037
+</td>
+<td style="text-align:right;">
+9.7289213
+</td>
+<td style="text-align:right;">
+22.6736038
+</td>
+<td style="text-align:right;">
+36.1492568
+</td>
+<td style="text-align:right;">
+-8.6148546
+</td>
+<td style="text-align:right;">
+4.6798629
+</td>
+<td style="text-align:right;">
+9.5540927
+</td>
+<td style="text-align:right;">
+12.3409315
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ChestPainNon-anginal pain
+</td>
+<td style="text-align:right;">
+-15.3471449
+</td>
+<td style="text-align:right;">
+9.1541813
+</td>
+<td style="text-align:right;">
+34.1239627
+</td>
+<td style="text-align:right;">
+34.0137249
+</td>
+<td style="text-align:right;">
+-6.9875791
+</td>
+<td style="text-align:right;">
+4.3056911
+</td>
+<td style="text-align:right;">
+-0.8015539
+</td>
+<td style="text-align:right;">
+11.3542299
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ExerciseInducedAnginaYes
+</td>
+<td style="text-align:right;">
+7.9952541
+</td>
+<td style="text-align:right;">
+4.8947727
+</td>
+<td style="text-align:right;">
+8.1371920
+</td>
+<td style="text-align:right;">
+18.1872573
+</td>
+<td style="text-align:right;">
+-1.0827067
+</td>
+<td style="text-align:right;">
+2.7780388
+</td>
+<td style="text-align:right;">
+6.8846691
+</td>
+<td style="text-align:right;">
+7.3257672
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HeartDiseaseYes
+</td>
+<td style="text-align:right;">
+12.0913966
+</td>
+<td style="text-align:right;">
+5.2058240
+</td>
+<td style="text-align:right;">
+5.8795266
+</td>
+<td style="text-align:right;">
+19.3430149
+</td>
+<td style="text-align:right;">
+3.0740495
+</td>
+<td style="text-align:right;">
+2.8029917
+</td>
+<td style="text-align:right;">
+13.4020228
+</td>
+<td style="text-align:right;">
+7.3915687
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MaximumHR
+</td>
+<td style="text-align:right;">
+0.1226586
+</td>
+<td style="text-align:right;">
+0.0992801
+</td>
+<td style="text-align:right;">
+0.7201695
+</td>
+<td style="text-align:right;">
+0.3688901
+</td>
+<td style="text-align:right;">
+0.0391572
+</td>
+<td style="text-align:right;">
+0.0600935
+</td>
+<td style="text-align:right;">
+0.2387579
+</td>
+<td style="text-align:right;">
+0.1584683
+</td>
+</tr>
+</tbody>
+</table>
+<p>The tables can then be piped through subsequent customized processing with <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html"><code>kableExtra</code></a> tools.</p>
+</div>
+</div>
+<div id="univariate-analysis" class="section level1">
+<h1 class="hasAnchor">
+<a href="#univariate-analysis" class="anchor"></a>Univariate analysis</h1>
+<p><code><a href="../reference/descriptives.html">descriptives()</a></code> produces a data frame in long format with a collection of descriptive statistics.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb66-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/descriptives.html">descriptives</a></span>()</a></code></pre></div>
+<pre><code>## # A tibble: 111 x 9
+##    fun_eval fun_key col_ind col_lab val_ind val_lab val_dbl val_chr val_cbn
+##    &lt;chr&gt;    &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;  
+##  1 all      availa…       1 Age           1 &lt;NA&gt;        303 &lt;NA&gt;    303    
+##  2 all      availa…       2 Sex           1 &lt;NA&gt;        303 &lt;NA&gt;    303    
+##  3 all      availa…       3 ChestP…       1 &lt;NA&gt;        303 &lt;NA&gt;    303    
+##  4 all      availa…       4 BP            1 &lt;NA&gt;        303 &lt;NA&gt;    303    
+##  5 all      availa…       5 Choles…       1 &lt;NA&gt;        303 &lt;NA&gt;    303    
+##  6 all      availa…       6 BloodS…       1 &lt;NA&gt;        303 &lt;NA&gt;    303    
+##  7 all      availa…       7 Maximu…       1 &lt;NA&gt;        303 &lt;NA&gt;    303    
+##  8 all      availa…       8 Exerci…       1 &lt;NA&gt;        303 &lt;NA&gt;    303    
+##  9 all      availa…       9 HeartD…       1 &lt;NA&gt;        303 &lt;NA&gt;    303    
+## 10 all      class         1 Age           1 &lt;NA&gt;         NA numeric numeric
+## # … with 101 more rows</code></pre>
+<p><code><a href="../reference/univariate_associations.html">univariate_associations()</a></code> is a special case of <code><a href="../reference/dish.html">dish()</a></code> specifically for computing association metrics of one or more <code>responses</code> with a collection of <code>predictors</code>.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb68-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/univariate_associations.html">univariate_associations</a></span>(</a>
+<a class="sourceLine" id="cb68-3" data-line-number="3">    <span class="dt">f =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">AIC =</span> <span class="cf">function</span>(y, x) <span class="kw"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y <span class="op">~</span><span class="st"> </span>x))),</a>
+<a class="sourceLine" id="cb68-4" data-line-number="4">    <span class="dt">responses =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(BP, Cholesterol)</a>
+<a class="sourceLine" id="cb68-5" data-line-number="5">  )</a></code></pre></div>
+<pre><code>## # A tibble: 14 x 3
+##    response    predictor               AIC
+##    &lt;chr&gt;       &lt;chr&gt;                 &lt;dbl&gt;
+##  1 BP          Age                   2577.
+##  2 BP          Sex                   2602.
+##  3 BP          ChestPain             2598.
+##  4 BP          BloodSugar            2593.
+##  5 BP          MaximumHR             2602.
+##  6 BP          ExerciseInducedAngina 2602.
+##  7 BP          HeartDisease          2596.
+##  8 Cholesterol Age                   3243.
+##  9 Cholesterol Sex                   3244.
+## 10 Cholesterol ChestPain             3259.
+## 11 Cholesterol BloodSugar            3257.
+## 12 Cholesterol MaximumHR             3257.
+## 13 Cholesterol ExerciseInducedAngina 3256.
+## 14 Cholesterol HeartDisease          3255.</code></pre>
+<p><code><a href="../reference/univariate_table.html">univariate_table()</a></code> allows you to create a custom descriptive table for a dataset. It uses almost every function in the package across its span of capabilities.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1">heart_disease <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb70-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/univariate_table.html">univariate_table</a></span>()</a></code></pre></div>
+<table class="table table">
+<thead><tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:left;">
+Level
+</th>
+<th style="text-align:left;">
+Summary
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Age
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+56 (48, 61)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
+Sex
+</td>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:left;">
+97 (32.01%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:left;">
+206 (67.99%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+ChestPain
+</td>
+<td style="text-align:left;">
+Typical angina
+</td>
+<td style="text-align:left;">
+23 (7.59%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atypical angina
+</td>
+<td style="text-align:left;">
+50 (16.5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Non-anginal pain
+</td>
+<td style="text-align:left;">
+86 (28.38%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Asymptomatic
+</td>
+<td style="text-align:left;">
+144 (47.52%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BP
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+130 (120, 140)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cholesterol
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+241 (211, 275)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MaximumHR
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+153 (133.5, 166)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
+ExerciseInducedAngina
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+204 (67.33%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+99 (32.67%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
+HeartDisease
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+164 (54.13%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+139 (45.87%)
+</td>
+</tr>
+</tbody>
+</table>
+<p>See <code><a href="../articles/describe.html">vignette("describe")</a></code> for a more in-depth introduction to these functions.</p>
 </div>
   </div>
 
@@ -720,9 +1973,22 @@
 <li><a href="#pairwise-combinations-of-column-sets">Pairwise combinations of column sets</a></li>
       <li><a href="#subsets-of-data">Subsets of data</a></li>
       <li><a href="#distributing-to-specific-classes">Distributing to specific classes</a></li>
-      <li><a href="#traversing-lists-to-identify-objects">Traversing lists to identify objects</a></li>
       </ul>
 </li>
+      <li>
+<a href="#populating-key-value-pairs-into-custom-string-templates">Populating key-value pairs into custom string templates</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#concatenating-repetitive-keys">Concatenating repetitive keys</a></li>
+      <li><a href="#evaluating-strings-as-expressions">Evaluating strings as expressions</a></li>
+      </ul>
+</li>
+      <li><a href="#traversing-lists-to-identify-objects">Traversing lists to identify objects</a></li>
+      <li><a href="#distorting-relationships-between-columns">Distorting relationships between columns</a></li>
+      <li>
+<a href="#spanning-keys-and-values-across-the-columns">Spanning keys and values across the columns</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#stacking-headers-in-a-table">Stacking headers in a table</a></li>
+      </ul>
+</li>
+      <li><a href="#univariate-analysis">Univariate analysis</a></li>
       </ul>
 </div>
       </div>

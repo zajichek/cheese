@@ -25,10 +25,10 @@ This data comes from the [UCI Machine Learning Repository](http://archive.ics.uc
 heart_disease
 ```
 
-The functions that will be introduced are roughly in order of their development, as many build off of one another. Also, selection of columns are done with non-standard evaluation (NSE) or with `tidyselect::select_helpers`.
+The functions that will be introduced are roughly in order of their development, as many build off of one another. Selection of columns is done with non-standard evaluation (NSE) or with `tidyselect::select_helpers`, where applicable.
 
 # Splitting and binding data
-`divide()` is used to easily split up a data frame into a list of subsets. Suppose you want to split the data by sex and heart disease status:
+`divide()` is used to split up a data frame into a list of subsets. Suppose you want to split the example dataset by sex and heart disease status:
 
 ```{r}
 div_dat <-
@@ -40,9 +40,9 @@ div_dat <-
 div_dat
 ```
 
-The default behavior is to continually split the data in a hierarchical structure based on the order of the input columns, and to remove them from the result. The `keep` argument can be used to retain the columns in the data frames.
+The default behavior is to continually split the data in a hierarchical structure based on the order of the input columns, and to remove them from the result. The `keep` argument can be used to retain the column(s) in the data frames.
 
-`fasten()` allows you to take a list structure containing data frames of arbitrary depth, and roll them back up into a single data frame. This is useful when a statistical process is mapped to many subsets, and you want to be able to easily collect the results without repeatedly binding data. You can call the function with the divided data from above:
+`fasten()` allows you to take a list structure that contains data frames at an arbitrary depth, and roll them back up into a single data frame. This is useful when a statistical process needs to be mapped to many subsets, and you want to be able to easily collect the results without repeatedly binding data. You can call the function with the divided data from above:
 
 ```{r}
 div_dat %>%
@@ -79,7 +79,7 @@ div_dat %>%
 Obviously, the classes of the split columns are not retained from the original data since the splitting and binding processes are independent.
 
 ## Adjusting the depth
-As shown above, the default behavior for these functions is to split or bind "as much as possible". However, it can be useful to have control over the shape of the split. This is where the `depth` argument comes in. Suppose you want the same data frames at the leaves of the list, but only one (1) level deep:
+As shown above, the default behavior for these functions is to split or bind "as much as possible". However, it can be useful to have control over the shape of the split. This is where the `depth` argument comes in. Suppose you want the same data frames at the leaves of the list, but only one level deep:
 
 ```{r}
 heart_disease %>%
@@ -90,7 +90,9 @@ heart_disease %>%
   )
 ```
 
-You now have list with four (4) elements containing the subsets--the names of which are the concatenated (see the `sep` argument) levels of the split columns. This argument also works when binding data. Going back to the original divided data frame, you may only want to bind the internal lists.
+You now have list with four elements containing the subsets--the names of which are the concatenated levels of the split columns (see the `sep` argument). 
+
+This argument also works when binding data. Going back to the original divided data frame, you may only want to bind the internal lists.
 
 ```{r}
 div_dat %>%
@@ -112,13 +114,13 @@ div_dat %>%
   )
 ```
 
-The new depth is one (1) less than the input. In this case, the same result was achieved because of the symmetry. 
+The new depth is one less than the input. In this case, the same result was achieved because of the symmetry. 
 
 # Applying functions
 The next set of functions are rooted in functional programming (i.e. [`purrr`](https://purrr.tidyverse.org/)). In each instance, given a pre-defined function, you can easily control the scope of the data in which it is evaluated on. This is an incredibly useful and efficient philosphy for generating reusable code that is non-repetitive.
 
 ## Pairwise combinations of column sets
-Often times a statistical analysis is concerned with mulitple outcomes/targets, though each one potentially uses the same set of explanatory variables. You could of course hard code the specific analysis steps for each outcome (e.g. formulas, etc.), but then the code becomes repetitive. You could also make separate datasets for each outcome with the associated predictors and then apply the same analysis process to each dataset, but then you waste resources by storing multiple copies of the same data in memory. `dish()` allows you to distribute a function to various pairwise sets of columns from the same dataset in a single call. The motivation described above is merely that--this is a completely generalizable function that can be applied to any context.
+Often times a statistical analysis is concerned with mulitple outcomes/targets, though each one potentially uses the same set of explanatory variables. You could of course hard code the specific analysis steps for each outcome (e.g. formulas, etc.), but then the code becomes repetitive. You could also make separate datasets for each outcome with the associated predictors and then apply the same analysis process to each dataset, but then you waste resources by storing multiple copies of the same data in memory. `dish()` allows you to distribute a function to various pairwise sets of columns from the same dataset in a single call. The motivation described above is merely that--this is a generalizable function that can be applied to any context.
 
 As a simple first example, lets compute the Pearson correlation of blood pressure and cholesterol with all numeric columns:
 ```{r}
@@ -140,7 +142,7 @@ heart_disease %>%
   )
 ```
 
-Now lets suppose you want to regress both blood pressure and cholesterol on all other variables in the dataset. The `each_` arguments allow you to control whether the column sets are entered into the function individually as vectors, or together in a single data frame. By default, every thing is entered into `f` as vectors, so you'll need to use this argument here:
+Now lets suppose you want to regress both blood pressure and cholesterol on all other variables in the dataset. The `each_` arguments allow you to control whether the column sets are entered into the function individually as vectors, or together in a single data frame. The former is the default, so you'll need to use this argument here:
 ```{r}
 heart_disease %>%
   dish(
@@ -175,7 +177,7 @@ heart_disease %>%
 ```
 
 ## Distributing to specific classes
-`typly()` allows you to apply a function to columns whose type conforms to at least one (or none) of the set of candidates. It is similar to `purrr::map_if()`, but uses `methods::is()` for determining types, and only returns the results for the selected columns:
+`typly()` allows you to apply a function to columns of a data frame whose type inherits at least one (or none) of the specified candidates. It is similar to `purrr::map_if()`, but uses `methods::is()` for determining types (see `some_type()`), and only returns the results for the selected columns:
 ```{r}
 heart_disease %>%
   typly(
@@ -195,6 +197,257 @@ heart_disease %>%
   )
 ```
 
-## Traversing lists to identify objects
+# Populating key-value pairs into custom string templates
+`absorb()` allows you to create collections of strings that use keys as placeholders, which are then populated by the values. This is useful for setting up results of your analysis to be presented in a specific format that is independent of the dataset at hand. Here's a simple example:
+```{r}
+absorb(
+  key = c("mean", "sd", "var"),
+  value = c("10", "2", "4"),
+  text = 
+    c(
+      "MEAN: mean, SD: sd",
+      "VAR: var = sd^2",
+      MEAN = "mean"
+    )
+)
+```
 
+The input `text` is scanned to look for the keys (interpreted as regular expressions) and are replaced with the corresponding values. 
 
+Let's look at a more useful example. Suppose we have a collection summary statistics for patient age by angina and heart disease status:
+```{r}
+age_stats <-
+  heart_disease %>%
+  dplyr::group_by(
+    ExerciseInducedAngina,
+    HeartDisease
+  ) %>%
+  dplyr::summarise(
+    mean = round(mean(Age), 2),
+    sd = round(sd(Age), 2),
+    median = median(Age),
+    iqr = IQR(Age)
+  ) %>%
+  dplyr::ungroup() %>%
+  tidyr::gather(
+    key = "key",
+    value = "value",
+    -ExerciseInducedAngina,
+    -HeartDisease
+  )
+age_stats
+```
+
+Next, you can specify the string format you want to nicely summarise the information in each group:
+```{r}
+age_stats %>%
+  dplyr::group_by(
+    ExerciseInducedAngina,
+    HeartDisease
+  ) %>%
+  dplyr::summarise(
+    Summary = 
+      absorb(
+        key = key,
+        value = value,
+        text = 
+          c(
+            "mean (sd) | median (iqr)"
+          )
+      )
+  ) %>%
+  dplyr::ungroup()
+```
+
+Of course, this is much more useful when the summary data is already in the format of `age_stats`.
+
+## Concatenating repetitive keys
+In the case where the key pattern found in the string template is repeated, its values are collapsed into a concatenated string:
+```{r}
+absorb(
+  key = age_stats$key,
+  value = age_stats$value,
+  text = c("(mean) / (sd)", "median")
+)
+```
+
+The `sep` argument can be used to customize how values are separated.
+
+## Evaluating strings as expressions
+It may be useful in some cases to evaluate the resulting string as an expression. You can setup the prior example so that the result contains valid expressions:
+```{r}
+absorb(
+  key = age_stats$key,
+  value = age_stats$value,
+  text = c("(mean) / (sd)", "median"),
+  sep = "+",
+  evaluate = TRUE,
+  trace = TRUE
+)
+```
+
+These statistics are not entirely useful here, but you get the point.
+
+# Traversing lists to identify objects
+`depths()` and `depths_string()` are used for traversing a list structure to find the elements that satisfy a predicate. The former produces a vector of the unique depths that contain at least one element where `predicate` is true, and the latter creates a string representation of the traversal with the actual positions.
+```{r}
+#Make a divided data frame
+div_dat1 <-
+  heart_disease %>%
+  divide(
+    Sex,
+    HeartDisease
+  )
+
+#Find the depths of the data frames
+div_dat1 %>%
+  depths(
+    predicate = is.data.frame
+  )
+div_dat1 %>%
+  depths_string(
+    predicate = is.data.frame
+  )
+```
+
+In the string result, the brackets represent the level of the list, and the integers represent the index at that level, which are negative if `predicate` is true for that element.
+
+By default, the algorithm continues when `rlang::is_bare_list()` so that the traversal can end with list-like objects. However, the `bare` argument can be used to traverse deeper into the list:
+```{r}
+div_dat1 %>%
+  depths_string(
+    predicate = is.data.frame,
+    bare = FALSE
+  )
+```
+
+Now it also evaluated the columns of each data frame in the list, though it still found the correct positions where the predicate held.
+
+# Distorting relationships between columns
+`muddle()` can be used to randomly shuffle columns in a data frame. This is a convenient way to remove confounding when exploring the effects of a variable on an outcome.
+```{r}
+set.seed(123)
+heart_disease %>%
+  muddle()
+```
+
+All columns are permuted by default. Use the `at` argument to only shuffle certain ones:
+```{r}
+heart_disease %>%
+  muddle(
+    at = Age
+  )
+```
+
+Additional arguments can be passed to `sample()` as well. For example, you might want five random values from each column:
+```{r}
+heart_disease %>%
+  muddle(
+    size = 5
+  )
+```
+
+# Spanning keys and values across the columns
+`stretch()` is for spanning keys and values across the columns. It is similar to `tidyr::spread()`, but allows for any number of keys and values to be selected. It's functionality is more so targeted at setting up your results to be presented in a table, rather than for general data manipulation. Thus, the resulting column names and orderings are setup to make it a seamless transition. 
+
+To illustrate, lets first collect the parameter estimates and standard errors from multiple regression models using blood pressure and cholesterol as outcomes, stratified by sex:
+```{r}
+mod_results <-
+  heart_disease %>%
+  
+  #For each sex
+  stratiply(
+    by = Sex,
+    f =
+      ~.x %>%
+      
+      #Collect coefficients and standard errors for model estimates on multiple outcomes
+      dish(
+        f = function(y, x) {
+          model <- lm(y ~ ., data = x)
+          tibble::tibble(
+            Parameter = names(model$coefficients),
+            Estimate = model$coefficients,
+            SE = sqrt(diag(vcov(model)))
+          )
+        },
+        left = c(BP, Cholesterol),
+        each_right = FALSE
+      ) 
+  ) %>%
+  
+  #Gather results into a single data frame
+  fasten(
+    into = c("Sex", "Outcome")
+  )
+mod_results
+```
+
+Now lets span the estimates and standard errors across the columns for both outcomes:
+```{r}
+straught1 <-
+  mod_results %>%
+  stretch(
+    key = Outcome,
+    value = c(Estimate, SE)
+  )
+straught1
+```
+
+The `sep` argument controls how the new column names are concatenated. 
+
+Now suppose you wanted to also span sex across the columns. It can just be added to the keys:
+```{r}
+straught2 <-
+  mod_results %>%
+  stretch(
+    key = c(Sex, Outcome),
+    value = c(Estimate, SE)
+  )
+straught2
+```
+
+Notice how the resulting columns are positioned. They are sequentially sorted starting with the outer-most key in a hierarchical manner. Since there are multiple `value` columns in this example, their names are also appended to the result in the order in which they were requested.
+
+## Stacking headers in a table
+`grable()` stands for "graded table". It is used to stack headers into a `knitr::kable()` in an automated fashion by iteratively parsing the column names by the specified delimiter. The result of `stretch()` was purposely made to flow directly into this function.
+```{r}
+straught1 %>%
+  grable(
+    at = -c(Sex, Parameter)
+  )
+```
+
+The `at` argument specifies which columns should be spanned in the header. Let's try it with the two-key example from above:
+```{r}
+straught2 %>%
+  grable(
+    at = -Parameter
+  )
+```
+
+The tables can then be piped through subsequent customized processing with [`kableExtra`](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) tools.
+
+# Univariate analysis
+`descriptives()` produces a data frame in long format with a collection of descriptive statistics.
+```{r}
+heart_disease %>%
+  descriptives()
+```
+
+`univariate_associations()` is a special case of `dish()` specifically for computing association metrics of one or more `responses` with a collection of `predictors`.
+```{r}
+heart_disease %>%
+  univariate_associations(
+    f = list(AIC = function(y, x) AIC(lm(y ~ x))),
+    responses = c(BP, Cholesterol)
+  )
+```
+
+`univariate_table()` allows you to create a custom descriptive table for a dataset. It uses almost every function in the package across its span of capabilities.
+```{r}
+heart_disease %>%
+  univariate_table()
+```
+
+See `vignette("describe")` for a more in-depth introduction to these functions.
