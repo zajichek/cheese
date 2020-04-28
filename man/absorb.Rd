@@ -15,9 +15,9 @@ absorb(
 )
 }
 \arguments{
-    \item{key}{A vector that can be coerced to type \code{base::character}.}
+    \item{key}{A vector that can be coerced to type \code{\link{character}}.}
     \item{value}{A vector with the same length as \code{key}.}
-    \item{text}{A (optionally named) \code{base::character} vector containing patterns.}
+    \item{text}{A (optionally named) \code{\link{character}} vector containing patterns.}
     \item{sep}{Delimiter to separate values by in the placeholder for duplicate patterns. Defaults to \code{"_"}}
     \item{trace}{Should the recursion results be printed to the console each iteration? Defaults to \code{FALSE}.}
     \item{evaluate}{Should the result(s) be evaluated as \code{R} expressions? Defaults to \code{FALSE}.}
@@ -27,8 +27,8 @@ The inputs are iterated in sequential order to replace each pattern with its cor
 }
 \value{
 \itemize{
-\item If \code{evaluate = FALSE} (default), a \code{base::character} vector the same length as \code{text} with all matching patterns replaced by their value.
-\item Otherwise, a \code{base::list} with the same length as \code{text}.
+\item If \code{evaluate = FALSE} (default), a \code{\link{character}} vector the same length as \code{text} with all matching patterns replaced by their value.
+\item Otherwise, a \code{\link{list}} with the same length as \code{text}.
 }
 }
 \author{Alex Zajichek}

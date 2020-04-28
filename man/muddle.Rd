@@ -2,7 +2,7 @@
 \alias{muddle}
 \title{Randomly permute some or all columns of a data frame}
 \description{
-Shuffle any of the columns of a \code{base::data.frame} to artificially distort relationships.
+Shuffle any of the columns of a \code{\link{data.frame}} to artificially distort relationships.
 }
 \usage{
 muddle(
@@ -12,12 +12,12 @@ muddle(
 )
 }
 \arguments{
-\item{data}{A \code{base::data.frame}.}
-\item{at}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers}. Defaults to all columns.}
-\item{...}{Additional arguments passed to \code{base::sample}.}
+\item{data}{A \code{\link{data.frame}}.}
+\item{at}{A vector of quoted/unquoted columns, positions, and/or \code{\link{tidyselect::select_helpers}}. Defaults to all columns.}
+\item{...}{Additional arguments passed to \code{\link{sample}}.}
 }
 \value{
-A \code{tibble::tibble}
+A \code{\link{tibble::tibble}}
 }
 \author{Alex Zajichek}
 \examples{

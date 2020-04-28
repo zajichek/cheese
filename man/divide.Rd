@@ -2,7 +2,7 @@
 \alias{divide}
 \title{Divide a data frame into a list}
 \description{
-Separate a \code{base::data.frame} into a \code{base::list} of any depth by one or more stratification columns whose levels become the names.
+Separate a \code{\link{data.frame}} into a \code{\link{list}} of any depth by one or more stratification columns whose levels become the names.
 }
 \usage{
 divide(
@@ -15,8 +15,8 @@ divide(
 )
 }
 \arguments{
-\item{data}{Any \code{base::data.frame}.}
-\item{...}{Selection of columns to split by. See \code{dplyr::select} for details.}
+\item{data}{Any \code{\link{data.frame}}.}
+\item{...}{Selection of columns to split by. See \code{\link{dplyr::select}} for details.}
 \item{depth}{Depth to split to. Defaults to \code{Inf}. See details for more information.}
 \item{remove}{Should the stratfication columns be removed? Defaults to \code{TRUE}.}
 \item{drop}{Should unused combinations of stratification variables be dropped? Defaults to \code{TRUE}.}
@@ -26,7 +26,7 @@ divide(
 For the \code{depth}, use positive integers to move from the root and negative integers to move from the leaves. The maximum (minimum) depth will be used for integers larger (smaller) than such.
 }
 \value{
-A \code{base::list}
+A \code{\link{list}}
 }
 \author{Alex Zajichek}
 \examples{

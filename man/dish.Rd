@@ -2,7 +2,7 @@
 \alias{dish}
 \title{Evaluate a two-argument function with combinations of columns}
 \description{
-Split up columns into groups and apply a function to combinations of those columns with control over whether each group is entered as a single \code{base::data.frame} or individual \code{base::vector}'s.
+Split up columns into groups and apply a function to combinations of those columns with control over whether each group is entered as a single \code{\link{data.frame}} or individual \code{\link{vector}}'s.
 }
 \usage{
 dish(
@@ -16,16 +16,16 @@ dish(
 )
 }
 \arguments{
-\item{data}{A \code{base::data.frame}.}
-\item{f}{A \code{function} that takes a \code{base::vector} and/or \code{base::data.frame} in the first two arguments.}    
-\item{left}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers} to be evaluated in the first argument of \code{f}.}
-\item{right}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers} to be evaluated in the second argument of \code{f}.}
-\item{each_left}{Should each \code{left} variable be indivdually evaluated in \code{f}? Defaults to \code{TRUE}. If \code{FALSE}, \code{left} columns are entered into \code{f} as a single \code{data.frame}.}
-\item{each_right}{Should each \code{right} variable be individually evaluated in \code{f}? Defaults to \code{TRUE}. If \code{FALSE}, \code{right} columns are entered into \code{f} as a single \code{data.frame}.}
+\item{data}{A \code{\link{data.frame}}.}
+\item{f}{A \code{\link{function}} that takes a \code{\link{vector}} and/or \code{\link{data.frame}} in the first two arguments.}    
+\item{left}{A vector of quoted/unquoted columns, positions, and/or \code{\link{tidyselect::select_helpers}} to be evaluated in the first argument of \code{f}.}
+\item{right}{A vector of quoted/unquoted columns, positions, and/or \code{\link{tidyselect::select_helpers}} to be evaluated in the second argument of \code{f}.}
+\item{each_left}{Should each \code{left} variable be indivdually evaluated in \code{f}? Defaults to \code{TRUE}. If \code{FALSE}, \code{left} columns are entered into \code{f} as a single \code{\link{data.frame}}.}
+\item{each_right}{Should each \code{right} variable be individually evaluated in \code{f}? Defaults to \code{TRUE}. If \code{FALSE}, \code{right} columns are entered into \code{f} as a single \code{\link{data.frame}}.}
 \item{...}{Additional arguments to be passed to \code{f}.}
 }
 \value{
-A \code{base::list} 
+A \code{\link{list}} 
 }
 \author{Alex Zajichek}
 \examples{

@@ -13,16 +13,16 @@ stretch(
 )
 }
 \arguments{
-\item{data}{A \code{base::data.frame}.}
-\item{key}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers} whose values will become the column name(s).}
-\item{value}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers} whose values will be spread across the columns.}
-\item{sep}{String to separate keys/values by in the resulting column names. Defaults to "_". Only used when there are more than one keys/values.}
+\item{data}{A \code{\link{data.frame}}.}
+\item{key}{A vector of quoted/unquoted columns, positions, and/or \code{\link{tidyselect::select_helpers}} whose values will become the column name(s).}
+\item{value}{A vector of quoted/unquoted columns, positions, and/or \code{\link{tidyselect::select_helpers}} whose values will be spread across the columns.}
+\item{sep}{String to separate keys/values by in the resulting column names. Defaults to \code{"_"}. Only used when there are more than one keys/values.}
 }
 \details{
 In the case of multiple \code{value}'s, the labels are always appended to the end of the resulting columns.
 }
 \value{
-A \code{tibble::tibble} 
+A \code{\link{tibble::tibble}}
 }
 \author{Alex Zajichek}
 \examples{

@@ -12,10 +12,10 @@ some_type(
 }
 \arguments{
 \item{object}{Any \code{R} object.}
-\item{types}{A \code{base::character} vector of classes to test against.}
+\item{types}{A \code{\link{character}} vector of classes to test against.}
 }
 \value{
-A \code{base::logical} indicator
+A \code{\link{logical}} indicator
 }
 \author{Alex Zajichek}
 \examples{

@@ -2,7 +2,7 @@
 \alias{univariate_associations}
 \title{Compute association statistics between columns of a data frame}
 \description{
-Evaluate a \code{base::list} of scalar functions on any number of "response" columns by any number of "predictor" columns
+Evaluate a \code{\link{list}} of scalar functions on any number of "response" columns by any number of "predictor" columns
 }
 \usage{
 univariate_associations(
@@ -13,14 +13,14 @@ univariate_associations(
 )
 }
 \arguments{
-\item{data}{A \code{base::data.frame}.}
-\item{f}{A function or a \code{base::list} of functions (preferably named) that take a vector as input in the first two arguments and return a scalar.}
-\item{responses}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers} to be evaluated as the first argument. See \code{cheese::dish}.}
-\item{predictors}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers} to be evaluated as the second argument. See \code{cheese::dish}.}
+\item{data}{A \code{\link{data.frame}}.}
+\item{f}{A function or a \code{\link{list}} of functions (preferably named) that take a vector as input in the first two arguments and return a scalar.}
+\item{responses}{A vector of quoted/unquoted columns, positions, and/or \code{\link{tidyselect::select_helpers}} to be evaluated as the first argument. See the \code{left} argument in \code{\link{dish}}.}
+\item{predictors}{A vector of quoted/unquoted columns, positions, and/or \code{\link{tidyselect::select_helpers}} to be evaluated as the second argument. See the \code{right} argument in \code{\link{dish}}.}
 }
  
 \value{
-A \code{tibble::tibble} with the response/predictor columns down the rows and the results of the \code{f} across the columns. The names of the result columns will be the names provided in \code{f}.
+A \code{\link{tibble::tibble}} with the response/predictor columns down the rows and the results of the \code{f} across the columns. The names of the result columns will be the names provided in \code{f}.
 }
 
 \author{Alex Zajichek}

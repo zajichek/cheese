@@ -20,19 +20,19 @@ depths_string(
 )
 }
 \arguments{
-\item{list}{A \code{base::list}, \code{base::data.frame}, or \code{base::vector}.}
-\item{predicate}{A \code{function} that evaluates to \code{TRUE} or \code{FALSE}.}
-\item{bare}{Should algorithm only continue for bare lists? Defaults to TRUE. See \code{rlang::`bare-type-predicates`}}
+\item{list}{A \code{\link{list}}, \code{\link{data.frame}}, or \code{\link{vector}}.}
+\item{predicate}{A \code{\link{function}} that evaluates to \code{TRUE} or \code{FALSE}.}
+\item{bare}{Should algorithm only continue for bare lists? Defaults to TRUE. See \code{\link{rlang::`bare-type-predicates`}}}
 \item{...}{Additional arguments to pass to \code{predicate}.}
 }
 \details{
-The input is recursively evaluated to find elements that satisfy \code{predicate}, and only proceeds where \code{rlang::is_list} when argument \code{bare} is \code{FALSE}, and \code{rlang::is_bare_list} when it is \code{TRUE}.
+The input is recursively evaluated to find elements that satisfy \code{predicate}, and only proceeds where \code{\link{rlang::is_list}} when argument \code{bare} is \code{FALSE}, and \code{\link{rlang::is_bare_list}} when it is \code{TRUE}.
 }
 \value{
 \itemize{
-\item \code{depths()} returns a \code{base::integer} vector indicating the levels that contain elements satisfying the predicate.
+\item \code{depths()} returns an \code{\link{integer}} vector indicating the levels that contain elements satisfying the predicate.
 
-\item \code{depths_string()} returns a \code{base::character} representation of the traversal. Brackets \{\} are used to indicate the level of the tree, commas to separate element-indices within a level, and the sign of the index to indicate whether the element satisfied \code{predicate} (- = yes, + = no).
+\item \code{depths_string()} returns a \code{\link{character}} representation of the traversal. Brackets \{\} are used to indicate the level of the tree, commas to separate element-indices within a level, and the sign of the index to indicate whether the element satisfied \code{predicate} (- = yes, + = no).
 
 }
 }

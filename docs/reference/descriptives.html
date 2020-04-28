@@ -150,15 +150,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a></code>.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code>.</p></td>
     </tr>
     <tr>
       <th>f_all</th>
-      <td><p>A <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code> of functions to evaluate on all columns.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> of functions to evaluate on all columns.</p></td>
     </tr>
     <tr>
       <th>f_numeric</th>
-      <td><p>A <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code> of functions to evaluate on <code>numeric_types</code> columns.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> of functions to evaluate on <code>numeric_types</code> columns.</p></td>
     </tr>
     <tr>
       <th>numeric_types</th>
@@ -166,7 +166,7 @@
     </tr>
     <tr>
       <th>f_categorical</th>
-      <td><p>A <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code> of functions to evaluate on <code>categorical_types</code> columns.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> of functions to evaluate on <code>categorical_types</code> columns.</p></td>
     </tr>
     <tr>
       <th>categorical_types</th>
@@ -174,11 +174,11 @@
     </tr>
     <tr>
       <th>f_other</th>
-      <td><p>A <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code> of functions to evaluate on remaining columns.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> of functions to evaluate on remaining columns.</p></td>
     </tr>
     <tr>
       <th>useNA</th>
-      <td><p>See <code><a href='https://rdrr.io/r/base/table.html'>base::table</a></code> for details. Defaults to <code>"ifany"</code>.</p></td>
+      <td><p>See <code><a href='https://rdrr.io/r/base/table.html'>table</a></code> for details. Defaults to <code>"ifany"</code>.</p></td>
     </tr>
     <tr>
       <th>round</th>
@@ -193,8 +193,8 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The following <code>fun_key</code>'s are available by default for the specified types:</p><ul>
-<li><p>ALL: <code>length, missing, available, class, unique</code></p></li>
-<li><p>Numeric: <code>mean, sd, min, q1, median, q3, max, iqr, range</code></p></li>
+<li><p>ALL: <code><a href='https://rdrr.io/r/base/length.html'>length</a>, missing, available, <a href='https://rdrr.io/r/base/class.html'>class</a>, <a href='https://rdrr.io/r/base/unique.html'>unique</a></code></p></li>
+<li><p>Numeric: <code><a href='https://rdrr.io/r/base/mean.html'>mean</a>, <a href='https://rdrr.io/r/stats/sd.html'>sd</a>, <a href='https://rdrr.io/r/base/Extremes.html'>min</a>, q1, <a href='https://rdrr.io/r/stats/median.html'>median</a>, q3, <a href='https://rdrr.io/r/base/Extremes.html'>max</a>, iqr, range</code></p></li>
 <li><p>Categorical: <code>count, proportion, percent</code></p></li>
 </ul>
 
@@ -207,7 +207,7 @@
 <li><p><code>col_ind</code>: Index from input dataset</p></li>
 <li><p><code>col_lab</code>: Label of the column</p></li>
 <li><p><code>val_ind</code>: Index of the value within the function result</p></li>
-<li><p><code>val_lab</code>: Label extracted from the result with <code><a href='https://rdrr.io/r/base/names.html'>base::names</a></code></p></li>
+<li><p><code>val_lab</code>: Label extracted from the result with <code><a href='https://rdrr.io/r/base/names.html'>names</a></code></p></li>
 <li><p><code>val_dbl</code>: Numeric result</p></li>
 <li><p><code>val_chr</code>: Non-numeric result</p></li>
 <li><p><code>val_cbn</code>: Combination of (rounded) numeric and non-numeric values</p></li>

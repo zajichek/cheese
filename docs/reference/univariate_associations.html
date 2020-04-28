@@ -34,7 +34,7 @@
 
 <meta property="og:title" content="Compute association statistics between columns of a data frame — univariate_associations" />
 
-<meta property="og:description" content="Evaluate a base::list of scalar functions on any number of &quot;response&quot; columns by any number of &quot;predictor&quot; columns" />
+<meta property="og:description" content="Evaluate a list of scalar functions on any number of &quot;response&quot; columns by any number of &quot;predictor&quot; columns" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -128,7 +128,7 @@
 
     <div class="ref-description">
     
-    <p>Evaluate a <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code> of scalar functions on any number of "response" columns by any number of "predictor" columns</p>
+    <p>Evaluate a <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> of scalar functions on any number of "response" columns by any number of "predictor" columns</p>
     
     </div>
 
@@ -144,19 +144,19 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a></code>.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code>.</p></td>
     </tr>
     <tr>
       <th>f</th>
-      <td><p>A function or a <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code> of functions (preferably named) that take a vector as input in the first two arguments and return a scalar.</p></td>
+      <td><p>A function or a <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> of functions (preferably named) that take a vector as input in the first two arguments and return a scalar.</p></td>
     </tr>
     <tr>
       <th>responses</th>
-      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code> to be evaluated as the first argument. See <code><a href='dish.html'>cheese::dish</a></code>.</p></td>
+      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code> to be evaluated as the first argument. See the <code>left</code> argument in <code><a href='dish.html'>dish</a></code>.</p></td>
     </tr>
     <tr>
       <th>predictors</th>
-      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code> to be evaluated as the second argument. See <code><a href='dish.html'>cheese::dish</a></code>.</p></td>
+      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code> to be evaluated as the second argument. See the <code>right</code> argument in <code><a href='dish.html'>dish</a></code>.</p></td>
     </tr>
     </table>
     

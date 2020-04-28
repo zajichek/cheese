@@ -2,7 +2,7 @@
 \alias{fasten}
 \title{Bind a list of data frames back together}
 \description{
-Merge a \code{base::list} of arbitrary depth with \code{base::data.frame}'s at the leaves row-wise.
+Roll up a \code{\link{list}} of arbitrary depth with \code{\link{data.frame}}'s at the leaves row-wise.
 }
 \usage{
 fasten(
@@ -12,15 +12,15 @@ fasten(
 )
 }
 \arguments{
-\item{list}{A \code{base::list} with \code{base::data.frame}'s at the leaves.}
-\item{into}{A \code{base::character} vector of resulting column names. Defaults to \code{NULL}.}
+\item{list}{A \code{\link{list}} with \code{\link{data.frame}}'s at the leaves.}
+\item{into}{A \code{\link{character}} vector of resulting column names. Defaults to \code{NULL}.}
 \item{depth}{Depth to bind the list to. Defaults to 0.}
 }
 \details{
 Use empty strings \code{""} in the \code{into} argument to omit column creation when rows are binded. Use positive integers for the \code{depth} to move from the root and negative integers to move from the leaves. The maximum (minimum) depth will be used for integers larger (smaller) than such. The leaves of the input \code{list} should be at the same depth.
 }
 \value{
-A \code{tibble::tibble} or reduced \code{base::list}
+A \code{\link{tibble::tibble}} or reduced \code{\link{list}}
 }
 \author{Alex Zajichek}
 \examples{
