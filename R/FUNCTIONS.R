@@ -1715,15 +1715,18 @@ univariate_table <-
     associations = NULL,
     numeric_summary = c(Summary = "median (q1, q3)"),
     categorical_summary = c(Summary = "count (percent%)"),
-    other_summary = c(Summary = "unique"),
+    other_summary = NULL,
     all_summary = NULL,
     evaluate = FALSE,
     add_n = FALSE,
-    sep = "_",
+    order = NULL,
+    labels = NULL,
+    levels = NULL,
+    format = c("html", "latex", "markdown", "pandoc", "none"),
     variableName = "Variable",
     levelName = "Level",
+    sep = "_",
     fill_blanks = "",
-    format = c("html", "latex", "markdown", "pandoc", "none"),
     caption = NULL,
     ...
   ) {
@@ -1954,15 +1957,7 @@ univariate_table <-
                 dplyr::summarise(
                   row_N = dplyr::n()
                 ) %>%
-                dplyr::ungroup() %>%
-                
-                #Convert to character types
-                dplyr::mutate_at(
-                  dplyr::vars(
-                    tidyselect::all_of(row_strata)
-                  ),
-                  as.character
-                ),
+                dplyr::ungroup(),
               by = row_strata
             ) %>%
             
@@ -1971,7 +1966,7 @@ univariate_table <-
               dplyr::vars(
                 tidyselect::all_of(row_strata[length(row_strata)])
               ),
-              ~paste0(.x, " (N=", row_N, ")")
+              ~paste0(as.character(.x), " (N=", row_N, ")")
             ) %>%
             
             #Remove sample size column
@@ -2011,9 +2006,11 @@ univariate_table <-
       #Determine index to join on depending on type (0 for categorical, 1 for everything else)
       association_results$val_ind <- as.numeric(!(association_results$response %in% unique(results$col_lab[results$val_ind != 1])))
       
-      #Join to get the col_ind
+      #Extract the col_ind to maintain order
       association_results <-
         association_results %>%
+        
+        #Join with distinct labels/indices
         dplyr::inner_join(
           y = 
             results %>%
@@ -2040,6 +2037,88 @@ univariate_table <-
         dplyr::full_join(
           y = association_results,
           by = c(row_strata, "col_ind", "col_lab" = "response", "val_ind")
+        )
+      
+    }
+    
+    #Reassign col_ind if needed
+    if(!is.null(order)) {
+      
+      results <-
+        results %>%
+        dplyr::mutate(
+          
+          #Convert to factor and apply releveling
+          col_lab = forcats::fct_relevel(factor(col_lab), order),
+          
+          #Get numeric order
+          col_ind = as.numeric(col_lab),
+          
+          #Convert back to character
+          col_lab = as.character(col_lab)
+          
+        )
+      
+    }
+    
+    #Relevel if requested
+    if(!is.null(levels)) {
+      
+      results <-
+        results %>%
+        
+        #Keep all result rows
+        dplyr::left_join(
+          y =
+            levels %>%
+            
+            #Convert each vector to a data frame
+            purrr::map_df(
+              tibble::enframe,
+              name = "val_lab",
+              value = "val_lab_new",
+              .id = "col_lab"
+            ),
+          by = c("col_lab", "val_lab")
+        ) %>%
+        
+        #Replace levels with new levels if present
+        dplyr::mutate(
+          val_lab = dplyr::coalesce(val_lab_new, val_lab)
+        ) %>%
+        
+        #Remove column of new labels
+        dplyr::select(
+          -val_lab_new
+        )
+      
+    }
+    
+    #Relabel if requested
+    if(!is.null(labels)) {
+      
+      results <-
+        results %>%
+        
+        #Keep all result rows
+        dplyr::left_join(
+          y = 
+            labels %>%
+            tibble::enframe(
+              name = "col_lab",
+              value = "col_lab_new"
+            ),
+          by = "col_lab"
+        ) %>%
+        
+        #Replace labels with new labels if present
+        dplyr::mutate(
+          col_lab = dplyr::coalesce(col_lab_new, col_lab)
+        ) %>%
+        
+        #Remove new labels
+        dplyr::select(
+          -col_lab_new
         )
       
     }

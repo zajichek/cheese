@@ -138,15 +138,18 @@
     <span class='kw'>associations</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
     <span class='kw'>numeric_summary</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>Summary</span> <span class='kw'>=</span> <span class='st'>"median (q1, q3)"</span>),
     <span class='kw'>categorical_summary</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>Summary</span> <span class='kw'>=</span> <span class='st'>"count (percent%)"</span>),
-    <span class='kw'>other_summary</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>Summary</span> <span class='kw'>=</span> <span class='st'>"unique"</span>),
+    <span class='kw'>other_summary</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
     <span class='kw'>all_summary</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
     <span class='kw'>evaluate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
     <span class='kw'>add_n</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-    <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_"</span>,
+    <span class='kw'>order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <span class='kw'>format</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"html"</span>, <span class='st'>"latex"</span>, <span class='st'>"markdown"</span>, <span class='st'>"pandoc"</span>, <span class='st'>"none"</span>),
     <span class='kw'>variableName</span> <span class='kw'>=</span> <span class='st'>"Variable"</span>,
     <span class='kw'>levelName</span> <span class='kw'>=</span> <span class='st'>"Level"</span>,
+    <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_"</span>,
     <span class='kw'>fill_blanks</span> <span class='kw'>=</span> <span class='st'>""</span>,
-    <span class='kw'>format</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"html"</span>, <span class='st'>"latex"</span>, <span class='st'>"markdown"</span>, <span class='st'>"pandoc"</span>, <span class='st'>"none"</span>),
     <span class='kw'>caption</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
     <span class='no'>...</span>
 )</pre>
@@ -156,43 +159,55 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>base::data.frame</a></code>.</p></td>
+      <td><p>A <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code>.</p></td>
     </tr>
     <tr>
       <th>strata</th>
-      <td><p>An additive <code><a href='https://rdrr.io/r/stats/formula.html'>stats::formula</a></code> specifying stratification columns. Columns on the left side go down the rows, and columns on the right side go across the columns. Defaults to <code>NULL</code>.</p></td>
+      <td><p>An additive <code><a href='https://rdrr.io/r/stats/formula.html'>formula</a></code> specifying stratification columns. Columns on the left side go down the rows, and columns on the right side go across the columns. Defaults to <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>associations</th>
-      <td><p>A named <code><a href='https://rdrr.io/r/base/list.html'>base::list</a></code> of functions to evaluate with column strata and each variable. Defaults to <code>NULL</code>. See <code>univarite_associations</code>.</p></td>
+      <td><p>A named <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> of functions to evaluate with column strata and each variable. Defaults to <code>NULL</code>. See <code><a href='univariate_associations.html'>univariate_associations</a></code>.</p></td>
     </tr>
     <tr>
       <th>numeric_summary</th>
-      <td><p>A (preferably named) character vector containing string templates of how results for numeric data should be presented. See details for a list of what is available by default. Defaults to <code><a href='https://rdrr.io/r/base/c.html'>c(Summary = "median (q1, q3)")</a></code>.</p></td>
+      <td><p>A named vector containing string templates of how results for numeric data should be presented. See details for what is available by default. Defaults to <code><a href='https://rdrr.io/r/base/c.html'>c(Summary = "median (q1, q3)")</a></code>.</p></td>
     </tr>
     <tr>
       <th>categorical_summary</th>
-      <td><p>A (preferably named) character vector containing string templates of how results for categorical data should be presented. See details for a list of what is available by default. Defaults to <code><a href='https://rdrr.io/r/base/c.html'>c(Summary = "count (percent%)")</a></code>.</p></td>
+      <td><p>A named vector containing string templates of how results for categorical data should be presented. See details for what is available by default. Defaults to <code><a href='https://rdrr.io/r/base/c.html'>c(Summary = "count (percent%)")</a></code>.</p></td>
     </tr>
     <tr>
       <th>other_summary</th>
-      <td><p>A (preferably named) character vector containing string templates of how results for non-numeric and non-categorical data should be presented. See details for a list of what is available by default. Defaults to <code><a href='https://rdrr.io/r/base/c.html'>c(Summary = "unique")</a></code>.</p></td>
+      <td><p>A named character vector containing string templates of how results for non-numeric and non-categorical data should be presented. Defaults to <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>all_summary</th>
-      <td><p>A (preferably named) character vector containing string templates of additional results for all variables should be presented. See details for a list of what is available by default. Defaults to <code>NULL</code>.</p></td>
+      <td><p>A named character vector containing string templates of additional results applying to all variables. See details for what is available by default. Defaults to <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>evaluate</th>
-      <td><p>Should the results of the string templates be evaluated as an <code>R</code> expression after filled with their values? See <code>"<a href='absorb.html'>absorb</a>"</code> for details.  Defaults to <code>FALSE</code>.</p></td>
+      <td><p>Should the results of the string templates be evaluated as an <code>R</code> expression after filled with their values? See <code><a href='absorb.html'>absorb</a></code> for details.  Defaults to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>add_n</th>
       <td><p>Should the sample size for each stratfication level be added to the result? Defaults to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>sep</th>
-      <td><p>Delimiter to separate summary columns. Defaults to <code>"_"</code>.</p></td>
+      <th>order</th>
+      <td><p>Arguments passed to <code><a href='https://forcats.tidyverse.org/reference/fct_relevel.html'>forcats::fct_relevel</a></code> for reordering the variables. Defaults to <code>NULL</code></p></td>
+    </tr>
+    <tr>
+      <th>labels</th>
+      <td><p>A named character vector containing the new labels. Defaults to <code>NULL</code></p></td>
+    </tr>
+    <tr>
+      <th>levels</th>
+      <td><p>A named <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> of named character vectors containing the new levels. Defaults to <code>NULL</code></p></td>
+    </tr>
+    <tr>
+      <th>format</th>
+      <td><p>The format that the result should be rendered in. Must be "html", "latex", "markdown", "pandoc", or "none". Defaults to <code>"html"</code>.</p></td>
     </tr>
     <tr>
       <th>variableName</th>
@@ -203,12 +218,12 @@
       <td><p>Header for the factor level column in the result. Defaults to <code>"Level"</code>.</p></td>
     </tr>
     <tr>
-      <th>fill_blanks</th>
-      <td><p>String to fill in blank spaces in the result. Defaults to <code>""</code>.</p></td>
+      <th>sep</th>
+      <td><p>Delimiter to separate summary columns. Defaults to <code>"_"</code>.</p></td>
     </tr>
     <tr>
-      <th>format</th>
-      <td><p>The format that the result should be rendered as. Must be one of <code><a href='https://rdrr.io/r/base/c.html'>c("html", "latex", "markdown", "pandoc", "none")</a></code>. Defaults to <code>"html"</code>.</p></td>
+      <th>fill_blanks</th>
+      <td><p>String to fill in blank spaces in the result. Defaults to <code>""</code>.</p></td>
     </tr>
     <tr>
       <th>caption</th>
@@ -216,13 +231,13 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments to pass to <code>"<a href='descriptives.html'>descriptives</a>"</code>.</p></td>
+      <td><p>Additional arguments to pass to <code><a href='descriptives.html'>descriptives</a></code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A table of summary statistics according to the specified <code>format</code>. A <code>tibble</code> is returned if <code>format = "none"</code>.</p>
+    <p>A table of summary statistics in the specified <code>format</code>. A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble</a></code> is returned if <code>format = "none"</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

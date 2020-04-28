@@ -8,22 +8,157 @@ vignette: >
     \usepackage[utf8]{inputenc}
 ---
 
-Once a dataset is cleaned and ready for statistical analysis, the first step is typically to summarize it. The `univariate_table()` function makes it easy to create a custom descriptive analysis while consistently producing clean, presentation-ready output. It is built to integrate directly into your work flow (e.g. R markdown) but can also be called from the console. Its different components/features are driven by many general-use functions found within the package. When using RStudio, it will show up in the 'Viewer' pane by default as an html table.
-
+Once a dataset is cleaned and ready for statistical analysis, the first step is typically to summarize it. The `univariate_table()` function makes it easy to create a custom descriptive analysis while consistently producing clean, presentation-ready output. It is built to integrate directly into your analysis work flow (e.g. R markdown) but can also be called from the console and be rendered in a number of formats. Let's jump in:
 ```{r}
 require(cheese)
 
 heart_disease %>%
   univariate_table()
 
+```
+
+By default, an HTML table is produced containing descriptive statistics for columns in the dataset. 
+
+# Custom string templates
+In the table above, the summary statistics are presented within the cells in a particular format for different types of data. You can use the `_summary` arguments to customize not only the appearance that the results are presented with, but the values that go into the results themselves -- both with a single argument (for each type of data).
+
+Let's suppose instead of the `"median (q1, q3)"` being displayed for numeric data, you want the `"mean [sd] / median"`, in that exact format:
+```{r}
 heart_disease %>%
   univariate_table(
-    strata = ~ Sex,
-    add_n = TRUE
+    numeric_summary = 
+      c(
+        Summary = "mean [sd] / median"
+      )
   )
 ```
 
-# Custom string templates
+The name `Summary` was needed to ensure that the result for the numeric data binded in the same row as the result for the other data types. If we chose to name it something else, we'd simply get a new column with those summaries only:
+```{r}
+heart_disease %>%
+  univariate_table(
+    numeric_summary = 
+      c(
+        NewSummary = "mean [sd] / median"
+      )
+  )
+```
+
+You can add as many of these columns as you want for each of the data types:
+```{r}
+heart_disease %>%
+  univariate_table(
+    numeric_summary = 
+      c(
+        NewSummary = "mean [sd] / median",
+        Summary = "median (q1, q3)"
+      )
+  )
+```
+
+The most useful case for having the ability to add multiple summaries is probably when all the data is the same type:
+```{r}
+heart_disease %>%
+  univariate_table(
+    categorical_types = NULL, #Easily disable categorical data from being summarized
+    numeric_summary =
+      c(
+        `Median (Q1, Q3)` = "median (q1, q3)",
+        `Min-Max` = "min - max",
+        `Mean (SD)` = "mean (sd)"
+      )
+  )
+```
+
+Or adding a summary to apply to all columns:
+```{r}
+heart_disease %>%
+  univariate_table(
+    all_summary = 
+      c(
+        `Sample size` = "length"
+      )
+  )
+```
+
+# Stratified analysis
+
+## Adding sample size
+
+## Association metrics
+
+
+# Cosmetic preferences
+Finally, we'll look at a few of the appearance-related arguments. These can be applied with any combination of other arguments.
+
+## Rendering format
+As mentioned above, the default format for the table is HTML, but you could choose an alternative with the `format` argument:
+```{r}
+#latex
+heart_disease %>%
+  univariate_table(
+    format = "latex"
+  )
+#markdown
+heart_disease %>%
+  univariate_table(
+    format = "markdown"
+  )
+#pandoc
+heart_disease %>%
+  univariate_table(
+    format = "pandoc"
+  )
+#none
+heart_disease %>%
+  univariate_table(
+    format = "none"
+  )
+```
+
+The remainder of this tutorial will continue to be rendered in HTML format.
+
+## Relabeling, releveling and reordering
+You can use the `labels` and `levels` arguments to add clean text to any of the variable or categorical level names, and the `order` argument to change the position of the variables in the result:
+```{r}
+heart_disease %>%
+  univariate_table(
+    labels = 
+      c(
+        Age = "Age (years)",
+        ChestPain = "Chest pain"
+      ),
+    levels = 
+      list(
+        Sex =
+          c(
+            Male = "M"
+          )
+      ),
+    order = 
+      c(
+        "BP",
+        "Age",
+        "Cholesterol"
+      )
+  )
+```
+
+Notice you only need to specify values that need to be changed. Also, ordering is done with the original names even when relabeled.
+
+## Headers, fill values, and captions
+The `variableName` and `levelName` arguments are used to change what the headers are for the column names and categorical levels, while `fill_blanks` determines what goes in empty cells. Finally, the `caption` argument specifies labels the entire table:
+```{r}
+heart_disease %>%
+  univariate_table(
+    variableName = "THESE ARE VARIABLES",
+    levelName = "THESE ARE LEVELS",
+    fill_blanks = "BLANK",
+    caption = "HERE IS MY CAPTION"
+  )
+```
+
+# Backend functionality
 
 ## Adding user-specified functions
 The `descriptives()` function is the workhorse behind computation of the summary statistics, and any of its arguments can be used. In the example, you'll notice that one of columns did not appear in the table. By default, only `factor()` and `numeric()` types are placed into the result, though there are (at least) three (3) ways to include it:
@@ -33,10 +168,3 @@ The `descriptives()` function is the workhorse behind computation of the summary
 ### Change scope of what column types are evaluated by what function sets
 
 ### Allow evaluation by its own set of functions
-
-# Stratified analysis
-
-## Association metrics
-
-# Miscellaneous
-
