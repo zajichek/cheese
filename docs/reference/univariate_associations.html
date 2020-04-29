@@ -249,69 +249,6 @@
 #&gt; </span><span style='color: #555555;'>6</span><span> HeartDisease          BP          0.03                 4.95 
 #&gt; </span><span style='color: #555555;'>7</span><span> HeartDisease          Cholesterol 0.04                 0.206
 #&gt; </span><span style='color: #555555;'>8</span><span> HeartDisease          MaximumHR   &lt;0.001              55.1  </div><div class='input'>
-<span class='co'>#Make a HTML table with spanned header</span>
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>univariate_associations</span>(
-    <span class='kw'>f</span> <span class='kw'>=</span> <span class='no'>f</span>,
-    <span class='kw'>responses</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>ExerciseInducedAngina</span>, <span class='no'>HeartDisease</span>),
-    <span class='kw'>predictors</span> <span class='kw'>=</span> <span class='no'>is.numeric</span>
-  ) <span class='kw'>%&gt;%</span>
-
-  <span class='co'>#Spread responses across the columns</span>
-  <span class='fu'><a href='stretch.html'>stretch</a></span>(
-    <span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>response</span>,
-    <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>f</span>)
-  ) <span class='kw'>%&gt;%</span>
-
-  <span class='co'>#Span the header in a table</span>
-  <span class='fu'><a href='grable.html'>grable</a></span>(
-    <span class='kw'>at</span> <span class='kw'>=</span> -<span class='no'>predictor</span>
-  )</div><div class='output co'>#&gt; &lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
-#&gt;  &lt;thead&gt;
-#&gt; &lt;tr&gt;
-#&gt; &lt;th style="border-bottom:hidden" colspan="1"&gt;&lt;/th&gt;
-#&gt; &lt;th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;ExerciseInducedAngina&lt;/div&gt;&lt;/th&gt;
-#&gt; &lt;th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;HeartDisease&lt;/div&gt;&lt;/th&gt;
-#&gt; &lt;/tr&gt;
-#&gt;   &lt;tr&gt;
-#&gt;    &lt;th style="text-align:left;"&gt; predictor &lt;/th&gt;
-#&gt;    &lt;th style="text-align:left;"&gt; P-value &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; AIC Difference &lt;/th&gt;
-#&gt;    &lt;th style="text-align:left;"&gt; P-value &lt;/th&gt;
-#&gt;    &lt;th style="text-align:right;"&gt; AIC Difference &lt;/th&gt;
-#&gt;   &lt;/tr&gt;
-#&gt;  &lt;/thead&gt;
-#&gt; &lt;tbody&gt;
-#&gt;   &lt;tr&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; Age &lt;/td&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; 0.14 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 0.5673180 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; &amp;lt;0.001 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 13.4465871 &lt;/td&gt;
-#&gt;   &lt;/tr&gt;
-#&gt;   &lt;tr&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; BP &lt;/td&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; 0.38 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; -0.7398564 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; 0.03 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 4.9541705 &lt;/td&gt;
-#&gt;   &lt;/tr&gt;
-#&gt;   &lt;tr&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; Cholesterol &lt;/td&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; 0.14 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; -0.8750976 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; 0.04 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 0.2055648 &lt;/td&gt;
-#&gt;   &lt;/tr&gt;
-#&gt;   &lt;tr&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; MaximumHR &lt;/td&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; &amp;lt;0.001 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 42.4780494 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:left;"&gt; &amp;lt;0.001 &lt;/td&gt;
-#&gt;    &lt;td style="text-align:right;"&gt; 55.0800334 &lt;/td&gt;
-#&gt;   &lt;/tr&gt;
-#&gt; &lt;/tbody&gt;
-#&gt; &lt;/table&gt;</div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

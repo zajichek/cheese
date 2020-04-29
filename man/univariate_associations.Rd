@@ -78,24 +78,5 @@ heart_disease \%>\%
     responses = c(ExerciseInducedAngina, HeartDisease),
     predictors = is.numeric
   )
-  
-#Make a HTML table with spanned header
-heart_disease \%>\%
-  univariate_associations(
-    f = f,
-    responses = c(ExerciseInducedAngina, HeartDisease),
-    predictors = is.numeric
-  ) \%>\%
-  
-  #Spread responses across the columns
-  stretch(
-    key = response,
-    value = names(f)
-  ) \%>\% 
-  
-  #Span the header in a table
-  grable(
-    at = -predictor
-  )
 
 }

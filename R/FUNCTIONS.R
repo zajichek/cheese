@@ -868,7 +868,7 @@ order_levels <-
       #Keep rank and level
       dplyr::transmute(
         index = order(order(.data$index)),
-        name = name
+        name = .data$name
       )
     
   }
@@ -941,7 +941,7 @@ stretch <-
     column_order <-
       column_order %>%
       dplyr::filter(
-        name %in% purrr::pluck(data, ".key")
+        .data$name %in% purrr::pluck(data, ".key")
       )
     
     #Gather id variables
@@ -1683,7 +1683,7 @@ absorb_descriptives <-
       #Absorb into text strings for each variable
       stratiply(
         f = absorb_descriptive_variable,
-        by = col_ind,
+        by = .data$col_ind,
         numeric_summary = numeric_summary,
         categorical_summary = categorical_summary,
         other_summary = other_summary,
