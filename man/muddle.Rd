@@ -13,11 +13,11 @@ muddle(
 }
 \arguments{
 \item{data}{A \code{\link{data.frame}}.}
-\item{at}{A vector of quoted/unquoted columns, positions, and/or \code{\link{tidyselect::select_helpers}}. Defaults to all columns.}
+\item{at}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers}. Defaults to all columns.}
 \item{...}{Additional arguments passed to \code{\link{sample}}.}
 }
 \value{
-A \code{\link{tibble::tibble}}
+A \code{tibble::tibble}
 }
 \author{Alex Zajichek}
 \examples{

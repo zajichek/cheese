@@ -824,17 +824,20 @@ order_levels <-
         .id = "column"
       )
     
-    sets %>%
+    sets <-
+      sets %>%
       
       #Convert to character
       purrr::map(as.character) %>%
       
       #Get cross-product for levels
-      purrr::cross_df() %>%
+      purrr::cross_df()
+      
+    sets %>%
       
       #Add group identifier
       dplyr::mutate(
-        .id = seq_len(nrow(.))
+        .id = seq_len(nrow(sets))
       ) %>%
       
       #Send down the rows
@@ -857,14 +860,14 @@ order_levels <-
       
       #Concatenate the levels
       dplyr::summarise(
-        index = paste(value, collapse = ""),
-        name = paste(name, collapse = sep)
+        index = paste(.data$value, collapse = ""),
+        name = paste(.data$name, collapse = sep)
       ) %>%
       dplyr::ungroup() %>%
       
       #Keep rank and level
       dplyr::transmute(
-        index = order(order(index)),
+        index = order(order(.data$index)),
         name = name
       )
     
@@ -986,7 +989,7 @@ stretch <-
               
               #Append value name and add index
               dplyr::mutate(
-                name = paste0(name, sep, value_i),
+                name = paste0(.data$name, sep, value_i),
                 val_index = i
               )
             
@@ -1045,7 +1048,7 @@ stretch <-
       ) %>%
       
       #Extract vector
-      dplyr::pull(name)
+      dplyr::pull(.data$name)
     
     #Rearrange the columns
     result %>%
@@ -1368,7 +1371,7 @@ descriptives <-
       
       #Add consolidated summary column
       dplyr::mutate(
-        val_cbn = dplyr::coalesce(as.character(round(val_dbl, round)), val_chr)
+        val_cbn = dplyr::coalesce(as.character(round(.data$val_dbl, round)), .data$val_chr)
       ) %>%
       
       #Rearrange rows
@@ -1576,7 +1579,7 @@ absorb_descriptive_variable <-
       
       #Filter to categorical functions only
       dplyr::filter(
-        fun_eval %in% use_filter
+        .data$fun_eval %in% use_filter
       )
     
     #Check if results exist
@@ -1620,7 +1623,7 @@ absorb_descriptive_variable <-
       variable_all <-
         variable %>%
         dplyr::filter(
-          fun_eval == "all"
+          .data$fun_eval == "all"
         )
       
       #Add extra row for categorical variables only
@@ -1695,13 +1698,13 @@ absorb_descriptives <-
       
       #Convert to factor to maintain order of summaries
       dplyr::mutate(
-        sum_lab = forcats::as_factor(sum_lab)
+        sum_lab = forcats::as_factor(.data$sum_lab)
       ) %>%
       
       #Spread over the columns
       tidyr::spread(
-        key = sum_lab,
-        value = sum_val
+        key = .data$sum_lab,
+        value = .data$sum_val
       ) 
     
   }
@@ -1821,12 +1824,12 @@ univariate_table <-
             dplyr::vars(
               tidyselect::all_of(col_strata[length(col_strata)])
             ),
-            ~paste0(.x, " (N=", col_N, ")")
+            ~paste0(.x, " (N=", .data$col_N, ")")
           ) %>%
           
           #Remove sample size column
           dplyr::select(
-            -col_N
+            -.data$col_N
           )
         
       }
@@ -1870,12 +1873,12 @@ univariate_table <-
             dplyr::vars(
               tidyselect::all_of(row_strata[length(row_strata)])
             ),
-            ~paste0(.x, " (N=", row_N, ")")
+            ~paste0(.x, " (N=", .data$row_N, ")")
           ) %>%
           
           #Remove sample size column
           dplyr::select(
-            -row_N
+            -.data$row_N
           )
         
       }
@@ -1966,12 +1969,12 @@ univariate_table <-
               dplyr::vars(
                 tidyselect::all_of(row_strata[length(row_strata)])
               ),
-              ~paste0(as.character(.x), " (N=", row_N, ")")
+              ~paste0(as.character(.x), " (N=", .data$row_N, ")")
             ) %>%
             
             #Remove sample size column
             dplyr::select(
-              -row_N
+              -.data$row_N
             )
           
         }
@@ -2017,8 +2020,8 @@ univariate_table <-
             
             #Get distinct col_ind, col_labs
             dplyr::select(
-              col_ind,
-              col_lab
+              .data$col_ind,
+              .data$col_lab
             ) %>%
             dplyr::distinct(),
           by = c("response" = "col_lab")
@@ -2026,7 +2029,7 @@ univariate_table <-
         
         #Remove predictor column
         dplyr::select(
-          -predictor
+          -.data$predictor
         )
       
       #Join back to results
@@ -2049,13 +2052,13 @@ univariate_table <-
         dplyr::mutate(
           
           #Convert to factor and apply releveling
-          col_lab = forcats::fct_relevel(factor(col_lab), order),
+          col_lab = forcats::fct_relevel(factor(.data$col_lab), order),
           
           #Get numeric order
-          col_ind = as.numeric(col_lab),
+          col_ind = as.numeric(.data$col_lab),
           
           #Convert back to character
-          col_lab = as.character(col_lab)
+          col_lab = as.character(.data$col_lab)
           
         )
       
@@ -2084,12 +2087,12 @@ univariate_table <-
         
         #Replace levels with new levels if present
         dplyr::mutate(
-          val_lab = dplyr::coalesce(val_lab_new, val_lab)
+          val_lab = dplyr::coalesce(.data$val_lab_new, .data$val_lab)
         ) %>%
         
         #Remove column of new labels
         dplyr::select(
-          -val_lab_new
+          -.data$val_lab_new
         )
       
     }
@@ -2113,12 +2116,12 @@ univariate_table <-
         
         #Replace labels with new labels if present
         dplyr::mutate(
-          col_lab = dplyr::coalesce(col_lab_new, col_lab)
+          col_lab = dplyr::coalesce(.data$col_lab_new, .data$col_lab)
         ) %>%
         
         #Remove new labels
         dplyr::select(
-          -col_lab_new
+          -.data$col_lab_new
         )
       
     }
@@ -2134,8 +2137,8 @@ univariate_table <-
       
       #Remove index columns
       dplyr::select(
-        -col_ind,
-        -val_ind
+        -.data$col_ind,
+        -.data$val_ind
       ) %>%
       
       #Provide specified column names

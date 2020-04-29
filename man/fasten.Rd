@@ -20,7 +20,7 @@ fasten(
 Use empty strings \code{""} in the \code{into} argument to omit column creation when rows are binded. Use positive integers for the \code{depth} to move from the root and negative integers to move from the leaves. The maximum (minimum) depth will be used for integers larger (smaller) than such. The leaves of the input \code{list} should be at the same depth.
 }
 \value{
-A \code{\link{tibble::tibble}} or reduced \code{\link{list}}
+A \code{tibble::tibble} or reduced \code{\link{list}}
 }
 \author{Alex Zajichek}
 \examples{

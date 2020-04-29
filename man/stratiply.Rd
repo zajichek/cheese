@@ -15,7 +15,7 @@ stratiply(
 \arguments{
 \item{data}{A \code{\link{data.frame}}.}
 \item{f}{A function that takes a \code{\link{data.frame}} as an argument.}
-\item{by}{A vector of quoted/unquoted columns, positions, and/or \code{\link{tidyselect::select_helpers}}}
+\item{by}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers}}
 \item{...}{Additional arguments passed to \code{f}.}
 }
 \value{

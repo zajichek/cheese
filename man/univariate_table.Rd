@@ -37,7 +37,7 @@ univariate_table(
 \item{all_summary}{A named character vector containing string templates of additional results applying to all variables. See details for what is available by default. Defaults to \code{NULL}.}
 \item{evaluate}{Should the results of the string templates be evaluated as an \code{R} expression after filled with their values? See \code{\link{absorb}} for details.  Defaults to \code{FALSE}.}
 \item{add_n}{Should the sample size for each stratfication level be added to the result? Defaults to \code{FALSE}.}
-\item{order}{Arguments passed to \code{\link{forcats::fct_relevel}} for reordering the variables. Defaults to \code{NULL}}
+\item{order}{Arguments passed to \code{forcats::fct_relevel} for reordering the variables. Defaults to \code{NULL}}
 \item{labels}{A named character vector containing the new labels. Defaults to \code{NULL}}
 \item{levels}{A named \code{\link{list}} of named character vectors containing the new levels. Defaults to \code{NULL}}
 \item{format}{The format that the result should be rendered in. Must be "html", "latex", "markdown", "pandoc", or "none". Defaults to \code{"html"}.}
@@ -45,12 +45,12 @@ univariate_table(
 \item{levelName}{Header for the factor level column in the result. Defaults to \code{"Level"}.}
 \item{sep}{Delimiter to separate summary columns. Defaults to \code{"_"}.}
 \item{fill_blanks}{String to fill in blank spaces in the result. Defaults to \code{""}.}
-\item{caption}{Caption for resulting table passed to \code{\link{knitr::kable}}. Defaults to \code{NULL}.}
+\item{caption}{Caption for resulting table passed to \code{knitr::kable}. Defaults to \code{NULL}.}
 \item{...}{Additional arguments to pass to \code{\link{descriptives}}.}
 }
 
 \value{
-A table of summary statistics in the specified \code{format}. A \code{\link{tibble::tibble}} is returned if \code{format = "none"}.
+A table of summary statistics in the specified \code{format}. A \code{tibble::tibble} is returned if \code{format = "none"}.
 }
 
 \author{Alex Zajichek}

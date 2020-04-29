@@ -426,7 +426,7 @@ straught2 %>%
   )
 ```
 
-The tables can then be piped through subsequent customized processing with [`kableExtra`](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) tools.
+The tables can then be piped through subsequent customized processing with [`kableExtra`](https://CRAN.R-project.org/package=kableExtra) tools.
 
 # Univariate analysis
 `descriptives()` produces a data frame in long format with a collection of descriptive statistics.

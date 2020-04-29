@@ -16,7 +16,7 @@ divide(
 }
 \arguments{
 \item{data}{Any \code{\link{data.frame}}.}
-\item{...}{Selection of columns to split by. See \code{\link{dplyr::select}} for details.}
+\item{...}{Selection of columns to split by. See \code{dplyr::select} for details.}
 \item{depth}{Depth to split to. Defaults to \code{Inf}. See details for more information.}
 \item{remove}{Should the stratfication columns be removed? Defaults to \code{TRUE}.}
 \item{drop}{Should unused combinations of stratification variables be dropped? Defaults to \code{TRUE}.}

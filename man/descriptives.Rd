@@ -41,7 +41,7 @@ The following \code{fun_key}'s are available by default for the specified types:
 }
 
 \value{
-A \code{\link{tibble::tibble}} with the following columns:
+A \code{tibble::tibble} with the following columns:
 \itemize{
 \item \code{fun_eval}: Column types function was applied to
 \item \code{fun_key}: Name of function that was evaluated

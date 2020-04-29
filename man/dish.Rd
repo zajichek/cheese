@@ -18,8 +18,8 @@ dish(
 \arguments{
 \item{data}{A \code{\link{data.frame}}.}
 \item{f}{A \code{\link{function}} that takes a \code{\link{vector}} and/or \code{\link{data.frame}} in the first two arguments.}    
-\item{left}{A vector of quoted/unquoted columns, positions, and/or \code{\link{tidyselect::select_helpers}} to be evaluated in the first argument of \code{f}.}
-\item{right}{A vector of quoted/unquoted columns, positions, and/or \code{\link{tidyselect::select_helpers}} to be evaluated in the second argument of \code{f}.}
+\item{left}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers} to be evaluated in the first argument of \code{f}.}
+\item{right}{A vector of quoted/unquoted columns, positions, and/or \code{tidyselect::select_helpers} to be evaluated in the second argument of \code{f}.}
 \item{each_left}{Should each \code{left} variable be indivdually evaluated in \code{f}? Defaults to \code{TRUE}. If \code{FALSE}, \code{left} columns are entered into \code{f} as a single \code{\link{data.frame}}.}
 \item{each_right}{Should each \code{right} variable be individually evaluated in \code{f}? Defaults to \code{TRUE}. If \code{FALSE}, \code{right} columns are entered into \code{f} as a single \code{\link{data.frame}}.}
 \item{...}{Additional arguments to be passed to \code{f}.}

@@ -22,11 +22,11 @@ depths_string(
 \arguments{
 \item{list}{A \code{\link{list}}, \code{\link{data.frame}}, or \code{\link{vector}}.}
 \item{predicate}{A \code{\link{function}} that evaluates to \code{TRUE} or \code{FALSE}.}
-\item{bare}{Should algorithm only continue for bare lists? Defaults to TRUE. See \code{\link{rlang::`bare-type-predicates`}}}
+\item{bare}{Should algorithm only continue for bare lists? Defaults to TRUE. See \code{rlang::`bare-type-predicates`}}
 \item{...}{Additional arguments to pass to \code{predicate}.}
 }
 \details{
-The input is recursively evaluated to find elements that satisfy \code{predicate}, and only proceeds where \code{\link{rlang::is_list}} when argument \code{bare} is \code{FALSE}, and \code{\link{rlang::is_bare_list}} when it is \code{TRUE}.
+The input is recursively evaluated to find elements that satisfy \code{predicate}, and only proceeds where \code{rlang::is_list} when argument \code{bare} is \code{FALSE}, and \code{rlang::is_bare_list} when it is \code{TRUE}.
 }
 \value{
 \itemize{
