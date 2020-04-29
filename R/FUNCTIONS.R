@@ -55,10 +55,10 @@ divide <-
     #Return error if no split variables entered
     if(length(selected_vars) == 0)
       stop("No columns registered.")
-      
+    
     #Set values as names
     selected_vars <- as.list(names(selected_vars))
-
+    
     #Get the depth
     depth <-
       actual_depth(
@@ -401,7 +401,7 @@ muddle <-
     #Set to all columns if missing input
     if(missing(at))
       at <- names(data)
-
+    
     #Splice variable names
     selected_vars <-
       tidyselect::eval_select(
@@ -2159,7 +2159,7 @@ univariate_table <-
       #Make sequences up to collapse
       collapse_set1 <- seq_len(which(names(results) == variableName))
       collapse_set2 <- NULL
-      if(!is.null(associations))
+      if(!is.null(associations) & !is.null(col_strata))
         collapse_set2 <- which(names(results) %in% setdiff(names(association_results), c(row_strata, "col_lab", "response")))
       
       #If there are no col strata, make kable
@@ -2214,7 +2214,7 @@ univariate_table <-
             ),
             ~
               dplyr::case_when(
-                duplicated(.x) ~ fill_blanks,
+                duplicated(as.character(.x)) ~ fill_blanks,
                 TRUE ~ as.character(.x)
               )
           ) %>%

@@ -8,7 +8,7 @@ vignette: >
     \usepackage[utf8]{inputenc}
 ---
 
-Once a dataset is cleaned and ready for statistical analysis, the first step is typically to summarize it. The `univariate_table()` function makes it easy to create a custom descriptive analysis while consistently producing clean, presentation-ready output. It is built to integrate directly into your analysis work flow (e.g. R markdown) but can also be called from the console and be rendered in a number of formats. Let's jump in:
+Once a dataset is cleaned and ready for statistical analysis, the first step is typically to summarize it. The `univariate_table()` function makes it easy to create a custom descriptive analysis while consistently producing clean, presentation-ready output. It is built to integrate directly into your analysis work flow (e.g. R markdown) but can also be called from the console and be rendered in a number of formats.
 ```{r}
 require(cheese)
 
@@ -20,9 +20,9 @@ heart_disease %>%
 By default, an HTML table is produced containing descriptive statistics for columns in the dataset. 
 
 # Custom string templates
-In the table above, the summary statistics are presented within the cells in a particular format for different types of data. You can use the `_summary` arguments to customize not only the appearance that the results are presented with, but the values that go into the results themselves -- both with a single argument (for each type of data).
+In the table above, the summary statistics are presented within the cells in a particular format for different types of data. You can use the `_summary` arguments to customize not only the appearance that the results are presented with, but the values that go into the results themselves.
 
-Let's suppose instead of the `"median (q1, q3)"` being displayed for numeric data, you want the `"mean [sd] / median"`, in that exact format:
+Suppose instead of the `"median (q1, q3)"` being displayed for numeric data, you want the `"mean [sd] / median"`, in that exact format:
 ```{r}
 heart_disease %>%
   univariate_table(
@@ -33,7 +33,7 @@ heart_disease %>%
   )
 ```
 
-The name `Summary` was needed to ensure that the result for the numeric data binded in the same row as the result for the other data types. If we chose to name it something else, we'd simply get a new column with those summaries only:
+The name `Summary` was used to ensure that the result for the numeric data binded in the same column as the result for the other data types. If you chose to name it something else, you'd get a new column with those summaries:
 ```{r}
 heart_disease %>%
   univariate_table(
@@ -44,19 +44,24 @@ heart_disease %>%
   )
 ```
 
-You can add as many of these columns as you want for each of the data types:
+You can add as many summary columns as you want separately for each type of data:
 ```{r}
 heart_disease %>%
   univariate_table(
     numeric_summary = 
       c(
-        NewSummary = "mean [sd] / median",
+        `Numeric only` = "mean [sd] / median",
         Summary = "median (q1, q3)"
+      ),
+    categorical_summary = 
+      c(
+        Summary = "count",
+        `Categorical only` = "percent = 100 * proportion"
       )
   )
 ```
 
-The most useful case for having the ability to add multiple summaries is probably when all the data is the same type:
+A more visually-appealing case for adding multiple summaries is probably when all the data is the same type:
 ```{r}
 heart_disease %>%
   univariate_table(
@@ -70,53 +75,242 @@ heart_disease %>%
   )
 ```
 
-Or adding a summary to apply to all columns:
+Or when adding a summary that applies to all columns:
 ```{r}
 heart_disease %>%
   univariate_table(
     all_summary = 
       c(
-        `Sample size` = "length"
+        `# obs. non-missing` = "available of length"
       )
   )
 ```
 
-# Stratified analysis
+These add an extra row for categorical variables. You may have also noticed that the `BloodSugar` column didn't show up in the table until the `all_summary` argument was used--this is because it is not classified as numeric or categorical data, and thus not evaluated by default. See the "Backend functionality" section to learn more.
+
+# Stratification variables
+The `strata` argument takes a `formula()` that can be used to stratify the analysis by any number of variables. Columns on the left side will appear down the rows, and columns on the right side will spread across the columns. You can use `+` on either side to specify more than one column. Let's start by stratifying sex across the columns:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = ~ Sex
+  )
+```
+
+You can do the same thing down the rows:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = Sex ~ 1
+  )
+```
+
+Or even both:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = Sex ~ HeartDisease
+  )
+```
+
+Now suppose you want both stratification variables across the columns:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = ~ Sex + HeartDisease
+  )
+```
+
+The levels will span the columns in a hierarchical fashion depending on their order in the formula:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = ~ HeartDisease + Sex
+  )
+```
+
+Similarly, the rows also collapse hierarchically:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = HeartDisease + Sex ~ 1
+  )
+```
+
+You can use any of the functionality described in the previous section with stratification variables as well:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = ~ Sex + HeartDisease,
+    numeric_summary = 
+      c(
+        `Mean (SD)` = "mean (sd)"
+      ),
+    categorical_summary = 
+      c(
+        `Count (%)` = "count (percent%)"
+      )
+  )
+```
+
+The summary columns simply get added to the column-spanning hierarchy.
 
 ## Adding sample size
+The `add_n` argument will add the sample size to the label for the stratification group:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = ~ Sex,
+    add_n = TRUE
+  )
+```
+
+When multiple stratification variables are added on one side of the formula, the sample size will show up on the lowest level of the hierarchy, excluding summary columns:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = ~ Sex + HeartDisease,
+    add_n = TRUE
+  )
+```
+
+A limitation is that when sample size is added in the presence of row and column strata, it is displayed for the marginal groups only:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = Sex ~ HeartDisease,
+    add_n = TRUE
+  )
+```
 
 ## Association metrics
+Often when a descriptive analysis is stratified by one or more variables, it is also of interest to add statistics that compare each variable across the groups. The `associations` argument allows you to add a list containing an unlimited number of functions that can produce a scalar value to be placed in the table. First, let's define a function:
+```{r}
+#Function for a p-value
+pval <-
+  function(y, x) {
+    
+    #For categorical data use Fisher's Exact test
+    if(some_type(x, "factor")) {
+      
+      p <- fisher.test(factor(y), factor(x), simulate.p.value = TRUE)$p.value
+    
+    #Otherwise use Kruskall-Wallis
+    } else {
+      
+      p <- kruskal.test(x, factor(y))$p.value
+      
+    }
+    
+    ifelse(p < 0.001, "<0.001", as.character(round(p, 2)))
+    
+  }
 
+```
 
-# Cosmetic preferences
+The stratification variable will be placed in the _second_ argument of the function(s) provided. Now you can add it to the function call:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = ~ HeartDisease,
+    associations = list(`P-value` = pval)
+  )
+```
+
+The name of function in the list is what becomes the column label. 
+
+The comparison will take place across the number of subgroups there are within the column stratification:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = ~ Sex + HeartDisease,
+    associations = list(`P-value` = pval)
+  )
+```
+
+However, using a row stratification makes the comparisons be _within_ those groups:
+```{r}
+heart_disease %>%
+  univariate_table(
+    strata = Sex ~ HeartDisease,
+    associations = list(`P-value` = pval)
+  )
+```
+
+In general, there must be at least one column stratification variable in order to use association metrics. See `univariate_associations()` for more details on the workhorse of this functionality.
+
+# Backend functionality
+`descriptives()` is the function that drives the computation behind the statistics for the columns of the input dataset. Any of its arguments can be passed from `univariate_table()` to add further customization.
+
+## Specifying data types
+As noted above, one of columns did not appear in the table by default because it was a `logical()` type. By default, only `factor()` and `numeric()` types are placed into the result, though there are (at least) three ways to include it:
+
+### Change column type prior to function call
+You could simply just make the column a conformable type outside of the call:
+```{r}
+heart_disease %>%
+  dplyr::mutate(
+    BloodSugar = factor(BloodSugar)
+  ) %>%
+  univariate_table()
+```
+
+### Change scope of what column types are evaluated by what function sets
+The `_types` arguments allow you to specify the data types that are to be interpreted by the high-level function call. Let's allow `logical()` types to be treated as a categorical variable:
+```{r}
+heart_disease %>%
+  univariate_table(
+    categorical_types = c("factor", "logical")
+  )
+```
+
+### Allow evaluation by its own set of functions
+The most flexible approach would be to define its own set of functions. By default, the data type of anything that is not interpreted as categorical or numeric is considered "other". There is infrastruce in place to supply functions and summaries in the same manner for these columns.
+```{r}
+heart_disease %>%
+  univariate_table(
+    f_other = list(count = function(x) table(x)),
+    other_summary = 
+      c(
+        Summary = "count"
+      )
+  )
+```
+
+You would need to also define functions for the percentages, proportions, etc. to exactly match the other examples.
+
+## Adding user-specified functions
+You can also add custom functions that can be available for numeric or categorical columns:
+```{r}
+heart_disease %>%
+  univariate_table(
+    categorical_types = NULL,
+    f_numeric =
+      list(
+        cv = ~sd(.x) / mean(.x)
+      ),
+    numeric_summary = 
+      c(
+        `Coef. of variation` = "sd / mean = cv"
+      )
+  )
+```
+
+The names of functions become the patterns that searched in the string templates.
+
+# Additional preferences
 Finally, we'll look at a few of the appearance-related arguments. These can be applied with any combination of other arguments.
 
 ## Rendering format
 As mentioned above, the default format for the table is HTML, but you could choose an alternative with the `format` argument:
 ```{r}
-#latex
-heart_disease %>%
-  univariate_table(
-    format = "latex"
-  )
-#markdown
-heart_disease %>%
-  univariate_table(
-    format = "markdown"
-  )
-#pandoc
-heart_disease %>%
-  univariate_table(
-    format = "pandoc"
-  )
-#none
 heart_disease %>%
   univariate_table(
     format = "none"
   )
 ```
 
-The remainder of this tutorial will continue to be rendered in HTML format.
+There are also options for `"latex", "pandoc", "markdown"`.
 
 ## Relabeling, releveling and reordering
 You can use the `labels` and `levels` arguments to add clean text to any of the variable or categorical level names, and the `order` argument to change the position of the variables in the result:
@@ -157,14 +351,3 @@ heart_disease %>%
     caption = "HERE IS MY CAPTION"
   )
 ```
-
-# Backend functionality
-
-## Adding user-specified functions
-The `descriptives()` function is the workhorse behind computation of the summary statistics, and any of its arguments can be used. In the example, you'll notice that one of columns did not appear in the table. By default, only `factor()` and `numeric()` types are placed into the result, though there are (at least) three (3) ways to include it:
-
-### Change column type prior to function call
-
-### Change scope of what column types are evaluated by what function sets
-
-### Allow evaluation by its own set of functions
