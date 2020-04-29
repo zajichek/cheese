@@ -40,11 +40,11 @@ selection as in `dplyr::select`. Here are a few:
 
 # Installation
 
-  - From CRAN (current version 0.0.3)
+  - From CRAN
 
 `install.packages("cheese")`
 
-  - From source (in development)
+  - From source
 
 `devtools::install_github("zajichek/cheese")`
 

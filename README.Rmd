@@ -36,11 +36,11 @@ These are built on a collection of data manipulation tools designed for general 
 
 # Installation
 
-*   From CRAN (current version 0.0.3)
+*   From CRAN
 
 `install.packages("cheese")`
 
-*   From source (in development)
+*   From source
 
 `devtools::install_github("zajichek/cheese")`
 
