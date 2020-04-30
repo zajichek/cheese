@@ -1709,6 +1709,102 @@ absorb_descriptives <-
     
   }
 
+#Name: f_add_n
+#Description: Internal function for compute sample size to avoid redundant code
+f_add_n <-
+  function(
+    result, #Data to add the sample size to
+    by, #Column to compute sample size for
+    data #Data to compute sample size on
+  ) {
+    
+    result %>%
+      
+      #Join to get sample size
+      dplyr::inner_join(
+        y = 
+          data %>%
+          
+          #Group by column strata
+          dplyr::group_by_at(
+            dplyr::vars(
+              tidyselect::all_of(by)
+            )
+          ) %>%
+          
+          #Compute sample size
+          dplyr::summarise(
+            col_N = dplyr::n()
+          ) %>%
+          dplyr::ungroup() %>%
+          
+          #Convert to character types
+          dplyr::mutate_at(
+            dplyr::vars(
+              tidyselect::all_of(by)
+            ),
+            as.character
+          ),
+        by = by
+      ) %>%
+      
+      #Concatenate sample size to last col_strata 
+      dplyr::mutate_at(
+        dplyr::vars(
+          tidyselect::all_of(by[length(by)])
+        ),
+        ~paste0(.x, " (N=", .data$col_N, ")")
+      ) %>%
+      
+      #Remove sample size column
+      dplyr::select(
+        -.data$col_N
+      )
+    
+  }
+
+#Name: remove_duplicates
+#Description: Internal function to replace duplicates with a specified value
+remove_duplicates <-
+  function(
+    results,
+    at,
+    fill_blanks,
+    groups = NULL
+  ) {
+    
+    #Group if non-null
+    if(!is.null(groups)) {
+      
+      results <-
+        results %>%
+        
+        #Remove duplicate values
+        dplyr::group_by_at(
+          dplyr::vars(
+            tidyselect::all_of(groups)
+          )
+        )
+      
+    }
+    
+    results %>%
+      
+      #Scope is the specified set
+      dplyr::mutate_at(
+        dplyr::vars(
+          tidyselect::all_of(at)
+        ),
+        ~
+          dplyr::case_when(
+            duplicated(as.character(.x)) ~ fill_blanks,
+            TRUE ~ as.character(.x)
+          )
+      ) %>%
+      dplyr::ungroup()
+    
+  }
+
 #Name: univariate_table
 #Description: Create a custom table with univariate descriptive statistics
 univariate_table <-
@@ -1788,111 +1884,34 @@ univariate_table <-
       #Check for column strata
       if(!is.null(col_strata)) {
         
-        results <-
-          results %>%
-          
-          #Join to get sample size
-          dplyr::inner_join(
-            y = 
-              data %>%
-              
-              #Group by column strata
-              dplyr::group_by_at(
-                dplyr::vars(
-                  tidyselect::all_of(col_strata)
-                )
-              ) %>%
-              
-              #Compute sample size
-              dplyr::summarise(
-                col_N = dplyr::n()
-              ) %>%
-              dplyr::ungroup() %>%
-              
-              #Convert to character types
-              dplyr::mutate_at(
-                dplyr::vars(
-                  tidyselect::all_of(col_strata)
-                ),
-                as.character
-              ),
-            by = col_strata
-          ) %>%
-          
-          #Concatenate sample size to last col_strata 
-          dplyr::mutate_at(
-            dplyr::vars(
-              tidyselect::all_of(col_strata[length(col_strata)])
-            ),
-            ~paste0(.x, " (N=", .data$col_N, ")")
-          ) %>%
-          
-          #Remove sample size column
-          dplyr::select(
-            -.data$col_N
-          )
+        #Call internal function
+        results <- f_add_n(results, col_strata, data)
         
       }
       
       #Check for row strata
       if(length(row_strata) > 0) {
         
-        results <-
-          results %>%
-          
-          #Join to get sample size
-          dplyr::inner_join(
-            y = 
-              data %>%
-              
-              #Group by column strata
-              dplyr::group_by_at(
-                dplyr::vars(
-                  tidyselect::all_of(row_strata)
-                )
-              ) %>%
-              
-              #Compute sample size
-              dplyr::summarise(
-                row_N = dplyr::n()
-              ) %>%
-              dplyr::ungroup() %>%
-              
-              #Convert to character types
-              dplyr::mutate_at(
-                dplyr::vars(
-                  tidyselect::all_of(row_strata)
-                ),
-                as.character
-              ),
-            by = row_strata
-          ) %>%
-          
-          #Concatenate sample size to last col_strata 
-          dplyr::mutate_at(
-            dplyr::vars(
-              tidyselect::all_of(row_strata[length(row_strata)])
-            ),
-            ~paste0(.x, " (N=", .data$row_N, ")")
-          ) %>%
-          
-          #Remove sample size column
-          dplyr::select(
-            -.data$row_N
-          )
+        #Call internal function
+        results <- f_add_n(results, row_strata, data)
         
       }
       
     }
     
-    results <-
-      results %>%
+    #Ensure all_summary are the last columns
+    if(!is.null(all_summary)) {
       
-      #Ensure all_summary are the last columns
-      dplyr::select(
-        -tidyselect::any_of(names(all_summary)),
-        tidyselect::any_of(names(all_summary))
-      )
+      results <-
+        results %>%
+        
+        #Remove then add to end
+        dplyr::select(
+          -tidyselect::any_of(names(all_summary)),
+          tidyselect::any_of(names(all_summary))
+        )
+      
+    }
     
     #Span results across columns
     if(!is.null(col_strata)) {
@@ -1921,126 +1940,109 @@ univariate_table <-
     if(!is.null(associations)) {
       
       #Ensure column strata are available
-      if(is.null(col_strata))
-        stop("Association metrics can only be computed with column strata.")
-      
-      #Create secondary dataset
-      temp_data <-
-        data %>%
+      if(is.null(col_strata)) {
         
-        #Combine column strata so they are compared across all groups
-        tidyr::unite(
-          col = "col_strata",
-          tidyselect::all_of(col_strata),
-          sep = sep
-        )
-      
-      #If there are row strata, run association metrics within
-      if(length(row_strata) > 0) {
+        #Give a warning 
+        warning("Association metrics can only be computed with column strata present.")
         
-        #Append the sample size to the row strata variable so joining works
-        if(add_n) {
+      } else {
+        
+        #Create secondary dataset
+        temp_data <-
+          data %>%
           
-          temp_data <-
+          #Combine column strata so they are compared across all groups
+          tidyr::unite(
+            col = "col_strata",
+            tidyselect::all_of(col_strata),
+            sep = sep
+          )
+        
+        #If there are row strata, run association metrics within
+        if(length(row_strata) > 0) {
+          
+          #Append the sample size to the row strata variable so joining works
+          if(add_n) {
+            
+            #Convert to character to avoid warning
+            temp_data <-
+              temp_data %>%
+              dplyr::mutate_at(
+                dplyr::vars(
+                  tidyselect::all_of(row_strata)
+                ),
+                as.character
+              )
+            
+            #Call internal function
+            temp_data <- f_add_n(temp_data, row_strata, temp_data)
+            
+          }
+          
+          association_results <-
             temp_data %>%
             
-            #Join to get sample size
-            dplyr::inner_join(
-              y = 
-                data %>%
-                
-                #Group by column strata
-                dplyr::group_by_at(
-                  dplyr::vars(
-                    tidyselect::all_of(row_strata)
-                  )
-                ) %>%
-                
-                #Compute sample size
-                dplyr::summarise(
-                  row_N = dplyr::n()
-                ) %>%
-                dplyr::ungroup(),
-              by = row_strata
+            #Evaluate functions on each row strata
+            stratiply(
+              f = univariate_associations,
+              by = tidyselect::all_of(row_strata),
+              associations,
+              predictors = tidyselect::all_of("col_strata")
             ) %>%
             
-            #Concatenate sample size to last col_strata 
-            dplyr::mutate_at(
-              dplyr::vars(
-                tidyselect::all_of(row_strata[length(row_strata)])
-              ),
-              ~paste0(as.character(.x), " (N=", .data$row_N, ")")
-            ) %>%
-            
-            #Remove sample size column
-            dplyr::select(
-              -.data$row_N
+            #Bind results together
+            fasten(
+              into = row_strata
+            ) 
+          
+        } else {
+          
+          association_results <-
+            temp_data %>%
+            univariate_associations(
+              f = associations,
+              predictors = tidyselect::all_of("col_strata")
             )
           
         }
         
+        #Determine index to join on depending on type (0 for categorical, 1 for everything else)
+        association_results$val_ind <- as.numeric(!(association_results$response %in% unique(results$col_lab[results$val_ind != 1])))
+        
+        #Extract the col_ind to maintain order
         association_results <-
-          temp_data %>%
+          association_results %>%
           
-          #Evaluate functions on each row strata
-          stratiply(
-            f = univariate_associations,
-            by = tidyselect::all_of(row_strata),
-            associations,
-            predictors = tidyselect::all_of("col_strata")
+          #Join with distinct labels/indices
+          dplyr::inner_join(
+            y = 
+              results %>%
+              
+              #Get distinct col_ind, col_labs
+              dplyr::select(
+                .data$col_ind,
+                .data$col_lab
+              ) %>%
+              dplyr::distinct(),
+            by = c("response" = "col_lab")
           ) %>%
           
-          #Bind results together
-          fasten(
-            into = row_strata
-          ) 
+          #Remove predictor column
+          dplyr::select(
+            -.data$predictor
+          )
         
-      } else {
-        
-        association_results <-
-          temp_data %>%
-          univariate_associations(
-            f = associations,
-            predictors = tidyselect::all_of("col_strata")
+        #Join back to results
+        results <-
+          results %>%
+          
+          #Join on required columns
+          dplyr::full_join(
+            y = association_results,
+            by = c(row_strata, "col_ind", "col_lab" = "response", "val_ind")
           )
         
       }
-      
-      #Determine index to join on depending on type (0 for categorical, 1 for everything else)
-      association_results$val_ind <- as.numeric(!(association_results$response %in% unique(results$col_lab[results$val_ind != 1])))
-      
-      #Extract the col_ind to maintain order
-      association_results <-
-        association_results %>%
-        
-        #Join with distinct labels/indices
-        dplyr::inner_join(
-          y = 
-            results %>%
-            
-            #Get distinct col_ind, col_labs
-            dplyr::select(
-              .data$col_ind,
-              .data$col_lab
-            ) %>%
-            dplyr::distinct(),
-          by = c("response" = "col_lab")
-        ) %>%
-        
-        #Remove predictor column
-        dplyr::select(
-          -.data$predictor
-        )
-      
-      #Join back to results
-      results <-
-        results %>%
-        
-        #Join on required columns
-        dplyr::full_join(
-          y = association_results,
-          by = c(row_strata, "col_ind", "col_lab" = "response", "val_ind")
-        )
       
     }
     
@@ -2203,25 +2205,14 @@ univariate_table <-
       if(!is.null(associations)) {
         
         results <-
-          results %>%
           
-          #Remove duplicate values
-          dplyr::group_by_at(
-            dplyr::vars(
-              tidyselect::all_of(c(row_strata, variableName))
-            )
-          ) %>%
-          dplyr::mutate_at(
-            dplyr::vars(
-              tidyselect::all_of(setdiff(names(association_results), c(row_strata, "col_lab", "response", "val_ind", "col_ind")))
-            ),
-            ~
-              dplyr::case_when(
-                duplicated(as.character(.x)) ~ fill_blanks,
-                TRUE ~ as.character(.x)
-              )
-          ) %>%
-          dplyr::ungroup()
+          #Call internal function
+          remove_duplicates(
+            results = results,
+            at = setdiff(names(association_results), c(row_strata, "col_lab", "response", "val_ind", "col_ind")),
+            fill_blanks = fill_blanks,
+            groups = c(row_strata, variableName)
+          )
         
       }
       
@@ -2242,18 +2233,13 @@ univariate_table <-
       
       #Remove duplicate variable names
       results <-
-        results %>%
-        dplyr::mutate_at(
-          dplyr::vars(
-            tidyselect::all_of(variableName)
-          ),
-          ~
-            dplyr::case_when(
-              duplicated(.x) ~ fill_blanks,
-              TRUE ~ as.character(.x)
-            )
-        ) %>%
-        dplyr::ungroup()
+        
+        #Call internal function
+        remove_duplicates(
+          results = results,
+          at = variableName,
+          fill_blanks = fill_blanks
+        )
       
       #Remove duplicate row strata if needed
       if(length(row_strata) > 0) {
@@ -2264,27 +2250,14 @@ univariate_table <-
           for(i in rev(seq_len(length(row_strata) - 1))) {
             
             results <-
-              results %>%
               
-              #Group by everything up to this variable
-              dplyr::group_by_at(
-                dplyr::vars(
-                  tidyselect::all_of(row_strata[seq_len(i)])
-                )
-              ) %>%
-              
-              #Remove duplicates for this variable
-              dplyr::mutate_at(
-                dplyr::vars(
-                  tidyselect::all_of(row_strata[i + 1])
-                ),
-                ~
-                  dplyr::case_when(
-                    duplicated(.x) ~ fill_blanks,
-                    TRUE ~ as.character(.x)
-                  )
-              ) %>%
-              dplyr::ungroup()
+              #Call internal function
+              remove_duplicates(
+                results = results,
+                at = row_strata[i + 1],
+                fill_blanks = fill_blanks,
+                groups = row_strata[seq_len(i)]
+              )
             
           }
           
@@ -2292,18 +2265,13 @@ univariate_table <-
         
         #Remove duplicate for remaining row strata
         results <-
-          results %>%
-          dplyr::mutate_at(
-            dplyr::vars(
-              tidyselect::all_of(row_strata[1])
-            ),
-            ~
-              dplyr::case_when(
-                duplicated(.x) ~ fill_blanks,
-                TRUE ~ as.character(.x)
-              )
-          ) %>%
-          dplyr::ungroup()
+          
+          #Call internal function
+          remove_duplicates(
+            results = results,
+            at = row_strata[1],
+            fill_blanks = fill_blanks
+          )
         
       }
       
