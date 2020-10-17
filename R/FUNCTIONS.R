@@ -1696,8 +1696,9 @@ absorb_descriptives <-
         .id = "col_ind"
       ) %>%
       
-      #Convert to factor to maintain order of summaries
+      #Keep index numeric; convert to factor to maintain order of summaries
       dplyr::mutate(
+        col_ind = as.numeric(.data$col_ind),
         sum_lab = forcats::as_factor(.data$sum_lab)
       ) %>%
       

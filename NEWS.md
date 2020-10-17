@@ -1,3 +1,7 @@
+# cheese 0.1.1
+
+Fixed a bug that caused the wrong ordering of columns in the result of `univariate_table` when there was more than nine (9) columns
+
 # cheese 0.1.0
 
 ## Changes to existing functions
