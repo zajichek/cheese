@@ -8,23 +8,29 @@
 
 <title>Evaluate a two-argument function with combinations of columns — dish • cheese</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,10 +38,10 @@
 
 
 
-<meta property="og:title" content="Evaluate a two-argument function with combinations of columns — dish" />
 
+<meta property="og:title" content="Evaluate a two-argument function with combinations of columns — dish" />
 <meta property="og:description" content="Split up columns into groups and apply a function to combinations of those columns with control over whether each group is entered as a single data.frame or individual vector's." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -52,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -100,11 +106,10 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/zajichek/cheese">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/zajichek/cheese/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -127,21 +132,19 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Split up columns into groups and apply a function to combinations of those columns with control over whether each group is entered as a single <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> or individual <code><a href='https://rdrr.io/r/base/vector.html'>vector</a></code>'s.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>dish</span>(
-    <span class='no'>data</span>,
-    <span class='no'>f</span>,
-    <span class='no'>left</span>,
-    <span class='no'>right</span>,
-    <span class='kw'>each_left</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>each_right</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='no'>...</span>
-)</pre>
-    
+    <pre class="usage"><span class='fu'>dish</span><span class='op'>(</span>
+    <span class='va'>data</span>,
+    <span class='va'>f</span>,
+    <span class='va'>left</span>,
+    <span class='va'>right</span>,
+    each_left <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    each_right <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    <span class='va'>...</span>
+<span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -155,11 +158,11 @@
     </tr>
     <tr>
       <th>left</th>
-      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code> to be evaluated in the first argument of <code>f</code>.</p></td>
+      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/language.html'>tidyselect::select_helpers</a></code> to be evaluated in the first argument of <code>f</code>.</p></td>
     </tr>
     <tr>
       <th>right</th>
-      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code> to be evaluated in the second argument of <code>f</code>.</p></td>
+      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/language.html'>tidyselect::select_helpers</a></code> to be evaluated in the second argument of <code>f</code>.</p></td>
     </tr>
     <tr>
       <th>each_left</th>
@@ -174,21 +177,24 @@
       <td><p>Additional arguments to be passed to <code>f</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code><a href='https://rdrr.io/r/base/list.html'>list</a></code></p>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alex Zajichek</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#All variables on both sides</span>
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select_all.html'>select_if</a></span>(
-        <span class='no'>is.numeric</span>
-    ) <span class='kw'>%&gt;%</span>
-    <span class='fu'>dish</span>(
-        <span class='kw'>f</span> <span class='kw'>=</span> <span class='no'>cor</span>
-    )</div><div class='output co'>#&gt; $Age
+<span class='va'>heart_disease</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select_all.html'>select_if</a></span><span class='op'>(</span>
+        <span class='va'>is.numeric</span>
+    <span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>dish</span><span class='op'>(</span>
+        f <span class='op'>=</span> <span class='va'>cor</span>
+    <span class='op'>)</span>
+</div><div class='output co'>#&gt; $Age
 #&gt; $Age$Age
 #&gt; [1] 1
 #&gt; 
@@ -245,82 +251,85 @@
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='co'>#Simple regression of each numeric variable on each other variable</span>
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>dish</span>(
-        <span class='kw'>f</span> <span class='kw'>=</span>
-            <span class='kw'>function</span>(<span class='no'>y</span>, <span class='no'>x</span>) {
-                <span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>y</span> ~ <span class='no'>x</span>)
-                <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
-                    <span class='kw'>Parameter</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mod</span>$<span class='no'>coef</span>),
-                    <span class='kw'>Estimate</span> <span class='kw'>=</span> <span class='no'>mod</span>$<span class='no'>coef</span>
-                )
-            },
-        <span class='kw'>left</span> <span class='kw'>=</span> <span class='no'>is.numeric</span>
-    ) <span class='kw'>%&gt;%</span>
-
+<span class='va'>heart_disease</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>dish</span><span class='op'>(</span>
+        f <span class='op'>=</span>
+            <span class='kw'>function</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
+                <span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x</span><span class='op'>)</span>
+                <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+                    Parameter <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>$</span><span class='va'>coef</span><span class='op'>)</span>,
+                    Estimate <span class='op'>=</span> <span class='va'>mod</span><span class='op'>$</span><span class='va'>coef</span>
+                <span class='op'>)</span>
+            <span class='op'>}</span>,
+        left <span class='op'>=</span> <span class='va'>is.numeric</span>
+    <span class='op'>)</span> <span class='op'>%&gt;%</span>
+    
     <span class='co'>#Bind rows together</span>
-    <span class='fu'><a href='fasten.html'>fasten</a></span>(
-        <span class='kw'>into</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Outcome"</span>, <span class='st'>"Predictor"</span>)
-    )</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 48 x 4</span><span>
+    <span class='fu'><a href='fasten.html'>fasten</a></span><span class='op'>(</span>
+        into <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Outcome"</span>, <span class='st'>"Predictor"</span><span class='op'>)</span>
+    <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Predicate functions must be wrapped in `where()`.</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>  # Bad</span>
+#&gt; <span class='warning'>  data %&gt;% select(is.numeric)</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>  # Good</span>
+#&gt; <span class='warning'>  data %&gt;% select(where(is.numeric))</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'><span style='color: #0000BB;'>ℹ</span> Please update your code.</span>
+#&gt; <span class='warning'><span style='color: #555555;'>This message is displayed once per session.</span></span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 48 x 4</span>
 #&gt;    Outcome Predictor             Parameter         Estimate
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Age     Sex                   (Intercept)         55.7  
-#&gt; </span><span style='color: #555555;'> 2</span><span> Age     Sex                   xMale               -</span><span style='color: #BB0000;'>1.89</span><span> 
-#&gt; </span><span style='color: #555555;'> 3</span><span> Age     ChestPain             (Intercept)         55.9  
-#&gt; </span><span style='color: #555555;'> 4</span><span> Age     ChestPain             xAtypical angina    -</span><span style='color: #BB0000;'>4.51</span><span> 
-#&gt; </span><span style='color: #555555;'> 5</span><span> Age     ChestPain             xNon-anginal pain   -</span><span style='color: #BB0000;'>2.17</span><span> 
-#&gt; </span><span style='color: #555555;'> 6</span><span> Age     ChestPain             xAsymptomatic       -</span><span style='color: #BB0000;'>0.147</span><span>
-#&gt; </span><span style='color: #555555;'> 7</span><span> Age     BloodSugar            (Intercept)         54.0  
-#&gt; </span><span style='color: #555555;'> 8</span><span> Age     BloodSugar            xTRUE                3.01 
-#&gt; </span><span style='color: #555555;'> 9</span><span> Age     ExerciseInducedAngina (Intercept)         53.9  
-#&gt; </span><span style='color: #555555;'>10</span><span> Age     ExerciseInducedAngina xYes                 1.76 
-#&gt; </span><span style='color: #555555;'># … with 38 more rows</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> Age     Sex                   (Intercept)         55.7  
+#&gt; <span style='color: #BCBCBC;'> 2</span> Age     Sex                   xMale               -<span style='color: #BB0000;'>1.89</span> 
+#&gt; <span style='color: #BCBCBC;'> 3</span> Age     ChestPain             (Intercept)         55.9  
+#&gt; <span style='color: #BCBCBC;'> 4</span> Age     ChestPain             xAtypical angina    -<span style='color: #BB0000;'>4.51</span> 
+#&gt; <span style='color: #BCBCBC;'> 5</span> Age     ChestPain             xNon-anginal pain   -<span style='color: #BB0000;'>2.17</span> 
+#&gt; <span style='color: #BCBCBC;'> 6</span> Age     ChestPain             xAsymptomatic       -<span style='color: #BB0000;'>0.147</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span> Age     BloodSugar            (Intercept)         54.0  
+#&gt; <span style='color: #BCBCBC;'> 8</span> Age     BloodSugar            xTRUE                3.01 
+#&gt; <span style='color: #BCBCBC;'> 9</span> Age     ExerciseInducedAngina (Intercept)         53.9  
+#&gt; <span style='color: #BCBCBC;'>10</span> Age     ExerciseInducedAngina xYes                 1.76 
+#&gt; <span style='color: #949494;'># … with 38 more rows</span></div><div class='input'>
 <span class='co'>#Multiple regression of each numeric variable on all others simultaneously</span>
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>dish</span>(
-        <span class='kw'>f</span> <span class='kw'>=</span>
-            <span class='kw'>function</span>(<span class='no'>y</span>, <span class='no'>x</span>) {
-                <span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>y</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>x</span>)
-                <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
-                    <span class='kw'>Parameter</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mod</span>$<span class='no'>coef</span>),
-                    <span class='kw'>Estimate</span> <span class='kw'>=</span> <span class='no'>mod</span>$<span class='no'>coef</span>
-                )
-            },
-        <span class='kw'>left</span> <span class='kw'>=</span> <span class='no'>is.numeric</span>,
-        <span class='kw'>each_right</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-    ) <span class='kw'>%&gt;%</span>
-
+<span class='va'>heart_disease</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>dish</span><span class='op'>(</span>
+        f <span class='op'>=</span>
+            <span class='kw'>function</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
+                <span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>x</span><span class='op'>)</span>
+                <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+                    Parameter <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>$</span><span class='va'>coef</span><span class='op'>)</span>,
+                    Estimate <span class='op'>=</span> <span class='va'>mod</span><span class='op'>$</span><span class='va'>coef</span>
+                <span class='op'>)</span>
+            <span class='op'>}</span>,
+        left <span class='op'>=</span> <span class='va'>is.numeric</span>,
+        each_right <span class='op'>=</span> <span class='cn'>FALSE</span>
+    <span class='op'>)</span> <span class='op'>%&gt;%</span>
+    
     <span class='co'>#Bind rows together</span>
-    <span class='fu'><a href='fasten.html'>fasten</a></span>(
-        <span class='kw'>into</span> <span class='kw'>=</span> <span class='st'>"Outcome"</span>
-    )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 32 x 3</span><span>
+    <span class='fu'><a href='fasten.html'>fasten</a></span><span class='op'>(</span>
+        into <span class='op'>=</span> <span class='st'>"Outcome"</span>
+    <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 32 x 3</span>
 #&gt;    Outcome Parameter                 Estimate
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Age     (Intercept)                 56.8  
-#&gt; </span><span style='color: #555555;'> 2</span><span> Age     SexMale                     -</span><span style='color: #BB0000;'>3.53</span><span> 
-#&gt; </span><span style='color: #555555;'> 3</span><span> Age     ChestPainAtypical angina    -</span><span style='color: #BB0000;'>4.28</span><span> 
-#&gt; </span><span style='color: #555555;'> 4</span><span> Age     ChestPainNon-anginal pain   -</span><span style='color: #BB0000;'>2.51</span><span> 
-#&gt; </span><span style='color: #555555;'> 5</span><span> Age     ChestPainAsymptomatic       -</span><span style='color: #BB0000;'>2.08</span><span> 
-#&gt; </span><span style='color: #555555;'> 6</span><span> Age     BloodSugarTRUE               2.90 
-#&gt; </span><span style='color: #555555;'> 7</span><span> Age     ExerciseInducedAnginaYes    -</span><span style='color: #BB0000;'>0.294</span><span>
-#&gt; </span><span style='color: #555555;'> 8</span><span> Age     HeartDiseaseYes              4.59 
-#&gt; </span><span style='color: #555555;'> 9</span><span> BP      (Intercept)                141.   
-#&gt; </span><span style='color: #555555;'>10</span><span> BP      SexMale                     -</span><span style='color: #BB0000;'>5.43</span><span> 
-#&gt; </span><span style='color: #555555;'># … with 22 more rows</span><span></div><div class='input'>
-</div></span></pre>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> Age     (Intercept)                 56.8  
+#&gt; <span style='color: #BCBCBC;'> 2</span> Age     SexMale                     -<span style='color: #BB0000;'>3.53</span> 
+#&gt; <span style='color: #BCBCBC;'> 3</span> Age     ChestPainAtypical angina    -<span style='color: #BB0000;'>4.28</span> 
+#&gt; <span style='color: #BCBCBC;'> 4</span> Age     ChestPainNon-anginal pain   -<span style='color: #BB0000;'>2.51</span> 
+#&gt; <span style='color: #BCBCBC;'> 5</span> Age     ChestPainAsymptomatic       -<span style='color: #BB0000;'>2.08</span> 
+#&gt; <span style='color: #BCBCBC;'> 6</span> Age     BloodSugarTRUE               2.90 
+#&gt; <span style='color: #BCBCBC;'> 7</span> Age     ExerciseInducedAnginaYes    -<span style='color: #BB0000;'>0.294</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> Age     HeartDiseaseYes              4.59 
+#&gt; <span style='color: #BCBCBC;'> 9</span> BP      (Intercept)                141.   
+#&gt; <span style='color: #BCBCBC;'>10</span> BP      SexMale                     -<span style='color: #BB0000;'>5.43</span> 
+#&gt; <span style='color: #949494;'># … with 22 more rows</span></div><div class='input'>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Alex Zajichek</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -331,7 +340,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

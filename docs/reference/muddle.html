@@ -8,23 +8,29 @@
 
 <title>Randomly permute some or all columns of a data frame — muddle • cheese</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,10 +38,10 @@
 
 
 
-<meta property="og:title" content="Randomly permute some or all columns of a data frame — muddle" />
 
+<meta property="og:title" content="Randomly permute some or all columns of a data frame — muddle" />
 <meta property="og:description" content="Shuffle any of the columns of a data.frame to artificially distort relationships." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -52,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -100,11 +106,10 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/zajichek/cheese">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/zajichek/cheese/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -127,17 +132,15 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Shuffle any of the columns of a <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code> to artificially distort relationships.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>muddle</span>(
-    <span class='no'>data</span>,
-    <span class='no'>at</span>,
-    <span class='no'>...</span>
-)</pre>
-    
+    <pre class="usage"><span class='fu'>muddle</span><span class='op'>(</span>
+    <span class='va'>data</span>,
+    <span class='va'>at</span>,
+    <span class='va'>...</span>
+<span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -147,103 +150,101 @@
     </tr>
     <tr>
       <th>at</th>
-      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code>. Defaults to all columns.</p></td>
+      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/language.html'>tidyselect::select_helpers</a></code>. Defaults to all columns.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Additional arguments passed to <code><a href='https://rdrr.io/r/base/sample.html'>sample</a></code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble</a></code></p>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alex Zajichek</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#Set a seed</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
 
 <span class='co'>#Default permutes all columns</span>
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-  <span class='no'>muddle</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 303 x 9</span><span>
+<span class='va'>heart_disease</span> <span class='op'>%&gt;%</span>
+  <span class='va'>muddle</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 303 x 9</span>
 #&gt;      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'> 1</span><span>    43 Fema… Non-angi…   130         214 FALSE            120 Yes             
-#&gt; </span><span style='color: #555555;'> 2</span><span>    44 Male  Asymptom…   130         204 FALSE            143 Yes             
-#&gt; </span><span style='color: #555555;'> 3</span><span>    68 Fema… Asymptom…   128         242 FALSE            125 Yes             
-#&gt; </span><span style='color: #555555;'> 4</span><span>    35 Fema… Asymptom…   120         269 FALSE            163 Yes             
-#&gt; </span><span style='color: #555555;'> 5</span><span>    45 Fema… Atypical…   138         240 FALSE            169 No              
-#&gt; </span><span style='color: #555555;'> 6</span><span>    54 Male  Asymptom…   128         209 FALSE            182 Yes             
-#&gt; </span><span style='color: #555555;'> 7</span><span>    61 Male  Asymptom…   100         258 FALSE            152 Yes             
-#&gt; </span><span style='color: #555555;'> 8</span><span>    57 Fema… Asymptom…   152         229 FALSE            142 No              
-#&gt; </span><span style='color: #555555;'> 9</span><span>    67 Male  Non-angi…   110         283 FALSE            138 No              
-#&gt; </span><span style='color: #555555;'>10</span><span>    51 Fema… Atypical…   125         204 TRUE             161 No              
-#&gt; </span><span style='color: #555555;'># … with 293 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           
+#&gt; <span style='color: #BCBCBC;'> 1</span>    43 Fema… Non-angi…   130         214 FALSE            120 Yes             
+#&gt; <span style='color: #BCBCBC;'> 2</span>    44 Male  Asymptom…   130         204 FALSE            143 Yes             
+#&gt; <span style='color: #BCBCBC;'> 3</span>    68 Fema… Asymptom…   128         242 FALSE            125 Yes             
+#&gt; <span style='color: #BCBCBC;'> 4</span>    35 Fema… Asymptom…   120         269 FALSE            163 Yes             
+#&gt; <span style='color: #BCBCBC;'> 5</span>    45 Fema… Atypical…   138         240 FALSE            169 No              
+#&gt; <span style='color: #BCBCBC;'> 6</span>    54 Male  Asymptom…   128         209 FALSE            182 Yes             
+#&gt; <span style='color: #BCBCBC;'> 7</span>    61 Male  Asymptom…   100         258 FALSE            152 Yes             
+#&gt; <span style='color: #BCBCBC;'> 8</span>    57 Fema… Asymptom…   152         229 FALSE            142 No              
+#&gt; <span style='color: #BCBCBC;'> 9</span>    67 Male  Non-angi…   110         283 FALSE            138 No              
+#&gt; <span style='color: #BCBCBC;'>10</span>    51 Fema… Atypical…   125         204 TRUE             161 No              
+#&gt; <span style='color: #949494;'># … with 293 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></div><div class='input'>
 <span class='co'>#Permute select columns</span>
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>muddle</span>(
-    <span class='kw'>at</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>Age</span>, <span class='no'>Sex</span>)
-  )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 303 x 9</span><span>
+<span class='va'>heart_disease</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>muddle</span><span class='op'>(</span>
+    at <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>Age</span>, <span class='va'>Sex</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 303 x 9</span>
 #&gt;      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'> 1</span><span>    47 Male  Typical …   145         233 TRUE             150 No              
-#&gt; </span><span style='color: #555555;'> 2</span><span>    49 Fema… Asymptom…   160         286 FALSE            108 Yes             
-#&gt; </span><span style='color: #555555;'> 3</span><span>    59 Male  Asymptom…   120         229 FALSE            129 Yes             
-#&gt; </span><span style='color: #555555;'> 4</span><span>    35 Male  Non-angi…   130         250 FALSE            187 No              
-#&gt; </span><span style='color: #555555;'> 5</span><span>    44 Fema… Atypical…   130         204 FALSE            172 No              
-#&gt; </span><span style='color: #555555;'> 6</span><span>    29 Fema… Atypical…   120         236 FALSE            178 No              
-#&gt; </span><span style='color: #555555;'> 7</span><span>    45 Male  Asymptom…   140         268 FALSE            160 No              
-#&gt; </span><span style='color: #555555;'> 8</span><span>    59 Male  Asymptom…   120         354 FALSE            163 Yes             
-#&gt; </span><span style='color: #555555;'> 9</span><span>    46 Male  Asymptom…   130         254 FALSE            147 No              
-#&gt; </span><span style='color: #555555;'>10</span><span>    54 Male  Asymptom…   140         203 TRUE             155 Yes             
-#&gt; </span><span style='color: #555555;'># … with 293 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           
+#&gt; <span style='color: #BCBCBC;'> 1</span>    47 Male  Typical …   145         233 TRUE             150 No              
+#&gt; <span style='color: #BCBCBC;'> 2</span>    49 Fema… Asymptom…   160         286 FALSE            108 Yes             
+#&gt; <span style='color: #BCBCBC;'> 3</span>    59 Male  Asymptom…   120         229 FALSE            129 Yes             
+#&gt; <span style='color: #BCBCBC;'> 4</span>    35 Male  Non-angi…   130         250 FALSE            187 No              
+#&gt; <span style='color: #BCBCBC;'> 5</span>    44 Fema… Atypical…   130         204 FALSE            172 No              
+#&gt; <span style='color: #BCBCBC;'> 6</span>    29 Fema… Atypical…   120         236 FALSE            178 No              
+#&gt; <span style='color: #BCBCBC;'> 7</span>    45 Male  Asymptom…   140         268 FALSE            160 No              
+#&gt; <span style='color: #BCBCBC;'> 8</span>    59 Male  Asymptom…   120         354 FALSE            163 Yes             
+#&gt; <span style='color: #BCBCBC;'> 9</span>    46 Male  Asymptom…   130         254 FALSE            147 No              
+#&gt; <span style='color: #BCBCBC;'>10</span>    54 Male  Asymptom…   140         203 TRUE             155 Yes             
+#&gt; <span style='color: #949494;'># … with 293 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></div><div class='input'>
 <span class='co'>#Using a select helper</span>
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>muddle</span>(
-    <span class='kw'>at</span> <span class='kw'>=</span> <span class='fu'>matches</span>(<span class='st'>"^S"</span>)
-  )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 303 x 9</span><span>
+<span class='va'>heart_disease</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>muddle</span><span class='op'>(</span>
+    at <span class='op'>=</span> <span class='fu'>matches</span><span class='op'>(</span><span class='st'>"^S"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 303 x 9</span>
 #&gt;      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'> 1</span><span>    63 Male  Typical …   145         233 TRUE             150 No              
-#&gt; </span><span style='color: #555555;'> 2</span><span>    67 Male  Asymptom…   160         286 FALSE            108 Yes             
-#&gt; </span><span style='color: #555555;'> 3</span><span>    67 Male  Asymptom…   120         229 FALSE            129 Yes             
-#&gt; </span><span style='color: #555555;'> 4</span><span>    37 Male  Non-angi…   130         250 FALSE            187 No              
-#&gt; </span><span style='color: #555555;'> 5</span><span>    41 Fema… Atypical…   130         204 FALSE            172 No              
-#&gt; </span><span style='color: #555555;'> 6</span><span>    56 Fema… Atypical…   120         236 FALSE            178 No              
-#&gt; </span><span style='color: #555555;'> 7</span><span>    62 Male  Asymptom…   140         268 FALSE            160 No              
-#&gt; </span><span style='color: #555555;'> 8</span><span>    57 Male  Asymptom…   120         354 FALSE            163 Yes             
-#&gt; </span><span style='color: #555555;'> 9</span><span>    63 Male  Asymptom…   130         254 FALSE            147 No              
-#&gt; </span><span style='color: #555555;'>10</span><span>    53 Male  Asymptom…   140         203 TRUE             155 Yes             
-#&gt; </span><span style='color: #555555;'># … with 293 more rows, and 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           
+#&gt; <span style='color: #BCBCBC;'> 1</span>    63 Male  Typical …   145         233 TRUE             150 No              
+#&gt; <span style='color: #BCBCBC;'> 2</span>    67 Male  Asymptom…   160         286 FALSE            108 Yes             
+#&gt; <span style='color: #BCBCBC;'> 3</span>    67 Male  Asymptom…   120         229 FALSE            129 Yes             
+#&gt; <span style='color: #BCBCBC;'> 4</span>    37 Male  Non-angi…   130         250 FALSE            187 No              
+#&gt; <span style='color: #BCBCBC;'> 5</span>    41 Fema… Atypical…   130         204 FALSE            172 No              
+#&gt; <span style='color: #BCBCBC;'> 6</span>    56 Fema… Atypical…   120         236 FALSE            178 No              
+#&gt; <span style='color: #BCBCBC;'> 7</span>    62 Male  Asymptom…   140         268 FALSE            160 No              
+#&gt; <span style='color: #BCBCBC;'> 8</span>    57 Male  Asymptom…   120         354 FALSE            163 Yes             
+#&gt; <span style='color: #BCBCBC;'> 9</span>    63 Male  Asymptom…   130         254 FALSE            147 No              
+#&gt; <span style='color: #BCBCBC;'>10</span>    53 Male  Asymptom…   140         203 TRUE             155 Yes             
+#&gt; <span style='color: #949494;'># … with 293 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></div><div class='input'>
 <span class='co'>#Pass other arguments</span>
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>muddle</span>(
-    <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-    <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-  )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 9</span><span>
-#&gt;     Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'>1</span><span>    41 Male  Atypical…   135         321 FALSE            180 Yes             
-#&gt; </span><span style='color: #555555;'>2</span><span>    42 Male  Atypical…   128         212 TRUE             172 Yes             
-#&gt; </span><span style='color: #555555;'>3</span><span>    63 Male  Typical …   152         234 FALSE            115 No              
-#&gt; </span><span style='color: #555555;'>4</span><span>    37 Male  Non-angi…   130         289 FALSE             71 No              
-#&gt; </span><span style='color: #555555;'>5</span><span>    41 Male  Atypical…   150         160 FALSE            192 No              
-#&gt; </span><span style='color: #555555;'># … with 1 more variable: HeartDisease </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span></div><div class='input'>
-</div></span></pre>
+<span class='va'>heart_disease</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>muddle</span><span class='op'>(</span>
+    size <span class='op'>=</span> <span class='fl'>5</span>,
+    replace <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5 x 9</span>
+#&gt;     Age Sex   ChestPain     BP Cholesterol BloodSugar MaximumHR ExerciseInduced…
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>           
+#&gt; <span style='color: #BCBCBC;'>1</span>    41 Male  Atypical …   135         321 FALSE            180 Yes             
+#&gt; <span style='color: #BCBCBC;'>2</span>    42 Male  Atypical …   128         212 TRUE             172 Yes             
+#&gt; <span style='color: #BCBCBC;'>3</span>    63 Male  Typical a…   152         234 FALSE            115 No              
+#&gt; <span style='color: #BCBCBC;'>4</span>    37 Male  Non-angin…   130         289 FALSE             71 No              
+#&gt; <span style='color: #BCBCBC;'>5</span>    41 Male  Atypical …   150         160 FALSE            192 No              
+#&gt; <span style='color: #949494;'># … with 1 more variable: HeartDisease &lt;fct&gt;</span></div><div class='input'>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Alex Zajichek</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -254,7 +255,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

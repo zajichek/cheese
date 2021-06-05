@@ -1,7 +1,7 @@
 destination: docs
 template:
   params:
-    bootswatch: yeti
+    bootswatch: journal
 
 reference:
 - title: Splitting and binding data

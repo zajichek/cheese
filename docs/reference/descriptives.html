@@ -8,23 +8,29 @@
 
 <title>Compute descriptive statistics on columns of a data frame — descriptives • cheese</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,10 +38,10 @@
 
 
 
-<meta property="og:title" content="Compute descriptive statistics on columns of a data frame — descriptives" />
 
+<meta property="og:title" content="Compute descriptive statistics on columns of a data frame — descriptives" />
 <meta property="og:description" content="The user can specify an unlimited number of functions to evaluate and the types of data that each set of functions will be applied to (including the default; see &quot;Details&quot;)." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -52,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -100,11 +106,10 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/zajichek/cheese">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/zajichek/cheese/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -127,24 +132,22 @@
     </div>
 
     <div class="ref-description">
-    
     <p>The user can specify an unlimited number of functions to evaluate and the types of data that each set of functions will be applied to (including the default; see "Details").</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>descriptives</span>(
-    <span class='no'>data</span>,
-    <span class='kw'>f_all</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-    <span class='kw'>f_numeric</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-    <span class='kw'>numeric_types</span> <span class='kw'>=</span> <span class='st'>"numeric"</span>,
-    <span class='kw'>f_categorical</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-    <span class='kw'>categorical_types</span> <span class='kw'>=</span> <span class='st'>"factor"</span>,
-    <span class='kw'>f_other</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-    <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ifany"</span>, <span class='st'>"no"</span>, <span class='st'>"always"</span>),
-    <span class='kw'>round</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-    <span class='kw'>na_string</span> <span class='kw'>=</span> <span class='st'>"(missing)"</span>
-)</pre>
-    
+    <pre class="usage"><span class='fu'>descriptives</span><span class='op'>(</span>
+    <span class='va'>data</span>,
+    f_all <span class='op'>=</span> <span class='cn'>NULL</span>,
+    f_numeric <span class='op'>=</span> <span class='cn'>NULL</span>,
+    numeric_types <span class='op'>=</span> <span class='st'>"numeric"</span>,
+    f_categorical <span class='op'>=</span> <span class='cn'>NULL</span>,
+    categorical_types <span class='op'>=</span> <span class='st'>"factor"</span>,
+    f_other <span class='op'>=</span> <span class='cn'>NULL</span>,
+    useNA <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ifany"</span>, <span class='st'>"no"</span>, <span class='st'>"always"</span><span class='op'>)</span>,
+    round <span class='op'>=</span> <span class='fl'>2</span>,
+    na_string <span class='op'>=</span> <span class='st'>"(missing)"</span>
+<span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -189,7 +192,7 @@
       <td><p>String to fill in <code>NA</code> names.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The following <code>fun_key</code>'s are available by default for the specified types:</p><ul>
@@ -198,7 +201,6 @@
 <li><p>Categorical: <code>count, proportion, percent</code></p></li>
 </ul>
 
-    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble</a></code> with the following columns:</p><ul>
@@ -213,101 +215,97 @@
 <li><p><code>val_cbn</code>: Combination of (rounded) numeric and non-numeric values</p></li>
 </ul>
 
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alex Zajichek</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#Default</span>
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>descriptives</span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 111 x 9</span><span>
+<span class='va'>heart_disease</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>descriptives</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 111 x 9</span>
 #&gt;    fun_eval fun_key  col_ind col_lab     val_ind val_lab val_dbl val_chr val_cbn
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
-#&gt; </span><span style='color: #555555;'> 1</span><span> all      availab…       1 Age               1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 2</span><span> all      availab…       2 Sex               1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 3</span><span> all      availab…       3 ChestPain         1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 4</span><span> all      availab…       4 BP                1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 5</span><span> all      availab…       5 Cholesterol       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 6</span><span> all      availab…       6 BloodSugar        1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 7</span><span> all      availab…       7 MaximumHR         1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 8</span><span> all      availab…       8 ExerciseIn…       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 9</span><span> all      availab…       9 HeartDisea…       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'>10</span><span> all      class          1 Age               1 </span><span style='color: #BB0000;'>NA</span><span>           </span><span style='color: #BB0000;'>NA</span><span> numeric numeric
-#&gt; </span><span style='color: #555555;'># … with 101 more rows</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  
+#&gt; <span style='color: #BCBCBC;'> 1</span> all      availab…       1 Age               1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 2</span> all      availab…       2 Sex               1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 3</span> all      availab…       3 ChestPain         1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 4</span> all      availab…       4 BP                1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 5</span> all      availab…       5 Cholesterol       1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 6</span> all      availab…       6 BloodSugar        1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 7</span> all      availab…       7 MaximumHR         1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 8</span> all      availab…       8 ExerciseIn…       1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 9</span> all      availab…       9 HeartDisea…       1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'>10</span> all      class          1 Age               1 <span style='color: #BB0000;'>NA</span>           <span style='color: #BB0000;'>NA</span> numeric numeric
+#&gt; <span style='color: #949494;'># … with 101 more rows</span></div><div class='input'>
 <span class='co'>#Allow logicals as categorical</span>
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>descriptives</span>(
-        <span class='kw'>categorical_types</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"logical"</span>, <span class='st'>"factor"</span>)
-    ) <span class='kw'>%&gt;%</span>
-
+<span class='va'>heart_disease</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>descriptives</span><span class='op'>(</span>
+        categorical_types <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"logical"</span>, <span class='st'>"factor"</span><span class='op'>)</span>
+    <span class='op'>)</span> <span class='op'>%&gt;%</span>
+    
     <span class='co'>#Extract info from the column</span>
-    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
-        <span class='no'>col_lab</span> <span class='kw'>==</span> <span class='st'>"BloodSugar"</span>
-    )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 11 x 9</span><span>
+    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span>
+        <span class='va'>col_lab</span> <span class='op'>==</span> <span class='st'>"BloodSugar"</span>
+    <span class='op'>)</span> 
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 11 x 9</span>
 #&gt;    fun_eval   fun_key   col_ind col_lab  val_ind val_lab val_dbl val_chr val_cbn
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
-#&gt; </span><span style='color: #555555;'> 1</span><span> all        available       6 BloodSu…       1 </span><span style='color: #BB0000;'>NA</span><span>      303     </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 2</span><span> all        class           6 BloodSu…       1 </span><span style='color: #BB0000;'>NA</span><span>       </span><span style='color: #BB0000;'>NA</span><span>     logical logical
-#&gt; </span><span style='color: #555555;'> 3</span><span> all        length          6 BloodSu…       1 </span><span style='color: #BB0000;'>NA</span><span>      303     </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 4</span><span> all        missing         6 BloodSu…       1 </span><span style='color: #BB0000;'>NA</span><span>        0     </span><span style='color: #BB0000;'>NA</span><span>      0      
-#&gt; </span><span style='color: #555555;'> 5</span><span> all        unique          6 BloodSu…       1 </span><span style='color: #BB0000;'>NA</span><span>        2     </span><span style='color: #BB0000;'>NA</span><span>      2      
-#&gt; </span><span style='color: #555555;'> 6</span><span> categoric… count           6 BloodSu…       1 FALSE   258     </span><span style='color: #BB0000;'>NA</span><span>      258    
-#&gt; </span><span style='color: #555555;'> 7</span><span> categoric… count           6 BloodSu…       2 TRUE     45     </span><span style='color: #BB0000;'>NA</span><span>      45     
-#&gt; </span><span style='color: #555555;'> 8</span><span> categoric… percent         6 BloodSu…       1 FALSE    85.1   </span><span style='color: #BB0000;'>NA</span><span>      85.15  
-#&gt; </span><span style='color: #555555;'> 9</span><span> categoric… percent         6 BloodSu…       2 TRUE     14.9   </span><span style='color: #BB0000;'>NA</span><span>      14.85  
-#&gt; </span><span style='color: #555555;'>10</span><span> categoric… proporti…       6 BloodSu…       1 FALSE     0.851 </span><span style='color: #BB0000;'>NA</span><span>      0.85   
-#&gt; </span><span style='color: #555555;'>11</span><span> categoric… proporti…       6 BloodSu…       2 TRUE      0.149 </span><span style='color: #BB0000;'>NA</span><span>      0.15   </div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  
+#&gt; <span style='color: #BCBCBC;'> 1</span> all        available       6 BloodSu…       1 <span style='color: #BB0000;'>NA</span>      303     <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 2</span> all        class           6 BloodSu…       1 <span style='color: #BB0000;'>NA</span>       <span style='color: #BB0000;'>NA</span>     logical logical
+#&gt; <span style='color: #BCBCBC;'> 3</span> all        length          6 BloodSu…       1 <span style='color: #BB0000;'>NA</span>      303     <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 4</span> all        missing         6 BloodSu…       1 <span style='color: #BB0000;'>NA</span>        0     <span style='color: #BB0000;'>NA</span>      0      
+#&gt; <span style='color: #BCBCBC;'> 5</span> all        unique          6 BloodSu…       1 <span style='color: #BB0000;'>NA</span>        2     <span style='color: #BB0000;'>NA</span>      2      
+#&gt; <span style='color: #BCBCBC;'> 6</span> categoric… count           6 BloodSu…       1 FALSE   258     <span style='color: #BB0000;'>NA</span>      258    
+#&gt; <span style='color: #BCBCBC;'> 7</span> categoric… count           6 BloodSu…       2 TRUE     45     <span style='color: #BB0000;'>NA</span>      45     
+#&gt; <span style='color: #BCBCBC;'> 8</span> categoric… percent         6 BloodSu…       1 FALSE    85.1   <span style='color: #BB0000;'>NA</span>      85.15  
+#&gt; <span style='color: #BCBCBC;'> 9</span> categoric… percent         6 BloodSu…       2 TRUE     14.9   <span style='color: #BB0000;'>NA</span>      14.85  
+#&gt; <span style='color: #BCBCBC;'>10</span> categoric… proporti…       6 BloodSu…       1 FALSE     0.851 <span style='color: #BB0000;'>NA</span>      0.85   
+#&gt; <span style='color: #BCBCBC;'>11</span> categoric… proporti…       6 BloodSu…       2 TRUE      0.149 <span style='color: #BB0000;'>NA</span>      0.15   </div><div class='input'>
 <span class='co'>#Nothing treated as numeric</span>
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>descriptives</span>(
-        <span class='kw'>numeric_types</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-    )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 75 x 9</span><span>
+<span class='va'>heart_disease</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>descriptives</span><span class='op'>(</span>
+        numeric_types <span class='op'>=</span> <span class='cn'>NULL</span>
+    <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 75 x 9</span>
 #&gt;    fun_eval fun_key  col_ind col_lab     val_ind val_lab val_dbl val_chr val_cbn
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
-#&gt; </span><span style='color: #555555;'> 1</span><span> all      availab…       1 Age               1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 2</span><span> all      availab…       2 Sex               1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 3</span><span> all      availab…       3 ChestPain         1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 4</span><span> all      availab…       4 BP                1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 5</span><span> all      availab…       5 Cholesterol       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 6</span><span> all      availab…       6 BloodSugar        1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 7</span><span> all      availab…       7 MaximumHR         1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 8</span><span> all      availab…       8 ExerciseIn…       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'> 9</span><span> all      availab…       9 HeartDisea…       1 </span><span style='color: #BB0000;'>NA</span><span>          303 </span><span style='color: #BB0000;'>NA</span><span>      303    
-#&gt; </span><span style='color: #555555;'>10</span><span> all      class          1 Age               1 </span><span style='color: #BB0000;'>NA</span><span>           </span><span style='color: #BB0000;'>NA</span><span> numeric numeric
-#&gt; </span><span style='color: #555555;'># … with 65 more rows</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  
+#&gt; <span style='color: #BCBCBC;'> 1</span> all      availab…       1 Age               1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 2</span> all      availab…       2 Sex               1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 3</span> all      availab…       3 ChestPain         1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 4</span> all      availab…       4 BP                1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 5</span> all      availab…       5 Cholesterol       1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 6</span> all      availab…       6 BloodSugar        1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 7</span> all      availab…       7 MaximumHR         1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 8</span> all      availab…       8 ExerciseIn…       1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'> 9</span> all      availab…       9 HeartDisea…       1 <span style='color: #BB0000;'>NA</span>          303 <span style='color: #BB0000;'>NA</span>      303    
+#&gt; <span style='color: #BCBCBC;'>10</span> all      class          1 Age               1 <span style='color: #BB0000;'>NA</span>           <span style='color: #BB0000;'>NA</span> numeric numeric
+#&gt; <span style='color: #949494;'># … with 65 more rows</span></div><div class='input'>
 <span class='co'>#Evaluate a custom function</span>
-<span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>descriptives</span>(
-        <span class='kw'>f_numeric</span> <span class='kw'>=</span>
-            <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-                <span class='kw'>cv</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)/<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-            )
-    ) <span class='kw'>%&gt;%</span>
-
+<span class='va'>heart_disease</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>descriptives</span><span class='op'>(</span>
+        f_numeric <span class='op'>=</span> 
+            <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+                cv <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+            <span class='op'>)</span>
+    <span class='op'>)</span> <span class='op'>%&gt;%</span>
+    
     <span class='co'>#Extract info from the custom function</span>
-    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(
-        <span class='no'>fun_key</span> <span class='kw'>==</span> <span class='st'>"cv"</span>
-    )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 9</span><span>
+    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span>
+        <span class='va'>fun_key</span> <span class='op'>==</span> <span class='st'>"cv"</span>
+    <span class='op'>)</span> 
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 9</span>
 #&gt;   fun_eval fun_key col_ind col_lab     val_ind val_lab val_dbl val_chr val_cbn
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
-#&gt; </span><span style='color: #555555;'>1</span><span> numeric  cv            1 Age               1 </span><span style='color: #BB0000;'>NA</span><span>        0.166 </span><span style='color: #BB0000;'>NA</span><span>      0.17   
-#&gt; </span><span style='color: #555555;'>2</span><span> numeric  cv            4 BP                1 </span><span style='color: #BB0000;'>NA</span><span>        0.134 </span><span style='color: #BB0000;'>NA</span><span>      0.13   
-#&gt; </span><span style='color: #555555;'>3</span><span> numeric  cv            5 Cholesterol       1 </span><span style='color: #BB0000;'>NA</span><span>        0.210 </span><span style='color: #BB0000;'>NA</span><span>      0.21   
-#&gt; </span><span style='color: #555555;'>4</span><span> numeric  cv            7 MaximumHR         1 </span><span style='color: #BB0000;'>NA</span><span>        0.153 </span><span style='color: #BB0000;'>NA</span><span>      0.15   </div><div class='input'>
-</div></span></pre>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  
+#&gt; <span style='color: #BCBCBC;'>1</span> numeric  cv            1 Age               1 <span style='color: #BB0000;'>NA</span>        0.166 <span style='color: #BB0000;'>NA</span>      0.17   
+#&gt; <span style='color: #BCBCBC;'>2</span> numeric  cv            4 BP                1 <span style='color: #BB0000;'>NA</span>        0.134 <span style='color: #BB0000;'>NA</span>      0.13   
+#&gt; <span style='color: #BCBCBC;'>3</span> numeric  cv            5 Cholesterol       1 <span style='color: #BB0000;'>NA</span>        0.210 <span style='color: #BB0000;'>NA</span>      0.21   
+#&gt; <span style='color: #BCBCBC;'>4</span> numeric  cv            7 MaximumHR         1 <span style='color: #BB0000;'>NA</span>        0.153 <span style='color: #BB0000;'>NA</span>      0.15   </div><div class='input'>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Alex Zajichek</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -318,7 +316,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

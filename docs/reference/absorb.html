@@ -8,23 +8,29 @@
 
 <title>Absorb values into a string containing keys — absorb • cheese</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,10 +38,10 @@
 
 
 
-<meta property="og:title" content="Absorb values into a string containing keys — absorb" />
 
+<meta property="og:title" content="Absorb values into a string containing keys — absorb" />
 <meta property="og:description" content="Populate string templates containing keys with their values. The keys are interpreted as regular expressions. Results can optionally be evaluated as R expressions." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -52,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -100,11 +106,10 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/zajichek/cheese">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/zajichek/cheese/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -127,20 +132,18 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Populate string templates containing keys with their values. The keys are interpreted as regular expressions. Results can optionally be evaluated as <code>R</code> expressions.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>absorb</span>(
-    <span class='no'>key</span>,
-    <span class='no'>value</span>,
-    <span class='no'>text</span>,
-    <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_"</span>,
-    <span class='kw'>trace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-    <span class='kw'>evaluate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
-    
+    <pre class="usage"><span class='fu'>absorb</span><span class='op'>(</span>
+    <span class='va'>key</span>, 
+    <span class='va'>value</span>, 
+    <span class='va'>text</span>, 
+    sep <span class='op'>=</span> <span class='st'>"_"</span>,
+    trace <span class='op'>=</span> <span class='cn'>FALSE</span>,
+    evaluate <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -169,11 +172,10 @@
       <td><p>Should the result(s) be evaluated as <code>R</code> expressions? Defaults to <code>FALSE</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The inputs are iterated in sequential order to replace each pattern with its corresponding value. It is possible that a subsequent pattern could match with a prior result, and hence be replaced more than once. If duplicate keys exist, the placeholder will be filled with a collapsed string of all the values for that key.</p>
-    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     
@@ -182,48 +184,42 @@
 <li><p>Otherwise, a <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> with the same length as <code>text</code>.</p></li>
 </ul>
 
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alex Zajichek</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#Simple example</span>
-<span class='fu'>absorb</span>(
-    <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mean"</span>, <span class='st'>"sd"</span>, <span class='st'>"var"</span>),
-    <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"10"</span>, <span class='st'>"2"</span>, <span class='st'>"4"</span>),
-    <span class='kw'>text</span> <span class='kw'>=</span>
-        <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"MEAN: mean, SD: sd"</span>,
+<span class='fu'>absorb</span><span class='op'>(</span>
+    key <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mean"</span>, <span class='st'>"sd"</span>, <span class='st'>"var"</span><span class='op'>)</span>,
+    value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"10"</span>, <span class='st'>"2"</span>, <span class='st'>"4"</span><span class='op'>)</span>,
+    text <span class='op'>=</span> 
+        <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"MEAN: mean, SD: sd"</span>,
           <span class='st'>"VAR: var = sd^2"</span>,
-          <span class='kw'>MEAN</span> <span class='kw'>=</span> <span class='st'>"mean"</span>
-        )
-)</div><div class='output co'>#&gt;                                                  MEAN 
+          MEAN <span class='op'>=</span> <span class='st'>"mean"</span>
+        <span class='op'>)</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt;                                                  MEAN 
 #&gt; "MEAN: 10, SD: 2"    "VAR: 4 = 2^2"              "10" </div><div class='input'>
 <span class='co'>#Evaluating results</span>
-<span class='fu'>absorb</span>(
-    <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mean"</span>, <span class='st'>"mean"</span>, <span class='st'>"sd"</span>, <span class='st'>"var"</span>),
-    <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"10"</span>, <span class='st'>"20"</span>, <span class='st'>"2"</span>, <span class='st'>"4"</span>),
-    <span class='kw'>text</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"(mean)/2"</span>, <span class='st'>"sd^2"</span>),
-    <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"+"</span>,
-    <span class='kw'>trace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>evaluate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-) <span class='kw'>%&gt;%</span>
-    <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/flatten.html'>flatten_dbl</a></span>()</div><div class='output co'>#&gt; (mean)/2 sd^2 
+<span class='fu'>absorb</span><span class='op'>(</span>
+    key <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mean"</span>, <span class='st'>"mean"</span>, <span class='st'>"sd"</span>, <span class='st'>"var"</span><span class='op'>)</span>,
+    value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"10"</span>, <span class='st'>"20"</span>, <span class='st'>"2"</span>, <span class='st'>"4"</span><span class='op'>)</span>,
+    text <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"(mean)/2"</span>, <span class='st'>"sd^2"</span><span class='op'>)</span>,
+    sep <span class='op'>=</span> <span class='st'>"+"</span>,
+    trace <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    evaluate <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/flatten.html'>flatten_dbl</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; (mean)/2 sd^2 
 #&gt; (10+20)/2 sd^2 
 #&gt; (10+20)/2 2^2 </div><div class='output co'>#&gt; [1] 15  4</div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Alex Zajichek</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -234,7 +230,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

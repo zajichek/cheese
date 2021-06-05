@@ -8,23 +8,29 @@
 
 <title>Span keys and values across the columns — stretch • cheese</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,10 +38,10 @@
 
 
 
-<meta property="og:title" content="Span keys and values across the columns — stretch" />
 
+<meta property="og:title" content="Span keys and values across the columns — stretch" />
 <meta property="og:description" content="Pivot one or more values across the columns by one or more keys" />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -52,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -100,11 +106,10 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/zajichek/cheese">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/zajichek/cheese/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -127,18 +132,16 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Pivot one or more values across the columns by one or more keys</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>stretch</span>(
-    <span class='no'>data</span>,
-    <span class='no'>key</span>,
-    <span class='no'>value</span>,
-    <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_"</span>
-)</pre>
-    
+    <pre class="usage"><span class='fu'>stretch</span><span class='op'>(</span>
+    <span class='va'>data</span>,
+    <span class='va'>key</span>,
+    <span class='va'>value</span>,
+    sep <span class='op'>=</span> <span class='st'>"_"</span>
+<span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -148,104 +151,107 @@
     </tr>
     <tr>
       <th>key</th>
-      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code> whose values will become the column name(s).</p></td>
+      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/language.html'>tidyselect::select_helpers</a></code> whose values will become the column name(s).</p></td>
     </tr>
     <tr>
       <th>value</th>
-      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/select_helpers.html'>tidyselect::select_helpers</a></code> whose values will be spread across the columns.</p></td>
+      <td><p>A vector of quoted/unquoted columns, positions, and/or <code><a href='https://tidyselect.r-lib.org/reference/language.html'>tidyselect::select_helpers</a></code> whose values will be spread across the columns.</p></td>
     </tr>
     <tr>
       <th>sep</th>
       <td><p>String to separate keys/values by in the resulting column names. Defaults to <code>"_"</code>. Only used when there are more than one keys/values.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>In the case of multiple <code>value</code>'s, the labels are always appended to the end of the resulting columns.</p>
-    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble</a></code></p>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Alex Zajichek</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>#Make a summary table</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
-<span class='no'>data</span> <span class='kw'>&lt;-</span>
-  <span class='no'>heart_disease</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(
-    <span class='no'>Sex</span>,
-    <span class='no'>BloodSugar</span>,
-    <span class='no'>HeartDisease</span>
-  ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(
-    <span class='kw'>Mean</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>Age</span>),
-    <span class='kw'>SD</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span>(<span class='no'>Age</span>)
-  ) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
-    <span class='kw'>Random</span> <span class='kw'>=</span>
-      <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>.</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>.5</span>) <span class='kw'>%&gt;%</span>
-      <span class='no'>factor</span>
-  )
-
-<span class='no'>data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>stretch</span>(
-    <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>BloodSugar</span>, <span class='no'>HeartDisease</span>),
-    <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>Mean</span>, <span class='no'>SD</span>, <span class='no'>Random</span>)
-  )</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 13</span><span>
-#&gt;   Sex   FALSE_No_Mean FALSE_No_SD FALSE_No_Random FALSE_Yes_Mean FALSE_Yes_SD
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Fema…          54.0       10.4  0                         59.7         3.61
-#&gt; </span><span style='color: #555555;'>2</span><span> Male           50.2        8.82 1                         55.8         8.56
-#&gt; </span><span style='color: #555555;'># … with 7 more variables: FALSE_Yes_Random </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, TRUE_No_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   TRUE_No_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, TRUE_No_Random </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, TRUE_Yes_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   TRUE_Yes_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, TRUE_Yes_Random </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span></div><div class='input'>
-<span class='no'>data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>stretch</span>(
-    <span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>is.factor</span>,
-    <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>is.numeric</span>
-  )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 11</span><span>
-#&gt;   BloodSugar Female_No_0_Mean Female_No_0_SD Female_Yes_1_Me… Female_Yes_1_SD
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> FALSE                  54.0          10.4              59.7            3.61
-#&gt; </span><span style='color: #555555;'>2</span><span> TRUE                   60.3           6.65             57.2            7.81
-#&gt; </span><span style='color: #555555;'># … with 6 more variables: Male_No_1_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_No_1_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Male_Yes_0_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_Yes_0_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_Yes_1_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Male_Yes_1_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
-<span class='no'>data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>stretch</span>(
-    <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>is.factor</span>, <span class='no'>is.logical</span>),
-    <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>is.numeric</span>
-  )</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 16</span><span>
-#&gt;   Female_No_0_FAL… Female_No_0_FAL… Female_No_0_TRU… Female_No_0_TRU…
-#&gt;              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>             54.0             10.4             60.3             6.65
-#&gt; </span><span style='color: #555555;'># … with 12 more variables: Female_Yes_1_FALSE_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Female_Yes_1_FALSE_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Female_Yes_1_TRUE_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Female_Yes_1_TRUE_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_No_1_FALSE_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Male_No_1_FALSE_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_No_1_TRUE_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Male_No_1_TRUE_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_Yes_0_FALSE_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Male_Yes_0_FALSE_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Male_Yes_1_TRUE_Mean </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
-#&gt; #   Male_Yes_1_TRUE_SD </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
-</div></span></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> 
+  <span class='va'>heart_disease</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span>
+    <span class='va'>Sex</span>,
+    <span class='va'>BloodSugar</span>,
+    <span class='va'>HeartDisease</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>
+    Mean <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>Age</span><span class='op'>)</span>,
+    SD <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>Age</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>
+    Random <span class='op'>=</span>
+      <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>1</span>, prob <span class='op'>=</span> <span class='fl'>.5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+      <span class='va'>factor</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>`summarise()` has grouped output by 'Sex', 'BloodSugar'. You can override using the `.groups` argument.</span></div><div class='input'>
+<span class='va'>data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>stretch</span><span class='op'>(</span>
+    key <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>BloodSugar</span>, <span class='va'>HeartDisease</span><span class='op'>)</span>,
+    value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>Mean</span>, <span class='va'>SD</span>, <span class='va'>Random</span><span class='op'>)</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 13</span>
+#&gt;   Sex    FALSE_No_Mean FALSE_No_SD FALSE_No_Random FALSE_Yes_Mean FALSE_Yes_SD
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>                    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> Female          54.0       10.4  0                         59.7         3.61
+#&gt; <span style='color: #BCBCBC;'>2</span> Male            50.2        8.82 1                         55.8         8.56
+#&gt; <span style='color: #949494;'># … with 7 more variables: FALSE_Yes_Random &lt;fct&gt;, TRUE_No_Mean &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   TRUE_No_SD &lt;dbl&gt;, TRUE_No_Random &lt;fct&gt;, TRUE_Yes_Mean &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   TRUE_Yes_SD &lt;dbl&gt;, TRUE_Yes_Random &lt;fct&gt;</span></div><div class='input'>
+<span class='va'>data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>stretch</span><span class='op'>(</span>
+    key <span class='op'>=</span> <span class='va'>is.factor</span>,
+    value <span class='op'>=</span> <span class='va'>is.numeric</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Predicate functions must be wrapped in `where()`.</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>  # Bad</span>
+#&gt; <span class='warning'>  data %&gt;% select(is.factor)</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>  # Good</span>
+#&gt; <span class='warning'>  data %&gt;% select(where(is.factor))</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'><span style='color: #0000BB;'>ℹ</span> Please update your code.</span>
+#&gt; <span class='warning'><span style='color: #555555;'>This message is displayed once per session.</span></span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 11</span>
+#&gt;   BloodSugar Female_No_0_Mean Female_No_0_SD Female_Yes_1_Mean Female_Yes_1_SD
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> FALSE                  54.0          10.4               59.7            3.61
+#&gt; <span style='color: #BCBCBC;'>2</span> TRUE                   60.3           6.65              57.2            7.81
+#&gt; <span style='color: #949494;'># … with 6 more variables: Male_No_1_Mean &lt;dbl&gt;, Male_No_1_SD &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   Male_Yes_0_Mean &lt;dbl&gt;, Male_Yes_0_SD &lt;dbl&gt;, Male_Yes_1_Mean &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   Male_Yes_1_SD &lt;dbl&gt;</span></div><div class='input'>
+<span class='va'>data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>stretch</span><span class='op'>(</span>
+    key <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>is.factor</span>, <span class='va'>is.logical</span><span class='op'>)</span>,
+    value <span class='op'>=</span> <span class='va'>is.numeric</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 16</span>
+#&gt;   Female_No_0_FALSE_M… Female_No_0_FALSE_… Female_No_0_TRUE_M… Female_No_0_TRUE…
+#&gt;                  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>                 54.0                10.4                60.3              6.65
+#&gt; <span style='color: #949494;'># … with 12 more variables: Female_Yes_1_FALSE_Mean &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   Female_Yes_1_FALSE_SD &lt;dbl&gt;, Female_Yes_1_TRUE_Mean &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   Female_Yes_1_TRUE_SD &lt;dbl&gt;, Male_No_1_FALSE_Mean &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   Male_No_1_FALSE_SD &lt;dbl&gt;, Male_No_1_TRUE_Mean &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   Male_No_1_TRUE_SD &lt;dbl&gt;, Male_Yes_0_FALSE_Mean &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   Male_Yes_0_FALSE_SD &lt;dbl&gt;, Male_Yes_1_TRUE_Mean &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   Male_Yes_1_TRUE_SD &lt;dbl&gt;</span></div><div class='input'>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Alex Zajichek</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -256,7 +262,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
