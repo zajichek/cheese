@@ -1,3 +1,11 @@
+# cheese 0.1.2 (in development)
+
+* **IN PROGRESS** `kableExtra::collapse_rows` version 1.3.4 doesn't work properly causing issues for `univariable_table` HTML output. This release will require the latest version of that package once it is available on CRAN with the fix.
+
+* **IN PROGRESS** Updating usage of `dplyr` functions to conform to most recent syntax best practices
+
+* Updated functionality for cases when custom functions for "other" data types are used in `univariate_table`. Previously, these functions only picked up the summary values (i.e. it treated it as if it were a single summary statistic). Now, if the desired function produces a _named_ vector as the result, the names (i.e. factor levels) will be attached and added to the result as is done for categorical data types.
+
 # cheese 0.1.1
 
 Fixed a bug that caused the wrong ordering of columns in the result of `univariate_table` when there was more than nine (9) columns

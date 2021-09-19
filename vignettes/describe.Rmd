@@ -243,7 +243,7 @@ In general, there must be at least one column stratification variable in order t
 `descriptives()` is the function that drives the computation behind the statistics for the columns of the input dataset. Any of its arguments can be passed from `univariate_table()` to add further customization.
 
 ## Specifying data types
-As noted above, one of columns did not appear in the table by default because it was a `logical()` type. By default, only `factor()` and `numeric()` types are placed into the result, though there are (at least) three ways to include it:
+As noted above, one of the columns did not appear in the table by default because it was a `logical()` type. By default, only `factor()` and `numeric()` types are placed into the result, though there are (at least) three ways to include it:
 
 ### Change column type prior to function call
 You could simply just make the column a conformable type outside of the call:

@@ -1571,6 +1571,14 @@ absorb_descriptive_variable <-
       use_summary <- other_summary
       use_filter <- "other"
       
+      #If the 'other' summary contains names, treat it categorically
+      if(any(!is.na(variable$val_lab))) {
+        
+        #Set the lower level groups
+        use_groups <- c(use_groups, "val_lab")
+        
+      }
+      
     }
     
     #Populate strings templates
@@ -1628,7 +1636,7 @@ absorb_descriptive_variable <-
       
       #Add extra row for categorical variables only
       val_lab_all <- 1
-      if("categorical" %in% eval_types)
+      if(length(use_groups) == 3)
         val_lab_all <- 0
       
       results <- 
