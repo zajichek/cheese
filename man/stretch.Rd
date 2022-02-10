@@ -38,9 +38,9 @@ data <-
   ) \%>\%
   dplyr::summarise(
     Mean = mean(Age),
-    SD = sd(Age)
+    SD = sd(Age),
+    .groups = "drop"
   ) \%>\%
-  dplyr::ungroup() \%>\%
   dplyr::mutate(
     Random =
       rbinom(nrow(.), size = 1, prob = .5) \%>\%
@@ -55,14 +55,14 @@ data \%>\%
 
 data \%>\%
   stretch(
-    key = is.factor,
-    value = is.numeric
+    key = where(is.factor),
+    value = where(is.numeric)
   )
 
 data \%>\%
   stretch(
-    key = c(is.factor, is.logical),
-    value = is.numeric
+    key = c(where(is.factor), where(is.logical)),
+    value = where(is.numeric)
   )
 
 }

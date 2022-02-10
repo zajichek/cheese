@@ -31,8 +31,8 @@ A \code{\link{list}}
 \examples{
 #All variables on both sides
 heart_disease \%>\%
-    dplyr::select_if(
-        is.numeric
+    dplyr::select(
+        where(is.numeric)
     ) \%>\%
     dish(
         f = cor
@@ -49,7 +49,7 @@ heart_disease \%>\%
                     Estimate = mod$coef
                 )
             },
-        left = is.numeric
+        left = where(is.numeric)
     ) \%>\%
     
     #Bind rows together
@@ -68,7 +68,7 @@ heart_disease \%>\%
                     Estimate = mod$coef
                 )
             },
-        left = is.numeric,
+        left = where(is.numeric),
         each_right = FALSE
     ) \%>\%
     

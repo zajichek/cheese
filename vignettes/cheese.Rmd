@@ -128,14 +128,14 @@ heart_disease %>%
   dish(
     f = cor,
     left = c(BP, Cholesterol),
-    right = is.numeric
+    right = where(is.numeric)
   )
 ```
 
 The `left` argument controls which columns are entered in the first argument of `f`, and the `right` argument controls which columns are entered into the second. In the example, you'll notice that the `left` columns were also included in the set of `right` columns, because they are, in fact, `numeric()`. If you didn't want this, you can omit the `right` argument, which will then include everything not in `left` as the second argument of `f`:
 ```{r}
 heart_disease %>%
-  dplyr::select_if(is.numeric) %>% #Need to do this so only numeric columns are evaluated
+  dplyr::select(where(is.numeric)) %>% #Need to do this so only numeric columns are evaluated
   dish(
     f = cor,
     left = c(BP, Cholesterol)
@@ -226,9 +226,9 @@ age_stats <-
     mean = round(mean(Age), 2),
     sd = round(sd(Age), 2),
     median = median(Age),
-    iqr = IQR(Age)
+    iqr = IQR(Age),
+    .groups = "drop"
   ) %>%
-  dplyr::ungroup() %>%
   tidyr::gather(
     key = "key",
     value = "value",
@@ -254,9 +254,9 @@ age_stats %>%
           c(
             "mean (sd) | median (iqr)"
           )
-      )
-  ) %>%
-  dplyr::ungroup()
+      ),
+    .groups = "drop"
+  ) 
 ```
 
 Of course, this is much more useful when the summary data is already in the format of `age_stats`.

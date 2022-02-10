@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">cheese</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/cheese.html">Get started</a>
 </li>
@@ -67,7 +63,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/zajichek/cheese/">
+  <a href="https://github.com/zajichek/cheese/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,16 +81,16 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="section" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#section" class="anchor"></a><img src="reference/figures/cheese.jpg" width="200">
+<div class="section level1">
+<div class="page-header"><h1 id="section">
+<img src="reference/figures/cheese.jpg" width="200"><a class="anchor" aria-label="anchor" href="#section"></a>
 </h1></div>
 <!-- badges: start -->
 
 </div>
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
+<div class="section level1">
+<h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h1>
 <p>The <code>cheese</code> package contains tools for working with data during statistical analysis–promoting flexible, intuitive, and reproducible workflows. There are functions designated for specific statistical tasks such as</p>
 <ul>
 <li>
@@ -105,7 +101,7 @@
 <li>
 <code><a href="reference/descriptives.html">descriptives()</a></code>: To compute descriptive statistics on columns of a dataset</li>
 </ul>
-<p>These are built on a collection of data manipulation tools designed for general use, many of which are motivated by the functional programming concept (i.e. <code>purrr</code>) and use non-standard evaluation for column selection as in <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code>. Here are a few:</p>
+<p>These are built on a collection of data manipulation tools designed for general use, many of which are motivated by the functional programming concept (i.e. <code>purrr</code>) and use non-standard evaluation for column selection as in <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select</a></code>. Here are a few:</p>
 <ul>
 <li>
 <code><a href="reference/depths.html">depths()</a></code>: Find the depth(s) of elements in a list structure that satisfy a predicate</li>
@@ -119,28 +115,28 @@
 <code><a href="reference/typly.html">typly()</a></code>: Evaluate a function on columns that inherit at least one (or none) of the specified classes</li>
 </ul>
 </div>
-<div id="installation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h1>
+<div class="section level1">
+<h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h1>
 <ul>
 <li>From CRAN</li>
 </ul>
-<p><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("cheese")</a></code></p>
+<p><code>install.packages("cheese")</code></p>
 <ul>
 <li>From source</li>
 </ul>
-<p><code><a href="https://devtools.r-lib.org//reference/remote-reexports.html">devtools::install_github("zajichek/cheese")</a></code></p>
+<p><code>devtools::install_github("zajichek/cheese")</code></p>
 </div>
-<div id="usage" class="section level1">
-<h1 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h1>
+<div class="section level1">
+<h1 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h1>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Load package</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://zajichek.github.io/cheese">cheese</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://zajichek.github.io/cheese" class="external-link">cheese</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: cheese</span>
 
 <span class="co">#Make a descriptive table</span>
-<span class="va">heart_disease</span> <span class="op">%&gt;%</span>
+<span class="va">heart_disease</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
     format <span class="op">=</span> <span class="st">"markdown"</span> <span class="co">#Could also render as "html", "latex", "pandoc", or "none"</span>
   <span class="op">)</span></code></pre></div>
@@ -225,24 +221,24 @@
 </table>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#Run some models</span>
-<span class="va">heart_disease</span> <span class="op">%&gt;%</span>
+<span class="va">heart_disease</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
 
   <span class="co">#Apply a function to subsets of the data</span>
   <span class="fu"><a href="reference/stratiply.html">stratiply</a></span><span class="op">(</span>
     by <span class="op">=</span> <span class="va">Sex</span>,
     f <span class="op">=</span>
-      <span class="op">~</span><span class="va">.x</span> <span class="op">%&gt;%</span>
+      <span class="op">~</span><span class="va">.x</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
       
       <span class="co">#Apply a function to pairwise combinations of columns</span>
       <span class="fu"><a href="reference/dish.html">dish</a></span><span class="op">(</span>
-        left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ExerciseInducedAngina</span>, <span class="va">HeartDisease</span><span class="op">)</span>,
-        f <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck</a></span><span class="op">(</span><span class="st">"coefficients"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/enframe.html">enframe</a></span><span class="op">(</span><span class="op">)</span>
+        left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ExerciseInducedAngina</span>, <span class="va">HeartDisease</span><span class="op">)</span>,
+        f <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html" class="external-link">pluck</a></span><span class="op">(</span><span class="st">"coefficients"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/enframe.html" class="external-link">enframe</a></span><span class="op">(</span><span class="op">)</span>
       <span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
     
     <span class="co">#Bind rows up to a specified depth</span>
     <span class="fu"><a href="reference/fasten.html">fasten</a></span><span class="op">(</span>
-      into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Outcome"</span>, <span class="st">"Predictor"</span><span class="op">)</span>,
+      into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Outcome"</span>, <span class="st">"Predictor"</span><span class="op">)</span>,
       depth <span class="op">=</span> <span class="fl">1</span>
     <span class="op">)</span>
 <span class="co">#&gt; $Female</span>
@@ -283,44 +279,55 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=cheese">https://​cloud.r-project.org/​package=cheese</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/zajichek/cheese/">https://​github.com/​zajichek/​cheese/​</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=cheese" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/zajichek/cheese/" class="external-link">Browse source code</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing cheese</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Alex Zajichek <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=cheese"><img src="https://www.r-pkg.org/badges/version/cheese" alt="CRAN Status"></a></li>
+<li><a href="https://cran.r-project.org/package=cheese" class="external-link"><img src="https://www.r-pkg.org/badges/version/cheese" alt="CRAN Status"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Alex Zajichek.</p>
+  <p></p>
+<p>Developed by Alex Zajichek.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -328,6 +335,8 @@
 
   
 
+
+  
 
   </body>
 </html>

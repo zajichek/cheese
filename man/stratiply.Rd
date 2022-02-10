@@ -50,7 +50,7 @@ heart_disease \%>\%
 heart_disease \%>\%
   stratiply(
         f = glm,
-        by = c(Sex, is.logical),
+        by = c(Sex, where(is.logical)),
         formula = HeartDisease ~ Age,
         family = "binomial"
   ) 
