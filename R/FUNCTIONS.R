@@ -854,9 +854,7 @@ order_levels <-
       ) %>%
       
       #Within each combination
-      dplyr::group_by_at(
-        tidyselect::all_of(".id")
-      ) %>%
+      dplyr::group_by_at(".id") %>%
       
       #Concatenate the levels
       dplyr::summarise(
@@ -1597,11 +1595,7 @@ absorb_descriptive_variable <-
         results %>%
         
         #For each level
-        dplyr::group_by_at(
-          dplyr::vars(
-            tidyselect::all_of(use_groups)
-          )
-        ) %>%
+        dplyr::group_by_at(use_groups) %>%
         
         #Absorb the strings
         dplyr::do(
@@ -1735,11 +1729,7 @@ f_add_n <-
           data %>%
           
           #Group by column strata
-          dplyr::group_by_at(
-            dplyr::vars(
-              tidyselect::all_of(by)
-            )
-          ) %>%
+          dplyr::group_by_at(by) %>%
           
           #Compute sample size
           dplyr::summarise(
@@ -1789,11 +1779,7 @@ remove_duplicates <-
         results %>%
         
         #Remove duplicate values
-        dplyr::group_by_at(
-          dplyr::vars(
-            tidyselect::all_of(groups)
-          )
-        )
+        dplyr::group_by_at(groups)
       
     }
     
@@ -2232,11 +2218,7 @@ univariate_table <-
           results %>%
           
           #Group by row strata
-          dplyr::group_by_at(
-            dplyr::vars(
-              tidyselect::all_of(row_strata)
-            )
-          )
+          dplyr::group_by_at(row_strata)
         
       }
       
