@@ -1336,7 +1336,8 @@ descriptives <-
       purrr::map_depth(
         .depth = 3,
         descriptives_component,
-        na_string = na_string
+        na_string = na_string,
+        .ragged = TRUE
       ) %>%
       
       #Bind columns
