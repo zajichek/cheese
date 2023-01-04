@@ -46,7 +46,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -92,13 +92,19 @@
 
     
     
-<p>Once a dataset is cleaned and ready for statistical analysis, the first step is typically to summarize it. The <code><a href="../reference/univariate_table.html">univariate_table()</a></code> function makes it easy to create a custom descriptive analysis while consistently producing clean, presentation-ready output. It is built to integrate directly into your analysis work flow (e.g. R markdown) but can also be called from the console and be rendered in a number of formats.</p>
+<p>Once a dataset is cleaned and ready for statistical analysis, the
+first step is typically to summarize it. The
+<code><a href="../reference/univariate_table.html">univariate_table()</a></code> function makes it easy to create a
+custom descriptive analysis while consistently producing clean,
+presentation-ready output. It is built to integrate directly into your
+analysis work flow (e.g. R markdown) but can also be called from the
+console and be rendered in a number of formats.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://zajichek.github.io/cheese" class="external-link">cheese</a></span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Loading required package: cheese</span></code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://zajichek.github.io/cheese/" class="external-link">cheese</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Loading required package: cheese</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -264,20 +270,27 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>By default, an HTML table is produced containing descriptive statistics for columns in the dataset.</p>
+<p>By default, an HTML table is produced containing descriptive
+statistics for columns in the dataset.</p>
 <div class="section level2">
 <h2 id="custom-string-templates">Custom string templates<a class="anchor" aria-label="anchor" href="#custom-string-templates"></a>
 </h2>
-<p>In the table above, the summary statistics are presented within the cells in a particular format for different types of data. You can use the <code>_summary</code> arguments to customize not only the appearance that the results are presented with, but the values that go into the results themselves.</p>
-<p>Suppose instead of the <code>"median (q1, q3)"</code> being displayed for numeric data, you want the <code>"mean [sd] / median"</code>, in that exact format:</p>
+<p>In the table above, the summary statistics are presented within the
+cells in a particular format for different types of data. You can use
+the <code>_summary</code> arguments to customize not only the appearance
+that the results are presented with, but the values that go into the
+results themselves.</p>
+<p>Suppose instead of the <code>"median (q1, q3)"</code> being displayed
+for numeric data, you want the <code>"mean [sd] / median"</code>, in
+that exact format:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    numeric_summary <span class="op">=</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        Summary <span class="op">=</span> <span class="st">"mean [sd] / median"</span>
-      <span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    numeric_summary <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        Summary <span class="op">=</span> <span class="st">"mean [sd] / median"</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -443,15 +456,18 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>The name <code>Summary</code> was used to ensure that the result for the numeric data binded in the same column as the result for the other data types. If you chose to name it something else, you’d get a new column with those summaries:</p>
+<p>The name <code>Summary</code> was used to ensure that the result for
+the numeric data binded in the same column as the result for the other
+data types. If you chose to name it something else, you’d get a new
+column with those summaries:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    numeric_summary <span class="op">=</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        NewSummary <span class="op">=</span> <span class="st">"mean [sd] / median"</span>
-      <span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    numeric_summary <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        NewSummary <span class="op">=</span> <span class="st">"mean [sd] / median"</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -648,21 +664,22 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>You can add as many summary columns as you want separately for each type of data:</p>
+<p>You can add as many summary columns as you want separately for each
+type of data:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    numeric_summary <span class="op">=</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        `Numeric only` <span class="op">=</span> <span class="st">"mean [sd] / median"</span>,
-        Summary <span class="op">=</span> <span class="st">"median (q1, q3)"</span>
-      <span class="op">)</span>,
-    categorical_summary <span class="op">=</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        Summary <span class="op">=</span> <span class="st">"count"</span>,
-        `Categorical only` <span class="op">=</span> <span class="st">"percent = 100 * proportion"</span>
-      <span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    numeric_summary <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        `Numeric only` <span class="op">=</span> <span class="st">"mean [sd] / median"</span>,</span>
+<span>        Summary <span class="op">=</span> <span class="st">"median (q1, q3)"</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>    categorical_summary <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        Summary <span class="op">=</span> <span class="st">"count"</span>,</span>
+<span>        `Categorical only` <span class="op">=</span> <span class="st">"percent = 100 * proportion"</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -904,18 +921,19 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>A more visually-appealing case for adding multiple summaries is probably when all the data is the same type:</p>
+<p>A more visually-appealing case for adding multiple summaries is
+probably when all the data is the same type:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    categorical_types <span class="op">=</span> <span class="cn">NULL</span>, <span class="co">#Easily disable categorical data from being summarized</span>
-    numeric_summary <span class="op">=</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        `Median (Q1, Q3)` <span class="op">=</span> <span class="st">"median (q1, q3)"</span>,
-        `Min-Max` <span class="op">=</span> <span class="st">"min - max"</span>,
-        `Mean (SD)` <span class="op">=</span> <span class="st">"mean (sd)"</span>
-      <span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    categorical_types <span class="op">=</span> <span class="cn">NULL</span>, <span class="co">#Easily disable categorical data from being summarized</span></span>
+<span>    numeric_summary <span class="op">=</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        `Median (Q1, Q3)` <span class="op">=</span> <span class="st">"median (q1, q3)"</span>,</span>
+<span>        `Min-Max` <span class="op">=</span> <span class="st">"min - max"</span>,</span>
+<span>        `Mean (SD)` <span class="op">=</span> <span class="st">"mean (sd)"</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -992,13 +1010,13 @@ MaximumHR
 </table>
 <p>Or when adding a summary that applies to all columns:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    all_summary <span class="op">=</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        `# obs. non-missing` <span class="op">=</span> <span class="st">"available of length"</span>
-      <span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    all_summary <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        `# obs. non-missing` <span class="op">=</span> <span class="st">"available of length"</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -1259,17 +1277,27 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>These add an extra row for categorical variables. You may have also noticed that the <code>BloodSugar</code> column didn’t show up in the table until the <code>all_summary</code> argument was used–this is because it is not classified as numeric or categorical data, and thus not evaluated by default. See the “Backend functionality” section to learn more.</p>
+<p>These add an extra row for categorical variables. You may have also
+noticed that the <code>BloodSugar</code> column didn’t show up in the
+table until the <code>all_summary</code> argument was used–this is
+because it is not classified as numeric or categorical data, and thus
+not evaluated by default. See the “Backend functionality” section to
+learn more.</p>
 </div>
 <div class="section level2">
 <h2 id="stratification-variables">Stratification variables<a class="anchor" aria-label="anchor" href="#stratification-variables"></a>
 </h2>
-<p>The <code>strata</code> argument takes a <code><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula()</a></code> that can be used to stratify the analysis by any number of variables. Columns on the left side will appear down the rows, and columns on the right side will spread across the columns. You can use <code>+</code> on either side to specify more than one column. Let’s start by stratifying sex across the columns:</p>
+<p>The <code>strata</code> argument takes a <code><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula()</a></code> that
+can be used to stratify the analysis by any number of variables. Columns
+on the left side will appear down the rows, and columns on the right
+side will spread across the columns. You can use <code>+</code> on
+either side to specify more than one column. Let’s start by stratifying
+sex across the columns:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -1454,10 +1482,10 @@ Yes
 </table>
 <p>You can do the same thing down the rows:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="va">Sex</span> <span class="op">~</span> <span class="fl">1</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="va">Sex</span> <span class="op">~</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -1806,10 +1834,10 @@ Yes
 </table>
 <p>Or even both:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="va">Sex</span> <span class="op">~</span> <span class="va">HeartDisease</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="va">Sex</span> <span class="op">~</span> <span class="va">HeartDisease</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -2163,12 +2191,13 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>Now suppose you want both stratification variables across the columns:</p>
+<p>Now suppose you want both stratification variables across the
+columns:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span> <span class="op">+</span> <span class="va">HeartDisease</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span> <span class="op">+</span> <span class="va">HeartDisease</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2405,12 +2434,13 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>The levels will span the columns in a hierarchical fashion depending on their order in the formula:</p>
+<p>The levels will span the columns in a hierarchical fashion depending
+on their order in the formula:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="op">~</span> <span class="va">HeartDisease</span> <span class="op">+</span> <span class="va">Sex</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="op">~</span> <span class="va">HeartDisease</span> <span class="op">+</span> <span class="va">Sex</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2649,10 +2679,10 @@ Yes
 </table>
 <p>Similarly, the rows also collapse hierarchically:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="va">HeartDisease</span> <span class="op">+</span> <span class="va">Sex</span> <span class="op">~</span> <span class="fl">1</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="va">HeartDisease</span> <span class="op">+</span> <span class="va">Sex</span> <span class="op">~</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -3338,20 +3368,21 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>You can use any of the functionality described in the previous section with stratification variables as well:</p>
+<p>You can use any of the functionality described in the previous
+section with stratification variables as well:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span> <span class="op">+</span> <span class="va">HeartDisease</span>,
-    numeric_summary <span class="op">=</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        `Mean (SD)` <span class="op">=</span> <span class="st">"mean (sd)"</span>
-      <span class="op">)</span>,
-    categorical_summary <span class="op">=</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        `Count (%)` <span class="op">=</span> <span class="st">"count (percent%)"</span>
-      <span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span> <span class="op">+</span> <span class="va">HeartDisease</span>,</span>
+<span>    numeric_summary <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        `Mean (SD)` <span class="op">=</span> <span class="st">"mean (sd)"</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>    categorical_summary <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        `Count (%)` <span class="op">=</span> <span class="st">"count (percent%)"</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -3704,17 +3735,19 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>The summary columns simply get added to the column-spanning hierarchy.</p>
+<p>The summary columns simply get added to the column-spanning
+hierarchy.</p>
 <div class="section level3">
 <h3 id="adding-sample-size">Adding sample size<a class="anchor" aria-label="anchor" href="#adding-sample-size"></a>
 </h3>
-<p>The <code>add_n</code> argument will add the sample size to the label for the stratification group:</p>
+<p>The <code>add_n</code> argument will add the sample size to the label
+for the stratification group:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span>,
-    add_n <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span>,</span>
+<span>    add_n <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -3897,13 +3930,15 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>When multiple stratification variables are added on one side of the formula, the sample size will show up on the lowest level of the hierarchy, excluding summary columns:</p>
+<p>When multiple stratification variables are added on one side of the
+formula, the sample size will show up on the lowest level of the
+hierarchy, excluding summary columns:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span> <span class="op">+</span> <span class="va">HeartDisease</span>,
-    add_n <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span> <span class="op">+</span> <span class="va">HeartDisease</span>,</span>
+<span>    add_n <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -4140,13 +4175,14 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>A limitation is that when sample size is added in the presence of row and column strata, it is displayed for the marginal groups only:</p>
+<p>A limitation is that when sample size is added in the presence of row
+and column strata, it is displayed for the marginal groups only:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="va">Sex</span> <span class="op">~</span> <span class="va">HeartDisease</span>,
-    add_n <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="va">Sex</span> <span class="op">~</span> <span class="va">HeartDisease</span>,</span>
+<span>    add_n <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -4504,34 +4540,41 @@ Yes
 <div class="section level3">
 <h3 id="association-metrics">Association metrics<a class="anchor" aria-label="anchor" href="#association-metrics"></a>
 </h3>
-<p>Often when a descriptive analysis is stratified by one or more variables, it is also of interest to add statistics that compare each variable across the groups. The <code>associations</code> argument allows you to add a list containing an unlimited number of functions that can produce a scalar value to be placed in the table. First, let’s define a function:</p>
+<p>Often when a descriptive analysis is stratified by one or more
+variables, it is also of interest to add statistics that compare each
+variable across the groups. The <code>associations</code> argument
+allows you to add a list containing an unlimited number of functions
+that can produce a scalar value to be placed in the table. First, let’s
+define a function:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#Function for a p-value</span>
-<span class="va">pval</span> <span class="op">&lt;-</span>
-  <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-    
-    <span class="co">#For categorical data use Fisher's Exact test</span>
-    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="../reference/some_type.html">some_type</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"factor"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-      
-      <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, simulate.p.value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span>
-    
-    <span class="co">#Otherwise use Kruskall-Wallis</span>
-    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-      
-      <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kruskal.test.html" class="external-link">kruskal.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span>
-      
-    <span class="op">}</span>
-    
-    <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">p</span> <span class="op">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt;0.001"</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">p</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-    
-  <span class="op">}</span></code></pre></div>
-<p>The stratification variable will be placed in the <em>second</em> argument of the function(s) provided. Now you can add it to the function call:</p>
+<code class="sourceCode R"><span><span class="co">#Function for a p-value</span></span>
+<span><span class="va">pval</span> <span class="op">&lt;-</span></span>
+<span>  <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    </span>
+<span>    <span class="co">#For categorical data use Fisher's Exact test</span></span>
+<span>    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="../reference/some_type.html">some_type</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"factor"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      </span>
+<span>      <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, simulate.p.value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span></span>
+<span>    </span>
+<span>    <span class="co">#Otherwise use Kruskall-Wallis</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>      </span>
+<span>      <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kruskal.test.html" class="external-link">kruskal.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span></span>
+<span>      </span>
+<span>    <span class="op">}</span></span>
+<span>    </span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">p</span> <span class="op">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt;0.001"</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">p</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>    </span>
+<span>  <span class="op">}</span></span></code></pre></div>
+<p>The stratification variable will be placed in the <em>second</em>
+argument of the function(s) provided. Now you can add it to the function
+call:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="op">~</span> <span class="va">HeartDisease</span>,
-    associations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>`P-value` <span class="op">=</span> <span class="va">pval</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="op">~</span> <span class="va">HeartDisease</span>,</span>
+<span>    associations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>`P-value` <span class="op">=</span> <span class="va">pval</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -4787,14 +4830,16 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>The name of function in the list is what becomes the column label.</p>
-<p>The comparison will take place across the number of subgroups there are within the column stratification:</p>
+<p>The name of function in the list is what becomes the column
+label.</p>
+<p>The comparison will take place across the number of subgroups there
+are within the column stratification:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span> <span class="op">+</span> <span class="va">HeartDisease</span>,
-    associations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>`P-value` <span class="op">=</span> <span class="va">pval</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span> <span class="op">+</span> <span class="va">HeartDisease</span>,</span>
+<span>    associations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>`P-value` <span class="op">=</span> <span class="va">pval</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -5096,13 +5141,14 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>However, using a row stratification makes the comparisons be <em>within</em> those groups:</p>
+<p>However, using a row stratification makes the comparisons be
+<em>within</em> those groups:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    strata <span class="op">=</span> <span class="va">Sex</span> <span class="op">~</span> <span class="va">HeartDisease</span>,
-    associations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>`P-value` <span class="op">=</span> <span class="va">pval</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="va">Sex</span> <span class="op">~</span> <span class="va">HeartDisease</span>,</span>
+<span>    associations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>`P-value` <span class="op">=</span> <span class="va">pval</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -5575,27 +5621,37 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>In general, there must be at least one column stratification variable in order to use association metrics. See <code><a href="../reference/univariate_associations.html">univariate_associations()</a></code> for more details on the workhorse of this functionality.</p>
+<p>In general, there must be at least one column stratification variable
+in order to use association metrics. See
+<code><a href="../reference/univariate_associations.html">univariate_associations()</a></code> for more details on the workhorse
+of this functionality.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="backend-functionality">Backend functionality<a class="anchor" aria-label="anchor" href="#backend-functionality"></a>
 </h2>
-<p><code><a href="../reference/descriptives.html">descriptives()</a></code> is the function that drives the computation behind the statistics for the columns of the input dataset. Any of its arguments can be passed from <code><a href="../reference/univariate_table.html">univariate_table()</a></code> to add further customization.</p>
+<p><code><a href="../reference/descriptives.html">descriptives()</a></code> is the function that drives the
+computation behind the statistics for the columns of the input dataset.
+Any of its arguments can be passed from <code><a href="../reference/univariate_table.html">univariate_table()</a></code>
+to add further customization.</p>
 <div class="section level3">
 <h3 id="specifying-data-types">Specifying data types<a class="anchor" aria-label="anchor" href="#specifying-data-types"></a>
 </h3>
-<p>As noted above, one of the columns did not appear in the table by default because it was a <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical()</a></code> type. By default, only <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor()</a></code> and <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code> types are placed into the result, though there are (at least) three ways to include it:</p>
+<p>As noted above, one of the columns did not appear in the table by
+default because it was a <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical()</a></code> type. By default, only
+<code><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor()</a></code> and <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code> types are placed into
+the result, though there are (at least) three ways to include it:</p>
 <div class="section level4">
 <h4 id="change-column-type-prior-to-function-call">Change column type prior to function call<a class="anchor" aria-label="anchor" href="#change-column-type-prior-to-function-call"></a>
 </h4>
-<p>You could simply just make the column a conformable type outside of the call:</p>
+<p>You could simply just make the column a conformable type outside of
+the call:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
-    BloodSugar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">BloodSugar</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    BloodSugar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">BloodSugar</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -5785,14 +5841,18 @@ Yes
 </table>
 </div>
 <div class="section level4">
-<h4 id="change-scope-of-what-column-types-are-evaluated-by-what-function-sets">Change scope of what column types are evaluated by what function sets<a class="anchor" aria-label="anchor" href="#change-scope-of-what-column-types-are-evaluated-by-what-function-sets"></a>
+<h4 id="change-scope-of-what-column-types-are-evaluated-by-what-function-sets">Change scope of what column types are evaluated by what function
+sets<a class="anchor" aria-label="anchor" href="#change-scope-of-what-column-types-are-evaluated-by-what-function-sets"></a>
 </h4>
-<p>The <code>_types</code> arguments allow you to specify the data types that are to be interpreted by the high-level function call. Let’s allow <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical()</a></code> types to be treated as a categorical variable:</p>
+<p>The <code>_types</code> arguments allow you to specify the data types
+that are to be interpreted by the high-level function call. Let’s allow
+<code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical()</a></code> types to be treated as a categorical
+variable:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    categorical_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"factor"</span>, <span class="st">"logical"</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    categorical_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"factor"</span>, <span class="st">"logical"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -5984,16 +6044,20 @@ Yes
 <div class="section level4">
 <h4 id="allow-evaluation-by-its-own-set-of-functions">Allow evaluation by its own set of functions<a class="anchor" aria-label="anchor" href="#allow-evaluation-by-its-own-set-of-functions"></a>
 </h4>
-<p>The most flexible approach would be to define its own set of functions. By default, the data type of anything that is not interpreted as categorical or numeric is considered “other”. There is infrastruce in place to supply functions and summaries in the same manner for these columns.</p>
+<p>The most flexible approach would be to define its own set of
+functions. By default, the data type of anything that is not interpreted
+as categorical or numeric is considered “other”. There is infrastruce in
+place to supply functions and summaries in the same manner for these
+columns.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    f_other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>count <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>,
-    other_summary <span class="op">=</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        Summary <span class="op">=</span> <span class="st">"count"</span>
-      <span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    f_other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>count <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    other_summary <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        Summary <span class="op">=</span> <span class="st">"count"</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -6181,26 +6245,28 @@ Yes
 </tr>
 </tbody>
 </table>
-<p>You would need to also define functions for the percentages, proportions, etc. to exactly match the other examples.</p>
+<p>You would need to also define functions for the percentages,
+proportions, etc. to exactly match the other examples.</p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="adding-user-specified-functions">Adding user-specified functions<a class="anchor" aria-label="anchor" href="#adding-user-specified-functions"></a>
 </h3>
-<p>You can also add custom functions that can be available for numeric or categorical columns:</p>
+<p>You can also add custom functions that can be available for numeric
+or categorical columns:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    categorical_types <span class="op">=</span> <span class="cn">NULL</span>,
-    f_numeric <span class="op">=</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-        cv <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>
-      <span class="op">)</span>,
-    numeric_summary <span class="op">=</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        `Coef. of variation` <span class="op">=</span> <span class="st">"sd / mean = cv"</span>
-      <span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    categorical_types <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    f_numeric <span class="op">=</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>        cv <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>    numeric_summary <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        `Coef. of variation` <span class="op">=</span> <span class="st">"sd / mean = cv"</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -6245,67 +6311,74 @@ MaximumHR
 </tr>
 </tbody>
 </table>
-<p>The names of functions become the patterns that searched in the string templates.</p>
+<p>The names of functions become the patterns that searched in the
+string templates.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="additional-preferences">Additional preferences<a class="anchor" aria-label="anchor" href="#additional-preferences"></a>
 </h2>
-<p>Finally, we’ll look at a few of the appearance-related arguments. These can be applied with any combination of other arguments.</p>
+<p>Finally, we’ll look at a few of the appearance-related arguments.
+These can be applied with any combination of other arguments.</p>
 <div class="section level3">
 <h3 id="rendering-format">Rendering format<a class="anchor" aria-label="anchor" href="#rendering-format"></a>
 </h3>
-<p>As mentioned above, the default format for the table is HTML, but you could choose an alternative with the <code>format</code> argument:</p>
+<p>As mentioned above, the default format for the table is HTML, but you
+could choose an alternative with the <code>format</code> argument:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    format <span class="op">=</span> <span class="st">"none"</span>
-  <span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 14 × 3</span></span>
-<span class="co">##    Variable                Level              Summary         </span>
-<span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="co">## <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">"</span>Age<span style="color: #949494;">"</span>                   <span style="color: #949494;">""</span>                 56 (48, 61)     </span>
-<span class="co">## <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">"</span>Sex<span style="color: #949494;">"</span>                   <span style="color: #949494;">"</span>Female<span style="color: #949494;">"</span>           97 (32.01%)     </span>
-<span class="co">## <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">""</span>                      <span style="color: #949494;">"</span>Male<span style="color: #949494;">"</span>             206 (67.99%)    </span>
-<span class="co">## <span style="color: #BCBCBC;"> 4</span> <span style="color: #949494;">"</span>ChestPain<span style="color: #949494;">"</span>             <span style="color: #949494;">"</span>Typical angina<span style="color: #949494;">"</span>   23 (7.59%)      </span>
-<span class="co">## <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">""</span>                      <span style="color: #949494;">"</span>Atypical angina<span style="color: #949494;">"</span>  50 (16.5%)      </span>
-<span class="co">## <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">""</span>                      <span style="color: #949494;">"</span>Non-anginal pain<span style="color: #949494;">"</span> 86 (28.38%)     </span>
-<span class="co">## <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">""</span>                      <span style="color: #949494;">"</span>Asymptomatic<span style="color: #949494;">"</span>     144 (47.52%)    </span>
-<span class="co">## <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">"</span>BP<span style="color: #949494;">"</span>                    <span style="color: #949494;">""</span>                 130 (120, 140)  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">"</span>Cholesterol<span style="color: #949494;">"</span>           <span style="color: #949494;">""</span>                 241 (211, 275)  </span>
-<span class="co">## <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">"</span>MaximumHR<span style="color: #949494;">"</span>             <span style="color: #949494;">""</span>                 153 (133.5, 166)</span>
-<span class="co">## <span style="color: #BCBCBC;">11</span> <span style="color: #949494;">"</span>ExerciseInducedAngina<span style="color: #949494;">"</span> <span style="color: #949494;">"</span>No<span style="color: #949494;">"</span>               204 (67.33%)    </span>
-<span class="co">## <span style="color: #BCBCBC;">12</span> <span style="color: #949494;">""</span>                      <span style="color: #949494;">"</span>Yes<span style="color: #949494;">"</span>              99 (32.67%)     </span>
-<span class="co">## <span style="color: #BCBCBC;">13</span> <span style="color: #949494;">"</span>HeartDisease<span style="color: #949494;">"</span>          <span style="color: #949494;">"</span>No<span style="color: #949494;">"</span>               164 (54.13%)    </span>
-<span class="co">## <span style="color: #BCBCBC;">14</span> <span style="color: #949494;">""</span>                      <span style="color: #949494;">"</span>Yes<span style="color: #949494;">"</span>              139 (45.87%)</span></code></pre>
-<p>There are also options for <code>"latex", "pandoc", "markdown"</code>.</p>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    format <span class="op">=</span> <span class="st">"none"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 14 × 3</span></span></span>
+<span><span class="co">##    Variable                Level              Summary         </span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">"</span>Age<span style="color: #949494;">"</span>                   <span style="color: #949494;">""</span>                 56 (48, 61)     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">"</span>Sex<span style="color: #949494;">"</span>                   <span style="color: #949494;">"</span>Female<span style="color: #949494;">"</span>           97 (32.01%)     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">""</span>                      <span style="color: #949494;">"</span>Male<span style="color: #949494;">"</span>             206 (67.99%)    </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> <span style="color: #949494;">"</span>ChestPain<span style="color: #949494;">"</span>             <span style="color: #949494;">"</span>Typical angina<span style="color: #949494;">"</span>   23 (7.59%)      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">""</span>                      <span style="color: #949494;">"</span>Atypical angina<span style="color: #949494;">"</span>  50 (16.5%)      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">""</span>                      <span style="color: #949494;">"</span>Non-anginal pain<span style="color: #949494;">"</span> 86 (28.38%)     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">""</span>                      <span style="color: #949494;">"</span>Asymptomatic<span style="color: #949494;">"</span>     144 (47.52%)    </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">"</span>BP<span style="color: #949494;">"</span>                    <span style="color: #949494;">""</span>                 130 (120, 140)  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">"</span>Cholesterol<span style="color: #949494;">"</span>           <span style="color: #949494;">""</span>                 241 (211, 275)  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">"</span>MaximumHR<span style="color: #949494;">"</span>             <span style="color: #949494;">""</span>                 153 (133.5, 166)</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">11</span> <span style="color: #949494;">"</span>ExerciseInducedAngina<span style="color: #949494;">"</span> <span style="color: #949494;">"</span>No<span style="color: #949494;">"</span>               204 (67.33%)    </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">12</span> <span style="color: #949494;">""</span>                      <span style="color: #949494;">"</span>Yes<span style="color: #949494;">"</span>              99 (32.67%)     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">13</span> <span style="color: #949494;">"</span>HeartDisease<span style="color: #949494;">"</span>          <span style="color: #949494;">"</span>No<span style="color: #949494;">"</span>               164 (54.13%)    </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">14</span> <span style="color: #949494;">""</span>                      <span style="color: #949494;">"</span>Yes<span style="color: #949494;">"</span>              139 (45.87%)</span></span></code></pre>
+<p>There are also options for
+<code>"latex", "pandoc", "markdown"</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="relabeling-releveling-and-reordering">Relabeling, releveling and reordering<a class="anchor" aria-label="anchor" href="#relabeling-releveling-and-reordering"></a>
 </h3>
-<p>You can use the <code>labels</code> and <code>levels</code> arguments to add clean text to any of the variable or categorical level names, and the <code>order</code> argument to change the position of the variables in the result:</p>
+<p>You can use the <code>labels</code> and <code>levels</code> arguments
+to add clean text to any of the variable or categorical level names, and
+the <code>order</code> argument to change the position of the variables
+in the result:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    labels <span class="op">=</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        Age <span class="op">=</span> <span class="st">"Age (years)"</span>,
-        ChestPain <span class="op">=</span> <span class="st">"Chest pain"</span>
-      <span class="op">)</span>,
-    levels <span class="op">=</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-        Sex <span class="op">=</span>
-          <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-            Male <span class="op">=</span> <span class="st">"M"</span>
-          <span class="op">)</span>
-      <span class="op">)</span>,
-    order <span class="op">=</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        <span class="st">"BP"</span>,
-        <span class="st">"Age"</span>,
-        <span class="st">"Cholesterol"</span>
-      <span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    labels <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        Age <span class="op">=</span> <span class="st">"Age (years)"</span>,</span>
+<span>        ChestPain <span class="op">=</span> <span class="st">"Chest pain"</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>    levels <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>        Sex <span class="op">=</span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>            Male <span class="op">=</span> <span class="st">"M"</span></span>
+<span>          <span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>    order <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        <span class="st">"BP"</span>,</span>
+<span>        <span class="st">"Age"</span>,</span>
+<span>        <span class="st">"Cholesterol"</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:left;">
@@ -6471,20 +6544,25 @@ M
 </tr>
 </tbody>
 </table>
-<p>Notice you only need to specify values that need to be changed. Also, ordering is done with the original names even when relabeled.</p>
+<p>Notice you only need to specify values that need to be changed. Also,
+ordering is done with the original names even when relabeled.</p>
 </div>
 <div class="section level3">
 <h3 id="headers-fill-values-and-captions">Headers, fill values, and captions<a class="anchor" aria-label="anchor" href="#headers-fill-values-and-captions"></a>
 </h3>
-<p>The <code>variableName</code> and <code>levelName</code> arguments are used to change what the headers are for the column names and categorical levels, while <code>fill_blanks</code> determines what goes in empty cells. Finally, the <code>caption</code> argument specifies labels the entire table:</p>
+<p>The <code>variableName</code> and <code>levelName</code> arguments
+are used to change what the headers are for the column names and
+categorical levels, while <code>fill_blanks</code> determines what goes
+in empty cells. Finally, the <code>caption</code> argument specifies
+labels the entire table:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    variableName <span class="op">=</span> <span class="st">"THESE ARE VARIABLES"</span>,
-    levelName <span class="op">=</span> <span class="st">"THESE ARE LEVELS"</span>,
-    fill_blanks <span class="op">=</span> <span class="st">"BLANK"</span>,
-    caption <span class="op">=</span> <span class="st">"HERE IS MY CAPTION"</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">heart_disease</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    variableName <span class="op">=</span> <span class="st">"THESE ARE VARIABLES"</span>,</span>
+<span>    levelName <span class="op">=</span> <span class="st">"THESE ARE LEVELS"</span>,</span>
+<span>    fill_blanks <span class="op">=</span> <span class="st">"BLANK"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"HERE IS MY CAPTION"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 HERE IS MY CAPTION
@@ -6678,7 +6756,7 @@ Yes
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

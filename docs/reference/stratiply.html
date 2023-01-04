@@ -29,7 +29,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -66,28 +66,36 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">stratiply</span><span class="op">(</span>
-    <span class="va">data</span>,
-    <span class="va">f</span>,
-    <span class="va">by</span>,
-    <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">stratiply</span><span class="op">(</span></span>
+<span>    <span class="va">data</span>,</span>
+<span>    <span class="va">f</span>,</span>
+<span>    <span class="va">by</span>,</span>
+<span>    <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>A <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></code>.</p></dd>
+
 <dt>f</dt>
 <dd><p>A function that takes a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></code> as an argument.</p></dd>
+
 <dt>by</dt>
 <dd><p>A vector of quoted/unquoted columns, positions, and/or <code><a href="https://tidyselect.r-lib.org/reference/language.html" class="external-link">tidyselect::select_helpers</a></code></p></dd>
+
 <dt>...</dt>
 <dd><p>Additional arguments passed to <code>f</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code></p>
+    
+
+<p>A <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code></p>
+
+
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -96,76 +104,76 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#Unquoted selection</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">stratiply</span><span class="op">(</span></span>
-<span class="r-in">        <span class="va">head</span>,</span>
-<span class="r-in">        <span class="va">Sex</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#Unquoted selection</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">stratiply</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="va">head</span>,</span></span>
+<span class="r-in"><span>        <span class="va">Sex</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Female</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Age ChestPain           BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>    41 Atypical angina    130         204 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>    62 Asymptomatic       140         268 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>    57 Asymptomatic       120         354 FALSE            163 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>    56 Atypical angina    140         294 FALSE            153 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    48 Non-anginal pain   130         275 FALSE            139 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>    58 Typical angina     150         283 TRUE             162 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Age ChestPain           BP Cholesterol BloodSugar MaximumHR Exerci…¹ Heart…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>    41 Atypical angina    130         204 FALSE            172 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>    62 Asymptomatic       140         268 FALSE            160 No       Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>    57 Asymptomatic       120         354 FALSE            163 Yes      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>    56 Atypical angina    140         294 FALSE            153 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    48 Non-anginal pain   130         275 FALSE            139 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>    58 Typical angina     150         283 TRUE             162 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable names ¹​ExerciseInducedAngina, ²​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Male</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Age ChestPain           BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>    63 Typical angina     145         233 TRUE             150 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>    67 Asymptomatic       160         286 FALSE            108 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>    67 Asymptomatic       120         229 FALSE            129 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>    37 Non-anginal pain   130         250 FALSE            187 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    56 Atypical angina    120         236 FALSE            178 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>    63 Asymptomatic       130         254 FALSE            147 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Age ChestPain           BP Cholesterol BloodSugar MaximumHR Exerci…¹ Heart…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>    63 Typical angina     145         233 TRUE             150 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>    67 Asymptomatic       160         286 FALSE            108 Yes      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>    67 Asymptomatic       120         229 FALSE            129 Yes      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>    37 Non-anginal pain   130         250 FALSE            187 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    56 Atypical angina    120         236 FALSE            178 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>    63 Asymptomatic       130         254 FALSE            147 No       Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable names ¹​ExerciseInducedAngina, ²​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Select helper</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">stratiply</span><span class="op">(</span></span>
-<span class="r-in">        f <span class="op">=</span> <span class="va">head</span>,</span>
-<span class="r-in">        by <span class="op">=</span> <span class="fu">starts_with</span><span class="op">(</span><span class="st">"S"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Select helper</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">stratiply</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        f <span class="op">=</span> <span class="va">head</span>,</span></span>
+<span class="r-in"><span>        by <span class="op">=</span> <span class="fu">starts_with</span><span class="op">(</span><span class="st">"S"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Female</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Age ChestPain           BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>    41 Atypical angina    130         204 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>    62 Asymptomatic       140         268 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>    57 Asymptomatic       120         354 FALSE            163 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>    56 Atypical angina    140         294 FALSE            153 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    48 Non-anginal pain   130         275 FALSE            139 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>    58 Typical angina     150         283 TRUE             162 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Age ChestPain           BP Cholesterol BloodSugar MaximumHR Exerci…¹ Heart…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>    41 Atypical angina    130         204 FALSE            172 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>    62 Asymptomatic       140         268 FALSE            160 No       Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>    57 Asymptomatic       120         354 FALSE            163 Yes      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>    56 Atypical angina    140         294 FALSE            153 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    48 Non-anginal pain   130         275 FALSE            139 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>    58 Typical angina     150         283 TRUE             162 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable names ¹​ExerciseInducedAngina, ²​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Male</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Age ChestPain           BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>    63 Typical angina     145         233 TRUE             150 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>    67 Asymptomatic       160         286 FALSE            108 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>    67 Asymptomatic       120         229 FALSE            129 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>    37 Non-anginal pain   130         250 FALSE            187 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    56 Atypical angina    120         236 FALSE            178 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>    63 Asymptomatic       130         254 FALSE            147 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Age ChestPain           BP Cholesterol BloodSugar MaximumHR Exerci…¹ Heart…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>    63 Typical angina     145         233 TRUE             150 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>    67 Asymptomatic       160         286 FALSE            108 Yes      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>    67 Asymptomatic       120         229 FALSE            129 Yes      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>    37 Non-anginal pain   130         250 FALSE            187 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>    56 Atypical angina    120         236 FALSE            178 No       No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>    63 Asymptomatic       130         254 FALSE            147 No       Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable names ¹​ExerciseInducedAngina, ²​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in">    </span>
-<span class="r-in"><span class="co">#Use additional arguments for the function</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">stratiply</span><span class="op">(</span></span>
-<span class="r-in">        f <span class="op">=</span> <span class="va">glm</span>,</span>
-<span class="r-in">        by <span class="op">=</span> <span class="va">Sex</span>,</span>
-<span class="r-in">        formula <span class="op">=</span> <span class="va">HeartDisease</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span class="r-in">        family <span class="op">=</span> <span class="st">"binomial"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"><span>    </span></span>
+<span class="r-in"><span><span class="co">#Use additional arguments for the function</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">stratiply</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        f <span class="op">=</span> <span class="va">glm</span>,</span></span>
+<span class="r-in"><span>        by <span class="op">=</span> <span class="va">Sex</span>,</span></span>
+<span class="r-in"><span>        formula <span class="op">=</span> <span class="va">HeartDisease</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>        family <span class="op">=</span> <span class="st">"binomial"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Female</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:  .f(formula = ..1, family = "binomial", data = .x[[i]])</span>
@@ -206,15 +214,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Null Deviance:	    283.2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residual Deviance: 191.5 	AIC: 211.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Use mixed selections to split by desired columns</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">stratiply</span><span class="op">(</span></span>
-<span class="r-in">        f <span class="op">=</span> <span class="va">glm</span>,</span>
-<span class="r-in">        by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Sex</span>, <span class="fu">where</span><span class="op">(</span><span class="va">is.logical</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">        formula <span class="op">=</span> <span class="va">HeartDisease</span> <span class="op">~</span> <span class="va">Age</span>,</span>
-<span class="r-in">        family <span class="op">=</span> <span class="st">"binomial"</span></span>
-<span class="r-in">  <span class="op">)</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Use mixed selections to split by desired columns</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">stratiply</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        f <span class="op">=</span> <span class="va">glm</span>,</span></span>
+<span class="r-in"><span>        by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Sex</span>, <span class="fu">where</span><span class="op">(</span><span class="va">is.logical</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        formula <span class="op">=</span> <span class="va">HeartDisease</span> <span class="op">~</span> <span class="va">Age</span>,</span></span>
+<span class="r-in"><span>        family <span class="op">=</span> <span class="st">"binomial"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Female</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Female$`FALSE`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -267,7 +275,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residual Deviance: 43.66 	AIC: 47.66</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in">  </span>
+<span class="r-in"><span>  </span></span>
 </code></pre></div>
     </div>
   </div>
@@ -282,7 +290,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

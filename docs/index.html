@@ -46,7 +46,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -131,15 +131,15 @@
 <h1 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h1>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#Load package</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://zajichek.github.io/cheese" class="external-link">cheese</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: cheese</span>
-
-<span class="co">#Make a descriptive table</span>
-<span class="va">heart_disease</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/univariate_table.html">univariate_table</a></span><span class="op">(</span>
-    format <span class="op">=</span> <span class="st">"markdown"</span> <span class="co">#Could also render as "html", "latex", "pandoc", or "none"</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#Load package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://zajichek.github.io/cheese/" class="external-link">cheese</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: cheese</span></span>
+<span></span>
+<span><span class="co">#Make a descriptive table</span></span>
+<span><span class="va">heart_disease</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/univariate_table.html">univariate_table</a></span><span class="op">(</span></span>
+<span>    format <span class="op">=</span> <span class="st">"markdown"</span> <span class="co">#Could also render as "html", "latex", "pandoc", or "none"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Variable</th>
@@ -220,58 +220,58 @@
 </tbody>
 </table>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#Run some models</span>
-<span class="va">heart_disease</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-
-  <span class="co">#Apply a function to subsets of the data</span>
-  <span class="fu"><a href="reference/stratiply.html">stratiply</a></span><span class="op">(</span>
-    by <span class="op">=</span> <span class="va">Sex</span>,
-    f <span class="op">=</span>
-      <span class="op">~</span><span class="va">.x</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-      
-      <span class="co">#Apply a function to pairwise combinations of columns</span>
-      <span class="fu"><a href="reference/dish.html">dish</a></span><span class="op">(</span>
-        left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ExerciseInducedAngina</span>, <span class="va">HeartDisease</span><span class="op">)</span>,
-        f <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html" class="external-link">pluck</a></span><span class="op">(</span><span class="st">"coefficients"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/enframe.html" class="external-link">enframe</a></span><span class="op">(</span><span class="op">)</span>
-      <span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-    
-    <span class="co">#Bind rows up to a specified depth</span>
-    <span class="fu"><a href="reference/fasten.html">fasten</a></span><span class="op">(</span>
-      into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Outcome"</span>, <span class="st">"Predictor"</span><span class="op">)</span>,
-      depth <span class="op">=</span> <span class="fl">1</span>
-    <span class="op">)</span>
-<span class="co">#&gt; $Female</span>
-<span class="co">#&gt; # A tibble: 28 x 4</span>
-<span class="co">#&gt;    Outcome               Predictor   name                  value</span>
-<span class="co">#&gt;    &lt;chr&gt;                 &lt;chr&gt;       &lt;chr&gt;                 &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 ExerciseInducedAngina Age         (Intercept)        -1.46   </span>
-<span class="co">#&gt;  2 ExerciseInducedAngina Age         x                   0.00416</span>
-<span class="co">#&gt;  3 ExerciseInducedAngina ChestPain   (Intercept)       -17.6    </span>
-<span class="co">#&gt;  4 ExerciseInducedAngina ChestPain   xAtypical angina   15.5    </span>
-<span class="co">#&gt;  5 ExerciseInducedAngina ChestPain   xNon-anginal pain  14.8    </span>
-<span class="co">#&gt;  6 ExerciseInducedAngina ChestPain   xAsymptomatic      17.4    </span>
-<span class="co">#&gt;  7 ExerciseInducedAngina BP          (Intercept)        -6.47   </span>
-<span class="co">#&gt;  8 ExerciseInducedAngina BP          x                   0.0383 </span>
-<span class="co">#&gt;  9 ExerciseInducedAngina Cholesterol (Intercept)        -2.06   </span>
-<span class="co">#&gt; 10 ExerciseInducedAngina Cholesterol x                   0.00315</span>
-<span class="co">#&gt; # … with 18 more rows</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $Male</span>
-<span class="co">#&gt; # A tibble: 28 x 4</span>
-<span class="co">#&gt;    Outcome               Predictor   name                 value</span>
-<span class="co">#&gt;    &lt;chr&gt;                 &lt;chr&gt;       &lt;chr&gt;                &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 ExerciseInducedAngina Age         (Intercept)       -2.44   </span>
-<span class="co">#&gt;  2 ExerciseInducedAngina Age         x                  0.0356 </span>
-<span class="co">#&gt;  3 ExerciseInducedAngina ChestPain   (Intercept)       -1.32   </span>
-<span class="co">#&gt;  4 ExerciseInducedAngina ChestPain   xAtypical angina  -1.39   </span>
-<span class="co">#&gt;  5 ExerciseInducedAngina ChestPain   xNon-anginal pain -0.219  </span>
-<span class="co">#&gt;  6 ExerciseInducedAngina ChestPain   xAsymptomatic      1.71   </span>
-<span class="co">#&gt;  7 ExerciseInducedAngina BP          (Intercept)        0.0385 </span>
-<span class="co">#&gt;  8 ExerciseInducedAngina BP          x                 -0.00424</span>
-<span class="co">#&gt;  9 ExerciseInducedAngina Cholesterol (Intercept)       -1.70   </span>
-<span class="co">#&gt; 10 ExerciseInducedAngina Cholesterol x                  0.00494</span>
-<span class="co">#&gt; # … with 18 more rows</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#Run some models</span></span>
+<span><span class="va">heart_disease</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span></span>
+<span>  <span class="co">#Apply a function to subsets of the data</span></span>
+<span>  <span class="fu"><a href="reference/stratiply.html">stratiply</a></span><span class="op">(</span></span>
+<span>    by <span class="op">=</span> <span class="va">Sex</span>,</span>
+<span>    f <span class="op">=</span></span>
+<span>      <span class="op">~</span><span class="va">.x</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>      </span>
+<span>      <span class="co">#Apply a function to pairwise combinations of columns</span></span>
+<span>      <span class="fu"><a href="reference/dish.html">dish</a></span><span class="op">(</span></span>
+<span>        left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ExerciseInducedAngina</span>, <span class="va">HeartDisease</span><span class="op">)</span>,</span>
+<span>        f <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html" class="external-link">pluck</a></span><span class="op">(</span><span class="st">"coefficients"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/enframe.html" class="external-link">enframe</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>    </span>
+<span>    <span class="co">#Bind rows up to a specified depth</span></span>
+<span>    <span class="fu"><a href="reference/fasten.html">fasten</a></span><span class="op">(</span></span>
+<span>      into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Outcome"</span>, <span class="st">"Predictor"</span><span class="op">)</span>,</span>
+<span>      depth <span class="op">=</span> <span class="fl">1</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="co">#&gt; $Female</span></span>
+<span><span class="co">#&gt; # A tibble: 28 × 4</span></span>
+<span><span class="co">#&gt;    Outcome               Predictor   name                  value</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;                 &lt;chr&gt;       &lt;chr&gt;                 &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 ExerciseInducedAngina Age         (Intercept)        -1.46   </span></span>
+<span><span class="co">#&gt;  2 ExerciseInducedAngina Age         x                   0.00416</span></span>
+<span><span class="co">#&gt;  3 ExerciseInducedAngina ChestPain   (Intercept)       -17.6    </span></span>
+<span><span class="co">#&gt;  4 ExerciseInducedAngina ChestPain   xAtypical angina   15.5    </span></span>
+<span><span class="co">#&gt;  5 ExerciseInducedAngina ChestPain   xNon-anginal pain  14.8    </span></span>
+<span><span class="co">#&gt;  6 ExerciseInducedAngina ChestPain   xAsymptomatic      17.4    </span></span>
+<span><span class="co">#&gt;  7 ExerciseInducedAngina BP          (Intercept)        -6.47   </span></span>
+<span><span class="co">#&gt;  8 ExerciseInducedAngina BP          x                   0.0383 </span></span>
+<span><span class="co">#&gt;  9 ExerciseInducedAngina Cholesterol (Intercept)        -2.06   </span></span>
+<span><span class="co">#&gt; 10 ExerciseInducedAngina Cholesterol x                   0.00315</span></span>
+<span><span class="co">#&gt; # … with 18 more rows</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Male</span></span>
+<span><span class="co">#&gt; # A tibble: 28 × 4</span></span>
+<span><span class="co">#&gt;    Outcome               Predictor   name                 value</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;                 &lt;chr&gt;       &lt;chr&gt;                &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 ExerciseInducedAngina Age         (Intercept)       -2.44   </span></span>
+<span><span class="co">#&gt;  2 ExerciseInducedAngina Age         x                  0.0356 </span></span>
+<span><span class="co">#&gt;  3 ExerciseInducedAngina ChestPain   (Intercept)       -1.32   </span></span>
+<span><span class="co">#&gt;  4 ExerciseInducedAngina ChestPain   xAtypical angina  -1.39   </span></span>
+<span><span class="co">#&gt;  5 ExerciseInducedAngina ChestPain   xNon-anginal pain -0.219  </span></span>
+<span><span class="co">#&gt;  6 ExerciseInducedAngina ChestPain   xAsymptomatic      1.71   </span></span>
+<span><span class="co">#&gt;  7 ExerciseInducedAngina BP          (Intercept)        0.0385 </span></span>
+<span><span class="co">#&gt;  8 ExerciseInducedAngina BP          x                 -0.00424</span></span>
+<span><span class="co">#&gt;  9 ExerciseInducedAngina Cholesterol (Intercept)       -1.70   </span></span>
+<span><span class="co">#&gt; 10 ExerciseInducedAngina Cholesterol x                  0.00494</span></span>
+<span><span class="co">#&gt; # … with 18 more rows</span></span></code></pre></div>
 <p>See the package vignettes and documentation for more thorough examples.</p>
 </div>
 
@@ -327,7 +327,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

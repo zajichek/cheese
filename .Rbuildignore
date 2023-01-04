@@ -10,3 +10,4 @@
 ^README-.*\.jpg$
 ^\.Rhistory$
 ^NEWS\.md$
+^NEWS\.html$

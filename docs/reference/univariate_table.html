@@ -29,7 +29,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -66,73 +66,94 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">univariate_table</span><span class="op">(</span>
-    <span class="va">data</span>,
-    strata <span class="op">=</span> <span class="cn">NULL</span>,
-    associations <span class="op">=</span> <span class="cn">NULL</span>,
-    numeric_summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Summary <span class="op">=</span> <span class="st">"median (q1, q3)"</span><span class="op">)</span>,
-    categorical_summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Summary <span class="op">=</span> <span class="st">"count (percent%)"</span><span class="op">)</span>,
-    other_summary <span class="op">=</span> <span class="cn">NULL</span>,
-    all_summary <span class="op">=</span> <span class="cn">NULL</span>,
-    evaluate <span class="op">=</span> <span class="cn">FALSE</span>,
-    add_n <span class="op">=</span> <span class="cn">FALSE</span>,
-    order <span class="op">=</span> <span class="cn">NULL</span>,
-    labels <span class="op">=</span> <span class="cn">NULL</span>,
-    levels <span class="op">=</span> <span class="cn">NULL</span>,
-    format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"html"</span>, <span class="st">"latex"</span>, <span class="st">"markdown"</span>, <span class="st">"pandoc"</span>, <span class="st">"none"</span><span class="op">)</span>,
-    variableName <span class="op">=</span> <span class="st">"Variable"</span>,
-    levelName <span class="op">=</span> <span class="st">"Level"</span>,
-    sep <span class="op">=</span> <span class="st">"_"</span>,
-    fill_blanks <span class="op">=</span> <span class="st">""</span>,
-    caption <span class="op">=</span> <span class="cn">NULL</span>,
-    <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">univariate_table</span><span class="op">(</span></span>
+<span>    <span class="va">data</span>,</span>
+<span>    strata <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    associations <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    numeric_summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Summary <span class="op">=</span> <span class="st">"median (q1, q3)"</span><span class="op">)</span>,</span>
+<span>    categorical_summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Summary <span class="op">=</span> <span class="st">"count (percent%)"</span><span class="op">)</span>,</span>
+<span>    other_summary <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    all_summary <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    evaluate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    add_n <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    order <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    levels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"html"</span>, <span class="st">"latex"</span>, <span class="st">"markdown"</span>, <span class="st">"pandoc"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>    variableName <span class="op">=</span> <span class="st">"Variable"</span>,</span>
+<span>    levelName <span class="op">=</span> <span class="st">"Level"</span>,</span>
+<span>    sep <span class="op">=</span> <span class="st">"_"</span>,</span>
+<span>    fill_blanks <span class="op">=</span> <span class="st">""</span>,</span>
+<span>    caption <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>A <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></code>.</p></dd>
+
 <dt>strata</dt>
 <dd><p>An additive <code><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></code> specifying stratification columns. Columns on the left side go down the rows, and columns on the right side go across the columns. Defaults to <code>NULL</code>.</p></dd>
+
 <dt>associations</dt>
 <dd><p>A named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code> of functions to evaluate with column strata and each variable. Defaults to <code>NULL</code>. See <code><a href="univariate_associations.html">univariate_associations</a></code>.</p></dd>
+
 <dt>numeric_summary</dt>
 <dd><p>A named vector containing string templates of how results for numeric data should be presented. See details for what is available by default. Defaults to <code>c(Summary = "median (q1, q3)")</code>.</p></dd>
+
 <dt>categorical_summary</dt>
 <dd><p>A named vector containing string templates of how results for categorical data should be presented. See details for what is available by default. Defaults to <code>c(Summary = "count (percent%)")</code>.</p></dd>
+
 <dt>other_summary</dt>
 <dd><p>A named character vector containing string templates of how results for non-numeric and non-categorical data should be presented. Defaults to <code>NULL</code>.</p></dd>
+
 <dt>all_summary</dt>
 <dd><p>A named character vector containing string templates of additional results applying to all variables. See details for what is available by default. Defaults to <code>NULL</code>.</p></dd>
+
 <dt>evaluate</dt>
 <dd><p>Should the results of the string templates be evaluated as an <code>R</code> expression after filled with their values? See <code><a href="absorb.html">absorb</a></code> for details.  Defaults to <code>FALSE</code>.</p></dd>
+
 <dt>add_n</dt>
 <dd><p>Should the sample size for each stratfication level be added to the result? Defaults to <code>FALSE</code>.</p></dd>
+
 <dt>order</dt>
 <dd><p>Arguments passed to <code><a href="https://forcats.tidyverse.org/reference/fct_relevel.html" class="external-link">forcats::fct_relevel</a></code> for reordering the variables. Defaults to <code>NULL</code></p></dd>
+
 <dt>labels</dt>
 <dd><p>A named character vector containing the new labels. Defaults to <code>NULL</code></p></dd>
+
 <dt>levels</dt>
 <dd><p>A named <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code> of named character vectors containing the new levels. Defaults to <code>NULL</code></p></dd>
+
 <dt>format</dt>
 <dd><p>The format that the result should be rendered in. Must be "html", "latex", "markdown", "pandoc", or "none". Defaults to <code>"html"</code>.</p></dd>
+
 <dt>variableName</dt>
 <dd><p>Header for the variable column in the result. Defaults to <code>"Variable"</code>.</p></dd>
+
 <dt>levelName</dt>
 <dd><p>Header for the factor level column in the result. Defaults to <code>"Level"</code>.</p></dd>
+
 <dt>sep</dt>
 <dd><p>Delimiter to separate summary columns. Defaults to <code>"_"</code>.</p></dd>
+
 <dt>fill_blanks</dt>
 <dd><p>String to fill in blank spaces in the result. Defaults to <code>""</code>.</p></dd>
+
 <dt>caption</dt>
 <dd><p>Caption for resulting table passed to <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable</a></code>. Defaults to <code>NULL</code>.</p></dd>
+
 <dt>...</dt>
 <dd><p>Additional arguments to pass to <code><a href="descriptives.html">descriptives</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A table of summary statistics in the specified <code>format</code>. A <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a></code> is returned if <code>format = "none"</code>.</p>
+    
+
+<p>A table of summary statistics in the specified <code>format</code>. A <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a></code> is returned if <code>format = "none"</code>.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -141,15 +162,15 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">#Set format</span></span>
-<span class="r-in"><span class="va">format</span> <span class="op">&lt;-</span> <span class="st">"pandoc"</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Default summary</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">univariate_table</span><span class="op">(</span></span>
-<span class="r-in">      format <span class="op">=</span> <span class="va">format</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Set format</span></span></span>
+<span class="r-in"><span><span class="va">format</span> <span class="op">&lt;-</span> <span class="st">"pandoc"</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Default summary</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">univariate_table</span><span class="op">(</span></span></span>
+<span class="r-in"><span>      format <span class="op">=</span> <span class="va">format</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variable                Level              Summary          </span>
@@ -168,14 +189,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         Yes                99 (32.67%)      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HeartDisease            No                 164 (54.13%)     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         Yes                139 (45.87%)     </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Stratified summary</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">univariate_table</span><span class="op">(</span></span>
-<span class="r-in">        strata <span class="op">=</span> <span class="op">~</span><span class="va">Sex</span>,</span>
-<span class="r-in">        add_n <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">        format <span class="op">=</span> <span class="va">format</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Stratified summary</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">univariate_table</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        strata <span class="op">=</span> <span class="op">~</span><span class="va">Sex</span>,</span></span>
+<span class="r-in"><span>        add_n <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>        format <span class="op">=</span> <span class="va">format</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variable                Level              Female (N=97)    Male (N=206)        </span>
@@ -192,17 +213,17 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         Yes                22 (22.68%)      77 (37.38%)         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HeartDisease            No                 72 (74.23%)      92 (44.66%)         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         Yes                25 (25.77%)      114 (55.34%)        </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Row strata with custom summaries with</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">univariate_table</span><span class="op">(</span></span>
-<span class="r-in">        strata <span class="op">=</span> <span class="va">HeartDisease</span><span class="op">~</span><span class="fl">1</span>,</span>
-<span class="r-in">        numeric_summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Mean <span class="op">=</span> <span class="st">"mean"</span>, Median <span class="op">=</span> <span class="st">"median"</span><span class="op">)</span>,</span>
-<span class="r-in">        categorical_summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`Count (%)` <span class="op">=</span> <span class="st">"count (percent%)"</span><span class="op">)</span>,</span>
-<span class="r-in">        categorical_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"factor"</span>, <span class="st">"logical"</span><span class="op">)</span>,</span>
-<span class="r-in">        add_n <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">        format <span class="op">=</span> <span class="va">format</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Row strata with custom summaries with</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">univariate_table</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        strata <span class="op">=</span> <span class="va">HeartDisease</span><span class="op">~</span><span class="fl">1</span>,</span></span>
+<span class="r-in"><span>        numeric_summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Mean <span class="op">=</span> <span class="st">"mean"</span>, Median <span class="op">=</span> <span class="st">"median"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        categorical_summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>`Count (%)` <span class="op">=</span> <span class="st">"count (percent%)"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        categorical_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"factor"</span>, <span class="st">"logical"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        add_n <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>        format <span class="op">=</span> <span class="va">format</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HeartDisease   Variable                Level              Mean     Median   Count (%)    </span>
@@ -235,7 +256,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                MaximumHR                                  139.26   142                   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                ExerciseInducedAngina   No                                   63 (45.32%)  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                        Yes                                  76 (54.68%)  </span>
-<span class="r-in">    </span>
+<span class="r-in"><span>    </span></span>
 </code></pre></div>
     </div>
   </div>
@@ -250,7 +271,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -29,7 +29,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -66,30 +66,36 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">divide</span><span class="op">(</span>
-    <span class="va">data</span>,
-    <span class="va">...</span>,
-    depth <span class="op">=</span> <span class="cn">Inf</span>,
-    remove <span class="op">=</span> <span class="cn">TRUE</span>,
-    drop <span class="op">=</span> <span class="cn">TRUE</span>,
-    sep <span class="op">=</span> <span class="st">"|"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">divide</span><span class="op">(</span></span>
+<span>    <span class="va">data</span>,</span>
+<span>    <span class="va">...</span>,</span>
+<span>    depth <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>    remove <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    drop <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    sep <span class="op">=</span> <span class="st">"|"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>Any <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></code>.</p></dd>
+
 <dt>...</dt>
 <dd><p>Selection of columns to split by. See <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select</a></code> for details.</p></dd>
+
 <dt>depth</dt>
 <dd><p>Depth to split to. Defaults to <code>Inf</code>. See details for more information.</p></dd>
+
 <dt>remove</dt>
 <dd><p>Should the stratfication columns be removed? Defaults to <code>TRUE</code>.</p></dd>
+
 <dt>drop</dt>
 <dd><p>Should unused combinations of stratification variables be dropped? Defaults to <code>TRUE</code>.</p></dd>
+
 <dt>sep</dt>
 <dd><p>String to separate values of each stratification variable by. Defaults to <code>"|"</code>. Only used when the number of stratification columns exceeds the desired depth.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -97,7 +103,11 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code></p>
+    
+
+<p>A <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code></p>
+
+
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -106,236 +116,244 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#Unquoted selection</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">divide</span><span class="op">(</span></span>
-<span class="r-in">        <span class="va">Sex</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#Unquoted selection</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">divide</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="va">Sex</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Female</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 97 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain          BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    41 Atypical angina   130         204 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    62 Asymptomatic      140         268 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    57 Asymptomatic      120         354 FALSE            163 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    56 Atypical angina   140         294 FALSE            153 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    48 Non-anginal pa…   130         275 FALSE            139 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    58 Typical angina    150         283 TRUE             162 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    50 Non-anginal pa…   120         219 FALSE            158 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    58 Non-anginal pa…   120         340 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    66 Typical angina    150         226 FALSE            114 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    69 Typical angina    140         239 FALSE            151 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 87 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain           BP Cholesterol BloodSugar MaximumHR Exerc…¹ Heart…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    41 Atypical angina    130         204 FALSE            172 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    62 Asymptomatic       140         268 FALSE            160 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    57 Asymptomatic       120         354 FALSE            163 Yes     No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    56 Atypical angina    140         294 FALSE            153 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    48 Non-anginal pain   130         275 FALSE            139 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    58 Typical angina     150         283 TRUE             162 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    50 Non-anginal pain   120         219 FALSE            158 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    58 Non-anginal pain   120         340 FALSE            172 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    66 Typical angina     150         226 FALSE            114 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    69 Typical angina     140         239 FALSE            151 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 87 more rows, and abbreviated variable names ¹​ExerciseInducedAngina,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Male</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 206 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain          BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Typical angina    145         233 TRUE             150 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Asymptomatic      160         286 FALSE            108 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    67 Asymptomatic      120         229 FALSE            129 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    37 Non-anginal pa…   130         250 FALSE            187 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    56 Atypical angina   120         236 FALSE            178 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    63 Asymptomatic      130         254 FALSE            147 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    53 Asymptomatic      140         203 TRUE             155 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    57 Asymptomatic      140         192 FALSE            148 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    56 Non-anginal pa…   130         256 TRUE             142 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    44 Atypical angina   120         263 FALSE            173 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 196 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain           BP Cholesterol BloodSugar MaximumHR Exerc…¹ Heart…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Typical angina     145         233 TRUE             150 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Asymptomatic       160         286 FALSE            108 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    67 Asymptomatic       120         229 FALSE            129 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    37 Non-anginal pain   130         250 FALSE            187 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    56 Atypical angina    120         236 FALSE            178 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    63 Asymptomatic       130         254 FALSE            147 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    53 Asymptomatic       140         203 TRUE             155 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    57 Asymptomatic       140         192 FALSE            148 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    56 Non-anginal pain   130         256 TRUE             142 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    44 Atypical angina    120         263 FALSE            173 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 196 more rows, and abbreviated variable names ¹​ExerciseInducedAngina,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Using select helpers</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">divide</span><span class="op">(</span></span>
-<span class="r-in">        <span class="fu">matches</span><span class="op">(</span><span class="st">"^S"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Using select helpers</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">divide</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="fu">matches</span><span class="op">(</span><span class="st">"^S"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Female</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 97 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain          BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    41 Atypical angina   130         204 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    62 Asymptomatic      140         268 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    57 Asymptomatic      120         354 FALSE            163 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    56 Atypical angina   140         294 FALSE            153 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    48 Non-anginal pa…   130         275 FALSE            139 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    58 Typical angina    150         283 TRUE             162 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    50 Non-anginal pa…   120         219 FALSE            158 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    58 Non-anginal pa…   120         340 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    66 Typical angina    150         226 FALSE            114 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    69 Typical angina    140         239 FALSE            151 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 87 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain           BP Cholesterol BloodSugar MaximumHR Exerc…¹ Heart…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    41 Atypical angina    130         204 FALSE            172 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    62 Asymptomatic       140         268 FALSE            160 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    57 Asymptomatic       120         354 FALSE            163 Yes     No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    56 Atypical angina    140         294 FALSE            153 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    48 Non-anginal pain   130         275 FALSE            139 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    58 Typical angina     150         283 TRUE             162 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    50 Non-anginal pain   120         219 FALSE            158 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    58 Non-anginal pain   120         340 FALSE            172 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    66 Typical angina     150         226 FALSE            114 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    69 Typical angina     140         239 FALSE            151 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 87 more rows, and abbreviated variable names ¹​ExerciseInducedAngina,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Male</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 206 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain          BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Typical angina    145         233 TRUE             150 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Asymptomatic      160         286 FALSE            108 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    67 Asymptomatic      120         229 FALSE            129 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    37 Non-anginal pa…   130         250 FALSE            187 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    56 Atypical angina   120         236 FALSE            178 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    63 Asymptomatic      130         254 FALSE            147 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    53 Asymptomatic      140         203 TRUE             155 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    57 Asymptomatic      140         192 FALSE            148 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    56 Non-anginal pa…   130         256 TRUE             142 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    44 Atypical angina   120         263 FALSE            173 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 196 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain           BP Cholesterol BloodSugar MaximumHR Exerc…¹ Heart…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Typical angina     145         233 TRUE             150 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Asymptomatic       160         286 FALSE            108 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    67 Asymptomatic       120         229 FALSE            129 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    37 Non-anginal pain   130         250 FALSE            187 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    56 Atypical angina    120         236 FALSE            178 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    63 Asymptomatic       130         254 FALSE            147 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    53 Asymptomatic       140         203 TRUE             155 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    57 Asymptomatic       140         192 FALSE            148 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    56 Non-anginal pain   130         256 TRUE             142 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    44 Atypical angina    120         263 FALSE            173 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 196 more rows, and abbreviated variable names ¹​ExerciseInducedAngina,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Reduced depth</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">divide</span><span class="op">(</span></span>
-<span class="r-in">        <span class="va">Sex</span>,</span>
-<span class="r-in">        <span class="va">HeartDisease</span>,</span>
-<span class="r-in">        depth <span class="op">=</span> <span class="fl">1</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Reduced depth</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">divide</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="va">Sex</span>,</span></span>
+<span class="r-in"><span>        <span class="va">HeartDisease</span>,</span></span>
+<span class="r-in"><span>        depth <span class="op">=</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Female|No`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 72 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain          BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    41 Atypical angina   130         204 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    57 Asymptomatic      120         354 FALSE            163 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    56 Atypical angina   140         294 FALSE            153 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    48 Non-anginal pa…   130         275 FALSE            139 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    58 Typical angina    150         283 TRUE             162 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    50 Non-anginal pa…   120         219 FALSE            158 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    58 Non-anginal pa…   120         340 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    66 Typical angina    150         226 FALSE            114 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    69 Typical angina    140         239 FALSE            151 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    71 Atypical angina   160         302 FALSE            162 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 62 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain           BP Cholesterol BloodSugar MaximumHR ExerciseInduc…¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    41 Atypical angina    130         204 FALSE            172 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    57 Asymptomatic       120         354 FALSE            163 Yes            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    56 Atypical angina    140         294 FALSE            153 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    48 Non-anginal pain   130         275 FALSE            139 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    58 Typical angina     150         283 TRUE             162 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    50 Non-anginal pain   120         219 FALSE            158 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    58 Non-anginal pain   120         340 FALSE            172 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    66 Typical angina     150         226 FALSE            114 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    69 Typical angina     140         239 FALSE            151 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    71 Atypical angina    160         302 FALSE            162 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 62 more rows, and abbreviated variable name ¹​ExerciseInducedAngina</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Male|No`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 92 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain          BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Typical angina    145         233 TRUE             150 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    37 Non-anginal pa…   130         250 FALSE            187 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    56 Atypical angina   120         236 FALSE            178 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    57 Asymptomatic      140         192 FALSE            148 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    44 Atypical angina   120         263 FALSE            173 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    52 Non-anginal pa…   172         199 TRUE             162 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    57 Non-anginal pa…   150         168 FALSE            174 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    54 Asymptomatic      140         239 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    49 Atypical angina   130         266 FALSE            171 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    64 Typical angina    110         211 FALSE            144 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 82 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain           BP Cholesterol BloodSugar MaximumHR ExerciseInduc…¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Typical angina     145         233 TRUE             150 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    37 Non-anginal pain   130         250 FALSE            187 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    56 Atypical angina    120         236 FALSE            178 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    57 Asymptomatic       140         192 FALSE            148 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    44 Atypical angina    120         263 FALSE            173 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    52 Non-anginal pain   172         199 TRUE             162 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    57 Non-anginal pain   150         168 FALSE            174 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    54 Asymptomatic       140         239 FALSE            160 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    49 Atypical angina    130         266 FALSE            171 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    64 Typical angina     110         211 FALSE            144 Yes            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 82 more rows, and abbreviated variable name ¹​ExerciseInducedAngina</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Female|Yes`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 25 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain          BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    62 Asymptomatic      140         268 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    65 Asymptomatic      150         225 FALSE            114 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    61 Asymptomatic      130         330 FALSE            169 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    51 Asymptomatic      130         305 FALSE            142 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    62 Asymptomatic      160         164 FALSE            145 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    60 Asymptomatic      150         258 FALSE            157 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    61 Asymptomatic      145         307 FALSE            146 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    43 Asymptomatic      132         341 TRUE             136 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    62 Non-anginal pa…   130         263 FALSE             97 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    63 Asymptomatic      150         407 FALSE            154 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 15 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain           BP Cholesterol BloodSugar MaximumHR ExerciseInduc…¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    62 Asymptomatic       140         268 FALSE            160 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    65 Asymptomatic       150         225 FALSE            114 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    61 Asymptomatic       130         330 FALSE            169 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    51 Asymptomatic       130         305 FALSE            142 Yes            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    62 Asymptomatic       160         164 FALSE            145 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    60 Asymptomatic       150         258 FALSE            157 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    61 Asymptomatic       145         307 FALSE            146 Yes            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    43 Asymptomatic       132         341 TRUE             136 Yes            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    62 Non-anginal pain   130         263 FALSE             97 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    63 Asymptomatic       150         407 FALSE            154 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 15 more rows, and abbreviated variable name ¹​ExerciseInducedAngina</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Male|Yes`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 114 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain          BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    67 Asymptomatic      160         286 FALSE            108 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Asymptomatic      120         229 FALSE            129 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    63 Asymptomatic      130         254 FALSE            147 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    53 Asymptomatic      140         203 TRUE             155 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    56 Non-anginal pa…   130         256 TRUE             142 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    48 Atypical angina   110         229 FALSE            168 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    58 Atypical angina   120         284 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    58 Non-anginal pa…   132         224 FALSE            173 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    60 Asymptomatic      130         206 FALSE            132 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    40 Asymptomatic      110         167 FALSE            114 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 104 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain           BP Cholesterol BloodSugar MaximumHR ExerciseInduc…¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    67 Asymptomatic       160         286 FALSE            108 Yes            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Asymptomatic       120         229 FALSE            129 Yes            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    63 Asymptomatic       130         254 FALSE            147 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    53 Asymptomatic       140         203 TRUE             155 Yes            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    56 Non-anginal pain   130         256 TRUE             142 Yes            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    48 Atypical angina    110         229 FALSE            168 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    58 Atypical angina    120         284 FALSE            160 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    58 Non-anginal pain   132         224 FALSE            173 No             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    60 Asymptomatic       130         206 FALSE            132 Yes            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    40 Asymptomatic       110         167 FALSE            114 Yes            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 104 more rows, and abbreviated variable name ¹​ExerciseInducedAngina</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in">    </span>
-<span class="r-in"><span class="co">#Keep columns in result; change delimiter in names</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">divide</span><span class="op">(</span></span>
-<span class="r-in">        <span class="va">Sex</span>,</span>
-<span class="r-in">        <span class="va">HeartDisease</span>,</span>
-<span class="r-in">        depth <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">        remove <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">        sep <span class="op">=</span> <span class="st">","</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span>    </span></span>
+<span class="r-in"><span><span class="co">#Keep columns in result; change delimiter in names</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">divide</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="va">Sex</span>,</span></span>
+<span class="r-in"><span>        <span class="va">HeartDisease</span>,</span></span>
+<span class="r-in"><span>        depth <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>        remove <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>        sep <span class="op">=</span> <span class="st">","</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Female,No`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 72 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    41 Fema… Atypical…   130         204 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    57 Fema… Asymptom…   120         354 FALSE            163 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    56 Fema… Atypical…   140         294 FALSE            153 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    48 Fema… Non-angi…   130         275 FALSE            139 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    58 Fema… Typical …   150         283 TRUE             162 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    50 Fema… Non-angi…   120         219 FALSE            158 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    58 Fema… Non-angi…   120         340 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    66 Fema… Typical …   150         226 FALSE            114 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    69 Fema… Typical …   140         239 FALSE            151 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    71 Fema… Atypical…   160         302 FALSE            162 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 62 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age Sex    ChestPain           BP Cholest…¹ Blood…² Maxim…³ Exerc…⁴ Heart…⁵</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    41 Female Atypical angina    130       204 FALSE       172 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    57 Female Asymptomatic       120       354 FALSE       163 Yes     No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    56 Female Atypical angina    140       294 FALSE       153 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    48 Female Non-anginal pain   130       275 FALSE       139 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    58 Female Typical angina     150       283 TRUE        162 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    50 Female Non-anginal pain   120       219 FALSE       158 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    58 Female Non-anginal pain   120       340 FALSE       172 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    66 Female Typical angina     150       226 FALSE       114 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    69 Female Typical angina     140       239 FALSE       151 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    71 Female Atypical angina    160       302 FALSE       162 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 62 more rows, and abbreviated variable names ¹​Cholesterol,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​BloodSugar, ³​MaximumHR, ⁴​ExerciseInducedAngina, ⁵​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Male,No`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 92 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Male  Typical …   145         233 TRUE             150 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    37 Male  Non-angi…   130         250 FALSE            187 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    56 Male  Atypical…   120         236 FALSE            178 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    57 Male  Asymptom…   140         192 FALSE            148 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    44 Male  Atypical…   120         263 FALSE            173 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    52 Male  Non-angi…   172         199 TRUE             162 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    57 Male  Non-angi…   150         168 FALSE            174 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    54 Male  Asymptom…   140         239 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    49 Male  Atypical…   130         266 FALSE            171 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    64 Male  Typical …   110         211 FALSE            144 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 82 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age Sex   ChestPain           BP Choleste…¹ Blood…² Maxim…³ Exerc…⁴ Heart…⁵</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Male  Typical angina     145        233 TRUE        150 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    37 Male  Non-anginal pain   130        250 FALSE       187 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    56 Male  Atypical angina    120        236 FALSE       178 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    57 Male  Asymptomatic       140        192 FALSE       148 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    44 Male  Atypical angina    120        263 FALSE       173 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    52 Male  Non-anginal pain   172        199 TRUE        162 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    57 Male  Non-anginal pain   150        168 FALSE       174 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    54 Male  Asymptomatic       140        239 FALSE       160 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    49 Male  Atypical angina    130        266 FALSE       171 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    64 Male  Typical angina     110        211 FALSE       144 Yes     No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 82 more rows, and abbreviated variable names ¹​Cholesterol,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​BloodSugar, ³​MaximumHR, ⁴​ExerciseInducedAngina, ⁵​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Female,Yes`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 25 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    62 Fema… Asymptom…   140         268 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    65 Fema… Asymptom…   150         225 FALSE            114 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    61 Fema… Asymptom…   130         330 FALSE            169 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    51 Fema… Asymptom…   130         305 FALSE            142 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    62 Fema… Asymptom…   160         164 FALSE            145 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    60 Fema… Asymptom…   150         258 FALSE            157 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    61 Fema… Asymptom…   145         307 FALSE            146 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    43 Fema… Asymptom…   132         341 TRUE             136 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    62 Fema… Non-angi…   130         263 FALSE             97 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    63 Fema… Asymptom…   150         407 FALSE            154 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 15 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age Sex    ChestPain           BP Cholest…¹ Blood…² Maxim…³ Exerc…⁴ Heart…⁵</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    62 Female Asymptomatic       140       268 FALSE       160 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    65 Female Asymptomatic       150       225 FALSE       114 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    61 Female Asymptomatic       130       330 FALSE       169 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    51 Female Asymptomatic       130       305 FALSE       142 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    62 Female Asymptomatic       160       164 FALSE       145 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    60 Female Asymptomatic       150       258 FALSE       157 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    61 Female Asymptomatic       145       307 FALSE       146 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    43 Female Asymptomatic       132       341 TRUE        136 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    62 Female Non-anginal pain   130       263 FALSE        97 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    63 Female Asymptomatic       150       407 FALSE       154 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 15 more rows, and abbreviated variable names ¹​Cholesterol,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​BloodSugar, ³​MaximumHR, ⁴​ExerciseInducedAngina, ⁵​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Male,Yes`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 114 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    67 Male  Asymptom…   160         286 FALSE            108 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Male  Asymptom…   120         229 FALSE            129 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    63 Male  Asymptom…   130         254 FALSE            147 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    53 Male  Asymptom…   140         203 TRUE             155 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    56 Male  Non-angi…   130         256 TRUE             142 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    48 Male  Atypical…   110         229 FALSE            168 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    58 Male  Atypical…   120         284 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    58 Male  Non-angi…   132         224 FALSE            173 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    60 Male  Asymptom…   130         206 FALSE            132 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    40 Male  Asymptom…   110         167 FALSE            114 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 104 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age Sex   ChestPain           BP Choleste…¹ Blood…² Maxim…³ Exerc…⁴ Heart…⁵</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    67 Male  Asymptomatic       160        286 FALSE       108 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Male  Asymptomatic       120        229 FALSE       129 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    63 Male  Asymptomatic       130        254 FALSE       147 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    53 Male  Asymptomatic       140        203 TRUE        155 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    56 Male  Non-anginal pain   130        256 TRUE        142 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    48 Male  Atypical angina    110        229 FALSE       168 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    58 Male  Atypical angina    120        284 FALSE       160 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    58 Male  Non-anginal pain   132        224 FALSE       173 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    60 Male  Asymptomatic       130        206 FALSE       132 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    40 Male  Asymptomatic       110        167 FALSE       114 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 104 more rows, and abbreviated variable names ¹​Cholesterol,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​BloodSugar, ³​MaximumHR, ⁴​ExerciseInducedAngina, ⁵​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Move inward from maximum depth</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">divide</span><span class="op">(</span></span>
-<span class="r-in">        <span class="va">Sex</span>,</span>
-<span class="r-in">        <span class="va">HeartDisease</span>,</span>
-<span class="r-in">        <span class="va">ChestPain</span>,</span>
-<span class="r-in">        depth <span class="op">=</span> <span class="op">-</span><span class="fl">1</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Move inward from maximum depth</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">divide</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="va">Sex</span>,</span></span>
+<span class="r-in"><span>        <span class="va">HeartDisease</span>,</span></span>
+<span class="r-in"><span>        <span class="va">ChestPain</span>,</span></span>
+<span class="r-in"><span>        depth <span class="op">=</span> <span class="op">-</span><span class="fl">1</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Female</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Female$`No|Typical angina`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 6</span></span>
@@ -565,89 +583,93 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 73 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#No depth returns original data (and warning)</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">divide</span><span class="op">(</span></span>
-<span class="r-in">        <span class="va">Sex</span>,</span>
-<span class="r-in">        depth <span class="op">=</span> <span class="fl">0</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#No depth returns original data (and warning)</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">divide</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="va">Sex</span>,</span></span>
+<span class="r-in"><span>        depth <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Split depth is 0; returning original data.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 303 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Male  Typical …   145         233 TRUE             150 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Male  Asymptom…   160         286 FALSE            108 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    67 Male  Asymptom…   120         229 FALSE            129 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    37 Male  Non-angi…   130         250 FALSE            187 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    41 Fema… Atypical…   130         204 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    56 Male  Atypical…   120         236 FALSE            178 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    62 Fema… Asymptom…   140         268 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    57 Fema… Asymptom…   120         354 FALSE            163 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    63 Male  Asymptom…   130         254 FALSE            147 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    53 Male  Asymptom…   140         203 TRUE             155 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 293 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">divide</span><span class="op">(</span></span>
-<span class="r-in">        <span class="va">Sex</span>,</span>
-<span class="r-in">        <span class="va">HeartDisease</span>,</span>
-<span class="r-in">        depth <span class="op">=</span> <span class="op">-</span><span class="fl">5</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age Sex    ChestPain           BP Cholest…¹ Blood…² Maxim…³ Exerc…⁴ Heart…⁵</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Male   Typical angina     145       233 TRUE        150 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Male   Asymptomatic       160       286 FALSE       108 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    67 Male   Asymptomatic       120       229 FALSE       129 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    37 Male   Non-anginal pain   130       250 FALSE       187 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    41 Female Atypical angina    130       204 FALSE       172 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    56 Male   Atypical angina    120       236 FALSE       178 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    62 Female Asymptomatic       140       268 FALSE       160 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    57 Female Asymptomatic       120       354 FALSE       163 Yes     No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    63 Male   Asymptomatic       130       254 FALSE       147 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    53 Male   Asymptomatic       140       203 TRUE        155 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 293 more rows, and abbreviated variable names ¹​Cholesterol,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​BloodSugar, ³​MaximumHR, ⁴​ExerciseInducedAngina, ⁵​HeartDisease</span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">divide</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="va">Sex</span>,</span></span>
+<span class="r-in"><span>        <span class="va">HeartDisease</span>,</span></span>
+<span class="r-in"><span>        depth <span class="op">=</span> <span class="op">-</span><span class="fl">5</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Split depth is 0; returning original data.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 303 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age Sex   ChestPain    BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Male  Typical …   145         233 TRUE             150 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Male  Asymptom…   160         286 FALSE            108 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    67 Male  Asymptom…   120         229 FALSE            129 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    37 Male  Non-angi…   130         250 FALSE            187 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    41 Fema… Atypical…   130         204 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    56 Male  Atypical…   120         236 FALSE            178 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    62 Fema… Asymptom…   140         268 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    57 Fema… Asymptom…   120         354 FALSE            163 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    63 Male  Asymptom…   130         254 FALSE            147 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    53 Male  Asymptom…   140         203 TRUE             155 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 293 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Larger than maximum depth returns maximum depth (default)</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">divide</span><span class="op">(</span></span>
-<span class="r-in">        <span class="va">Sex</span>,</span>
-<span class="r-in">        depth <span class="op">=</span> <span class="fl">100</span></span>
-<span class="r-in">    <span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age Sex    ChestPain           BP Cholest…¹ Blood…² Maxim…³ Exerc…⁴ Heart…⁵</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Male   Typical angina     145       233 TRUE        150 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Male   Asymptomatic       160       286 FALSE       108 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    67 Male   Asymptomatic       120       229 FALSE       129 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    37 Male   Non-anginal pain   130       250 FALSE       187 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    41 Female Atypical angina    130       204 FALSE       172 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    56 Male   Atypical angina    120       236 FALSE       178 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    62 Female Asymptomatic       140       268 FALSE       160 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    57 Female Asymptomatic       120       354 FALSE       163 Yes     No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    63 Male   Asymptomatic       130       254 FALSE       147 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    53 Male   Asymptomatic       140       203 TRUE        155 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 293 more rows, and abbreviated variable names ¹​Cholesterol,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​BloodSugar, ³​MaximumHR, ⁴​ExerciseInducedAngina, ⁵​HeartDisease</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Larger than maximum depth returns maximum depth (default)</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">divide</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="va">Sex</span>,</span></span>
+<span class="r-in"><span>        depth <span class="op">=</span> <span class="fl">100</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Female</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 97 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain          BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    41 Atypical angina   130         204 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    62 Asymptomatic      140         268 FALSE            160 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    57 Asymptomatic      120         354 FALSE            163 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    56 Atypical angina   140         294 FALSE            153 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    48 Non-anginal pa…   130         275 FALSE            139 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    58 Typical angina    150         283 TRUE             162 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    50 Non-anginal pa…   120         219 FALSE            158 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    58 Non-anginal pa…   120         340 FALSE            172 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    66 Typical angina    150         226 FALSE            114 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    69 Typical angina    140         239 FALSE            151 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 87 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain           BP Cholesterol BloodSugar MaximumHR Exerc…¹ Heart…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    41 Atypical angina    130         204 FALSE            172 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    62 Asymptomatic       140         268 FALSE            160 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    57 Asymptomatic       120         354 FALSE            163 Yes     No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    56 Atypical angina    140         294 FALSE            153 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    48 Non-anginal pain   130         275 FALSE            139 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    58 Typical angina     150         283 TRUE             162 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    50 Non-anginal pain   120         219 FALSE            158 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    58 Non-anginal pain   120         340 FALSE            172 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    66 Typical angina     150         226 FALSE            114 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    69 Typical angina     140         239 FALSE            151 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 87 more rows, and abbreviated variable names ¹​ExerciseInducedAngina,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Male</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 206 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain          BP Cholesterol BloodSugar MaximumHR ExerciseInduced…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Typical angina    145         233 TRUE             150 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Asymptomatic      160         286 FALSE            108 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    67 Asymptomatic      120         229 FALSE            129 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    37 Non-anginal pa…   130         250 FALSE            187 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    56 Atypical angina   120         236 FALSE            178 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    63 Asymptomatic      130         254 FALSE            147 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    53 Asymptomatic      140         203 TRUE             155 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    57 Asymptomatic      140         192 FALSE            148 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    56 Non-anginal pa…   130         256 TRUE             142 Yes             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    44 Atypical angina   120         263 FALSE            173 No              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 196 more rows, and 1 more variable: HeartDisease &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Age ChestPain           BP Cholesterol BloodSugar MaximumHR Exerc…¹ Heart…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    63 Typical angina     145         233 TRUE             150 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    67 Asymptomatic       160         286 FALSE            108 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>    67 Asymptomatic       120         229 FALSE            129 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>    37 Non-anginal pain   130         250 FALSE            187 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>    56 Atypical angina    120         236 FALSE            178 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>    63 Asymptomatic       130         254 FALSE            147 No      Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>    53 Asymptomatic       140         203 TRUE             155 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>    57 Asymptomatic       140         192 FALSE            148 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>    56 Non-anginal pain   130         256 TRUE             142 Yes     Yes    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    44 Atypical angina    120         263 FALSE            173 No      No     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 196 more rows, and abbreviated variable names ¹​ExerciseInducedAngina,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​HeartDisease</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -662,7 +684,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -29,7 +29,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -66,28 +66,34 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">univariate_associations</span><span class="op">(</span>
-    <span class="va">data</span>,
-    <span class="va">f</span>,
-    <span class="va">responses</span>,
-    <span class="va">predictors</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">univariate_associations</span><span class="op">(</span></span>
+<span>    <span class="va">data</span>,</span>
+<span>    <span class="va">f</span>,</span>
+<span>    <span class="va">responses</span>,</span>
+<span>    <span class="va">predictors</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>A <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></code>.</p></dd>
+
 <dt>f</dt>
 <dd><p>A function or a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code> of functions (preferably named) that take a vector as input in the first two arguments and return a scalar.</p></dd>
+
 <dt>responses</dt>
 <dd><p>A vector of quoted/unquoted columns, positions, and/or <code><a href="https://tidyselect.r-lib.org/reference/language.html" class="external-link">tidyselect::select_helpers</a></code> to be evaluated as the first argument. See the <code>left</code> argument in <code><a href="dish.html">dish</a></code>.</p></dd>
+
 <dt>predictors</dt>
 <dd><p>A vector of quoted/unquoted columns, positions, and/or <code><a href="https://tidyselect.r-lib.org/reference/language.html" class="external-link">tidyselect::select_helpers</a></code> to be evaluated as the second argument. See the <code>right</code> argument in <code><a href="dish.html">dish</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a></code> with the response/predictor columns down the rows and the results of the <code>f</code> across the columns. The names of the result columns will be the names provided in <code>f</code>.</p>
+    
+
+<p>A <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a></code> with the response/predictor columns down the rows and the results of the <code>f</code> across the columns. The names of the result columns will be the names provided in <code>f</code>.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -96,43 +102,43 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#Make a list of functions to evaluate</span></span>
-<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">    </span>
-<span class="r-in">    <span class="co">#Compute a univariate p-value</span></span>
-<span class="r-in">    `P-value` <span class="op">=</span></span>
-<span class="r-in">      <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">        <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="some_type.html">some_type</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"factor"</span>, <span class="st">"character"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">          </span>
-<span class="r-in">          <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, simulate.p.value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span></span>
-<span class="r-in">          </span>
-<span class="r-in">        <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span class="r-in">          </span>
-<span class="r-in">          <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kruskal.test.html" class="external-link">kruskal.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span></span>
-<span class="r-in">          </span>
-<span class="r-in">        <span class="op">}</span></span>
-<span class="r-in">        </span>
-<span class="r-in">        <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">p</span> <span class="op">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt;0.001"</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">p</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">        </span>
-<span class="r-in">      <span class="op">}</span>,</span>
-<span class="r-in">    </span>
-<span class="r-in">    <span class="co">#Compute difference in AIC model between null model and one predictor model</span></span>
-<span class="r-in">    `AIC Difference` <span class="op">=</span></span>
-<span class="r-in">      <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">        </span>
-<span class="r-in">        <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">~</span><span class="fl">1</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span><span class="op">$</span><span class="va">aic</span> <span class="op">-</span></span>
-<span class="r-in">          <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">~</span><span class="va">x</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span><span class="op">$</span><span class="va">aic</span></span>
-<span class="r-in">        </span>
-<span class="r-in">      <span class="op">}</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Choose a couple binary outcomes</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu">univariate_associations</span><span class="op">(</span></span>
-<span class="r-in">    f <span class="op">=</span> <span class="va">f</span>,</span>
-<span class="r-in">    responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ExerciseInducedAngina</span>, <span class="va">HeartDisease</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#Make a list of functions to evaluate</span></span></span>
+<span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    </span></span>
+<span class="r-in"><span>    <span class="co">#Compute a univariate p-value</span></span></span>
+<span class="r-in"><span>    `P-value` <span class="op">=</span></span></span>
+<span class="r-in"><span>      <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>        <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="some_type.html">some_type</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"factor"</span>, <span class="st">"character"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>          </span></span>
+<span class="r-in"><span>          <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/fisher.test.html" class="external-link">fisher.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, simulate.p.value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span></span></span>
+<span class="r-in"><span>          </span></span>
+<span class="r-in"><span>        <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>          </span></span>
+<span class="r-in"><span>          <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kruskal.test.html" class="external-link">kruskal.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span></span></span>
+<span class="r-in"><span>          </span></span>
+<span class="r-in"><span>        <span class="op">}</span></span></span>
+<span class="r-in"><span>        </span></span>
+<span class="r-in"><span>        <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">p</span> <span class="op">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt;0.001"</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">p</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        </span></span>
+<span class="r-in"><span>      <span class="op">}</span>,</span></span>
+<span class="r-in"><span>    </span></span>
+<span class="r-in"><span>    <span class="co">#Compute difference in AIC model between null model and one predictor model</span></span></span>
+<span class="r-in"><span>    `AIC Difference` <span class="op">=</span></span></span>
+<span class="r-in"><span>      <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>        </span></span>
+<span class="r-in"><span>        <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">~</span><span class="fl">1</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span><span class="op">$</span><span class="va">aic</span> <span class="op">-</span></span></span>
+<span class="r-in"><span>          <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">~</span><span class="va">x</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span><span class="op">$</span><span class="va">aic</span></span></span>
+<span class="r-in"><span>        </span></span>
+<span class="r-in"><span>      <span class="op">}</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Choose a couple binary outcomes</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu">univariate_associations</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    f <span class="op">=</span> <span class="va">f</span>,</span></span>
+<span class="r-in"><span>    responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ExerciseInducedAngina</span>, <span class="va">HeartDisease</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 14 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    response              predictor   `P-value` `AIC Difference`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -150,14 +156,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> HeartDisease          Cholesterol 0.04                 0.206</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> HeartDisease          BloodSugar  0.66                -<span style="color: #BB0000;">1.81</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> HeartDisease          MaximumHR   &lt;0.001              55.1  </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Use a subset of predictors</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu">univariate_associations</span><span class="op">(</span></span>
-<span class="r-in">    f <span class="op">=</span> <span class="va">f</span>,</span>
-<span class="r-in">    responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ExerciseInducedAngina</span>, <span class="va">HeartDisease</span><span class="op">)</span>,</span>
-<span class="r-in">    predictors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Age</span>, <span class="va">BP</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Use a subset of predictors</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu">univariate_associations</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    f <span class="op">=</span> <span class="va">f</span>,</span></span>
+<span class="r-in"><span>    responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ExerciseInducedAngina</span>, <span class="va">HeartDisease</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    predictors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Age</span>, <span class="va">BP</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   response              predictor `P-value` `AIC Difference`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -165,24 +171,21 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ExerciseInducedAngina BP        0.38                -<span style="color: #BB0000;">0.740</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> HeartDisease          Age       &lt;0.001              13.4  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> HeartDisease          BP        0.03                 4.95 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#Numeric predictors only</span></span>
-<span class="r-in"><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span>
-<span class="r-in">  <span class="fu">univariate_associations</span><span class="op">(</span></span>
-<span class="r-in">    f <span class="op">=</span> <span class="va">f</span>,</span>
-<span class="r-in">    responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ExerciseInducedAngina</span>, <span class="va">HeartDisease</span><span class="op">)</span>,</span>
-<span class="r-in">    predictors <span class="op">=</span> <span class="va">is.numeric</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Predicate functions must be wrapped in `where()`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   # Bad</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Numeric predictors only</span></span></span>
+<span class="r-in"><span><span class="va">heart_disease</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu">univariate_associations</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    f <span class="op">=</span> <span class="va">f</span>,</span></span>
+<span class="r-in"><span>    responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ExerciseInducedAngina</span>, <span class="va">HeartDisease</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    predictors <span class="op">=</span> <span class="va">is.numeric</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Use of bare predicate functions was deprecated in tidyselect 1.1.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use wrap predicates in `where()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   # Was:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   data %&gt;% select(is.numeric)</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   # Good</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   # Now:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   data %&gt;% select(where(is.numeric))</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Please update your code.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">This message is displayed once per session.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   response              predictor   `P-value` `AIC Difference`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -194,7 +197,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> HeartDisease          BP          0.03                 4.95 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> HeartDisease          Cholesterol 0.04                 0.206</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> HeartDisease          MaximumHR   &lt;0.001              55.1  </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -209,7 +212,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

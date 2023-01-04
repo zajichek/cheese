@@ -7,7 +7,7 @@
 
 [![CRAN
 Status](https://www.r-pkg.org/badges/version/cheese)](https://cran.r-project.org/package=cheese)
-![CRAN\_Download\_Counter](http://cranlogs.r-pkg.org/badges/grand-total/cheese)
+![CRAN_Download_Counter](http://cranlogs.r-pkg.org/badges/grand-total/cheese)
 <!-- badges: end -->
 
 # Introduction
@@ -17,34 +17,34 @@ statistical analysis–promoting flexible, intuitive, and reproducible
 workflows. There are functions designated for specific statistical tasks
 such as
 
-  - `univariate_table()`: To create a custom table of descriptive
-    statistics for a dataset
-  - `univariate_associations()`: For computing pairwise association
-    metrics for combinations of `predictors` and `responses`
-  - `descriptives()`: To compute descriptive statistics on columns of a
-    dataset
+- `univariate_table()`: To create a custom table of descriptive
+  statistics for a dataset
+- `univariate_associations()`: For computing pairwise association
+  metrics for combinations of `predictors` and `responses`
+- `descriptives()`: To compute descriptive statistics on columns of a
+  dataset
 
 These are built on a collection of data manipulation tools designed for
 general use, many of which are motivated by the functional programming
-concept (i.e. `purrr`) and use non-standard evaluation for column
+concept (i.e. `purrr`) and use non-standard evaluation for column
 selection as in `dplyr::select`. Here are a few:
 
-  - `depths()`: Find the depth(s) of elements in a list structure that
-    satisfy a predicate
-  - `divide()` and `fasten()`: Split/bind data frames to/from any list
-    depth
-  - `dish()`: Evaluate a function with pairwise combinations of columns
-  - `stratiply()`: Evaluate a function on subsets of a data frame
-  - `typly()`: Evaluate a function on columns that inherit at least one
-    (or none) of the specified classes
+- `depths()`: Find the depth(s) of elements in a list structure that
+  satisfy a predicate
+- `divide()` and `fasten()`: Split/bind data frames to/from any list
+  depth
+- `dish()`: Evaluate a function with pairwise combinations of columns
+- `stratiply()`: Evaluate a function on subsets of a data frame
+- `typly()`: Evaluate a function on columns that inherit at least one
+  (or none) of the specified classes
 
 # Installation
 
-  - From CRAN
+- From CRAN
 
 `install.packages("cheese")`
 
-  - From source
+- From source
 
 `devtools::install_github("zajichek/cheese")`
 
@@ -63,7 +63,7 @@ heart_disease %>%
 ```
 
 | Variable              | Level            | Summary          |
-| :-------------------- | :--------------- | :--------------- |
+|:----------------------|:-----------------|:-----------------|
 | Age                   |                  | 56 (48, 61)      |
 | Sex                   | Female           | 97 (32.01%)      |
 |                       | Male             | 206 (67.99%)     |
@@ -102,7 +102,7 @@ heart_disease %>%
       depth = 1
     )
 #> $Female
-#> # A tibble: 28 x 4
+#> # A tibble: 28 × 4
 #>    Outcome               Predictor   name                  value
 #>    <chr>                 <chr>       <chr>                 <dbl>
 #>  1 ExerciseInducedAngina Age         (Intercept)        -1.46   
@@ -118,7 +118,7 @@ heart_disease %>%
 #> # … with 18 more rows
 #> 
 #> $Male
-#> # A tibble: 28 x 4
+#> # A tibble: 28 × 4
 #>    Outcome               Predictor   name                 value
 #>    <chr>                 <chr>       <chr>                <dbl>
 #>  1 ExerciseInducedAngina Age         (Intercept)       -2.44   
