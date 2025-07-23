@@ -1,4 +1,8 @@
-# cheese 0.1.2 (in development)
+# cheese 0.1.3
+
+* Minor fix in documentation (see [#4](https://github.com/zajichek/cheese/issues/4))
+
+# cheese 0.1.2
 
 * **IN PROGRESS** `kableExtra::collapse_rows` version 1.3.4 doesn't work properly causing issues for `univariable_table` HTML output. This release will require the latest version of that package once it is available on CRAN with the fix.
 

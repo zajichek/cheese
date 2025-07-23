@@ -115,7 +115,7 @@ heart_disease %>%
 #>  8 ExerciseInducedAngina BP          x                   0.0383 
 #>  9 ExerciseInducedAngina Cholesterol (Intercept)        -2.06   
 #> 10 ExerciseInducedAngina Cholesterol x                   0.00315
-#> # … with 18 more rows
+#> # ℹ 18 more rows
 #> 
 #> $Male
 #> # A tibble: 28 × 4
@@ -131,7 +131,7 @@ heart_disease %>%
 #>  8 ExerciseInducedAngina BP          x                 -0.00424
 #>  9 ExerciseInducedAngina Cholesterol (Intercept)       -1.70   
 #> 10 ExerciseInducedAngina Cholesterol x                  0.00494
-#> # … with 18 more rows
+#> # ℹ 18 more rows
 ```
 
 See the package vignettes and documentation for more thorough examples.

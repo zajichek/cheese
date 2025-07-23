@@ -1,81 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/articles/cheese.html</loc>
-  </url>
-  <url>
-    <loc>/articles/describe.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/absorb.html</loc>
-  </url>
-  <url>
-    <loc>/reference/depths.html</loc>
-  </url>
-  <url>
-    <loc>/reference/descriptives.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dish.html</loc>
-  </url>
-  <url>
-    <loc>/reference/divide.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fasten.html</loc>
-  </url>
-  <url>
-    <loc>/reference/grable.html</loc>
-  </url>
-  <url>
-    <loc>/reference/heart_disease.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/muddle.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>/reference/some_type.html</loc>
-  </url>
-  <url>
-    <loc>/reference/stratiply.html</loc>
-  </url>
-  <url>
-    <loc>/reference/stretch.html</loc>
-  </url>
-  <url>
-    <loc>/reference/typly.html</loc>
-  </url>
-  <url>
-    <loc>/reference/univariate_associations.html</loc>
-  </url>
-  <url>
-    <loc>/reference/univariate_table.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/articles/cheese.html</loc></url>
+<url><loc>/articles/describe.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/absorb.html</loc></url>
+<url><loc>/reference/depths.html</loc></url>
+<url><loc>/reference/descriptives.html</loc></url>
+<url><loc>/reference/dish.html</loc></url>
+<url><loc>/reference/divide.html</loc></url>
+<url><loc>/reference/fasten.html</loc></url>
+<url><loc>/reference/grable.html</loc></url>
+<url><loc>/reference/heart_disease.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/muddle.html</loc></url>
+<url><loc>/reference/pipe.html</loc></url>
+<url><loc>/reference/some_type.html</loc></url>
+<url><loc>/reference/stratiply.html</loc></url>
+<url><loc>/reference/stretch.html</loc></url>
+<url><loc>/reference/typly.html</loc></url>
+<url><loc>/reference/univariate_associations.html</loc></url>
+<url><loc>/reference/univariate_table.html</loc></url>
 </urlset>
+

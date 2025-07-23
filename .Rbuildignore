@@ -11,3 +11,7 @@
 ^\.Rhistory$
 ^NEWS\.md$
 ^NEWS\.html$
+^.*\.Rproj$
+^\.Rproj\.user$
+^revdep$
+^CRAN-SUBMISSION$

@@ -12,21 +12,19 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/journal/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Building a descriptive analysis">
-<meta property="og:description" content="cheese">
-<meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -40,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cheese</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
       </span>
     </div>
 
@@ -55,7 +53,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -72,7 +70,7 @@
 <li>
   <a href="https://github.com/zajichek/cheese/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -83,7 +81,7 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><script src="describe_files/kePrint-0.0.1/kePrint.js"></script><link href="describe_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
@@ -136,7 +134,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 Sex
 </td>
 <td style="text-align:left;">
@@ -148,9 +146,6 @@ Female
 </tr>
 <tr>
 <td style="text-align:left;">
-Sex
-</td>
-<td style="text-align:left;">
 Male
 </td>
 <td style="text-align:left;">
@@ -158,7 +153,7 @@ Male
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -170,9 +165,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -181,9 +173,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -191,9 +180,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -232,7 +218,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -244,9 +230,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -254,7 +237,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -265,9 +248,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -322,7 +302,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 Sex
 </td>
 <td style="text-align:left;">
@@ -334,9 +314,6 @@ Female
 </tr>
 <tr>
 <td style="text-align:left;">
-Sex
-</td>
-<td style="text-align:left;">
 Male
 </td>
 <td style="text-align:left;">
@@ -344,7 +321,7 @@ Male
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -356,9 +333,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -367,9 +341,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -377,9 +348,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -418,7 +386,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -430,9 +398,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -440,7 +405,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -451,9 +416,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -504,7 +466,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 Sex
 </td>
 <td style="text-align:left;">
@@ -518,9 +480,6 @@ Female
 </tr>
 <tr>
 <td style="text-align:left;">
-Sex
-</td>
-<td style="text-align:left;">
 Male
 </td>
 <td style="text-align:left;">
@@ -530,7 +489,7 @@ Male
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -544,9 +503,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -557,9 +513,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -569,9 +522,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -618,7 +568,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -632,9 +582,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -644,7 +591,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -657,9 +604,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -722,7 +666,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 Sex
 </td>
 <td style="text-align:left;">
@@ -739,9 +683,6 @@ Female
 </tr>
 <tr>
 <td style="text-align:left;">
-Sex
-</td>
-<td style="text-align:left;">
 Male
 </td>
 <td style="text-align:left;">
@@ -754,7 +695,7 @@ Male
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -771,9 +712,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -787,9 +725,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -802,9 +737,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -863,7 +795,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -880,9 +812,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -895,7 +824,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -911,9 +840,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -1054,7 +980,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
 Sex
 </td>
 <td style="text-align:left;">
@@ -1066,9 +992,6 @@ Sex
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Sex
-</td>
 <td style="text-align:left;">
 Female
 </td>
@@ -1080,9 +1003,6 @@ Female
 </tr>
 <tr>
 <td style="text-align:left;">
-Sex
-</td>
-<td style="text-align:left;">
 Male
 </td>
 <td style="text-align:left;">
@@ -1092,7 +1012,7 @@ Male
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="5">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -1105,9 +1025,6 @@ ChestPain
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Typical angina
 </td>
 <td style="text-align:left;">
@@ -1117,9 +1034,6 @@ Typical angina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Atypical angina
 </td>
@@ -1131,9 +1045,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -1143,9 +1054,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -1207,7 +1115,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -1219,9 +1127,6 @@ ExerciseInducedAngina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
 <td style="text-align:left;">
 No
 </td>
@@ -1233,9 +1138,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -1245,7 +1147,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -1258,9 +1160,6 @@ HeartDisease
 </tr>
 <tr>
 <td style="text-align:left;">
-HeartDisease
-</td>
-<td style="text-align:left;">
 No
 </td>
 <td style="text-align:left;">
@@ -1270,9 +1169,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -1335,7 +1231,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -1350,9 +1246,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -1364,9 +1257,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -1377,9 +1267,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -1430,7 +1317,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -1445,9 +1332,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -1458,7 +1342,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -1472,9 +1356,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -1510,7 +1391,7 @@ Summary
 </tr></thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="12">
 Female
 </td>
 <td style="text-align:left;">
@@ -1523,10 +1404,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -1538,12 +1416,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -1551,12 +1423,6 @@ Atypical angina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -1566,12 +1432,6 @@ Non-anginal pain
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Asymptomatic
 </td>
 <td style="text-align:left;">
@@ -1579,9 +1439,6 @@ Asymptomatic
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
 <td style="text-align:left;">
 BP
 </td>
@@ -1593,9 +1450,6 @@ BP
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
 Cholesterol
 </td>
 <td style="text-align:left;">
@@ -1606,9 +1460,6 @@ Cholesterol
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
 MaximumHR
 </td>
 <td style="text-align:left;">
@@ -1618,10 +1469,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -1633,12 +1481,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -1646,10 +1488,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -1661,12 +1500,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-HeartDisease
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -1674,7 +1507,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="12">
 Male
 </td>
 <td style="text-align:left;">
@@ -1687,10 +1520,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -1702,12 +1532,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -1715,12 +1539,6 @@ Atypical angina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -1730,12 +1548,6 @@ Non-anginal pain
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Asymptomatic
 </td>
 <td style="text-align:left;">
@@ -1743,9 +1555,6 @@ Asymptomatic
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
 <td style="text-align:left;">
 BP
 </td>
@@ -1757,9 +1566,6 @@ BP
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
 Cholesterol
 </td>
 <td style="text-align:left;">
@@ -1770,9 +1576,6 @@ Cholesterol
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
 MaximumHR
 </td>
 <td style="text-align:left;">
@@ -1782,10 +1585,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -1797,12 +1597,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -1810,10 +1604,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -1824,12 +1615,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -1865,7 +1650,7 @@ Yes
 </tr></thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="10">
 Female
 </td>
 <td style="text-align:left;">
@@ -1881,10 +1666,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -1899,12 +1681,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -1915,12 +1691,6 @@ Atypical angina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -1933,12 +1703,6 @@ Non-anginal pain
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Asymptomatic
 </td>
 <td style="text-align:left;">
@@ -1949,9 +1713,6 @@ Asymptomatic
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
 <td style="text-align:left;">
 BP
 </td>
@@ -1966,9 +1727,6 @@ BP
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
 Cholesterol
 </td>
 <td style="text-align:left;">
@@ -1982,9 +1740,6 @@ Cholesterol
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
 MaximumHR
 </td>
 <td style="text-align:left;">
@@ -1997,10 +1752,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -2015,12 +1767,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -2031,7 +1777,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="10">
 Male
 </td>
 <td style="text-align:left;">
@@ -2047,10 +1793,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -2065,12 +1808,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -2081,12 +1818,6 @@ Atypical angina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -2099,12 +1830,6 @@ Non-anginal pain
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Asymptomatic
 </td>
 <td style="text-align:left;">
@@ -2115,9 +1840,6 @@ Asymptomatic
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
 <td style="text-align:left;">
 BP
 </td>
@@ -2132,9 +1854,6 @@ BP
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
 Cholesterol
 </td>
 <td style="text-align:left;">
@@ -2148,9 +1867,6 @@ Cholesterol
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
 MaximumHR
 </td>
 <td style="text-align:left;">
@@ -2163,10 +1879,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -2180,12 +1893,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -2263,7 +1970,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -2284,9 +1991,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -2304,9 +2008,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -2323,9 +2024,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -2400,7 +2098,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -2420,9 +2118,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -2506,7 +2201,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -2527,9 +2222,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -2547,9 +2239,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -2566,9 +2255,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -2643,7 +2329,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -2663,9 +2349,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -2710,10 +2393,10 @@ Summary
 </tr></thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="20">
 No
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="10">
 Female
 </td>
 <td style="text-align:left;">
@@ -2726,13 +2409,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -2744,15 +2421,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -2760,15 +2428,6 @@ Atypical angina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -2778,15 +2437,6 @@ Non-anginal pain
 </tr>
 <tr>
 <td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Asymptomatic
 </td>
 <td style="text-align:left;">
@@ -2794,12 +2444,6 @@ Asymptomatic
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Female
-</td>
 <td style="text-align:left;">
 BP
 </td>
@@ -2811,12 +2455,6 @@ BP
 </tr>
 <tr>
 <td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
 Cholesterol
 </td>
 <td style="text-align:left;">
@@ -2827,12 +2465,6 @@ Cholesterol
 </tr>
 <tr>
 <td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
 MaximumHR
 </td>
 <td style="text-align:left;">
@@ -2842,13 +2474,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -2860,15 +2486,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -2876,10 +2493,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="10">
 Male
 </td>
 <td style="text-align:left;">
@@ -2892,13 +2506,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -2910,15 +2518,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -2926,15 +2525,6 @@ Atypical angina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -2944,15 +2534,6 @@ Non-anginal pain
 </tr>
 <tr>
 <td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Asymptomatic
 </td>
 <td style="text-align:left;">
@@ -2960,12 +2541,6 @@ Asymptomatic
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Male
-</td>
 <td style="text-align:left;">
 BP
 </td>
@@ -2977,12 +2552,6 @@ BP
 </tr>
 <tr>
 <td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
 Cholesterol
 </td>
 <td style="text-align:left;">
@@ -2993,12 +2562,6 @@ Cholesterol
 </tr>
 <tr>
 <td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
 MaximumHR
 </td>
 <td style="text-align:left;">
@@ -3008,13 +2571,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -3026,15 +2583,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-No
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -3042,10 +2590,10 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="20">
 Yes
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="10">
 Female
 </td>
 <td style="text-align:left;">
@@ -3058,13 +2606,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -3076,15 +2618,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -3092,15 +2625,6 @@ Atypical angina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -3110,15 +2634,6 @@ Non-anginal pain
 </tr>
 <tr>
 <td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Asymptomatic
 </td>
 <td style="text-align:left;">
@@ -3126,12 +2641,6 @@ Asymptomatic
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Female
-</td>
 <td style="text-align:left;">
 BP
 </td>
@@ -3143,12 +2652,6 @@ BP
 </tr>
 <tr>
 <td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
 Cholesterol
 </td>
 <td style="text-align:left;">
@@ -3159,12 +2662,6 @@ Cholesterol
 </tr>
 <tr>
 <td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
 MaximumHR
 </td>
 <td style="text-align:left;">
@@ -3174,13 +2671,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -3195,23 +2686,11 @@ No
 Yes
 </td>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
 14 (56%)
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="10">
 Male
 </td>
 <td style="text-align:left;">
@@ -3224,13 +2703,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -3242,15 +2715,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -3258,15 +2722,6 @@ Atypical angina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -3276,15 +2731,6 @@ Non-anginal pain
 </tr>
 <tr>
 <td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Asymptomatic
 </td>
 <td style="text-align:left;">
@@ -3292,12 +2738,6 @@ Asymptomatic
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Male
-</td>
 <td style="text-align:left;">
 BP
 </td>
@@ -3309,12 +2749,6 @@ BP
 </tr>
 <tr>
 <td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
 Cholesterol
 </td>
 <td style="text-align:left;">
@@ -3325,12 +2759,6 @@ Cholesterol
 </tr>
 <tr>
 <td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
 MaximumHR
 </td>
 <td style="text-align:left;">
@@ -3340,13 +2768,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -3357,15 +2779,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Yes
-</td>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -3492,7 +2905,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -3521,9 +2934,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -3549,9 +2959,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -3576,9 +2983,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -3685,7 +3089,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -3713,9 +3117,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -3785,7 +3186,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -3800,9 +3201,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -3814,9 +3212,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -3827,9 +3222,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -3880,7 +3272,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -3895,9 +3287,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -3908,7 +3297,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -3922,9 +3311,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -4004,7 +3390,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -4025,9 +3411,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -4045,9 +3428,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -4064,9 +3444,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -4141,7 +3518,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -4161,9 +3538,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -4210,7 +3584,7 @@ Yes (N=139)
 </tr></thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="10">
 Female (N=97)
 </td>
 <td style="text-align:left;">
@@ -4226,10 +3600,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female (N=97)
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -4244,12 +3615,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-Female (N=97)
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -4260,12 +3625,6 @@ Atypical angina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female (N=97)
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -4278,12 +3637,6 @@ Non-anginal pain
 </tr>
 <tr>
 <td style="text-align:left;">
-Female (N=97)
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Asymptomatic
 </td>
 <td style="text-align:left;">
@@ -4294,9 +3647,6 @@ Asymptomatic
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female (N=97)
-</td>
 <td style="text-align:left;">
 BP
 </td>
@@ -4311,9 +3661,6 @@ BP
 </tr>
 <tr>
 <td style="text-align:left;">
-Female (N=97)
-</td>
-<td style="text-align:left;">
 Cholesterol
 </td>
 <td style="text-align:left;">
@@ -4327,9 +3674,6 @@ Cholesterol
 </tr>
 <tr>
 <td style="text-align:left;">
-Female (N=97)
-</td>
-<td style="text-align:left;">
 MaximumHR
 </td>
 <td style="text-align:left;">
@@ -4342,10 +3686,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female (N=97)
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -4360,12 +3701,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-Female (N=97)
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -4376,7 +3711,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="10">
 Male (N=206)
 </td>
 <td style="text-align:left;">
@@ -4392,10 +3727,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male (N=206)
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -4410,12 +3742,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-Male (N=206)
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -4426,12 +3752,6 @@ Atypical angina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male (N=206)
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -4444,12 +3764,6 @@ Non-anginal pain
 </tr>
 <tr>
 <td style="text-align:left;">
-Male (N=206)
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Asymptomatic
 </td>
 <td style="text-align:left;">
@@ -4460,9 +3774,6 @@ Asymptomatic
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male (N=206)
-</td>
 <td style="text-align:left;">
 BP
 </td>
@@ -4477,9 +3788,6 @@ BP
 </tr>
 <tr>
 <td style="text-align:left;">
-Male (N=206)
-</td>
-<td style="text-align:left;">
 Cholesterol
 </td>
 <td style="text-align:left;">
@@ -4493,9 +3801,6 @@ Cholesterol
 </tr>
 <tr>
 <td style="text-align:left;">
-Male (N=206)
-</td>
-<td style="text-align:left;">
 MaximumHR
 </td>
 <td style="text-align:left;">
@@ -4508,10 +3813,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male (N=206)
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -4525,12 +3827,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male (N=206)
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -4618,7 +3914,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
 Sex
 </td>
 <td style="text-align:left;">
@@ -4632,9 +3928,6 @@ Sex
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Sex
-</td>
 <td style="text-align:left;">
 Female
 </td>
@@ -4644,13 +3937,10 @@ Female
 <td style="text-align:left;">
 25 (17.99%)
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Sex
-</td>
 <td style="text-align:left;">
 Male
 </td>
@@ -4660,11 +3950,9 @@ Male
 <td style="text-align:left;">
 114 (82.01%)
 </td>
-<td style="text-align:left;">
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="5">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -4679,9 +3967,6 @@ ChestPain
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Typical angina
 </td>
 <td style="text-align:left;">
@@ -4690,13 +3975,10 @@ Typical angina
 <td style="text-align:left;">
 7 (5.04%)
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Atypical angina
 </td>
@@ -4706,13 +3988,8 @@ Atypical angina
 <td style="text-align:left;">
 9 (6.47%)
 </td>
-<td style="text-align:left;">
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -4722,13 +3999,8 @@ Non-anginal pain
 <td style="text-align:left;">
 18 (12.95%)
 </td>
-<td style="text-align:left;">
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -4737,8 +4009,6 @@ Asymptomatic
 </td>
 <td style="text-align:left;">
 105 (75.54%)
-</td>
-<td style="text-align:left;">
 </td>
 </tr>
 <tr>
@@ -4790,7 +4060,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -4805,9 +4075,6 @@ ExerciseInducedAngina
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 No
 </td>
 <td style="text-align:left;">
@@ -4816,13 +4083,10 @@ No
 <td style="text-align:left;">
 63 (45.32%)
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -4831,8 +4095,6 @@ Yes
 </td>
 <td style="text-align:left;">
 76 (54.68%)
-</td>
-<td style="text-align:left;">
 </td>
 </tr>
 </tbody>
@@ -4913,7 +4175,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="5">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -4932,9 +4194,6 @@ ChestPain
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Typical angina
 </td>
 <td style="text-align:left;">
@@ -4949,13 +4208,10 @@ Typical angina
 <td style="text-align:left;">
 7 (6.14%)
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Atypical angina
 </td>
@@ -4971,13 +4227,8 @@ Atypical angina
 <td style="text-align:left;">
 7 (6.14%)
 </td>
-<td style="text-align:left;">
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -4993,13 +4244,8 @@ Non-anginal pain
 <td style="text-align:left;">
 17 (14.91%)
 </td>
-<td style="text-align:left;">
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -5014,8 +4260,6 @@ Asymptomatic
 </td>
 <td style="text-align:left;">
 83 (72.81%)
-</td>
-<td style="text-align:left;">
 </td>
 </tr>
 <tr>
@@ -5085,7 +4329,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -5104,9 +4348,6 @@ ExerciseInducedAngina
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 No
 </td>
 <td style="text-align:left;">
@@ -5121,13 +4362,10 @@ No
 <td style="text-align:left;">
 52 (45.61%)
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -5142,8 +4380,6 @@ Yes
 </td>
 <td style="text-align:left;">
 62 (54.39%)
-</td>
-<td style="text-align:left;">
 </td>
 </tr>
 </tbody>
@@ -5179,7 +4415,7 @@ P-value
 </tr></thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="12">
 Female
 </td>
 <td style="text-align:left;">
@@ -5198,10 +4434,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="5">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -5216,12 +4449,6 @@ ChestPain
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Typical angina
 </td>
 <td style="text-align:left;">
@@ -5230,16 +4457,10 @@ Typical angina
 <td style="text-align:left;">
 0 (0%)
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Atypical angina
 </td>
@@ -5249,16 +4470,8 @@ Atypical angina
 <td style="text-align:left;">
 2 (8%)
 </td>
-<td style="text-align:left;">
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -5268,16 +4481,8 @@ Non-anginal pain
 <td style="text-align:left;">
 1 (4%)
 </td>
-<td style="text-align:left;">
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -5287,13 +4492,8 @@ Asymptomatic
 <td style="text-align:left;">
 22 (88%)
 </td>
-<td style="text-align:left;">
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
 <td style="text-align:left;">
 BP
 </td>
@@ -5311,9 +4511,6 @@ BP
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
 Cholesterol
 </td>
 <td style="text-align:left;">
@@ -5330,9 +4527,6 @@ Cholesterol
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
 MaximumHR
 </td>
 <td style="text-align:left;">
@@ -5348,10 +4542,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -5366,12 +4557,6 @@ ExerciseInducedAngina
 </tr>
 <tr>
 <td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 No
 </td>
 <td style="text-align:left;">
@@ -5380,16 +4565,10 @@ No
 <td style="text-align:left;">
 11 (44%)
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Female
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -5399,11 +4578,9 @@ Yes
 <td style="text-align:left;">
 14 (56%)
 </td>
-<td style="text-align:left;">
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="12">
 Male
 </td>
 <td style="text-align:left;">
@@ -5422,10 +4599,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="5">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -5440,12 +4614,6 @@ ChestPain
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Typical angina
 </td>
 <td style="text-align:left;">
@@ -5454,16 +4622,10 @@ Typical angina
 <td style="text-align:left;">
 7 (6.14%)
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Atypical angina
 </td>
@@ -5473,16 +4635,8 @@ Atypical angina
 <td style="text-align:left;">
 7 (6.14%)
 </td>
-<td style="text-align:left;">
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -5492,16 +4646,8 @@ Non-anginal pain
 <td style="text-align:left;">
 17 (14.91%)
 </td>
-<td style="text-align:left;">
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -5511,13 +4657,8 @@ Asymptomatic
 <td style="text-align:left;">
 83 (72.81%)
 </td>
-<td style="text-align:left;">
-</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
 <td style="text-align:left;">
 BP
 </td>
@@ -5535,9 +4676,6 @@ BP
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
 Cholesterol
 </td>
 <td style="text-align:left;">
@@ -5554,9 +4692,6 @@ Cholesterol
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
 MaximumHR
 </td>
 <td style="text-align:left;">
@@ -5572,10 +4707,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -5590,12 +4722,6 @@ ExerciseInducedAngina
 </tr>
 <tr>
 <td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 No
 </td>
 <td style="text-align:left;">
@@ -5604,16 +4730,10 @@ No
 <td style="text-align:left;">
 52 (45.61%)
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Male
-</td>
-<td style="text-align:left;">
-ExerciseInducedAngina
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -5622,8 +4742,6 @@ Yes
 </td>
 <td style="text-align:left;">
 62 (54.39%)
-</td>
-<td style="text-align:left;">
 </td>
 </tr>
 </tbody>
@@ -5683,7 +4801,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 Sex
 </td>
 <td style="text-align:left;">
@@ -5695,9 +4813,6 @@ Female
 </tr>
 <tr>
 <td style="text-align:left;">
-Sex
-</td>
-<td style="text-align:left;">
 Male
 </td>
 <td style="text-align:left;">
@@ -5705,7 +4820,7 @@ Male
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -5717,9 +4832,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -5728,9 +4840,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -5738,9 +4847,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -5769,7 +4875,7 @@ Cholesterol
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 BloodSugar
 </td>
 <td style="text-align:left;">
@@ -5780,9 +4886,6 @@ FALSE
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-BloodSugar
-</td>
 <td style="text-align:left;">
 TRUE
 </td>
@@ -5801,7 +4904,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -5813,9 +4916,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -5823,7 +4923,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -5834,9 +4934,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -5884,7 +4981,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 Sex
 </td>
 <td style="text-align:left;">
@@ -5896,9 +4993,6 @@ Female
 </tr>
 <tr>
 <td style="text-align:left;">
-Sex
-</td>
-<td style="text-align:left;">
 Male
 </td>
 <td style="text-align:left;">
@@ -5906,7 +5000,7 @@ Male
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -5918,9 +5012,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -5929,9 +5020,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -5939,9 +5027,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -5970,7 +5055,7 @@ Cholesterol
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 BloodSugar
 </td>
 <td style="text-align:left;">
@@ -5981,9 +5066,6 @@ FALSE
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-BloodSugar
-</td>
 <td style="text-align:left;">
 TRUE
 </td>
@@ -6002,7 +5084,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -6014,9 +5096,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -6024,7 +5103,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -6035,9 +5114,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -6089,7 +5165,7 @@ Age
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 Sex
 </td>
 <td style="text-align:left;">
@@ -6101,9 +5177,6 @@ Female
 </tr>
 <tr>
 <td style="text-align:left;">
-Sex
-</td>
-<td style="text-align:left;">
 Male
 </td>
 <td style="text-align:left;">
@@ -6111,7 +5184,7 @@ Male
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -6123,9 +5196,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -6134,9 +5204,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -6144,9 +5211,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -6175,7 +5239,7 @@ Cholesterol
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 BloodSugar
 </td>
 <td style="text-align:left;">
@@ -6186,9 +5250,6 @@ FALSE
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-BloodSugar
-</td>
 <td style="text-align:left;">
 TRUE
 </td>
@@ -6207,7 +5268,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -6219,9 +5280,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -6229,7 +5287,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -6240,9 +5298,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -6430,7 +5485,7 @@ Cholesterol
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 Chest pain
 </td>
 <td style="text-align:left;">
@@ -6442,9 +5497,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-Chest pain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -6452,9 +5504,6 @@ Atypical angina
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Chest pain
-</td>
 <td style="text-align:left;">
 Non-anginal pain
 </td>
@@ -6464,9 +5513,6 @@ Non-anginal pain
 </tr>
 <tr>
 <td style="text-align:left;">
-Chest pain
-</td>
-<td style="text-align:left;">
 Asymptomatic
 </td>
 <td style="text-align:left;">
@@ -6474,7 +5520,7 @@ Asymptomatic
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -6486,9 +5532,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -6496,7 +5539,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -6507,9 +5550,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -6528,7 +5568,7 @@ MaximumHR
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 Sex
 </td>
 <td style="text-align:left;">
@@ -6539,9 +5579,6 @@ Female
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-Sex
-</td>
 <td style="text-align:left;">
 M
 </td>
@@ -6598,7 +5635,7 @@ BLANK
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 Sex
 </td>
 <td style="text-align:left;">
@@ -6610,9 +5647,6 @@ Female
 </tr>
 <tr>
 <td style="text-align:left;">
-Sex
-</td>
-<td style="text-align:left;">
 Male
 </td>
 <td style="text-align:left;">
@@ -6620,7 +5654,7 @@ Male
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
 ChestPain
 </td>
 <td style="text-align:left;">
@@ -6632,9 +5666,6 @@ Typical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Atypical angina
 </td>
 <td style="text-align:left;">
@@ -6643,9 +5674,6 @@ Atypical angina
 </tr>
 <tr>
 <td style="text-align:left;">
-ChestPain
-</td>
-<td style="text-align:left;">
 Non-anginal pain
 </td>
 <td style="text-align:left;">
@@ -6653,9 +5681,6 @@ Non-anginal pain
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-ChestPain
-</td>
 <td style="text-align:left;">
 Asymptomatic
 </td>
@@ -6697,7 +5722,7 @@ BLANK
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 ExerciseInducedAngina
 </td>
 <td style="text-align:left;">
@@ -6709,9 +5734,6 @@ No
 </tr>
 <tr>
 <td style="text-align:left;">
-ExerciseInducedAngina
-</td>
-<td style="text-align:left;">
 Yes
 </td>
 <td style="text-align:left;">
@@ -6719,7 +5741,7 @@ Yes
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
 HeartDisease
 </td>
 <td style="text-align:left;">
@@ -6730,9 +5752,6 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-HeartDisease
-</td>
 <td style="text-align:left;">
 Yes
 </td>
@@ -6748,9 +5767,7 @@ Yes
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 
@@ -6763,16 +5780,16 @@ Yes
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>
