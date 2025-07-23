@@ -1,3 +1,5 @@
+# cheese (development version)
+
 # cheese 0.1.3
 
 * Minor fix in documentation (see [#4](https://github.com/zajichek/cheese/issues/4))
