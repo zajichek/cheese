@@ -15,3 +15,4 @@
 ^\.Rproj\.user$
 ^revdep$
 ^CRAN-SUBMISSION$
+^cran-comments\.md$
