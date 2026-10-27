@@ -831,7 +831,9 @@ order_levels <-
       purrr::map(as.character) %>%
       
       #Get cross-product for levels
-      purrr::cross_df()
+      rev() %>%
+      do.call(tidyr::expand_grid, .) %>%
+      .[rev(names(.))]
       
     sets %>%
       
